@@ -1,11 +1,26 @@
 import { useMemo, useState } from "react";
 
+const OFFERS_STORAGE_KEY = "fdOffers";
+
 function formatMoney(value, currency = "MYR") {
   const amount = Number(value || 0);
   return `${currency} ${amount.toLocaleString(undefined, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   })}`;
+}
+
+function getAmount(record) {
+  return Number(record?.principal ?? record?.amount ?? 0);
+}
+
+function normalizeRecordType(type) {
+  const value = String(type || "").toUpperCase().replace(/\s+/g, "_");
+  if (value === "FD") return "FD";
+  if (value === "SAVINGS") return "SAVINGS";
+  if (value === "CASH") return "PARKING_CASH";
+  if (value === "PARKING_CASH") return "PARKING_CASH";
+  return "FD";
 }
 
 function daysBetween(fromDate, toDate) {
@@ -24,35 +39,106 @@ function monthKey(dateStr) {
   return d.toISOString().slice(0, 7);
 }
 
-function buildProjection(activeFdRecords = [], targetPerMonth = 36000) {
+function buildNextMonths(count = 12) {
   const today = new Date();
-  const months = [];
-
-  for (let i = 0; i < 6; i += 1) {
+  return Array.from({ length: count }, (_, i) => {
     const d = new Date(today.getFullYear(), today.getMonth() + i, 1);
-    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
-    months.push(key);
-  }
-
-  const actualMap = {};
-  months.forEach((m) => {
-    actualMap[m] = 0;
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
   });
+}
+
+function buildMonthlyFdSummary(activeFdRecords = []) {
+  const map = {};
 
   activeFdRecords.forEach((record) => {
     const key = monthKey(record.maturityDate);
-    if (key && Object.prototype.hasOwnProperty.call(actualMap, key)) {
-      actualMap[key] += Number(record.amount || 0);
+    if (!key) return;
+
+    if (!map[key]) {
+      map[key] = {
+        month: key,
+        totalFdAmount: 0,
+        totalInterest: 0,
+        records: [],
+      };
     }
+
+    map[key].totalFdAmount += getAmount(record);
+    map[key].totalInterest += Number(record.estimatedInterest || 0);
+    map[key].records.push(record);
   });
 
-  return months.map((month) => {
-    const actual = Number(actualMap[month] || 0);
-    const gap = Math.max(targetPerMonth - actual, 0);
-    const excess = Math.max(actual - targetPerMonth, 0);
+  return Object.values(map).sort((a, b) => a.month.localeCompare(b.month));
+}
 
-    return { month, target: targetPerMonth, actual, gap, excess };
+function roundTarget(value) {
+  if (!value || value <= 0) return 0;
+  return Math.round(value / 1000) * 1000;
+}
+
+function recommendTarget(totalFd, deployableFunds, monthlySummary, strategyMode) {
+  if (totalFd <= 0) return 0;
+
+  const base = totalFd / 12;
+  const concentration = monthlySummary.length
+    ? Math.max(...monthlySummary.map((m) => m.totalFdAmount))
+    : 0;
+
+  let multiplier = 1;
+  if (strategyMode === "conservative") multiplier = 0.7;
+  if (strategyMode === "balanced") multiplier = 1;
+  if (strategyMode === "aggressive") multiplier = 1.25;
+
+  let target = base * multiplier;
+
+  if (deployableFunds > 0) {
+    target = Math.max(target, deployableFunds * 0.5);
+  }
+
+  if (concentration > base * 2) {
+    target = Math.min(target, concentration * 0.6);
+  }
+
+  return roundTarget(target);
+}
+
+function readOffers() {
+  try {
+    const raw = localStorage.getItem(OFFERS_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function getBestActiveOffer(offers, currency) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const active = offers.filter((offer) => {
+    const sameCurrency = !offer.currency || offer.currency === currency;
+    const isActive = String(offer.status || "ACTIVE").toUpperCase() === "ACTIVE";
+
+    const effectiveUntil = offer.effectiveUntil
+      ? new Date(offer.effectiveUntil)
+      : null;
+
+    if (effectiveUntil) {
+      effectiveUntil.setHours(0, 0, 0, 0);
+    }
+
+    const notExpired = !effectiveUntil || effectiveUntil >= today;
+
+    return sameCurrency && isActive && notExpired;
   });
+
+  if (!active.length) return null;
+
+  return active.reduce(
+    (best, offer) =>
+      Number(offer.ratePa || 0) > Number(best.ratePa || 0) ? offer : best,
+    active[0]
+  );
 }
 
 export default function DashboardPage({
@@ -61,66 +147,155 @@ export default function DashboardPage({
   currency = "MYR",
   records,
   activeRecords,
+  onAddRecord,
 }) {
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
   const [activeView, setActiveView] = useState("summary");
+  const [strategyMode, setStrategyMode] = useState("balanced");
+  const [customTarget, setCustomTarget] = useState("");
+  const [offers] = useState(() => readOffers());
 
   const safeRecords = Array.isArray(records) ? records : [];
-  const safeActiveRecords = Array.isArray(activeRecords) ? activeRecords : [];
+  const safeActiveRecords = Array.isArray(activeRecords)
+    ? activeRecords
+    : safeRecords.filter(
+        (r) => String(r.status || "ACTIVE").toUpperCase() === "ACTIVE"
+      );
+
+  const bestOffer = useMemo(
+    () => getBestActiveOffer(offers, currency),
+    [offers, currency]
+  );
 
   const activeFdRecords = useMemo(
-    () => safeActiveRecords.filter((r) => String(r.recordType).toUpperCase() === "FD"),
+    () =>
+      safeActiveRecords.filter(
+        (r) => normalizeRecordType(r.recordType) === "FD"
+      ),
     [safeActiveRecords]
   );
 
   const savingsRecords = useMemo(
-    () => safeActiveRecords.filter((r) => String(r.recordType).toUpperCase() === "SAVINGS"),
+    () =>
+      safeActiveRecords.filter(
+        (r) => normalizeRecordType(r.recordType) === "SAVINGS"
+      ),
     [safeActiveRecords]
   );
 
   const parkingCashRecords = useMemo(
     () =>
       safeActiveRecords.filter(
-        (r) => String(r.recordType).toUpperCase() === "PARKING CASH"
+        (r) => normalizeRecordType(r.recordType) === "PARKING_CASH"
       ),
     [safeActiveRecords]
   );
 
-  const totalActivePortfolio = useMemo(
-    () => safeActiveRecords.reduce((sum, r) => sum + Number(r.amount || 0), 0),
-    [safeActiveRecords]
-  );
-
   const totalFixedDeposits = useMemo(
-    () => activeFdRecords.reduce((sum, r) => sum + Number(r.amount || 0), 0),
+    () => activeFdRecords.reduce((sum, r) => sum + getAmount(r), 0),
     [activeFdRecords]
   );
 
   const totalSavings = useMemo(
-    () => savingsRecords.reduce((sum, r) => sum + Number(r.amount || 0), 0),
+    () => savingsRecords.reduce((sum, r) => sum + getAmount(r), 0),
     [savingsRecords]
   );
 
   const totalParkingCash = useMemo(
-    () => parkingCashRecords.reduce((sum, r) => sum + Number(r.amount || 0), 0),
+    () => parkingCashRecords.reduce((sum, r) => sum + getAmount(r), 0),
     [parkingCashRecords]
   );
+
+  const totalDeployableFunds = totalSavings + totalParkingCash;
+  const totalActivePortfolio =
+    totalFixedDeposits + totalSavings + totalParkingCash;
+
+  const totalInterestEarned = useMemo(
+    () =>
+      activeFdRecords.reduce(
+        (sum, r) => sum + Number(r.estimatedInterest || 0),
+        0
+      ),
+    [activeFdRecords]
+  );
+
+  const monthlyFdSummary = useMemo(
+    () => buildMonthlyFdSummary(activeFdRecords),
+    [activeFdRecords]
+  );
+
+  const recommendedTarget = useMemo(
+    () =>
+      recommendTarget(
+        totalFixedDeposits,
+        totalDeployableFunds,
+        monthlyFdSummary,
+        strategyMode
+      ),
+    [totalFixedDeposits, totalDeployableFunds, monthlyFdSummary, strategyMode]
+  );
+
+  const targetAmount =
+    strategyMode === "custom"
+      ? Number(customTarget || 0)
+      : Number(recommendedTarget || 0);
+
+  const hasTarget = targetAmount > 0;
+
+  const monthlyMap = useMemo(() => {
+    const map = {};
+    monthlyFdSummary.forEach((m) => {
+      map[m.month] = m;
+    });
+    return map;
+  }, [monthlyFdSummary]);
+
+  const ladderMonths = useMemo(() => {
+    return buildNextMonths(12).map((month) => {
+      const data = monthlyMap[month];
+      const totalFdAmount = data?.totalFdAmount || 0;
+      const totalInterest = data?.totalInterest || 0;
+      const recordsList = data?.records || [];
+      const gap = hasTarget ? Math.max(targetAmount - totalFdAmount, 0) : 0;
+
+      let status = "NO TARGET";
+      if (hasTarget) {
+        if (totalFdAmount >= targetAmount) status = "FULL";
+        else if (totalFdAmount > 0) status = "PARTIAL";
+        else status = "EMPTY";
+      } else if (totalFdAmount > 0) {
+        status = "BUILT";
+      }
+
+      return {
+        month,
+        target: targetAmount,
+        totalFdAmount,
+        totalInterest,
+        gap,
+        records: recordsList,
+        status,
+      };
+    });
+  }, [monthlyMap, targetAmount, hasTarget]);
 
   const todayIso = new Date().toISOString().slice(0, 10);
 
   const overdueRecords = useMemo(
     () =>
       activeFdRecords
-        .map((r) => ({ ...r, overdueDays: daysBetween(r.maturityDate, todayIso) }))
+        .map((r) => ({
+          ...r,
+          overdueDays: daysBetween(r.maturityDate, todayIso),
+        }))
         .filter((r) => typeof r.overdueDays === "number" && r.overdueDays > 0),
     [activeFdRecords, todayIso]
   );
 
   const dueTodayRecords = useMemo(
     () =>
-      activeFdRecords.filter((r) => {
-        const diff = daysBetween(todayIso, r.maturityDate);
-        return diff === 0;
-      }),
+      activeFdRecords.filter((r) => daysBetween(todayIso, r.maturityDate) === 0),
     [activeFdRecords, todayIso]
   );
 
@@ -142,53 +317,436 @@ export default function DashboardPage({
     [activeFdRecords, todayIso]
   );
 
-  const projection = useMemo(() => buildProjection(activeFdRecords, 36000), [activeFdRecords]);
+  const nextMaturityMonth = monthlyFdSummary[0] || null;
 
-  const weakestMonth = useMemo(() => {
-    if (!projection.length) return null;
-    return projection.reduce((best, item) => (item.gap > best.gap ? item : best), projection[0]);
-  }, [projection]);
+  const largestMaturityMonth = useMemo(() => {
+    if (!monthlyFdSummary.length) return null;
+    return monthlyFdSummary.reduce(
+      (best, item) => (item.totalFdAmount > best.totalFdAmount ? item : best),
+      monthlyFdSummary[0]
+    );
+  }, [monthlyFdSummary]);
 
-  const strongestMonth = useMemo(() => {
-    if (!projection.length) return null;
-    return projection.reduce((best, item) => (item.actual > best.actual ? item : best), projection[0]);
-  }, [projection]);
+  const nextTargetMonth = useMemo(() => {
+    if (!hasTarget) return null;
+    return (
+      ladderMonths.find((m) => m.status === "EMPTY") ||
+      ladderMonths.find((m) => m.status === "PARTIAL") ||
+      null
+    );
+  }, [ladderMonths, hasTarget]);
 
+  const upcomingFdAmount = nextMaturityMonth?.totalFdAmount || 0;
+  const totalDeployableWithUpcoming = totalDeployableFunds + upcomingFdAmount;
+
+  const aiReason = useMemo(() => {
+    if (!activeFdRecords.length) {
+      return "Add FD records first. The system will analyze your maturity pattern and recommend a monthly ladder target.";
+    }
+
+    if (strategyMode === "custom") {
+      return "Custom mode uses your own monthly ladder target. This is best when you already know your personal monthly FD goal.";
+    }
+
+    if (strategyMode === "conservative") {
+      return "Conservative mode uses a smaller monthly target to reduce pressure and keep more cash flexibility.";
+    }
+
+    if (strategyMode === "aggressive") {
+      return "Aggressive mode uses a higher monthly target to build stronger monthly maturity coverage faster.";
+    }
+
+    return "Balanced mode spreads your current FD portfolio across 12 months and adjusts for deployable cash and maturity concentration.";
+  }, [activeFdRecords.length, strategyMode]);
+
+  const bestOfferText = bestOffer
+    ? `${bestOffer.bank} · ${bestOffer.tenureMonths}M · ${Number(
+        bestOffer.ratePa || 0
+      ).toFixed(2)}%`
+    : "No active offer yet";
+    // ===============================
+// V31.4 Execution Timing Engine
+// ===============================
+const executionPlan = useMemo(() => {
+  if (!hasTarget || !nextTargetMonth) return null;
+
+  const gap = nextTargetMonth.gap || 0;
+  const nowFunds = totalDeployableFunds || 0;
+  const futureFunds = totalDeployableWithUpcoming || 0;
+
+  if (nowFunds >= gap && gap > 0) {
+    return {
+      action: "EXECUTE_NOW",
+      amount: gap,
+      source: "Savings + Parking",
+      timing: "Today",
+      reason:
+        "You already have sufficient deployable funds to fill the ladder gap.",
+    };
+  }
+
+  if (futureFunds >= gap && gap > 0) {
+    return {
+      action: "WAIT_MATURITY",
+      amount: gap,
+      source: "Upcoming FD + Cash",
+      timing: "After next FD maturity",
+      reason:
+        "Upcoming FD maturity will unlock sufficient funds. Waiting improves execution efficiency.",
+    };
+  }
+
+  if (gap > 0) {
+    return {
+      action: "PARTIAL_BUILD",
+      amount: nowFunds,
+      source: "Partial build",
+      timing: "Start now, complete later",
+      reason:
+        "Current funds are insufficient. Start partial ladder build and complete after future inflows.",
+    };
+  }
+
+  return {
+    action: "NO_ACTION",
+    amount: 0,
+    source: "-",
+    timing: "-",
+    reason: "Ladder already fully covered.",
+  };
+}, [
+  hasTarget,
+  nextTargetMonth,
+  totalDeployableFunds,
+  totalDeployableWithUpcoming,
+]);
+
+const executionOrders = useMemo(() => {
+  if (!executionPlan || !nextTargetMonth) return [];
+
+  let remaining = executionPlan.amount || 0;
+  if (remaining <= 0) return [];
+
+  if (remaining > 30000) {
+    const first = Math.round(remaining * 0.55);
+    const second = remaining - first;
+
+  return [
+  {
+    amount: first,
+    label: "Primary placement",
+    bank: bestOffer?.bank || "Bank TBD",
+    tenureMonths: bestOffer?.tenureMonths || 12,
+    ratePa: bestOffer?.ratePa || 0,
+    reason: "Place after FD maturity",
+  },
+  {
+    amount: second,
+    label: "Secondary placement",
+    bank: bestOffer?.bank || "Bank TBD",
+    tenureMonths: bestOffer?.tenureMonths || 12,
+    ratePa: bestOffer?.ratePa || 0,
+    reason: "Balance ladder distribution",
+  },
+]; 
+  }
+
+  return [
+  {
+    amount: remaining,
+    label: "Single placement",
+    bank: bestOffer?.bank || "Bank TBD",
+    tenureMonths: bestOffer?.tenureMonths || 12,
+    ratePa: bestOffer?.ratePa || 0,
+    reason: "Direct ladder placement",
+  },
+];
+
+}, [executionPlan, nextTargetMonth]);
+
+  const executePlan = () => {
+  console.log("onAddRecord:", onAddRecord);
+  console.log("🔥 EXECUTE PLAN TRIGGERED");
+  const batchId = `EXE-${new Date().toISOString().slice(0,10).replace(/-/g,"")}-${Date.now()}`;
+  console.log("executionOrders:", executionOrders);
+  if (!executionOrders.length) {
+  setToastMessage("⚠️ No execution order available.");
+
+setTimeout(() => {
+  setToastMessage("");
+}, 3000);
+    return;
+  }
+
+  const existingRecords = JSON.parse(
+    localStorage.getItem("fd_v315_records") || "[]"
+  );
+
+  let nextNumber = existingRecords.length + 1;
+
+  const newRecords = executionOrders.map((order, index) => {
+   
+    const idNumber = String(nextNumber + index).padStart(3, "0");
+
+    const startDate = new Date().toISOString().slice(0, 10);
+
+    const maturityDate = new Date();
+    maturityDate.setMonth(
+      maturityDate.getMonth() + Number(order.tenureMonths || 12)
+    );
+
+    const maturityDateText = maturityDate.toISOString().slice(0, 10);
+
+    const interest =
+      (Number(order.amount || 0) *
+        Number(order.ratePa || 0) *
+        Number(order.tenureMonths || 12)) /
+      12 /
+      100;
+
+    return {
+      id: `FD${idNumber}`,
+
+      // ✅ 用 recordType（你系统标准）
+      recordType: "FD",
+
+      bank: order.bank || "Unknown Bank",
+      productName: `${order.tenureMonths || 12}M Placement @ ${Number(order.ratePa || 0).toFixed(2)}%`,
+      principal: Number(order.amount || 0),
+      rate: Number(order.ratePa || 0),
+      tenure: Number(order.tenureMonths || 12),
+
+      startDate,
+      maturityDate: maturityDateText,
+
+      estimatedInterest: interest,
+
+      status: "ACTIVE",
+      tag: "AUTO_EXECUTED",
+      executionBatchId: batchId,
+      note: `Auto generated from V32 Execution Engine → ${order.label} | ${order.reason}`,
+      
+    };
+  });
+
+  console.log("newRecords:", newRecords);
+
+  newRecords.forEach((record) => {
+    onAddRecord?.(record);
+});
+
+  setToastMessage("✅ Execution completed. FD records created.");
+
+setTimeout(() => {
+  setToastMessage("");
+}, 3000);
+
+
+  if (typeof openRecordsTab === "function") {
+    openRecordsTab();
+  }
+};
+const undoLastExecution = () => {
+  const existingRecords = JSON.parse(
+    localStorage.getItem("fd_v315_records") || "[]"
+  );
+
+  const lastBatchId = existingRecords
+    .filter((r) => r.tag === "AUTO_EXECUTED" && r.executionBatchId)
+    .map((r) => r.executionBatchId)
+    .pop();
+
+  if (!lastBatchId) {
+    alert("No auto execution batch found to undo.");
+    return;
+  }
+
+  const nextRecords = existingRecords.filter(
+    (r) => r.executionBatchId !== lastBatchId
+  );
+
+  localStorage.setItem("fd_v315_records", JSON.stringify(nextRecords));
+
+  setToastMessage(`↩️ Undo completed. Removed batch: ${lastBatchId}`);
+
+setTimeout(() => {
+  setToastMessage("");
+}, 3000);
+};
+const aiSuggestion = useMemo(() => {
+  const offerLine = bestOffer
+    ? ` Current best rate awareness: ${bestOffer.bank} ${
+        bestOffer.tenureMonths
+      }M at ${Number(bestOffer.ratePa || 0).toFixed(2)}%.`
+    : " Add bank offers in Rates Center for better rate awareness.";
+
+  const executionBlock = executionPlan
+    ? `
+
+👉 Execution Plan:
+📅 ${executionPlan.timing}
+💰 ${formatMoney(executionPlan.amount, currency)}
+🏦 ${executionPlan.source}
+
+🧠 ${executionPlan.reason}
+`
+    : "";
+
+  // ✅ 1. 完全没有 FD
+  if (!activeFdRecords.length) {
+    return `Start building your FD ladder.
+
+👉 Action:
+Use any available funds (Savings / Parking Cash).
+
+👉 Strategy:
+Focus on building monthly maturity structure first.
+
+👉 Important:
+Do NOT lock bank, rate or tenure yet.${executionBlock}${offerLine}`;
+  }
+
+  // ✅ 2. 没 target
+  if (!hasTarget) {
+    return `Set a monthly ladder target to activate timing-aware advice.
+
+👉 Strategy:
+Define how much FD should mature every month before making placement decisions.${executionBlock}${offerLine}`;
+  }
+
+  // ✅ 3. 有 gap
+  if (nextTargetMonth) {
+    // ❌ 钱不够
+    if (totalDeployableWithUpcoming < nextTargetMonth.gap) {
+      return `Target Month: ${nextTargetMonth.month}
+Gap: ${formatMoney(nextTargetMonth.gap, currency)}
+
+👉 Action:
+WAIT.
+
+👉 Reason:
+Your funds are not enough yet.
+
+👉 Strategy:
+Wait for upcoming FD maturity or new savings.
+
+👉 Important:
+Do NOT lock rate/tenure early.${executionBlock}${offerLine}`;
+    }
+
+    // ✅ 钱够 → 可以做
+    if (totalDeployableFunds >= nextTargetMonth.gap) {
+      return `Target Month: ${nextTargetMonth.month}
+Gap: ${formatMoney(nextTargetMonth.gap, currency)}
+
+👉 Action:
+You may consider placing FD soon.
+
+👉 Strategy:
+Choose best rate ONLY at placement time.
+
+👉 Important:
+Rates change. Do not pre-lock decision.${executionBlock}${offerLine}`;
+    }
+
+    // ⚠️ 半够
+    return `Target Month: ${nextTargetMonth.month}
+Gap: ${formatMoney(nextTargetMonth.gap, currency)}
+
+👉 Action:
+Partially ready.
+
+👉 Strategy:
+Combine Savings + Parking + Upcoming FD before placing.${executionBlock}${offerLine}`;
+  }
+
+  // ✅ 已覆盖
+  return `Your FD ladder is balanced.
+
+👉 Strategy:
+Maintain structure and optimize future placements using latest rates.${executionBlock}${offerLine}`;
+}, [
+  hasTarget,
+  nextTargetMonth,
+  totalDeployableFunds,
+  totalDeployableWithUpcoming,
+  activeFdRecords,
+  currency,
+  bestOffer,
+  executionPlan,
+]);
   const topSignals = useMemo(() => {
     const list = [];
 
-    if (overdueRecords.length > 0) {
+    if (nextMaturityMonth) {
       list.push({
-        title: "Maturity Alert",
-        text: `${overdueRecords[0].bank} ${overdueRecords[0].id} is overdue`,
+        title: "Next Maturity",
+        text: `${nextMaturityMonth.month} · ${formatMoney(
+          nextMaturityMonth.totalFdAmount,
+          currency
+        )}`,
         tone: "blue",
       });
     }
 
-    if (weakestMonth && weakestMonth.gap > 0) {
+    if (bestOffer) {
       list.push({
-        title: `Fill ${weakestMonth.month}`,
-        text: `Gap ${formatMoney(weakestMonth.gap, currency)}`,
-        tone: "orange",
-      });
-    }
-
-    if (strongestMonth) {
-      list.push({
-        title: `Strongest ${strongestMonth.month}`,
-        text: `Actual ${formatMoney(strongestMonth.actual, currency)}`,
+        title: "Best Active Offer",
+        text: `${bestOffer.bank} · ${bestOffer.tenureMonths}M · ${Number(
+          bestOffer.ratePa || 0
+        ).toFixed(2)}%`,
         tone: "green",
       });
     }
 
-    list.push({
-      title: "Maintain Ladder Rhythm",
-      text: "Keep staggered maturities for monthly liquidity",
-      tone: "blue",
-    });
+    if (largestMaturityMonth) {
+      list.push({
+        title: "Largest Maturity Month",
+        text: `${largestMaturityMonth.month} · ${formatMoney(
+          largestMaturityMonth.totalFdAmount,
+          currency
+        )}`,
+        tone: "orange",
+      });
+    }
 
-    return list.slice(0, 4);
-  }, [overdueRecords, weakestMonth, strongestMonth, currency]);
+    if (hasTarget && nextTargetMonth) {
+      list.push({
+        title: "Next Ladder Target",
+        text: `${nextTargetMonth.month} · Gap ${formatMoney(
+          nextTargetMonth.gap,
+          currency
+        )}`,
+        tone: nextTargetMonth.status === "EMPTY" ? "orange" : "blue",
+      });
+    }
+
+    if (totalDeployableFunds > 0) {
+      list.push({
+        title: "Deployable Funds",
+        text: `${formatMoney(totalDeployableFunds, currency)} available`,
+        tone: "green",
+      });
+    }
+
+    if (!list.length) {
+      list.push({
+        title: "Start Ladder",
+        text: "Add FD records and choose a strategy mode.",
+        tone: "blue",
+      });
+    }
+
+    return list.slice(0, 5);
+  }, [
+    nextMaturityMonth,
+    bestOffer,
+    largestMaturityMonth,
+    hasTarget,
+    nextTargetMonth,
+    totalDeployableFunds,
+    currency,
+  ]);
 
   const openRecordsTab = () => {
     if (onTabChange && tabs.RECORDS) onTabChange(tabs.RECORDS);
@@ -198,18 +756,18 @@ export default function DashboardPage({
     if (onTabChange && tabs.MORE) onTabChange(tabs.MORE);
   };
 
-  const grandTotal = totalFixedDeposits + totalSavings + totalParkingCash || 1;
   const notificationCount = overdueRecords.length + dueTodayRecords.length;
+  const grandTotal = totalActivePortfolio || 1;
 
   return (
-    <div className="page bank-dashboard-page">
+    <div className="page bank-dashboard-page"> 
       <section className="hero-card bank-hero dashboard-hero">
         <div className="hero-left">
           <div className="hero-badge">FD WEALTH ENGINE</div>
-          <h1 className="bank-title">Fixed Deposit Portfolio Dashboard</h1>
+          <h1 className="bank-title">Private Banker Ladder Engine</h1>
           <p className="bank-subtitle">
-            Monitor active deposits, maturity schedules, funding sources and rate
-            opportunities across your portfolio.
+            Build a monthly FD ladder using FD maturity, savings reserve,
+            parking cash and live rate offers.
           </p>
         </div>
 
@@ -222,28 +780,127 @@ export default function DashboardPage({
       </section>
 
       <div className="dashboard-tabs summary-tabs">
-        <button
-          className={`tab-chip tab-btn ${activeView === "summary" ? "active" : ""}`}
-          onClick={() => setActiveView("summary")}
-        >
-          Summary
-        </button>
-        <button
-          className={`tab-chip tab-btn ${activeView === "alerts" ? "active" : ""}`}
-          onClick={() => setActiveView("alerts")}
-        >
-          Alerts
-        </button>
-        <button
-          className={`tab-chip tab-btn ${activeView === "analytics" ? "active" : ""}`}
-          onClick={() => setActiveView("analytics")}
-        >
-          Analytics
-        </button>
+        {["summary", "ladder", "alerts", "analytics"].map((tab) => (
+          <button
+            key={tab}
+            className={`tab-chip tab-btn ${activeView === tab ? "active" : ""}`}
+            onClick={() => setActiveView(tab)}
+          >
+            {tab === "summary"
+              ? "Summary"
+              : tab === "ladder"
+              ? "Ladder"
+              : tab === "alerts"
+              ? "Alerts" 
+              : "Analytics"}
+          </button>
+        ))}
       </div>
 
       {activeView === "summary" && (
         <>
+          <section className="bank-panel" style={{ marginBottom: 24 }}>
+            <div className="bank-panel-head">
+              <div>
+                <div className="panel-kicker">PRIVATE BANKER AI</div>
+                <h3>Strategy Mode & Ladder Target</h3>
+              </div>
+              <small>Connected to Rates Center</small>
+            </div>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr 1fr",
+                gap: 16,
+              }}
+            >
+              <div className="field">
+                <label>Strategy Mode</label>
+                <select
+                  className="input"
+                  value={strategyMode}
+                  onChange={(e) => setStrategyMode(e.target.value)}
+                >
+                  <option value="conservative">Conservative</option>
+                  <option value="balanced">Balanced</option>
+                  <option value="aggressive">Aggressive</option>
+                  <option value="custom">Custom</option>
+                </select>
+                <small
+                  style={{ color: "#7b87a8", display: "block", marginTop: 8 }}
+                >
+                  Choose how fast you want to build your ladder.
+                </small>
+              </div>
+
+              <div className="field">
+                <label>
+                  {strategyMode === "custom"
+                    ? `Custom Target (${currency})`
+                    : `Recommended Target (${currency})`}
+                </label>
+                <input
+                  className="input"
+                  type="number"
+                  min="0"
+                  step="1000"
+                  placeholder="e.g. 10000"
+                  value={
+                    strategyMode === "custom" ? customTarget : recommendedTarget
+                  }
+                  disabled={strategyMode !== "custom"}
+                  onChange={(e) => setCustomTarget(e.target.value)}
+                />
+                <small
+                  style={{ color: "#7b87a8", display: "block", marginTop: 8 }}
+                >
+                  {strategyMode === "custom"
+                    ? "Enter your own monthly ladder target."
+                    : "Auto-calculated from FD size and maturity pattern."}
+                </small>
+              </div>
+
+              <div className="metric-box summary-card dashboard-stat-card">
+                <span>TARGET MONTH</span>
+                <strong className="metric-value">
+                  {!hasTarget
+                    ? "Set target"
+                    : nextTargetMonth
+                    ? nextTargetMonth.month
+                    : "Covered"}
+                </strong>
+                <small>
+                  {!hasTarget
+                    ? "No target detected"
+                    : nextTargetMonth
+                    ? `Gap ${formatMoney(nextTargetMonth.gap, currency)}`
+                    : "No gap detected"}
+                </small>
+              </div>
+            </div>
+
+            <div className="signal-card tone-blue" style={{ marginTop: 18 }}>
+              <h4>Why this target?</h4>
+              <p>{aiReason}</p>
+            </div>
+
+            <div className="signal-card tone-green" style={{ marginTop: 18 }}>
+              <h4>Best Active Offer</h4>
+              <p>{bestOfferText}</p>
+              <p>
+                {bestOffer
+                  ? `Minimum: ${formatMoney(
+                      bestOffer.minAmount,
+                      bestOffer.currency
+                    )} · Effective until: ${
+                      bestOffer.effectiveUntil || "Not specified"
+                    }`
+                  : "Go to More → Rates Center to add FD offers."}
+              </p>
+            </div>
+          </section>
+
           <div className="dashboard-metrics-grid dashboard-summary-grid">
             <div className="metric-box summary-card dashboard-stat-card">
               <span>FIXED DEPOSITS</span>
@@ -269,65 +926,214 @@ export default function DashboardPage({
               <small>Ready to deploy</small>
             </div>
 
-            <div className="metric-box summary-card dashboard-stat-card notification-card">
-              <span>NOTIFICATIONS</span>
-              <strong className="metric-value">{notificationCount}</strong>
-              <small>{notificationCount > 0 ? "Action required" : "All clear"}</small>
+            <div className="metric-box summary-card dashboard-stat-card">
+              <span>TOTAL DEPLOYABLE</span>
+              <strong className="metric-value">
+                {formatMoney(totalDeployableWithUpcoming, currency)}
+              </strong>
+              <small>Savings + Parking + Upcoming FD</small>
             </div>
           </div>
 
           <div className="dashboard-two-col">
             <section className="bank-panel advisor-focus">
-              <div className="bank-panel-head">
-                <div>
-                  <div className="panel-kicker">ADVISOR FOCUS</div>
-                  <h3>Top Signals</h3>
-                </div>
-                <small>Most important now</small>
-              </div>
+  <div className="bank-panel-head">
+    <div>
+      <div className="panel-kicker">AI ADVISOR FOCUS</div>
+      <h3>Top Signals</h3>
+    </div>
+    <small>Based on ladder + rates</small>
+  </div>
 
-              <div className="signal-list">
-                {topSignals.map((item, index) => (
-                  <div
-                    key={`${item.title}-${index}`}
-                    className={`signal-card top-signal-card tone-${item.tone}`}
-                  >
-                    <h4>{item.title}</h4>
-                    <p>{item.text}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
+  <div className="signal-list">
+    {topSignals.map((item, index) => (
+      <div
+        key={`${item.title}-${index}`}
+        className={`signal-card top-signal-card tone-${item.tone}`}
+      >
+        <h4>{item.title}</h4>
+        <p>{item.text}</p>
+      </div>
+    ))}
+  </div>
+</section>
 
-            <section className="bank-panel immediate-action">
-              <div className="bank-panel-head">
-                <div>
-                  <div className="panel-kicker">IMMEDIATE ACTION</div>
-                  <h3>Execution Snapshot</h3>
-                </div>
-                <small>Today and this week</small>
-              </div>
+<section className="bank-panel immediate-action">
+  <div className="bank-panel-head">
+    <div>
+      <div className="panel-kicker">AI SUGGESTION</div>
+      <h3>Next FD Action</h3>
+    </div>
+    <small>Build the next weak month</small>
+  </div>
 
-              <div className="action-cards">
-                <div className="action-card execution-snapshot-card tone-blue">
-                  <h4>Open Records</h4>
-                  <p>Manage active records, overdue items and rollover opportunities.</p>
-                  <button className="primary-btn" onClick={openRecordsTab}>
-                    Open Records
-                  </button>
+  <div className="action-card execution-snapshot-card tone-orange">
+    <h4>Your next FD target</h4>
+    <p>{aiSuggestion}</p>
+
+    {executionPlan && (
+      <div className="signal-card tone-green" style={{ marginTop: 12 }}>
+        <h4>Execution Plan</h4>
+
+        {executionOrders.length > 0 && (
+          <div style={{ marginTop: 12 }}>
+            <h4 style={{ marginBottom: 8 }}>Execution Orders</h4>
+
+            {executionOrders.map((order, i) => (
+              <div
+                key={i}
+                style={{
+                  padding: "14px",
+                  borderRadius: 12,
+                  background: "#0b1d3a",
+                  color: "#fff",
+                  marginBottom: 10,
+                  boxShadow: "0 6px 14px rgba(0,0,0,0.2)",
+                }}
+              >
+                <div style={{ fontSize: 12, opacity: 0.7 }}>
+                  {i === 0 ? "PRIMARY ORDER" : "SECONDARY ORDER"}
                 </div>
 
-                <div className="action-card execution-snapshot-card tone-orange">
-                  <h4>Open Planner</h4>
-                  <p>Review weak month funding gaps and placement decisions.</p>
-                  <button className="primary-btn" onClick={openMoreTab}>
-                    Open Planner
-                  </button>
+                <div style={{ fontSize: 14, marginTop: 4 }}>
+                  🏦 {bestOffer?.bank || "Bank TBD"} ·{" "}
+                  {bestOffer?.tenureMonths || "-"}M
+                </div>
+
+                <div style={{ fontSize: 22, fontWeight: 600, marginTop: 6 }}>
+                  {formatMoney(order.amount, currency)}
+                </div>
+
+                <div style={{ fontSize: 12, marginTop: 6, opacity: 0.7 }}>
+                  {i === 0
+                    ? "→ Place after FD maturity"
+                    : "→ Balance ladder distribution"}
                 </div>
               </div>
-            </section>
+            ))}
+          </div>
+        )}
+        <div style={{ display: "flex", gap: 10, marginTop: 14, marginBottom: 14 }}>
+  <button className="primary-btn" onClick={() => setShowConfirm(true)}>
+  Execute Plan
+  </button>
+
+  <button
+  className="btn-secondary"
+  onClick={openRecordsTab}
+>
+  Adjust Amount
+</button>
+
+<button
+  className="btn-secondary"
+  onClick={undoLastExecution}
+>
+  Undo Last Execution
+</button>
+</div>
+        <p>📅 Action Timing: {executionPlan.timing}</p>
+        <p>💰 Suggested Amount: {formatMoney(executionPlan.amount, currency)}</p>
+        <p>🏦 Source: {executionPlan.source}</p>
+
+        {bestOffer && (
+          <p>
+            📊 Suggested Rate: {bestOffer.bank} · {bestOffer.tenureMonths}M ·{" "}
+            {Number(bestOffer.ratePa).toFixed(2)}%
+          </p>
+        )}
+
+        <p style={{ marginTop: 6 }}>🧠 {executionPlan.reason}</p>
+      </div>
+    )}
+
+    <div className="projection-note">
+      Savings: {formatMoney(totalSavings, currency)}
+    </div>
+
+    <div className="projection-note">
+      Parking Cash: {formatMoney(totalParkingCash, currency)}
+    </div>
+
+    <div className="projection-note">
+      Upcoming FD: {formatMoney(upcomingFdAmount, currency)}
+    </div>
+
+    <div className="projection-note">
+      Best Offer: {bestOfferText}
+    </div>
+
+    <button className="primary-btn" onClick={openRecordsTab}>
+      Open Records
+    </button>
+  </div>
+</section>
           </div>
         </>
+      )}
+
+      {activeView === "ladder" && (
+        <section className="bank-panel">
+          <div className="bank-panel-head">
+            <div>
+              <div className="panel-kicker">MONTHLY LADDER STATUS</div>
+              <h3>12-Month Ladder Coverage</h3>
+            </div>
+            <small>
+              {hasTarget
+                ? `Target: ${formatMoney(targetAmount, currency)}`
+                : "No target set"}
+            </small>
+          </div>
+
+          <div className="projection-list">
+            {ladderMonths.map((item) => (
+              <div key={item.month} className="projection-card">
+                <div className="projection-month">
+                  {item.month}{" "}
+                  {!hasTarget
+                    ? item.totalFdAmount > 0
+                      ? "✔ Built"
+                      : "○ No Target"
+                    : item.status === "FULL"
+                    ? "✔ Full"
+                    : item.status === "PARTIAL"
+                    ? "⚠ Partial"
+                    : "❌ Gap"}
+                </div>
+
+                <div className="projection-note">
+                  Total FD Amount: {formatMoney(item.totalFdAmount, currency)}
+                </div>
+
+                <div className="projection-note">
+                  Target:{" "}
+                  {hasTarget ? formatMoney(item.target, currency) : "Not set"}
+                </div>
+
+                <div className="projection-note">
+                  Gap: {hasTarget ? formatMoney(item.gap, currency) : "-"}
+                </div>
+
+                <div className="projection-note">
+                  Total Interest Earned:{" "}
+                  {formatMoney(item.totalInterest, currency)}
+                </div>
+
+                <div className="projection-note">
+                  FD Records: {item.records.length}
+                </div>
+
+                <div className="projection-note">
+                  FD IDs:{" "}
+                  {item.records.length
+                    ? item.records.map((r) => r.id).filter(Boolean).join(", ")
+                    : "-"}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
       )}
 
       {activeView === "alerts" && (
@@ -337,217 +1143,181 @@ export default function DashboardPage({
               <div className="panel-kicker">NOTIFICATION CENTER</div>
               <h3>Maturity Monitoring</h3>
             </div>
-            <small>Overdue / Due soon</small>
+            <small>FD records only</small>
           </div>
 
           <div className="alerts-grid">
-            <div className="alert-box">
-              <div className="alert-box-head">
-                <h4>Overdue</h4>
-                <span>{overdueRecords.length}</span>
-              </div>
-              {overdueRecords.length ? (
-                overdueRecords.slice(0, 1).map((r) => (
-                  <div key={r.id} className="alert-record overdue">
-                    <div className="alert-row">
+            {[
+              ["Overdue", overdueRecords],
+              ["Today", dueTodayRecords],
+              ["Due in 7 Days", dueIn7DaysRecords],
+              ["Due in 30 Days", dueIn30DaysRecords],
+            ].map(([title, list]) => (
+              <div className="alert-box" key={title}>
+                <div className="alert-box-head">
+                  <h4>{title}</h4>
+                  <span>{list.length}</span>
+                </div>
+
+                {list.length ? (
+                  list.map((r) => (
+                    <div key={r.id} className="alert-record">
                       <strong>
-                        {r.bank} · {r.id}
+                        {r.bank || "FD"} · {r.id || "No ID"}
                       </strong>
-                      <span className="pill overdue">{r.overdueDays}D overdue</span>
+                      <div className="alert-sub">{r.productName || "-"}</div>
+                      <div className="alert-row">
+                        <small>{r.maturityDate || "-"}</small>
+                        <strong>{formatMoney(getAmount(r), currency)}</strong>
+                      </div>
                     </div>
-                    <div className="alert-sub">{r.productName}</div>
-                    <div className="alert-row">
-                      <small>{r.maturityDate}</small>
-                      <strong>{formatMoney(r.amount, currency)}</strong>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="alert-empty">No data</div>
-              )}
-            </div>
-
-            <div className="alert-box">
-              <div className="alert-box-head">
-                <h4>Today</h4>
-                <span>{dueTodayRecords.length}</span>
+                  ))
+                ) : (
+                  <div className="alert-empty">No data</div>
+                )}
               </div>
-              {dueTodayRecords.length ? (
-                dueTodayRecords.map((r) => (
-                  <div key={r.id} className="alert-record">
-                    <strong>
-                      {r.bank} · {r.id}
-                    </strong>
-                  </div>
-                ))
-              ) : (
-                <div className="alert-empty">No data</div>
-              )}
-            </div>
-
-            <div className="alert-box">
-              <div className="alert-box-head">
-                <h4>Due in 7 Days</h4>
-                <span>{dueIn7DaysRecords.length}</span>
-              </div>
-              {dueIn7DaysRecords.length ? (
-                dueIn7DaysRecords.map((r) => (
-                  <div key={r.id} className="alert-record">
-                    <strong>
-                      {r.bank} · {r.id}
-                    </strong>
-                  </div>
-                ))
-              ) : (
-                <div className="alert-empty">No data</div>
-              )}
-            </div>
-
-            <div className="alert-box">
-              <div className="alert-box-head">
-                <h4>Due in 30 Days</h4>
-                <span>{dueIn30DaysRecords.length}</span>
-              </div>
-              {dueIn30DaysRecords.length ? (
-                dueIn30DaysRecords.map((r) => (
-                  <div key={r.id} className="alert-record">
-                    <strong>
-                      {r.bank} · {r.id}
-                    </strong>
-                  </div>
-                ))
-              ) : (
-                <div className="alert-empty">No data</div>
-              )}
-            </div>
+            ))}
           </div>
         </section>
       )}
 
       {activeView === "analytics" && (
         <>
-          <div className="dashboard-two-col">
-            <section className="bank-panel">
-              <div className="bank-panel-head">
-                <div>
-                  <div className="panel-kicker">MONTH ANALYSIS</div>
-                  <h3>Weak vs Strong</h3>
-                </div>
-                <small>Funding balance</small>
+          <section className="bank-panel">
+            <div className="bank-panel-head">
+              <div>
+                <div className="panel-kicker">MONTHLY FD SUMMARY</div>
+                <h3>Next Maturity Summary</h3>
               </div>
+              <small>Monthly FD amount + interest</small>
+            </div>
 
-              <div className="signal-list">
-                <div className="signal-card tone-orange">
-                  <h4>Weakest Month</h4>
-                  <p>{weakestMonth?.month || "N/A"}</p>
-                  <small>{formatMoney(weakestMonth?.gap || 0, currency)}</small>
-                </div>
+            <div className="projection-list">
+              {monthlyFdSummary.length ? (
+                monthlyFdSummary.map((item) => (
+                  <div key={item.month} className="projection-card">
+                    <div className="projection-month">📅 {item.month}</div>
 
-                <div className="signal-card tone-green">
-                  <h4>Strongest Month</h4>
-                  <p>{strongestMonth?.month || "N/A"}</p>
-                  <small>{formatMoney(strongestMonth?.actual || 0, currency)}</small>
-                </div>
-              </div>
-            </section>
+                    <div className="projection-note">
+                      Total FD Amount:{" "}
+                      {formatMoney(item.totalFdAmount, currency)}
+                    </div>
 
-            <section className="bank-panel">
-              <div className="bank-panel-head">
-                <div>
-                  <div className="panel-kicker">ALLOCATION CHART</div>
-                  <h3>Portfolio Allocation</h3>
-                </div>
-                <small>FD / Savings / Cash</small>
-              </div>
+                    <div className="projection-note">
+                      Total Interest Earned:{" "}
+                      {formatMoney(item.totalInterest, currency)}
+                    </div>
 
-              <div className="allocation-list">
-                <div className="allocation-row">
-                  <span>FD</span>
-                  <div className="allocation-bar">
-                    <div
-                      className="allocation-fill blue"
-                      style={{ width: `${(totalFixedDeposits / grandTotal) * 100}%` }}
-                    />
+                    <div className="projection-note">
+                      FD Records: {item.records.length}
+                    </div>
+
+                    <div className="projection-note">
+                      FD IDs:{" "}
+                      {item.records.map((r) => r.id).filter(Boolean).join(", ")}
+                    </div>
                   </div>
-                  <strong>{formatMoney(totalFixedDeposits, currency)}</strong>
+                ))
+              ) : (
+                <div className="signal-card tone-blue">
+                  <h4>No FD maturity data yet</h4>
+                  <p>Add FD records with maturity dates to see monthly summary.</p>
                 </div>
-
-                <div className="allocation-row">
-                  <span>Savings</span>
-                  <div className="allocation-bar">
-                    <div
-                      className="allocation-fill purple"
-                      style={{ width: `${(totalSavings / grandTotal) * 100}%` }}
-                    />
-                  </div>
-                  <strong>{formatMoney(totalSavings, currency)}</strong>
-                </div>
-
-                <div className="allocation-row">
-                  <span>Cash</span>
-                  <div className="allocation-bar">
-                    <div
-                      className="allocation-fill green"
-                      style={{ width: `${(totalParkingCash / grandTotal) * 100}%` }}
-                    />
-                  </div>
-                  <strong>{formatMoney(totalParkingCash, currency)}</strong>
-                </div>
-              </div>
-            </section>
-          </div>
+              )}
+            </div>
+          </section>
 
           <section className="bank-panel" style={{ marginTop: 24 }}>
             <div className="bank-panel-head">
               <div>
-                <div className="panel-kicker">FUNDING GAP CHART</div>
-                <h3>Monthly Projection</h3>
+                <div className="panel-kicker">ALLOCATION CHART</div>
+                <h3>Portfolio Allocation</h3>
               </div>
-              <small>Target vs actual</small>
+              <small>FD / Savings / Parking Cash</small>
             </div>
 
-            <div className="projection-list">
-              {projection.map((item) => (
-                <div key={item.month} className="projection-card">
-                  <div className="projection-month">{item.month}</div>
-                  <div className="projection-meta">
-                    Target {formatMoney(item.target, currency)} · Actual{" "}
-                    {formatMoney(item.actual, currency)}
-                  </div>
-
-                  <div className="projection-line">
-                    <span>Actual</span>
-                    <div className="allocation-bar">
-                      <div
-                        className="allocation-fill blue"
-                        style={{ width: `${Math.min((item.actual / item.target) * 100, 100)}%` }}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="projection-line">
-                    <span>{item.gap > 0 ? "Gap" : "Excess"}</span>
-                    <div className="allocation-bar">
-                      <div
-                        className={`allocation-fill ${item.gap > 0 ? "orange" : "green"}`}
-                        style={{
-                          width: `${Math.min(((item.gap || item.excess) / item.target) * 100, 100)}%`,
-                        }}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="projection-note">
-                    {item.gap > 0
-                      ? `Need ${formatMoney(item.gap, currency)}`
-                      : `Excess ${formatMoney(item.excess, currency)}`}
-                  </div>
+            <div className="allocation-list">
+              <div className="allocation-row">
+                <span>FD</span>
+                <div className="allocation-bar">
+                  <div
+                    className="allocation-fill blue"
+                    style={{
+                      width: `${(totalFixedDeposits / grandTotal) * 100}%`,
+                    }}
+                  />
                 </div>
-              ))}
+                <strong>{formatMoney(totalFixedDeposits, currency)}</strong>
+              </div>
+
+              <div className="allocation-row">
+                <span>Savings</span>
+                <div className="allocation-bar">
+                  <div
+                    className="allocation-fill purple"
+                    style={{
+                      width: `${(totalSavings / grandTotal) * 100}%`,
+                    }}
+                  />
+                </div>
+                <strong>{formatMoney(totalSavings, currency)}</strong>
+              </div>
+
+              <div className="allocation-row">
+                <span>Parking Cash</span>
+                <div className="allocation-bar">
+                  <div
+                    className="allocation-fill green"
+                    style={{
+                      width: `${(totalParkingCash / grandTotal) * 100}%`,
+                    }}
+                  />
+                </div>
+                <strong>{formatMoney(totalParkingCash, currency)}</strong>
+              </div>
             </div>
           </section>
         </>
       )}
+     {showConfirm && (
+  <div className="confirm-overlay">
+    <div className="confirm-modal">
+      <h3>Confirm Execution</h3>
+
+      {executionOrders.map((order, i) => (
+        <div key={i} style={{ marginBottom: 10 }}>
+          <strong>{order.label}</strong>
+          <div>
+            {formatMoney(order.amount, currency)} · {order.tenureMonths}M ·{" "}
+            {Number(order.ratePa).toFixed(2)}%
+          </div>
+        </div>
+      ))}
+
+      <div style={{ marginTop: 20, display: "flex", gap: 10 }}>
+        <button
+          className="primary-btn"
+          onClick={() => {
+            executePlan();
+            setShowConfirm(false);
+          }}
+        >
+          Confirm
+        </button>
+
+        <button className="btn-secondary" onClick={() => setShowConfirm(false)}>
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+)} 
+
+{toastMessage && (
+  <div className="toast-success">
+    {toastMessage}
+  </div>
+)}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import RatesPage from "./RatesPage";
 
 const STORAGE_KEYS = {
   RATES: "fd_v322_rates",
@@ -60,8 +61,7 @@ function addMonths(yyyyMm, offset) {
 
 function averageRate(rateEntries, currency) {
   const filtered = rateEntries.filter(
-    (item) =>
-      Number(item.rate) > 0 && (!currency || item.currency === currency)
+    (item) => Number(item.rate) > 0 && (!currency || item.currency === currency)
   );
   if (!filtered.length) return 0;
   const sum = filtered.reduce((acc, item) => acc + Number(item.rate), 0);
@@ -205,8 +205,10 @@ function thTdStyle() {
   };
 }
 
-export default function MorePage({ currency = "MYR" }) {
+export default function MorePage({ currency = "MYR", onAddRecord }) {
   const [activeTab, setActiveTab] = useState("GUIDE");
+
+  const [executing, setExecuting] = useState(false);
 
   const [rates, setRates] = useState(() => readStorage(STORAGE_KEYS.RATES, []));
   const [savedPlans, setSavedPlans] = useState(() =>
@@ -402,6 +404,38 @@ export default function MorePage({ currency = "MYR" }) {
     addActivityItem(`Saved plan: ${result.targetMonthLabel} ladder target.`);
   };
 
+  const handleExecutePlan = () => {
+  if (!result || executing) return;
+
+  setExecuting(true);
+
+  const batchId = `EXE-${Date.now()}`;
+
+  const newFD = {
+    id: `AUTO-FD-${Date.now()}`,
+    bank: result.bestOffer?.bank || "AUTO SYSTEM",
+    productName: `12M Placement @ ${result.avgRate}%`,
+    principal: result.monthlyPlacement,
+    rate: result.avgRate,
+    tenure: result.tenureMonths,
+    startDate: new Date().toISOString().slice(0, 10),
+    status: "ACTIVE",
+    tag: "AUTO_EXECUTED",
+    recordType: "FD",
+    executionBatchId: batchId,
+  };
+
+  console.log("AUTO CREATED:", newFD);
+
+  onAddRecord?.(newFD);
+
+  addActivityItem("AUTO FD executed.");
+
+  setTimeout(() => {
+    setExecuting(false);
+  }, 300);
+};
+
   const handleDeleteSavedPlan = (id) => {
     setSavedPlans((prev) => prev.filter((item) => item.id !== id));
     addActivityItem("A saved plan was removed.");
@@ -447,379 +481,7 @@ export default function MorePage({ currency = "MYR" }) {
       ) : null}
 
       <section className="content-card">
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            gap: 16,
-            alignItems: "center",
-            flexWrap: "wrap",
-          }}
-        >
-          <div>
-            <div className="card-kicker">GLOBAL USER GUIDE</div>
-            <h2 style={{ marginTop: 8 }}>How to Use This Page</h2>
-          </div>
-          <div className="status-badge">Step-by-step</div>
-        </div>
-
-        <div className="guide-grid">
-          <div className="guide-item">
-            <div className="guide-head">
-              <span>Rates</span>
-              <span className="status-badge">Step 1</span>
-            </div>
-            <p>Add the latest monthly FD rates manually from the banks you want to compare.</p>
-          </div>
-
-          <div className="guide-item">
-            <div className="guide-head">
-              <span>Goal</span>
-              <span className="status-badge">Step 2</span>
-            </div>
-            <p>Set your target monthly interest, target month, build-up years, and tenure.</p>
-          </div>
-
-          <div className="guide-item">
-            <div className="guide-head">
-              <span>Planner</span>
-              <span className="status-badge">Step 3</span>
-            </div>
-            <p>Generate the ladder only after your own inputs are ready. No default amount is used.</p>
-          </div>
-
-          <div className="guide-item">
-            <div className="guide-head">
-              <span>Result</span>
-              <span className="status-badge">Step 4</span>
-            </div>
-            <p>Read the month-by-month ladder table, year-by-year accumulation, saved plans, and activity.</p>
-          </div>
-        </div>
-      </section>
-
-      <section
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: 24,
-          marginTop: 24,
-        }}
-      >
-        <div className="content-card">
-          <div className="card-kicker">STEP 1</div>
-          <h2>Enter Latest Bank Rates</h2>
-
-          <div className="settings-form-grid" style={{ marginTop: 20 }}>
-            <div className="field" style={{ gridColumn: "1 / -1" }}>
-              <label>Bank</label>
-              <input
-                className="input"
-                placeholder="Example: HLB / DBS / HSBC / UOB"
-                value={rateForm.bank}
-                onChange={(e) =>
-                  setRateForm((prev) => ({ ...prev, bank: e.target.value }))
-                }
-              />
-            </div>
-
-            <div className="field">
-              <label>Currency</label>
-              <select
-                value={rateForm.currency}
-                onChange={(e) =>
-                  setRateForm((prev) => ({ ...prev, currency: e.target.value }))
-                }
-              >
-                {RATE_CURRENCIES.map((item) => (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="field">
-              <label>Tenure Months</label>
-              <input
-                className="input"
-                type="number"
-                min="1"
-                placeholder="12"
-                value={rateForm.tenureMonths}
-                onChange={(e) =>
-                  setRateForm((prev) => ({
-                    ...prev,
-                    tenureMonths: e.target.value,
-                  }))
-                }
-              />
-            </div>
-
-            <div className="field">
-              <label>Rate (%)</label>
-              <input
-                className="input"
-                type="number"
-                step="0.01"
-                min="0"
-                placeholder="3.60"
-                value={rateForm.rate}
-                onChange={(e) =>
-                  setRateForm((prev) => ({ ...prev, rate: e.target.value }))
-                }
-              />
-            </div>
-
-            <div className="field">
-              <label>Updated Month</label>
-              <input
-                className="input"
-                type="month"
-                value={rateForm.updatedMonth}
-                onChange={(e) =>
-                  setRateForm((prev) => ({
-                    ...prev,
-                    updatedMonth: e.target.value,
-                  }))
-                }
-              />
-            </div>
-
-            <div className="field" style={{ gridColumn: "1 / -1" }}>
-              <label>Notes</label>
-              <input
-                className="input"
-                placeholder="Promo / standard / online special"
-                value={rateForm.notes}
-                onChange={(e) =>
-                  setRateForm((prev) => ({ ...prev, notes: e.target.value }))
-                }
-              />
-            </div>
-          </div>
-
-          <button
-            type="button"
-            className="btn-primary"
-            onClick={handleAddRate}
-          >
-            Add Rate
-          </button>
-
-          <div style={{ marginTop: 20, display: "grid", gap: 14 }}>
-            {rates.length === 0 ? (
-              <div className="empty" style={softBoxStyle()}>
-                No market rate entries yet.
-              </div>
-            ) : (
-              rates.map((item) => (
-                <div key={item.id} style={softBoxStyle()}>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      gap: 12,
-                      alignItems: "center",
-                      flexWrap: "wrap",
-                    }}
-                  >
-                    <div>
-                      <div className="status-title">{item.bank}</div>
-                      <div className="status-subtitle">
-                        {item.currency} · {item.tenureMonths}M · {item.updatedMonth}
-                      </div>
-                    </div>
-                    <div className="status-badge">{formatPercent(item.rate)}</div>
-                  </div>
-
-                  <div className="list-row" style={{ marginTop: 14 }}>
-                    <span className="text-muted">Notes</span>
-                    <span>{item.notes || "-"}</span>
-                  </div>
-
-                  <button
-                    type="button"
-                    className="btn-secondary"
-                    style={{ marginTop: 14 }}
-                    onClick={() => handleDeleteRate(item.id)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-
-        <div className="content-card">
-          <div className="card-kicker">STEP 2</div>
-          <h2>Set Your Monthly Interest Goal</h2>
-
-          <div className="settings-form-grid" style={{ marginTop: 20 }}>
-            <div className="field">
-              <label>Target Monthly Interest</label>
-              <input
-                className="input"
-                type="number"
-                min="0"
-                placeholder="Example: 1500"
-                value={goalForm.monthlyInterest}
-                onChange={(e) =>
-                  setGoalForm((prev) => ({
-                    ...prev,
-                    monthlyInterest: e.target.value,
-                  }))
-                }
-              />
-            </div>
-
-            <div className="field">
-              <label>Currency</label>
-              <select
-                value={goalForm.currency}
-                onChange={(e) =>
-                  setGoalForm((prev) => ({ ...prev, currency: e.target.value }))
-                }
-              >
-                {RATE_CURRENCIES.map((item) => (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="field">
-              <label>Target Month</label>
-              <input
-                className="input"
-                type="month"
-                value={goalForm.targetMonth}
-                onChange={(e) =>
-                  setGoalForm((prev) => ({
-                    ...prev,
-                    targetMonth: e.target.value,
-                  }))
-                }
-              />
-            </div>
-
-            <div className="field">
-              <label>Build-up Years</label>
-              <input
-                className="input"
-                type="number"
-                min="1"
-                placeholder="Example: 3"
-                value={goalForm.buildYears}
-                onChange={(e) =>
-                  setGoalForm((prev) => ({
-                    ...prev,
-                    buildYears: e.target.value,
-                  }))
-                }
-              />
-            </div>
-
-            <div className="field">
-              <label>Tenure Months</label>
-              <input
-                className="input"
-                type="number"
-                min="1"
-                placeholder="12"
-                value={goalForm.tenureMonths}
-                onChange={(e) =>
-                  setGoalForm((prev) => ({
-                    ...prev,
-                    tenureMonths: e.target.value,
-                  }))
-                }
-              />
-            </div>
-
-            <div className="field">
-              <label>Preference</label>
-              <select
-                value={goalForm.preference}
-                onChange={(e) =>
-                  setGoalForm((prev) => ({
-                    ...prev,
-                    preference: e.target.value,
-                  }))
-                }
-              >
-                <option value="Balanced">Balanced</option>
-                <option value="Conservative">Conservative</option>
-                <option value="Aggressive">Aggressive</option>
-              </select>
-            </div>
-          </div>
-
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 16 }}>
-            <button
-              type="button"
-              className="btn-primary"
-              onClick={handleGeneratePlan}
-            >
-              Generate Step-by-step Plan
-            </button>
-
-            <button
-              type="button"
-              className="btn-secondary"
-              onClick={resetGoal}
-            >
-              Reset Goal
-            </button>
-          </div>
-
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: 16,
-              marginTop: 20,
-            }}
-          >
-            <div style={softBoxStyle()}>
-              <div className="text-muted">Estimated rate used</div>
-              <div style={{ fontSize: 22, fontWeight: 900, marginTop: 8 }}>
-                {result ? result.avgRateLabel : "-"}
-              </div>
-            </div>
-
-            <div style={softBoxStyle()}>
-              <div className="text-muted">Total FD Required</div>
-              <div style={{ fontSize: 22, fontWeight: 900, marginTop: 8 }}>
-                {result ? result.principalNeededLabel : "-"}
-              </div>
-            </div>
-
-            <div style={softBoxStyle()}>
-              <div className="text-muted">Monthly FD Required</div>
-              <div style={{ fontSize: 22, fontWeight: 900, marginTop: 8 }}>
-                {result ? result.monthlyPlacementLabel : "-"}
-              </div>
-            </div>
-
-            <div style={softBoxStyle()}>
-              <div className="text-muted">Time to build</div>
-              <div style={{ fontSize: 22, fontWeight: 900, marginTop: 8 }}>
-                {result
-                  ? `${Number(result.buildYears) * 12} month(s) / ${Number(
-                      result.buildYears
-                    ).toFixed(1)} year(s)`
-                  : "-"}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="content-card" style={{ marginTop: 28 }}>
-        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 18 }}>
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
           <button
             type="button"
             className={activeTab === "GUIDE" ? "btn-primary" : "btn-secondary"}
@@ -841,313 +503,721 @@ export default function MorePage({ currency = "MYR" }) {
           >
             Saved Plans
           </button>
+          <button
+            type="button"
+            className={activeTab === "RATES" ? "btn-primary" : "btn-secondary"}
+            onClick={() => setActiveTab("RATES")}
+          >
+            Rates Center
+          </button>
         </div>
+      </section>
 
-        {activeTab === "GUIDE" && (
-          <div style={softBoxStyle()}>
-            <h2>Simple explanation</h2>
-            <p className="text-muted" style={{ marginTop: 16, lineHeight: 1.8 }}>
-              This planner calculates how much total FD you need to reach your
-              monthly interest goal, then spreads it into a month-by-month FD ladder.
-            </p>
-          </div>
-        )}
-
-        {activeTab === "RESULTS" && (
-          <div style={{ display: "grid", gap: 24 }}>
-            {!result ? (
-              <div className="empty" style={softBoxStyle()}>
-                No result yet. Enter latest rates, set your monthly interest goal,
-                then click Generate Step-by-step Plan.
+      {activeTab === "RATES" ? (
+        <RatesPage />
+      ) : (
+        <>
+          <section className="content-card">
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                gap: 16,
+                alignItems: "center",
+                flexWrap: "wrap",
+              }}
+            >
+              <div>
+                <div className="card-kicker">GLOBAL USER GUIDE</div>
+                <h2 style={{ marginTop: 8 }}>How to Use This Page</h2>
               </div>
-            ) : (
-              <>
+              <div className="status-badge">Step-by-step</div>
+            </div>
+
+            <div className="guide-grid">
+              <div className="guide-item">
+                <div className="guide-head">
+                  <span>Rates</span>
+                  <span className="status-badge">Step 1</span>
+                </div>
+                <p>Add the latest monthly FD rates manually from the banks you want to compare.</p>
+              </div>
+
+              <div className="guide-item">
+                <div className="guide-head">
+                  <span>Goal</span>
+                  <span className="status-badge">Step 2</span>
+                </div>
+                <p>Set your target monthly interest, target month, build-up years, and tenure.</p>
+              </div>
+
+              <div className="guide-item">
+                <div className="guide-head">
+                  <span>Planner</span>
+                  <span className="status-badge">Step 3</span>
+                </div>
+                <p>Generate the ladder only after your own inputs are ready. No default amount is used.</p>
+              </div>
+
+              <div className="guide-item">
+                <div className="guide-head">
+                  <span>Result</span>
+                  <span className="status-badge">Step 4</span>
+                </div>
+                <p>Read the month-by-month ladder table, year-by-year accumulation, saved plans, and activity.</p>
+              </div>
+            </div>
+          </section>
+
+          <section
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: 24,
+              marginTop: 24,
+            }}
+          >
+            <div className="content-card">
+              <div className="card-kicker">STEP 1</div>
+              <h2>Enter Latest Bank Rates</h2>
+
+              <div className="settings-form-grid" style={{ marginTop: 20 }}>
+                <div className="field" style={{ gridColumn: "1 / -1" }}>
+                  <label>Bank</label>
+                  <input
+                    className="input"
+                    placeholder="Example: HLB / DBS / HSBC / UOB"
+                    value={rateForm.bank}
+                    onChange={(e) =>
+                      setRateForm((prev) => ({ ...prev, bank: e.target.value }))
+                    }
+                  />
+                </div>
+
+                <div className="field">
+                  <label>Currency</label>
+                  <select
+                    value={rateForm.currency}
+                    onChange={(e) =>
+                      setRateForm((prev) => ({ ...prev, currency: e.target.value }))
+                    }
+                  >
+                    {RATE_CURRENCIES.map((item) => (
+                      <option key={item} value={item}>
+                        {item}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="field">
+                  <label>Tenure Months</label>
+                  <input
+                    className="input"
+                    type="number"
+                    min="1"
+                    placeholder="12"
+                    value={rateForm.tenureMonths}
+                    onChange={(e) =>
+                      setRateForm((prev) => ({
+                        ...prev,
+                        tenureMonths: e.target.value,
+                      }))
+                    }
+                  />
+                </div>
+
+                <div className="field">
+                  <label>Rate (%)</label>
+                  <input
+                    className="input"
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    placeholder="3.60"
+                    value={rateForm.rate}
+                    onChange={(e) =>
+                      setRateForm((prev) => ({ ...prev, rate: e.target.value }))
+                    }
+                  />
+                </div>
+
+                <div className="field">
+                  <label>Updated Month</label>
+                  <input
+                    className="input"
+                    type="month"
+                    value={rateForm.updatedMonth}
+                    onChange={(e) =>
+                      setRateForm((prev) => ({
+                        ...prev,
+                        updatedMonth: e.target.value,
+                      }))
+                    }
+                  />
+                </div>
+
+                <div className="field" style={{ gridColumn: "1 / -1" }}>
+                  <label>Notes</label>
+                  <input
+                    className="input"
+                    placeholder="Promo / standard / online special"
+                    value={rateForm.notes}
+                    onChange={(e) =>
+                      setRateForm((prev) => ({ ...prev, notes: e.target.value }))
+                    }
+                  />
+                </div>
+              </div>
+
+              <button type="button" className="btn-primary" onClick={handleAddRate}>
+                Add Rate
+              </button>
+
+              <div style={{ marginTop: 20, display: "grid", gap: 14 }}>
+                {rates.length === 0 ? (
+                  <div className="empty" style={softBoxStyle()}>
+                    No market rate entries yet.
+                  </div>
+                ) : (
+                  rates.map((item) => (
+                    <div key={item.id} style={softBoxStyle()}>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          gap: 12,
+                          alignItems: "center",
+                          flexWrap: "wrap",
+                        }}
+                      >
+                        <div>
+                          <div className="status-title">{item.bank}</div>
+                          <div className="status-subtitle">
+                            {item.currency} · {item.tenureMonths}M · {item.updatedMonth}
+                          </div>
+                        </div>
+                        <div className="status-badge">{formatPercent(item.rate)}</div>
+                      </div>
+
+                      <div className="list-row" style={{ marginTop: 14 }}>
+                        <span className="text-muted">Notes</span>
+                        <span>{item.notes || "-"}</span>
+                      </div>
+
+                      <button
+                        type="button"
+                        className="btn-secondary"
+                        style={{ marginTop: 14 }}
+                        onClick={() => handleDeleteRate(item.id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+
+            <div className="content-card">
+              <div className="card-kicker">STEP 2</div>
+              <h2>Set Your Monthly Interest Goal</h2>
+
+              <div className="settings-form-grid" style={{ marginTop: 20 }}>
+                <div className="field">
+                  <label>Target Monthly Interest</label>
+                  <input
+                    className="input"
+                    type="number"
+                    min="0"
+                    placeholder="Example: 1500"
+                    value={goalForm.monthlyInterest}
+                    onChange={(e) =>
+                      setGoalForm((prev) => ({
+                        ...prev,
+                        monthlyInterest: e.target.value,
+                      }))
+                    }
+                  />
+                </div>
+
+                <div className="field">
+                  <label>Currency</label>
+                  <select
+                    value={goalForm.currency}
+                    onChange={(e) =>
+                      setGoalForm((prev) => ({ ...prev, currency: e.target.value }))
+                    }
+                  >
+                    {RATE_CURRENCIES.map((item) => (
+                      <option key={item} value={item}>
+                        {item}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="field">
+                  <label>Target Month</label>
+                  <input
+                    className="input"
+                    type="month"
+                    value={goalForm.targetMonth}
+                    onChange={(e) =>
+                      setGoalForm((prev) => ({
+                        ...prev,
+                        targetMonth: e.target.value,
+                      }))
+                    }
+                  />
+                </div>
+
+                <div className="field">
+                  <label>Build-up Years</label>
+                  <input
+                    className="input"
+                    type="number"
+                    min="1"
+                    placeholder="Example: 3"
+                    value={goalForm.buildYears}
+                    onChange={(e) =>
+                      setGoalForm((prev) => ({
+                        ...prev,
+                        buildYears: e.target.value,
+                      }))
+                    }
+                  />
+                </div>
+
+                <div className="field">
+                  <label>Tenure Months</label>
+                  <input
+                    className="input"
+                    type="number"
+                    min="1"
+                    placeholder="12"
+                    value={goalForm.tenureMonths}
+                    onChange={(e) =>
+                      setGoalForm((prev) => ({
+                        ...prev,
+                        tenureMonths: e.target.value,
+                      }))
+                    }
+                  />
+                </div>
+
+                <div className="field">
+                  <label>Preference</label>
+                  <select
+                    value={goalForm.preference}
+                    onChange={(e) =>
+                      setGoalForm((prev) => ({
+                        ...prev,
+                        preference: e.target.value,
+                      }))
+                    }
+                  >
+                    <option value="Balanced">Balanced</option>
+                    <option value="Conservative">Conservative</option>
+                    <option value="Aggressive">Aggressive</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 16 }}>
+                <button
+                  type="button"
+                  className="btn-primary"
+                  onClick={handleGeneratePlan}
+                >
+                  Generate Step-by-step Plan
+                </button>
+
+                <button type="button" className="btn-secondary" onClick={resetGoal}>
+                  Reset Goal
+                </button>
+              </div>
+
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: 16,
+                  marginTop: 20,
+                }}
+              >
+                <div style={softBoxStyle()}>
+                  <div className="text-muted">Estimated rate used</div>
+                  <div style={{ fontSize: 22, fontWeight: 900, marginTop: 8 }}>
+                    {result ? result.avgRateLabel : "-"}
+                  </div>
+                </div>
+
+                <div style={softBoxStyle()}>
+                  <div className="text-muted">Total FD Required</div>
+                  <div style={{ fontSize: 22, fontWeight: 900, marginTop: 8 }}>
+                    {result ? result.principalNeededLabel : "-"}
+                  </div>
+                </div>
+
+                <div style={softBoxStyle()}>
+                  <div className="text-muted">Monthly FD Required</div>
+                  <div style={{ fontSize: 22, fontWeight: 900, marginTop: 8 }}>
+                    {result ? result.monthlyPlacementLabel : "-"}
+                  </div>
+                </div>
+
+                <div style={softBoxStyle()}>
+                  <div className="text-muted">Time to build</div>
+                  <div style={{ fontSize: 22, fontWeight: 900, marginTop: 8 }}>
+                    {result
+                      ? `${Number(result.buildYears) * 12} month(s) / ${Number(
+                          result.buildYears
+                        ).toFixed(1)} year(s)`
+                      : "-"}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="content-card" style={{ marginTop: 28 }}>
+            {activeTab === "GUIDE" && (
+              <div style={softBoxStyle()}>
+                <h2>Simple explanation</h2>
+                <p className="text-muted" style={{ marginTop: 16, lineHeight: 1.8 }}>
+                  This planner calculates how much total FD you need to reach your
+                  monthly interest goal, then spreads it into a month-by-month FD ladder.
+                </p>
+              </div>
+            )}
+
+            {activeTab === "RESULTS" && (
+              <div style={{ display: "grid", gap: 24 }}>
+                {!result ? (
+                  <div className="empty" style={softBoxStyle()}>
+                    No result yet. Enter latest rates, set your monthly interest goal,
+                    then click Generate Step-by-step Plan.
+                  </div>
+                ) : (
+                  <>
+                    <div style={softBoxStyle()}>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          gap: 16,
+                          flexWrap: "wrap",
+                          alignItems: "center",
+                        }}
+                      >
+                        <div>
+                          <div className="card-kicker">STEP 4</div>
+                          <h2 style={{ marginTop: 8 }}>
+                            Month-by-Month Ladder Table
+                          </h2>
+                        </div>
+
+                        <div style={{ display: "flex", gap: 10 }}>
+                          <button
+                            type="button"
+                            className="btn-primary"
+                            onClick={handleSavePlan}
+                          >
+                            Save This Plan
+                          </button>
+
+                        <button
+                          type="button"
+                          className="btn-primary"
+                          onClick={handleExecutePlan}
+                          disabled={executing}
+                        >
+                          {executing ? "Executing..." : "🚀 Execute Plan"}
+                        </button>  
+                        </div>
+                       </div>
+
+                      <div style={{ marginTop: 18, ...tableWrapStyle() }}>
+                        <table style={tableStyle()}>
+                          <thead>
+                            <tr>
+                              <th style={thTdStyle()}>Place Month</th>
+                              <th style={thTdStyle()}>Monthly FD Required</th>
+                              <th style={thTdStyle()}>Tenure</th>
+                              <th style={thTdStyle()}>Rate</th>
+                              <th style={thTdStyle()}>
+                                Estimated Annual Interest
+                              </th>
+                              <th style={thTdStyle()}>
+                                Estimated Monthly Interest
+                              </th>
+                              <th style={thTdStyle()}>Cumulative Principal</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {result.monthlyRows.map((row) => (
+                              <tr key={row.id}>
+                                <td style={thTdStyle()}>{row.placeMonthLabel}</td>
+                                <td style={thTdStyle()}>
+                                  {row.monthlyPlacementLabel}
+                                </td>
+                                <td style={thTdStyle()}>{row.tenureLabel}</td>
+                                <td style={thTdStyle()}>{row.rateLabel}</td>
+                                <td style={thTdStyle()}>
+                                  {row.estimatedAnnualInterestLabel}
+                                </td>
+                                <td style={thTdStyle()}>
+                                  {row.estimatedMonthlyInterestLabel}
+                                </td>
+                                <td style={thTdStyle()}>
+                                  {row.cumulativePrincipalLabel}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div style={softBoxStyle()}>
+                      <div className="card-kicker">YEAR SUMMARY</div>
+                      <h2 style={{ marginTop: 8 }}>Year-by-Year Accumulation</h2>
+
+                      <div style={{ marginTop: 18, ...tableWrapStyle() }}>
+                        <table style={tableStyle()}>
+                          <thead>
+                            <tr>
+                              <th style={thTdStyle()}>Year</th>
+                              <th style={thTdStyle()}>Total Principal</th>
+                              <th style={thTdStyle()}>
+                                Estimated Annual Interest
+                              </th>
+                              <th style={thTdStyle()}>
+                                Estimated Monthly Interest
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {result.yearlyRows.map((row) => (
+                              <tr key={row.year}>
+                                <td style={thTdStyle()}>{row.year}</td>
+                                <td style={thTdStyle()}>
+                                  {row.totalPrincipalLabel}
+                                </td>
+                                <td style={thTdStyle()}>
+                                  {row.estimatedAnnualInterestLabel}
+                                </td>
+                                <td style={thTdStyle()}>
+                                  {row.estimatedMonthlyInterestLabel}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
+
+            {activeTab === "SAVED" && (
+              <div style={{ display: "grid", gap: 16 }}>
+                {savedPlans.length === 0 ? (
+                  <div className="empty" style={softBoxStyle()}>
+                    No saved plans yet.
+                  </div>
+                ) : (
+                  savedPlans.map((plan) => (
+                    <div key={plan.id} style={softBoxStyle()}>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          gap: 16,
+                          flexWrap: "wrap",
+                        }}
+                      >
+                        <div>
+                          <div className="status-title">
+                            {plan.monthlyInterestLabel}/month target
+                          </div>
+                          <div className="status-subtitle">
+                            Target: {plan.targetMonthLabel} · Saved:{" "}
+                            {formatDateTime(plan.savedAt || plan.createdAt)}
+                          </div>
+                        </div>
+                        <div className="status-badge">{plan.preference}</div>
+                      </div>
+
+                      <div
+                        style={{
+                          display: "grid",
+                          gridTemplateColumns: "1fr 1fr 1fr",
+                          gap: 16,
+                          marginTop: 16,
+                        }}
+                      >
+                        <div style={softBoxStyle()}>
+                          <div className="text-muted">Estimated rate</div>
+                          <div style={{ fontWeight: 900, marginTop: 8 }}>
+                            {formatPercent(plan.avgRate)}
+                          </div>
+                        </div>
+
+                        <div style={softBoxStyle()}>
+                          <div className="text-muted">Total FD Required</div>
+                          <div style={{ fontWeight: 900, marginTop: 8 }}>
+                            {plan.principalNeededLabel}
+                          </div>
+                        </div>
+
+                        <div style={softBoxStyle()}>
+                          <div className="text-muted">Monthly FD Required</div>
+                          <div style={{ fontWeight: 900, marginTop: 8 }}>
+                            {plan.monthlyPlacementLabel}
+                          </div>
+                        </div>
+                      </div>
+
+                      <button
+                        type="button"
+                        className="btn-secondary"
+                        style={{ marginTop: 14 }}
+                        onClick={() => handleDeleteSavedPlan(plan.id)}
+                      >
+                        Delete Saved Plan
+                      </button>
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
+          </section>
+
+          <section
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: 24,
+              marginTop: 28,
+            }}
+          >
+            <div className="content-card">
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  gap: 16,
+                  flexWrap: "wrap",
+                  alignItems: "center",
+                }}
+              >
+                <div>
+                  <div className="card-kicker">ACTION QUEUE</div>
+                  <h2>What to Do Next</h2>
+                </div>
+                <div className="text-muted">
+                  {result ? "3 suggested actions" : "0 suggested actions"}
+                </div>
+              </div>
+
+              <div style={{ marginTop: 16, display: "grid", gap: 14 }}>
                 <div style={softBoxStyle()}>
                   <div
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
-                      gap: 16,
+                      gap: 12,
                       flexWrap: "wrap",
-                      alignItems: "center",
                     }}
                   >
-                    <div>
-                      <div className="card-kicker">STEP 4</div>
-                      <h2 style={{ marginTop: 8 }}>Month-by-Month Ladder Table</h2>
-                    </div>
-
-                    <button
-                      type="button"
-                      className="btn-primary"
-                      onClick={handleSavePlan}
-                    >
-                      Save This Plan
-                    </button>
+                    <div className="status-title">1. Enter latest FD rates</div>
+                    <div className="status-badge">High</div>
                   </div>
-
-                  <div style={{ marginTop: 18, ...tableWrapStyle() }}>
-                    <table style={tableStyle()}>
-                      <thead>
-                        <tr>
-                          <th style={thTdStyle()}>Place Month</th>
-                          <th style={thTdStyle()}>Monthly FD Required</th>
-                          <th style={thTdStyle()}>Tenure</th>
-                          <th style={thTdStyle()}>Rate</th>
-                          <th style={thTdStyle()}>Estimated Annual Interest</th>
-                          <th style={thTdStyle()}>Estimated Monthly Interest</th>
-                          <th style={thTdStyle()}>Cumulative Principal</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {result.monthlyRows.map((row) => (
-                          <tr key={row.id}>
-                            <td style={thTdStyle()}>{row.placeMonthLabel}</td>
-                            <td style={thTdStyle()}>{row.monthlyPlacementLabel}</td>
-                            <td style={thTdStyle()}>{row.tenureLabel}</td>
-                            <td style={thTdStyle()}>{row.rateLabel}</td>
-                            <td style={thTdStyle()}>
-                              {row.estimatedAnnualInterestLabel}
-                            </td>
-                            <td style={thTdStyle()}>
-                              {row.estimatedMonthlyInterestLabel}
-                            </td>
-                            <td style={thTdStyle()}>
-                              {row.cumulativePrincipalLabel}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                  <div className="status-subtitle" style={{ marginTop: 10 }}>
+                    Start with real monthly bank rates instead of guessing.
                   </div>
                 </div>
 
                 <div style={softBoxStyle()}>
-                  <div className="card-kicker">YEAR SUMMARY</div>
-                  <h2 style={{ marginTop: 8 }}>Year-by-Year Accumulation</h2>
-
-                  <div style={{ marginTop: 18, ...tableWrapStyle() }}>
-                    <table style={tableStyle()}>
-                      <thead>
-                        <tr>
-                          <th style={thTdStyle()}>Year</th>
-                          <th style={thTdStyle()}>Total Principal</th>
-                          <th style={thTdStyle()}>Estimated Annual Interest</th>
-                          <th style={thTdStyle()}>Estimated Monthly Interest</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {result.yearlyRows.map((row) => (
-                          <tr key={row.year}>
-                            <td style={thTdStyle()}>{row.year}</td>
-                            <td style={thTdStyle()}>{row.totalPrincipalLabel}</td>
-                            <td style={thTdStyle()}>
-                              {row.estimatedAnnualInterestLabel}
-                            </td>
-                            <td style={thTdStyle()}>
-                              {row.estimatedMonthlyInterestLabel}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
-        )}
-
-        {activeTab === "SAVED" && (
-          <div style={{ display: "grid", gap: 16 }}>
-            {savedPlans.length === 0 ? (
-              <div className="empty" style={softBoxStyle()}>
-                No saved plans yet.
-              </div>
-            ) : (
-              savedPlans.map((plan) => (
-                <div key={plan.id} style={softBoxStyle()}>
                   <div
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
-                      gap: 16,
+                      gap: 12,
                       flexWrap: "wrap",
                     }}
                   >
-                    <div>
-                      <div className="status-title">
-                        {plan.monthlyInterestLabel}/month target
-                      </div>
-                      <div className="status-subtitle">
-                        Target: {plan.targetMonthLabel} · Saved:{" "}
-                        {formatDateTime(plan.savedAt || plan.createdAt)}
-                      </div>
+                    <div className="status-title">
+                      2. Set your target monthly interest
                     </div>
-                    <div className="status-badge">{plan.preference}</div>
+                    <div className="status-badge">High</div>
                   </div>
+                  <div className="status-subtitle" style={{ marginTop: 10 }}>
+                    Example: if you want MYR 1,500 monthly interest, enter 1500.
+                  </div>
+                </div>
 
+                <div style={softBoxStyle()}>
                   <div
                     style={{
-                      display: "grid",
-                      gridTemplateColumns: "1fr 1fr 1fr",
-                      gap: 16,
-                      marginTop: 16,
+                      display: "flex",
+                      justifyContent: "space-between",
+                      gap: 12,
+                      flexWrap: "wrap",
                     }}
                   >
-                    <div style={softBoxStyle()}>
-                      <div className="text-muted">Estimated rate</div>
-                      <div style={{ fontWeight: 900, marginTop: 8 }}>
-                        {formatPercent(plan.avgRate)}
-                      </div>
+                    <div className="status-title">
+                      3. Review the ladder tables clearly
                     </div>
-
-                    <div style={softBoxStyle()}>
-                      <div className="text-muted">Total FD Required</div>
-                      <div style={{ fontWeight: 900, marginTop: 8 }}>
-                        {plan.principalNeededLabel}
-                      </div>
-                    </div>
-
-                    <div style={softBoxStyle()}>
-                      <div className="text-muted">Monthly FD Required</div>
-                      <div style={{ fontWeight: 900, marginTop: 8 }}>
-                        {plan.monthlyPlacementLabel}
-                      </div>
-                    </div>
+                    <div className="status-badge">Medium</div>
                   </div>
-
-                  <button
-                    type="button"
-                    className="btn-secondary"
-                    style={{ marginTop: 14 }}
-                    onClick={() => handleDeleteSavedPlan(plan.id)}
-                  >
-                    Delete Saved Plan
-                  </button>
-                </div>
-              ))
-            )}
-          </div>
-        )}
-      </section>
-
-      <section
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: 24,
-          marginTop: 28,
-        }}
-      >
-        <div className="content-card">
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              gap: 16,
-              flexWrap: "wrap",
-              alignItems: "center",
-            }}
-          >
-            <div>
-              <div className="card-kicker">ACTION QUEUE</div>
-              <h2>What to Do Next</h2>
-            </div>
-            <div className="text-muted">
-              {result ? "3 suggested actions" : "0 suggested actions"}
-            </div>
-          </div>
-
-          <div style={{ marginTop: 16, display: "grid", gap: 14 }}>
-            <div style={softBoxStyle()}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  gap: 12,
-                  flexWrap: "wrap",
-                }}
-              >
-                <div className="status-title">1. Enter latest FD rates</div>
-                <div className="status-badge">High</div>
-              </div>
-              <div className="status-subtitle" style={{ marginTop: 10 }}>
-                Start with real monthly bank rates instead of guessing.
-              </div>
-            </div>
-
-            <div style={softBoxStyle()}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  gap: 12,
-                  flexWrap: "wrap",
-                }}
-              >
-                <div className="status-title">2. Set your target monthly interest</div>
-                <div className="status-badge">High</div>
-              </div>
-              <div className="status-subtitle" style={{ marginTop: 10 }}>
-                Example: if you want MYR 1,500 monthly interest, enter 1500.
-              </div>
-            </div>
-
-            <div style={softBoxStyle()}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  gap: 12,
-                  flexWrap: "wrap",
-                }}
-              >
-                <div className="status-title">3. Review the ladder tables clearly</div>
-                <div className="status-badge">Medium</div>
-              </div>
-              <div className="status-subtitle" style={{ marginTop: 10 }}>
-                Check month-by-month placement and year-by-year accumulation.
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="content-card">
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              gap: 16,
-              flexWrap: "wrap",
-              alignItems: "center",
-            }}
-          >
-            <div>
-              <div className="card-kicker">ACTIVITY LOG</div>
-              <h2>Recent Notes</h2>
-            </div>
-            <div className="text-muted">Latest actions</div>
-          </div>
-
-          <div style={{ marginTop: 16, display: "grid", gap: 14 }}>
-            {activityLog.length === 0 ? (
-              <div className="empty" style={softBoxStyle()}>
-                No activity yet.
-              </div>
-            ) : (
-              activityLog.map((item) => (
-                <div key={item.id} style={softBoxStyle()}>
-                  <div className="status-title">{item.message}</div>
-                  <div className="status-subtitle" style={{ marginTop: 8 }}>
-                    {formatDateTime(item.createdAt)}
+                  <div className="status-subtitle" style={{ marginTop: 10 }}>
+                    Check month-by-month placement and year-by-year accumulation.
                   </div>
                 </div>
-              ))
-            )}
-          </div>
-        </div>
-      </section>
+              </div>
+            </div>
+
+            <div className="content-card">
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  gap: 16,
+                  flexWrap: "wrap",
+                  alignItems: "center",
+                }}
+              >
+                <div>
+                  <div className="card-kicker">ACTIVITY LOG</div>
+                  <h2>Recent Notes</h2>
+                </div>
+                <div className="text-muted">Latest actions</div>
+              </div>
+
+              <div style={{ marginTop: 16, display: "grid", gap: 14 }}>
+                {activityLog.length === 0 ? (
+                  <div className="empty" style={softBoxStyle()}>
+                    No activity yet.
+                  </div>
+                ) : (
+                  activityLog.map((item) => (
+                    <div key={item.id} style={softBoxStyle()}>
+                      <div className="status-title">{item.message}</div>
+                      <div className="status-subtitle" style={{ marginTop: 8 }}>
+                        {formatDateTime(item.createdAt)}
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          </section>
+        </>
+      )}
     </div>
   );
 }

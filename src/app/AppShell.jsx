@@ -91,6 +91,8 @@ export default function AppShell({
     currency,
     records,
     activeRecords,
+
+    onAddRecord,
   };
 
   switch (activeTab) {
