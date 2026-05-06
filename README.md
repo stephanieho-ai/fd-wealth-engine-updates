@@ -97,23 +97,33 @@ It enables users to manage, plan, and execute FD ladder strategies with clarity 
 
 ```bash
 npm install
-npm run dev
-npm run desktop:build
+```
 
-📦 Project Vision
+### Run Development Server
+
+```bash
+npm run dev
+```
+
+### Build Desktop Application
+
+```bash
+npm run desktop:build
+```
+
+## 📦 Project Vision
 
 FD Wealth Engine aims to modernize personal fixed deposit portfolio management by combining:
 
-Portfolio analytics
-Ladder planning
-Smart execution workflows
-Banking-style UI experience
-Intelligent deployment guidance
+- Portfolio analytics
+- Ladder planning
+- Smart execution workflows
+- Banking-style UI experience
+- Intelligent deployment guidance
 
 The long-term goal is to evolve the platform into a complete private banking style FD operating system for global multi-currency portfolio management.
 
-📄 License
+## 📄 License
 
 This project is for educational, portfolio and product development purposes.
-
 
