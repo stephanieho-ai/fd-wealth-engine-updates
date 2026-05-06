@@ -78,7 +78,7 @@ It enables users to manage, plan, and execute FD ladder strategies with clarity 
 ---
 
 ### ⚙️ Settings Workspace
-![Settings](assets/settings.png)
+![Settings](assets/setting.png)
 
 ---
 
