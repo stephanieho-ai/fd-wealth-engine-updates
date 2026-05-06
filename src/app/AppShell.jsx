@@ -79,6 +79,10 @@ export default function AppShell({
   onAddRecord,
   onUpdateRecord,
   onDeleteRecord,
+
+  // 🔥 加这里
+  onUndoExecution,
+
   onCloseRecord,
   onRolloverRecord,
 }) {
@@ -86,14 +90,15 @@ export default function AppShell({
   let page = null;
 
   const sharedPageProps = {
-    tabs,
-    onTabChange: setActiveTab,
-    currency,
-    records,
-    activeRecords,
-
-    onAddRecord,
-  };
+  tabs,
+  onTabChange: setActiveTab,
+  currency,
+  records,
+  activeRecords,
+  onAddRecord,
+  onUpdateRecord,
+  onDeleteRecord,
+};
 
   switch (activeTab) {
     case tabs.RECORDS:
@@ -138,7 +143,13 @@ export default function AppShell({
     case tabs.HOME:
     default:
       pageTitle = "Portfolio Overview";
-      page = <DashboardPage {...sharedPageProps} />;
+      page = (
+        <DashboardPage
+          {...sharedPageProps}
+          onUpdateRecord={onUpdateRecord}
+          onDeleteRecord={onDeleteRecord}
+        />
+      );
       break;
   }
 
@@ -157,5 +168,4 @@ export default function AppShell({
         <div className="shell-content">{page}</div>
       </div>
     </div>
-  );
-}
+  )}

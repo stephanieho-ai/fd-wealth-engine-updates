@@ -148,12 +148,16 @@ export default function DashboardPage({
   records,
   activeRecords,
   onAddRecord,
+  onUpdateRecord,
+  onDeleteRecord,
+  onUndoExecution,
 }) {
   const [showConfirm, setShowConfirm] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [activeView, setActiveView] = useState("summary");
   const [strategyMode, setStrategyMode] = useState("balanced");
   const [customTarget, setCustomTarget] = useState("");
+  const [customExecutionAmount, setCustomExecutionAmount] = useState("");
   const [offers] = useState(() => readOffers());
 
   const safeRecords = Array.isArray(records) ? records : [];
@@ -207,7 +211,21 @@ export default function DashboardPage({
     [parkingCashRecords]
   );
 
-  const totalDeployableFunds = totalSavings + totalParkingCash;
+
+
+  // =============================
+  // V33 – CAPITAL ENGINE
+  // =============================
+  // =============================
+const [reserveAmount, setReserveAmount] = useState(0);
+
+const deployableSavings = Math.max(
+  0,
+  totalSavings - Number(reserveAmount || 0)
+);
+
+const totalDeployableFunds = deployableSavings + totalParkingCash;
+ 
   const totalActivePortfolio =
     totalFixedDeposits + totalSavings + totalParkingCash;
 
@@ -421,10 +439,67 @@ const executionPlan = useMemo(() => {
   totalDeployableWithUpcoming,
 ]);
 
+const getDaysLeft = (dateStr) => {
+  if (!dateStr) return null;
+  const today = new Date();
+  const m = new Date(dateStr);
+  if (Number.isNaN(m.getTime())) return null;
+  return Math.ceil((m - today) / (1000 * 60 * 60 * 24));
+};
+
+const maturityAlerts = safeRecords
+  .filter((r) => String(r.recordType || "").toUpperCase() === "FD")
+  .filter((r) => r.status !== "CLOSED")
+  .map((r) => {
+    const daysLeft = getDaysLeft(r.maturityDate);
+
+    let level = null;
+    if (daysLeft === 0) level = "🔥 Due Today";
+    else if (daysLeft > 0 && daysLeft <= 3) level = "⚠️ Urgent";
+    else if (daysLeft > 3 && daysLeft <= 7) level = "📅 Upcoming";
+
+    return { ...r, daysLeft, level };
+  })
+  .filter((r) => r.level)
+  .sort((a, b) => a.daysLeft - b.daysLeft);
+
+const notifications = maturityAlerts.map((r) => ({
+  id: `alert-${r.id}`,
+  recordId: r.id,
+  message: `${r.bank} (${r.id}) matures in ${r.daysLeft} day(s)`,
+  level: r.level,
+}));
+
+const LADDER_TARGET = 36000;
+
+const monthlyTotals = {};
+
+safeRecords
+  .filter((r) => String(r.recordType || "").toUpperCase() === "FD")
+  .forEach((r) => {
+    if (!r.maturityDate) return;
+    const d = new Date(r.maturityDate);
+    if (Number.isNaN(d.getTime())) return;
+
+    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+    monthlyTotals[key] = (monthlyTotals[key] || 0) + Number(r.principal || 0);
+  });
+
+const monthlyHeatmap = Object.entries(monthlyTotals).map(([month, amount]) => {
+  let strength = "weak";
+  if (amount >= LADDER_TARGET) strength = "strong";
+  else if (amount >= LADDER_TARGET * 0.7) strength = "balanced";
+
+  return { month, amount, strength };
+});
+
 const executionOrders = useMemo(() => {
   if (!executionPlan || !nextTargetMonth) return [];
 
-  let remaining = executionPlan.amount || 0;
+  let remaining = Math.min(
+  executionPlan.amount || 0,
+  totalDeployableFunds
+);
   if (remaining <= 0) return [];
 
   if (remaining > 30000) {
@@ -462,7 +537,7 @@ const executionOrders = useMemo(() => {
   },
 ];
 
-}, [executionPlan, nextTargetMonth]);
+  }, [executionPlan, nextTargetMonth, totalDeployableFunds]);
 
   const executePlan = () => {
   console.log("onAddRecord:", onAddRecord);
@@ -528,8 +603,7 @@ setTimeout(() => {
       
     };
   });
-
-  console.log("newRecords:", newRecords);
+console.log("newRecords:", newRecords);
 
   newRecords.forEach((record) => {
     onAddRecord?.(record);
@@ -547,32 +621,60 @@ setTimeout(() => {
   }
 };
 const undoLastExecution = () => {
-  const existingRecords = JSON.parse(
-    localStorage.getItem("fd_v315_records") || "[]"
+  const autoRecords = safeRecords.filter(
+    (r) => r.tag === "AUTO_EXECUTED" && r.executionBatchId
   );
 
-  const lastBatchId = existingRecords
-    .filter((r) => r.tag === "AUTO_EXECUTED" && r.executionBatchId)
-    .map((r) => r.executionBatchId)
-    .pop();
-
-  if (!lastBatchId) {
-    alert("No auto execution batch found to undo.");
+  if (!autoRecords.length) {
+    setToastMessage("No execution to undo.");
     return;
   }
 
-  const nextRecords = existingRecords.filter(
-    (r) => r.executionBatchId !== lastBatchId
+  const lastBatchId =
+    autoRecords[autoRecords.length - 1].executionBatchId;
+
+  const lastBatchRecords = autoRecords.filter(
+    (r) => r.executionBatchId === lastBatchId
   );
 
-  localStorage.setItem("fd_v315_records", JSON.stringify(nextRecords));
+  const refundAmount = lastBatchRecords.reduce(
+    (sum, r) => sum + Number(r.principal ?? r.amount ?? 0),
+    0
+  );
 
-  setToastMessage(`↩️ Undo completed. Removed batch: ${lastBatchId}`);
+  const savingsRecord = safeRecords.find((r) => {
+    const type = String(r.recordType || "")
+      .toUpperCase()
+      .replace(/\s+/g, "_");
+    return type === "SAVINGS";
+  });
 
-setTimeout(() => {
-  setToastMessage("");
-}, 3000);
+  lastBatchRecords.forEach((r) => {
+    onDeleteRecord?.(r.id);
+  });
+
+  if (savingsRecord) {
+    const currentAmount = Number(
+      savingsRecord.principal ?? savingsRecord.amount ?? 0
+    );
+
+    onUpdateRecord?.({
+      ...savingsRecord,
+      principal: currentAmount + refundAmount,
+      amount: currentAmount + refundAmount,
+      status: "ACTIVE",
+    });
+  }
+
+  setToastMessage(
+    `Undo completed. MYR ${refundAmount.toLocaleString()} returned to Savings.`
+  );
+
+  setTimeout(() => {
+    setToastMessage("");
+  }, 3000);
 };
+
 const aiSuggestion = useMemo(() => {
   const offerLine = bestOffer
     ? ` Current best rate awareness: ${bestOffer.bank} ${
@@ -944,18 +1046,44 @@ Maintain structure and optimize future placements using latest rates.${execution
     </div>
     <small>Based on ladder + rates</small>
   </div>
+                                                          
+<div className="signal-list">
+  {topSignals.map((item, index) => (
+    <div
+      key={`${item.title}-${index}`}
+      className={`signal-card top-signal-card tone-${item.tone}`}
+    >
+      <h4>{item.title}</h4>
+      <p>{item.text}</p>
+    </div>
+  ))}
 
-  <div className="signal-list">
-    {topSignals.map((item, index) => (
-      <div
-        key={`${item.title}-${index}`}
-        className={`signal-card top-signal-card tone-${item.tone}`}
-      >
-        <h4>{item.title}</h4>
-        <p>{item.text}</p>
-      </div>
-    ))}
+  {/* 🔥 Maturity Alerts */}
+  <div
+    className={`signal-card ${
+      maturityAlerts.some(a => a.daysLeft <= 3)
+        ? "tone-red"
+        : maturityAlerts.length > 0
+        ? "tone-orange"
+        : "tone-blue"
+    }`}
+  >
+    <h4>🔔 Maturity Alerts</h4>
+
+    {maturityAlerts.length === 0 ? (
+      <p>No FD maturity within 7 days.</p>
+    ) : (
+      maturityAlerts.map((alert) => (
+        <div key={alert.id}>
+          <strong>{alert.level}</strong>
+          <div>
+            {alert.id} · {alert.bank} · {alert.daysLeft} day(s)
+          </div>
+        </div>
+      ))
+    )}
   </div>
+</div>                 
 </section>
 
 <section className="bank-panel immediate-action">
@@ -977,8 +1105,9 @@ Maintain structure and optimize future placements using latest rates.${execution
 
         {executionOrders.length > 0 && (
           <div style={{ marginTop: 12 }}>
-            <h4 style={{ marginBottom: 8 }}>Execution Orders</h4>
-
+            <h4 style={{ marginBottom: 8 }}>
+            Suggested Execution Amount
+            </h4>
             {executionOrders.map((order, i) => (
               <div
                 key={i}
@@ -992,7 +1121,9 @@ Maintain structure and optimize future placements using latest rates.${execution
                 }}
               >
                 <div style={{ fontSize: 12, opacity: 0.7 }}>
-                  {i === 0 ? "PRIMARY ORDER" : "SECONDARY ORDER"}
+                 {i === 0
+                   ? "SUGGESTED ORDER"
+                   : "SECONDARY SUGGESTION"}
                 </div>
 
                 <div style={{ fontSize: 14, marginTop: 4 }}>
@@ -1005,25 +1136,26 @@ Maintain structure and optimize future placements using latest rates.${execution
                 </div>
 
                 <div style={{ fontSize: 12, marginTop: 6, opacity: 0.7 }}>
-                  {i === 0
-                    ? "→ Place after FD maturity"
-                    : "→ Balance ladder distribution"}
+              {i === 0
+                ? "→ Review and choose your final amount before confirming"
+                : "→ Optional split suggestion"}    
                 </div>
               </div>
             ))}
           </div>
         )}
         <div style={{ display: "flex", gap: 10, marginTop: 14, marginBottom: 14 }}>
-  <button className="primary-btn" onClick={() => setShowConfirm(true)}>
-  Execute Plan
-  </button>
-
-  <button
-  className="btn-secondary"
-  onClick={openRecordsTab}
+   <button
+  className="primary-btn"
+  onClick={() => {
+    setCustomExecutionAmount(String(executionPlan?.amount || ""));
+    setShowConfirm(true);
+  }}
 >
-  Adjust Amount
-</button>
+  Review & Execute
+</button>     
+
+
 
 <button
   className="btn-secondary"
@@ -1279,26 +1411,82 @@ Maintain structure and optimize future placements using latest rates.${execution
           </section>
         </>
       )}
-     {showConfirm && (
+{showConfirm && (
   <div className="confirm-overlay">
     <div className="confirm-modal">
       <h3>Confirm Execution</h3>
 
-      {executionOrders.map((order, i) => (
-        <div key={i} style={{ marginBottom: 10 }}>
-          <strong>{order.label}</strong>
-          <div>
-            {formatMoney(order.amount, currency)} · {order.tenureMonths}M ·{" "}
-            {Number(order.ratePa).toFixed(2)}%
-          </div>
+      <div style={{ marginBottom: 14 }}>
+        <strong>Available Deployable Funds</strong>
+        <div>{formatMoney(totalDeployableFunds, currency)}</div>
+      </div>
+
+      <div style={{ marginBottom: 14 }}>
+        <strong>Suggested Amount</strong>
+        <div>{formatMoney(executionPlan?.amount || 0, currency)}</div>
+      </div>
+
+      <div className="field" style={{ marginTop: 12 }}>
+        <label>Execution Amount ({currency})</label>
+        <input
+          className="input"
+          type="number"
+          min="0"
+          step="100"
+          value={customExecutionAmount}
+          onChange={(e) => setCustomExecutionAmount(e.target.value)}
+          placeholder="Example: 5000"
+        />
+        <small style={{ color: "#7b87a8", display: "block", marginTop: 8 }}>
+          You can execute any amount within your available Savings / Parking Cash.
+        </small>
+      </div>
+
+      <div style={{ marginTop: 14 }}>
+        <strong>FD Preview</strong>
+        <div>
+          {formatMoney(Number(customExecutionAmount || 0), currency)} ·{" "}
+          {bestOffer?.tenureMonths || 12}M ·{" "}
+          {Number(bestOffer?.ratePa || 0).toFixed(2)}%
         </div>
-      ))}
+      </div>
 
       <div style={{ marginTop: 20, display: "flex", gap: 10 }}>
         <button
           className="primary-btn"
           onClick={() => {
+            const amount = Number(customExecutionAmount || 0);
+
+            if (amount <= 0) {
+              setToastMessage("⚠️ Please enter a valid execution amount.");
+              setTimeout(() => setToastMessage(""), 3000);
+              return;
+            }
+
+            if (amount > totalDeployableFunds) {
+              setToastMessage("⚠️ Amount cannot exceed available deployable funds.");
+              setTimeout(() => setToastMessage(""), 3000);
+              return;
+            }
+
+            const customOrder = {
+              amount,
+              label: "Custom placement",
+              bank: bestOffer?.bank || "Bank TBD",
+              tenureMonths: bestOffer?.tenureMonths || 12,
+              ratePa: bestOffer?.ratePa || 0,
+              reason: "Custom flexible execution amount",
+            };
+
+            const originalOrders = executionOrders;
+            executionOrders.length = 0;
+            executionOrders.push(customOrder);
+
             executePlan();
+
+            executionOrders.length = 0;
+            originalOrders.forEach((o) => executionOrders.push(o));
+
             setShowConfirm(false);
           }}
         >
@@ -1311,7 +1499,7 @@ Maintain structure and optimize future placements using latest rates.${execution
       </div>
     </div>
   </div>
-)} 
+)}
 
 {toastMessage && (
   <div className="toast-success">
