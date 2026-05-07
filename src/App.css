@@ -2338,3 +2338,12 @@ textarea:focus {
   color: #64748b;
   font-weight: 600;
 }
+.latest-audit-card {
+  border: 1px solid rgba(37, 99, 235, 0.35);
+  background: linear-gradient(
+    180deg,
+    rgba(239, 246, 255, 0.95),
+    rgba(255, 255, 255, 0.98)
+  );
+  box-shadow: 0 14px 32px rgba(37, 99, 235, 0.12);
+}

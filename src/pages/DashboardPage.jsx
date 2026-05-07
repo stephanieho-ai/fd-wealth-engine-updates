@@ -159,6 +159,114 @@ export default function DashboardPage({
   const [customTarget, setCustomTarget] = useState("");
   const [customExecutionAmount, setCustomExecutionAmount] = useState("");
   const [offers] = useState(() => readOffers());
+  const [executionHistory, setExecutionHistory] = useState(() => {
+  try {
+    return JSON.parse(
+      localStorage.getItem("fd_execution_history") || "[]"
+    );
+  } catch {
+    return [];
+  }
+});
+
+const [auditFilter, setAuditFilter] = useState("ALL");
+const [showAllAudit, setShowAllAudit] = useState(false);
+
+const filteredAuditTrail = executionHistory.filter((item) => {
+  if (auditFilter === "ALL") return true;
+
+  if (auditFilter === "EXECUTE") {
+    return item.type === "EXECUTE";
+  }
+
+  if (auditFilter === "UNDO") {
+    return item.type === "UNDO";
+  }
+
+  if (auditFilter === "TODAY") {
+    const today = new Date().toISOString().slice(0, 10);
+
+    return item.createdAt?.slice(0, 10) === today;
+  }
+
+  return true;
+});
+const visibleAuditTrail = showAllAudit
+  ? filteredAuditTrail
+  : filteredAuditTrail.slice(0, 3);
+
+const exportAuditCSV = () => {
+  if (!filteredAuditTrail.length) {
+    setToastMessage("No audit history to export.");
+    setTimeout(() => setToastMessage(""), 3000);
+    return;
+  }
+
+  const rows = filteredAuditTrail.flatMap((item) =>
+    (item.records || []).map((record) => ({
+      Type: item.type || "",
+      BatchID: item.batchId || "",
+      Time: item.createdAt || "",
+      RecordID: record.id || "",
+      Bank: record.bank || "",
+      Amount: record.principal || "",
+      Tenure: record.tenure || "",
+      Rate: record.rate || "",
+      TotalAmount: item.totalAmount || "",
+      RefundAmount: item.refundAmount || "",
+    }))
+  );
+
+  const headers = Object.keys(rows[0]);
+
+  const csvContent = [
+    headers.join(","),
+    ...rows.map((row) =>
+      headers
+        .map((header) => `"${String(row[header] ?? "").replace(/"/g, '""')}"`)
+        .join(",")
+    ),
+  ].join("\n");
+
+  const blob = new Blob([csvContent], {
+    type: "text/csv;charset=utf-8;",
+  });
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = `fd-audit-trail-${new Date()
+    .toISOString()
+    .slice(0, 10)}.csv`;
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  URL.revokeObjectURL(url);
+
+  setToastMessage("Audit CSV exported.");
+  setTimeout(() => setToastMessage(""), 3000);
+};
+
+const clearTestAuditLog = () => {
+  const confirmClear = window.confirm(
+    "Clear audit history only? FD records will NOT be deleted."
+  );
+
+  if (!confirmClear) return;
+
+  setExecutionHistory([]);
+  localStorage.setItem("fd_execution_history", "[]");
+
+  setToastMessage("Audit history cleared. FD records are unchanged.");
+  setTimeout(() => setToastMessage(""), 3000);
+};
+
+const printAuditReport = () => {
+  window.print();
+};
 
   const safeRecords = Array.isArray(records) ? records : [];
   const safeActiveRecords = Array.isArray(activeRecords)
@@ -608,17 +716,49 @@ console.log("newRecords:", newRecords);
   newRecords.forEach((record) => {
     onAddRecord?.(record);
 });
+// =========================
+// V32.2 AUDIT TRAIL
+// =========================
+const historyItem = {
+  id: `HIS-${Date.now()}`,
+  type: "EXECUTE",
+  batchId,
+  createdAt: new Date().toISOString(),
 
-  setToastMessage("✅ Execution completed. FD records created.");
+  totalAmount: newRecords.reduce(
+    (sum, r) => sum + Number(r.principal || 0),
+    0
+  ),
+
+  records: newRecords.map((r) => ({
+    id: r.id,
+    bank: r.bank,
+    principal: r.principal,
+    tenure: r.tenure,
+    rate: r.rate,
+  })),
+};
+
+const updatedHistory = [
+  historyItem,
+  ...executionHistory,
+];
+
+setExecutionHistory(updatedHistory);
+
+localStorage.setItem(
+  "fd_execution_history",
+  JSON.stringify(updatedHistory)
+);
+
+setToastMessage("✅ Execution completed. FD records created.");
 
 setTimeout(() => {
   setToastMessage("");
 }, 3000);
 
-
-  if (typeof openRecordsTab === "function") {
-    openRecordsTab();
-  }
+// Stay on Dashboard so success toast can appear.
+// User can press Open Records manually. 
 };
 const undoLastExecution = () => {
   const autoRecords = safeRecords.filter(
@@ -665,7 +805,34 @@ const undoLastExecution = () => {
       status: "ACTIVE",
     });
   }
+  // =========================
+// V32.2 UNDO AUDIT
+// =========================
+const undoHistoryItem = {
+  id: `UNDO-${Date.now()}`,
+  type: "UNDO",
+  batchId: lastBatchId,
+  createdAt: new Date().toISOString(),
+  refundAmount,
 
+  records: lastBatchRecords.map((r) => ({
+    id: r.id,
+    bank: r.bank,
+    principal: r.principal,
+  })),
+};
+
+const updatedHistory = [
+  undoHistoryItem,
+  ...executionHistory,
+];
+
+setExecutionHistory(updatedHistory);
+
+localStorage.setItem(
+  "fd_execution_history",
+  JSON.stringify(updatedHistory)
+);
   setToastMessage(
     `Undo completed. MYR ${refundAmount.toLocaleString()} returned to Savings.`
   );
@@ -1200,7 +1367,136 @@ Maintain structure and optimize future placements using latest rates.${execution
     </button>
   </div>
 </section>
+{/* ✅ V32.2 EXECUTION HISTORY */}
+<section className="bank-panel" style={{ marginTop: 24 }}>
+<div className="bank-panel-head">
+  <div>
+    <div className="panel-kicker">EXECUTION HISTORY</div>
+    <h3>Audit Trail</h3>
+  </div>
+
+  <div
+    style={{
+      display: "flex",
+      gap: 10,
+      alignItems: "center",
+      flexWrap: "wrap",
+    }}
+  >
+    <small>{executionHistory.length} event(s)</small>
+
+    <button
+      className="btn-secondary"
+      onClick={exportAuditCSV}
+    >
+      Export CSV
+    </button>
+
+    <button
+      className="btn-secondary"
+      onClick={clearTestAuditLog}
+    >
+      Clear Test Log
+    </button>
+
+    <button
+      className="btn-secondary"
+      onClick={printAuditReport}
+    >
+      Print Report
+    </button>
+
+    <select
+      value={auditFilter}
+      onChange={(e) => setAuditFilter(e.target.value)}
+      className="input"
+      style={{
+        width: 140,
+        padding: "6px 10px",
+        fontSize: 13,
+      }}
+    >
+      <option value="ALL">All</option>
+      <option value="EXECUTE">Execute</option>
+      <option value="UNDO">Undo</option>
+      <option value="TODAY">Today</option>
+    </select>
+  </div>
+</div>
+
+  <div className="projection-list">
+    {executionHistory.length === 0 ? (
+      <div className="signal-card tone-blue">
+        <h4>No execution history yet</h4>
+        <p>Review & Execute actions will appear here.</p>
+      </div>
+    ) : (
+      visibleAuditTrail.map((item, index) => (
+      <div
+        key={item.id}
+        className={`projection-card ${index === 0 ? "latest-audit-card" : ""}`}
+>
+      <div className="projection-month">
+        {item.type === "UNDO"
+              ? "↩ Undo Execution"
+              : "✅ Execute"}
           </div>
+
+          <div className="projection-note">
+            Batch ID: {item.batchId}
+          </div>
+
+          <div className="projection-note">
+            Time:{" "}
+            {new Date(item.createdAt).toLocaleString()}
+          </div>
+
+          {item.totalAmount && (
+            <div className="projection-note">
+              Amount:{" "}
+              {formatMoney(item.totalAmount, currency)}
+            </div>
+          )}
+
+          {item.refundAmount && (
+            <div className="projection-note">
+              Refund:{" "}
+              {formatMoney(item.refundAmount, currency)}
+            </div>
+          )}
+
+          <div className="projection-note">
+            Records:
+          </div>
+
+          {item.records?.map((r) => (
+            <div
+              key={r.id}
+              style={{
+                fontSize: 12,
+                opacity: 0.8,
+                marginTop: 4,
+              }}
+            >
+              {r.id} · {r.bank} ·{" "}
+              {formatMoney(r.principal, currency)}
+            </div>
+          ))}
+        </div>
+      ))
+    )}
+   {filteredAuditTrail.length > 3 && (
+  <button
+    className="btn-secondary"
+    onClick={() => setShowAllAudit(!showAllAudit)}
+    style={{ marginTop: 12 }}
+  >
+    {showAllAudit ? "Show Less" : "Show More"}
+  </button>
+)} 
+  </div>
+</section>
+</div>          
         </>
       )}
 
@@ -1217,7 +1513,7 @@ Maintain structure and optimize future placements using latest rates.${execution
                 : "No target set"}
             </small>
           </div>
-
+    
           <div className="projection-list">
             {ladderMonths.map((item) => (
               <div key={item.month} className="projection-card">
@@ -1264,6 +1560,7 @@ Maintain structure and optimize future placements using latest rates.${execution
                 </div>
               </div>
             ))}
+         
           </div>
         </section>
       )}
