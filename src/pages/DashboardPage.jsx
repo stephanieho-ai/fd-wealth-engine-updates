@@ -1,3 +1,4 @@
+import { getIntelligenceSummary } from "../selectors/intelligenceSelectors";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { useMemo, useState } from "react";
@@ -419,6 +420,20 @@ const exportAuditCSV = () => {
     () => getBestActiveOffer(offers, currency),
     [offers, currency]
   );
+
+  const intelligenceSummary = useMemo(
+  () => getIntelligenceSummary(safeRecords, offers),
+  [safeRecords, offers]
+);
+
+const {
+  strongestMonth,
+  weakestMonth,
+  idleCash,
+  deployableFunds,
+  bestOffer: intelligenceBestOffer,
+  liquidityBuffer,
+} = intelligenceSummary;
 
   const activeFdRecords = useMemo(
     () =>
@@ -1354,6 +1369,7 @@ Maintain structure and optimize future placements using latest rates.${execution
          {/* =============================
             V33.0-A CAPITAL ENGINE PANEL
           ============================= */}
+          <div className="dashboard-main-grid">
           <section className="bank-panel" style={{ marginTop: 24, marginBottom: 24 }}>
         <div className="bank-panel-head">
           <div>
@@ -1505,6 +1521,89 @@ Maintain structure and optimize future placements using latest rates.${execution
     : "No weak target month detected yet. Your ladder may be covered or target is not set."}
 </p> 
 </div>
+
+{/* =============================
+   V33.1 BANKER INTELLIGENCE
+============================= */}
+<section className="bank-panel" style={{ marginTop: 24, marginBottom: 24 }}>
+  <div className="bank-panel-head">
+    <div>
+      <div className="panel-kicker">BANKER INTELLIGENCE</div>
+      <h3>Intelligence Summary</h3>
+    </div>
+
+    <small>Reasoning Layer</small>
+  </div>
+
+  <div className="dashboard-metrics-grid dashboard-summary-grid">
+
+    <div className="metric-box summary-card dashboard-stat-card">
+      <span>STRONGEST MONTH</span>
+
+      <strong className="metric-value">
+        {strongestMonth?.month || "-"}
+      </strong>
+
+      <small>
+        {formatMoney(
+          strongestMonth?.totalPrincipal || 0,
+          currency
+        )}
+      </small>
+    </div>
+
+    <div className="metric-box summary-card dashboard-stat-card">
+      <span>WEAKEST MONTH</span>
+
+      <strong className="metric-value">
+        {weakestMonth?.month || "-"}
+      </strong>
+
+      <small>
+        {formatMoney(
+          weakestMonth?.totalPrincipal || 0,
+          currency
+        )}
+      </small>
+    </div>
+
+    <div className="metric-box summary-card dashboard-stat-card">
+      <span>IDLE CASH</span>
+
+      <strong className="metric-value">
+        {formatMoney(idleCash, currency)}
+      </strong>
+
+      <small>
+        Savings + Parking Cash
+      </small>
+    </div>
+
+    <div className="metric-box summary-card dashboard-stat-card">
+      <span>LIQUIDITY BUFFER</span>
+
+      <strong className="metric-value">
+        {formatMoney(liquidityBuffer, currency)}
+      </strong>
+
+      <small>
+        Suggested reserve
+      </small>
+    </div>
+
+  </div>
+
+  <div className="signal-card tone-blue" style={{ marginTop: 18 }}>
+    <h4>Banker Intelligence Insight</h4>
+
+    <p>
+      {weakestMonth?.month && strongestMonth?.month
+        ? `Current strongest maturity concentration is ${strongestMonth.month}, while weakest coverage is ${weakestMonth.month}. Consider future deployment toward weaker maturity periods to improve ladder balance.`
+        : "Add more FD records to activate banker intelligence analysis."}
+    </p>
+  </div>
+</section>
+
 {/* =============================
    V33.0-D CAPITAL ALLOCATION
 ============================= */}
@@ -1595,8 +1694,7 @@ Maintain structure and optimize future placements using latest rates.${execution
 
 </section>
 
-<div className="dashboard-two-col">
-
+<div className="dashboard-main-side">
   <section className="bank-panel advisor-focus">
   <div className="bank-panel-head">
     <div>
@@ -1760,6 +1858,9 @@ Maintain structure and optimize future placements using latest rates.${execution
   </div>
 </section>
 </div>
+
+
+
 {/* ✅ V32.2 EXECUTION HISTORY */}
 <section className="bank-panel" style={{ marginTop: 24 }}>
 <div className="bank-panel-head">
@@ -1900,12 +2001,16 @@ Maintain structure and optimize future placements using latest rates.${execution
   </button>
 )} 
 </div>
-</section>       
+</section>
+
+</div>
+
         </>
       )}
 
-      {activeView === "ladder" && (
-        <section className="bank-panel">
+          {activeView === "ladder" && (
+            <>
+            <section className="bank-panel">
           <div className="bank-panel-head">
             <div>
               <div className="panel-kicker">MONTHLY LADDER STATUS</div>
@@ -1967,7 +2072,9 @@ Maintain structure and optimize future placements using latest rates.${execution
          
           </div>
         </section>
+      </>  
       )}
+      
 
       {activeView === "alerts" && (
         <section className="bank-panel">
@@ -2005,13 +2112,13 @@ Maintain structure and optimize future placements using latest rates.${execution
                       </div>
                     </div>
                   ))
-                ) : (
+                      ) : (
                   <div className="alert-empty">No data</div>
                 )}
               </div>
             ))}
           </div>
-        </section>
+        </section>   
       )}
 
       {activeView === "analytics" && (
@@ -2112,6 +2219,7 @@ Maintain structure and optimize future placements using latest rates.${execution
           </section>
         </>
       )}
+      
 {showConfirm && (
   <div className="confirm-overlay">
     <div className="confirm-modal">
