@@ -1,4 +1,7 @@
-import { getIntelligenceSummary } from "../selectors/intelligenceSelectors";
+import {
+  getIntelligenceSummary,
+  getCapitalHealthScore,
+} from "../selectors/intelligenceSelectors";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { useMemo, useState } from "react";
@@ -496,8 +499,32 @@ const capitalSignal =
     ? "healthy"
     : "neutral";
  
-  const totalActivePortfolio =
-    totalFixedDeposits + totalSavings + totalParkingCash;
+const totalActivePortfolio =
+  totalFixedDeposits + totalSavings + totalParkingCash;
+
+const fdAllocationRatio =
+  totalActivePortfolio > 0
+    ? (totalFixedDeposits / totalActivePortfolio) * 100
+    : 0;
+
+const liquidityRatio =
+  totalActivePortfolio > 0
+    ? (totalDeployableFunds / totalActivePortfolio) * 100
+    : 0;
+
+const reserveRatio =
+  totalActivePortfolio > 0
+    ? (Number(reserveAmount || 0) / totalActivePortfolio) * 100
+    : 0;
+
+const deployableNow = totalDeployableFunds;
+
+const capitalHealth = getCapitalHealthScore({
+  fdAllocationRatio,
+  liquidityRatio,
+  reserveRatio,
+  deployableNow,
+});
 
   const totalInterestEarned = useMemo(
     () =>
@@ -1427,11 +1454,24 @@ Maintain structure and optimize future placements using latest rates.${execution
         </div>
 
             <div className="dashboard-metrics-grid dashboard-summary-grid">
+              
               <div className="metric-box summary-card dashboard-stat-card">
+              <span>CAPITAL HEALTH</span>
+
+              <strong className="metric-value">
+                {capitalHealth.score}/100
+              </strong>
+
+              <small>{capitalHealth.label}</small>
+            </div>
+
+             <div className="metric-box summary-card dashboard-stat-card"> 
                 <span>TOTAL CAPITAL</span>
+
                 <strong className="metric-value">
                   {formatMoney(totalActivePortfolio, currency)}
                 </strong>
+
                 <small>FD + Savings + Parking Cash</small>
               </div>
 
@@ -1459,8 +1499,14 @@ Maintain structure and optimize future placements using latest rates.${execution
                 <small>Deployable + next maturity</small>
               </div>
             </div>
+<div className="signal-card tone-blue" style={{ marginTop: 18 }}>
+  <h4>Capital Health Explanation</h4>
 
-          <div
+  {capitalHealth.reasons.map((reason, index) => (
+    <p key={index}>• {reason}</p>
+  ))}
+</div>
+<div  
   className={`signal-card ${
   capitalSignal === "moderate"
     ? "tone-orange"

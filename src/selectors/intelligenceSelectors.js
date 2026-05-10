@@ -119,3 +119,58 @@ export const getIntelligenceSummary = (records = [], offers = []) => {
     liquidityBuffer: idleCash * 0.2,
   };
 };
+export function getCapitalHealthScore({
+  fdAllocationRatio = 0,
+  liquidityRatio = 0,
+  reserveRatio = 0,
+  deployableNow = 0,
+}) {
+  let score = 100;
+  const reasons = [];
+
+  if (fdAllocationRatio >= 90) {
+    score -= 25;
+    reasons.push("FD allocation is above 90%, which means portfolio is highly FD-focused.");
+  } else if (fdAllocationRatio >= 80) {
+    score -= 15;
+    reasons.push("FD allocation is above 80%, showing strong fixed-deposit concentration.");
+  } else if (fdAllocationRatio >= 70) {
+    score -= 8;
+    reasons.push("FD allocation is above 70%, but still within manageable range.");
+  }
+
+  if (liquidityRatio <= 5) {
+    score -= 20;
+    reasons.push("Liquidity ratio is below 5%, meaning immediately deployable cash is low.");
+  } else if (liquidityRatio <= 10) {
+    score -= 10;
+    reasons.push("Liquidity ratio is below 10%, so cash flexibility is limited.");
+  }
+
+  if (reserveRatio >= 10) {
+    score += 5;
+    reasons.push("Reserve protection is above 10%, giving the portfolio a stronger liquidity buffer.");
+  } else {
+    reasons.push("Reserve protection is below 10%, so protected cash buffer is still limited.");
+  }
+
+  if (deployableNow >= 10000) {
+    score += 5;
+    reasons.push("Deployable funds are available for future FD opportunities.");
+  } else {
+    reasons.push("Deployable funds are below 10,000, so execution flexibility is limited.");
+  }
+
+  score = Math.max(0, Math.min(100, score));
+
+  let label = "Healthy";
+  if (score < 75) label = "Moderate";
+  if (score < 55) label = "Aggressive";
+  if (score < 35) label = "Risky";
+
+  return {
+    score,
+    label,
+    reasons,
+  };
+}   
