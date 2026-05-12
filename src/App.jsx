@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import "./App.css";
+import "./styles/dashboard/index.css";
 import AppShell from "./app/AppShell";
 
 // =========================

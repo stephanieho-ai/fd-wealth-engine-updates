@@ -1,0 +1,25 @@
+.dashboard-page {
+  min-height: 100vh;
+  padding: 28px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.dashboard-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-main-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 0.9fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.dashboard-main-side {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
