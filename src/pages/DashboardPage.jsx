@@ -161,12 +161,14 @@ function getCapitalHealthScore({
   };
 }
 
-export default function DashboardPage({
+  export default function DashboardPage({
   records = [],
   offers = [],
   currency = "MYR",
   settings = {},
   onUndoExecution,
+  onAddRecord,
+  onDeleteRecord,
 }) {
   const [reserveAmount, setReserveAmount] = useState(
     toNumber(settings?.reserveAmount ?? 10000)
@@ -338,12 +340,52 @@ export default function DashboardPage({
 
   const handleExecuteDeployment = () => {
   if (idleCash <= 0) {
-    setToastMessage("No deployable capital available.");
-  } else {
-    setToastMessage(
-      `Execution ready: ${formatMoney(idleCash, currency)} available for deployment.`
-    );
+    setToastMessage("No deployable idle cash available.");
+    return;
   }
+
+  const executionRecord = {
+    id: `AUTO-${Date.now()}`,
+    bank: bestOffer?.bank || "Suggested FD",
+    principal: idleCash,
+    rate: bestOffer?.rate || 0,
+    tenureMonths: bestOffer?.tenureMonths || 6,
+    startDate: new Date().toISOString().split("T")[0],
+
+    maturityDate: new Date(
+      Date.now() + 1000 * 60 * 60 * 24 * 30 * 6
+    )
+      .toISOString()
+      .split("T")[0],
+
+    status: "ACTIVE",
+    tag: "AUTO_EXECUTED",
+    recordType: "FD",
+  };
+
+  onAddRecord?.(executionRecord);
+
+  const auditEntry = {
+    id: `AUDIT-${Date.now()}`,
+    type: "EXECUTE",
+    amount: idleCash,
+    currency,
+    batchId: executionRecord.id,
+    timestamp: new Date().toISOString(),
+  };
+
+  const existingAudit = JSON.parse(
+    localStorage.getItem("fd_execution_history") || "[]"
+  );
+
+  localStorage.setItem(
+    "fd_execution_history",
+    JSON.stringify([...existingAudit, auditEntry])
+  );
+
+  setToastMessage(
+    `Execution completed. ${currency} ${idleCash.toLocaleString()} deployed.`
+  );
 
   setTimeout(() => {
     setToastMessage("");
@@ -351,18 +393,45 @@ export default function DashboardPage({
 };
 
   const handleUndoExecution = () => {
-    if (typeof onUndoExecution === "function") {
-      onUndoExecution();
+  const autoRecords = safeRecords.filter(
+    (record) => record.tag === "AUTO_EXECUTED"
+  );
 
-      setToastMessage("Undo request sent.");
-    } else {
-      setToastMessage("No undo function connected.");
-    }
+  if (!autoRecords.length) {
+    setToastMessage("No auto execution to undo.");
+    return;
+  }
 
-    setTimeout(() => {
-      setToastMessage("");
-    }, 3000);
+  const latestAutoRecord = autoRecords[autoRecords.length - 1];
+
+  onDeleteRecord?.(latestAutoRecord.id);
+
+  const auditEntry = {
+    id: `AUDIT-${Date.now()}`,
+    type: "UNDO",
+    amount: getAmount(latestAutoRecord),
+    currency,
+    batchId: latestAutoRecord.id,
+    timestamp: new Date().toISOString(),
   };
+
+  const existingAudit = JSON.parse(
+    localStorage.getItem("fd_execution_history") || "[]"
+  );
+
+  localStorage.setItem(
+    "fd_execution_history",
+    JSON.stringify([...existingAudit, auditEntry])
+  );
+
+  setToastMessage(
+    `Undo completed. ${currency} ${getAmount(latestAutoRecord).toLocaleString()} reversed.`
+  );
+
+  setTimeout(() => {
+    setToastMessage("");
+  }, 3000);
+};
 
   const summaryItems = [
     {
