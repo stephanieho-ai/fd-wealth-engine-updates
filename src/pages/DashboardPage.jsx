@@ -441,11 +441,14 @@ export default function DashboardPage({
     />
 
     <ExecutionPanel
-      currency={currency}
-      upcomingMaturityAmount={upcomingMaturityAmount}
-      idleCash={idleCash}
-      onUndoExecution={handleUndoExecution}
-    />
+    currency={currency}
+    upcomingMaturityAmount={upcomingMaturityAmount}
+    idleCash={idleCash}
+    onExecute={() => {
+      setToastMessage("Execution engine coming next.");
+    }}
+    onUndoExecution={handleUndoExecution}
+  />
   </div>
 
   <AuditTrail />

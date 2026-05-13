@@ -1,10 +1,11 @@
 import "../../styles/dashboard/execution-panel.css";
 
-export default function ExecutionPanel({
+  export default function ExecutionPanel({
   currency = "MYR",
   upcomingMaturityAmount = 0,
   idleCash = 0,
   onUndoExecution,
+  onExecute,
 }) {
   const formatMoney = (value) =>
     `${currency} ${Number(value || 0).toLocaleString(undefined, {
@@ -35,6 +36,14 @@ export default function ExecutionPanel({
           <strong>{formatMoney(idleCash)}</strong>
         </div>
       </div>
+
+      <button
+        className="primary-button"
+        type="button"
+        onClick={onExecute}
+      >
+        Execute Suggested Deployment
+      </button>
 
       <button
         className="secondary-button"
