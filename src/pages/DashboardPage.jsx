@@ -1,3 +1,4 @@
+import LedgerViewer from "../components/dashboard/LedgerViewer";
 import { writeLedgerEntry } from "../utils/ledgerUtils";
 import React, { useMemo, useState } from "react";
 
@@ -444,6 +445,10 @@ writeLedgerEntry({
   note: "Auto execution created FD from deployable capital.",
 });
 
+window.dispatchEvent(
+  new Event("ledgerUpdated")
+);
+
   const auditEntry = {
     id: `AUDIT-${Date.now()}`,
     type: "EXECUTE",
@@ -509,7 +514,7 @@ writeLedgerEntry({
   });
 });
 
-  writeLedgerEntry({
+writeLedgerEntry({
   type: "UNDO",
   amount: getAmount(latestAutoRecord),
   currency,
@@ -517,6 +522,10 @@ writeLedgerEntry({
   sourceBreakdown: latestAutoRecord.sourceBreakdown || [],
   note: "Undo reversed auto execution and restored original source balances.",
 });
+
+window.dispatchEvent(
+  new Event("ledgerUpdated")
+);
 
   const auditEntry = {
     id: `AUDIT-${Date.now()}`,
@@ -653,6 +662,7 @@ writeLedgerEntry({
   </div>
   {/* Right Governance Column */}
   <AuditTrail />
+  <LedgerViewer />
 </div>
 </main>
   );

@@ -2275,19 +2275,6 @@ textarea:focus {
   text-align: center;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 .empty-state {
   padding: 22px;
   border-radius: 20px;
@@ -2353,4 +2340,89 @@ input {
   font-weight: 900 !important;
   letter-spacing: 1.1px !important;
   text-transform: uppercase !important;
+}
+
+/* =========================
+   Ledger Viewer System
+========================= */
+
+.ledger-entry {
+  border: 1px solid rgba(90, 120, 255, 0.10);
+  transition: all 0.22s ease;
+  padding: 16px 18px;
+  min-height: auto;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.ledger-entry:hover {
+  transform: translateY(-1px);
+  border-color: rgba(90, 120, 255, 0.24);
+}
+
+.latest-ledger-entry {
+  border-color: rgba(90, 120, 255, 0.34);
+  box-shadow:
+    0 0 0 1px rgba(90, 120, 255, 0.05),
+    0 8px 22px rgba(40, 60, 140, 0.06);
+}
+
+.ledger-entry p {
+  margin: 0;
+}
+
+.ledger-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+}
+
+.ledger-badge-execute {
+  background: rgba(65, 105, 255, 0.10);
+  color: #3158ff;
+}
+
+.ledger-badge-undo {
+  background: rgba(255, 140, 0, 0.10);
+  color: #d97706;
+}
+
+.ledger-sequence {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: rgba(40, 55, 110, 0.38);
+  margin-bottom: 8px;
+}
+
+.ledger-meta-grid {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 10px 16px;
+  margin-top: 10px;
+}
+
+.ledger-meta-grid div {
+  display: contents;
+}
+
+.ledger-meta-grid span {
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(40, 55, 110, 0.48);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  align-self: center;
+}
+
+.ledger-meta-grid strong {
+  font-size: 11px;
+  font-weight: 600;
+  color: #0b1f4d;
+  line-height: 1.25;
 }
