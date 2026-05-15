@@ -1,3 +1,4 @@
+import { writeLedgerEntry } from "../utils/ledgerUtils";
 import React, { useMemo, useState } from "react";
 
 import CapitalPanel from "../components/dashboard/CapitalPanel";
@@ -169,7 +170,9 @@ function getCapitalHealthScore({
   onUndoExecution,
   onAddRecord,
   onDeleteRecord,
+  onUpdateRecord,
 }) {
+
   const [reserveAmount, setReserveAmount] = useState(
     toNumber(settings?.reserveAmount ?? 0)
   );
@@ -410,7 +413,36 @@ function getCapitalHealthScore({
     sourceBreakdown,
   };
 
-  onAddRecord?.(executionRecord);
+  sourceBreakdown.forEach((source) => {
+  const originalRecord = safeRecords.find(
+    (record) => record.id === source.id
+  );
+
+  if (!originalRecord) return;
+
+  const newAmount =
+    getAmount(originalRecord) - Number(source.amount || 0);
+
+  onUpdateRecord?.({
+    ...originalRecord,
+    principal: Math.max(newAmount, 0),
+    amount: Math.max(newAmount, 0),
+    note: `${originalRecord.note || ""} | Used for execution ${
+      executionRecord.id
+    }`,
+  });
+});
+
+onAddRecord?.(executionRecord);
+
+writeLedgerEntry({
+  type: "EXECUTE",
+  amount: getAmount(executionRecord),
+  currency,
+  recordId: executionRecord.id,
+  sourceBreakdown,
+  note: "Auto execution created FD from deployable capital.",
+});
 
   const auditEntry = {
     id: `AUDIT-${Date.now()}`,
@@ -457,19 +489,34 @@ function getCapitalHealthScore({
 
   onDeleteRecord?.(latestAutoRecord.id);
 
-(latestAutoRecord.sourceBreakdown || []).forEach(
-  (source, index) => {
-    onAddRecord?.({
-      id: `RESTORE-${Date.now()}-${index}`,
-      bank: source.bank || "Recovered Capital",
-      principal: source.amount,
-      amount: source.amount,
-      status: "ACTIVE",
-      recordType: source.recordType,
-      note: `Restored from undo execution ${latestAutoRecord.id}`,
-    });
-  }
-);
+  (latestAutoRecord.sourceBreakdown || []).forEach((source) => {
+  const originalRecord = safeRecords.find(
+    (record) => record.id === source.id
+  );
+
+  if (!originalRecord) return;
+
+  const restoredAmount =
+    getAmount(originalRecord) + Number(source.amount || 0);
+
+  onUpdateRecord?.({
+    ...originalRecord,
+    principal: restoredAmount,
+    amount: restoredAmount,
+    note: `${originalRecord.note || ""} | Restored from undo ${
+      latestAutoRecord.id
+    }`,
+  });
+});
+
+  writeLedgerEntry({
+  type: "UNDO",
+  amount: getAmount(latestAutoRecord),
+  currency,
+  recordId: latestAutoRecord.id,
+  sourceBreakdown: latestAutoRecord.sourceBreakdown || [],
+  note: "Undo reversed auto execution and restored original source balances.",
+});
 
   const auditEntry = {
     id: `AUDIT-${Date.now()}`,

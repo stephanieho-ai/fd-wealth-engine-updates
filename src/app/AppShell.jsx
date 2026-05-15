@@ -49,7 +49,7 @@ function Sidebar({ tabs, activeTab, onTabChange, currency, totalActivePortfolio 
 
   <div className="sidebar-mini-card version-card">
     <span>SYSTEM VERSION</span>
-    <strong>V32.4 FINAL RELEASE</strong>
+    <strong>V33.2-F4A IMMUTABLE LEDGER</strong>
   </div>
 </div>
 
@@ -61,7 +61,7 @@ function TopBar({ title, currency }) {
   return (
     <header className="topbar">
       <div>
-        <div className="topbar-version">FD WEALTH ENGINE · V32.4 FINAL RELEASE</div>
+        <div className="topbar-version">FD WEALTH ENGINE • V33.2-F4A IMMUTABLE LEDGER</div>
         <h1 className="topbar-title">{title}</h1>
       </div>
 
@@ -180,7 +180,7 @@ export default function AppShell({
             <div>FD Wealth Engine · Private Banking Console</div>
 
             <div>
-              V32.4 FINAL RELEASE · Built with React + Electron
+             V33.2-F4A IMMUTABLE LEDGER • Built with React + Electron
             </div>
           </footer>
         </div>

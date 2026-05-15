@@ -77,52 +77,11 @@ export default function App() {
 
   const addRecord = (newRecord) => {
   setRecords((prev) => {
-    if (newRecord.tag !== "AUTO_EXECUTED") {
-      return [...prev, newRecord];
-    }
-
-    const exists = prev.some(
-      (r) =>
-        r.executionBatchId === newRecord.executionBatchId &&
-        r.tag === "AUTO_EXECUTED"
-    );
+    const exists = prev.some((r) => r.id === newRecord.id);
 
     if (exists) return prev;
 
-    let remaining = Number(newRecord.principal ?? newRecord.amount ?? 0);
-
-    const nextRecords = [];
-
-    for (const r of prev) {
-      const type = String(r.recordType || "")
-        .toUpperCase()
-        .replace(/\s+/g, "_");
-
-      const isCashSource =
-        type === "SAVINGS" || type === "PARKING_CASH";
-
-      if (!isCashSource || remaining <= 0) {
-        nextRecords.push(r);
-        continue;
-      }
-
-      const current = Number(r.principal ?? r.amount ?? 0);
-      const deduct = Math.min(current, remaining);
-      const nextAmount = Math.max(0, current - deduct);
-
-      remaining -= deduct;
-
-      // 如果已经扣完，就不要放回 records
-      if (nextAmount > 0) {
-        nextRecords.push({
-          ...r,
-          principal: nextAmount,
-          amount: nextAmount,
-        });
-      }
-    }
-
-    return [...nextRecords, newRecord];
+    return [...prev, newRecord];
   });
 };
 
