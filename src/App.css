@@ -2426,3 +2426,33 @@ input {
   color: #0b1f4d;
   line-height: 1.25;
 }
+
+.ledger-filter-row {
+  display: flex;
+  gap: 10px;
+  margin: 14px 0 18px;
+  flex-wrap: wrap;
+}
+
+.ledger-filter-btn {
+  border: none;
+  background: rgba(90, 120, 255, 0.08);
+  color: #4568ff;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ledger-filter-btn:hover {
+  background: rgba(90, 120, 255, 0.16);
+}
+
+.ledger-filter-btn-active {
+  background: #4568ff;
+  color: white;
+  box-shadow: 0 4px 14px rgba(69, 104, 255, 0.22);
+}
