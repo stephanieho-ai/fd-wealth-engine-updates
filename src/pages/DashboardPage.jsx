@@ -15,12 +15,7 @@ function toNumber(value) {
 }
 
 function getAmount(record) {
-  return toNumber(
-    record?.principal ??
-      record?.principal_rm ??
-      record?.amount ??
-      0
-  );
+  return toNumber(record?.principal ?? record?.principal_rm ?? record?.amount ?? 0);
 }
 
 function isClosed(record) {
@@ -43,24 +38,15 @@ function isDeployableRecord(record) {
 }
 
 function getMaturityDate(record) {
-  return (
-    record?.maturityDate ||
-    record?.maturity_date ||
-    record?.maturity ||
-    ""
-  );
+  return record?.maturityDate || record?.maturity_date || record?.maturity || "";
 }
 
 function getMonthKey(dateString) {
   if (!dateString) return "-";
-
   const date = new Date(dateString);
-
   if (Number.isNaN(date.getTime())) return "-";
 
-  return `${date.getFullYear()}-${String(
-    date.getMonth() + 1
-  ).padStart(2, "0")}`;
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
 }
 
 function daysUntil(dateString) {
@@ -95,7 +81,6 @@ function getBestOffer(offers = []) {
   return activeOffers.reduce((best, current) => {
     const bestRate = toNumber(best?.ratePa ?? best?.rate ?? 0);
     const currentRate = toNumber(current?.ratePa ?? current?.rate ?? 0);
-
     return currentRate > bestRate ? current : best;
   }, activeOffers[0]);
 }
@@ -163,7 +148,45 @@ function getCapitalHealthScore({
   };
 }
 
-  export default function DashboardPage({
+function getLargestBankExposure(records = [], totalPortfolio = 0) {
+  if (!totalPortfolio) {
+    return {
+      bank: "-",
+      amount: 0,
+      ratio: 0,
+    };
+  }
+
+  const bankMap = {};
+
+  records.forEach((record) => {
+    const bank = record?.bank || "Unknown Bank";
+    bankMap[bank] = (bankMap[bank] || 0) + getAmount(record);
+  });
+
+  const bankEntries = Object.entries(bankMap);
+
+  if (!bankEntries.length) {
+    return {
+      bank: "-",
+      amount: 0,
+      ratio: 0,
+    };
+  }
+
+  const [bank, amount] = bankEntries.reduce(
+    (largest, current) => (current[1] > largest[1] ? current : largest),
+    bankEntries[0]
+  );
+
+  return {
+    bank,
+    amount,
+    ratio: amount / totalPortfolio,
+  };
+}
+
+export default function DashboardPage({
   records = [],
   offers = [],
   currency = "MYR",
@@ -173,7 +196,6 @@ function getCapitalHealthScore({
   onDeleteRecord,
   onUpdateRecord,
 }) {
-
   const [reserveAmount, setReserveAmount] = useState(
     toNumber(settings?.reserveAmount ?? 0)
   );
@@ -199,58 +221,47 @@ function getCapitalHealthScore({
   );
 
   const totalActivePortfolio = useMemo(
-    () =>
-      activeRecords.reduce(
-        (sum, record) => sum + getAmount(record),
-        0
-      ),
+    () => activeRecords.reduce((sum, record) => sum + getAmount(record), 0),
     [activeRecords]
   );
 
-
   const totalFixedDeposits = useMemo(
-    () =>
-      activeFDRecords.reduce(
-        (sum, record) => sum + getAmount(record),
-        0
-      ),
+    () => activeFDRecords.reduce((sum, record) => sum + getAmount(record), 0),
     [activeFDRecords]
   );
 
-    const totalSavings = useMemo(
-      () =>
-        activeRecords
-          .filter(
-            (record) => normalizeType(record) === "SAVINGS"
-          )
-          .reduce(
-            (sum, record) => sum + getAmount(record),
-            0
-          ),
-      [activeRecords]
-    );
+  const totalSavings = useMemo(
+    () =>
+      activeRecords
+        .filter((record) => normalizeType(record) === "SAVINGS")
+        .reduce((sum, record) => sum + getAmount(record), 0),
+    [activeRecords]
+  );
 
-    const totalParkingCash = useMemo(
-      () =>
-        activeRecords
-          .filter(
-            (record) =>
-              normalizeType(record) === "PARKING_CASH"
-          )
-          .reduce(
-            (sum, record) => sum + getAmount(record),
-            0
-          ),
-      [activeRecords]
-    );
+  const totalParkingCash = useMemo(
+    () =>
+      activeRecords
+        .filter((record) => normalizeType(record) === "PARKING_CASH")
+        .reduce((sum, record) => sum + getAmount(record), 0),
+    [activeRecords]
+  );
 
   const totalDeployableFunds = useMemo(
-    () =>
-      deployableRecords.reduce(
-        (sum, record) => sum + getAmount(record),
-        0
-      ),
+    () => deployableRecords.reduce((sum, record) => sum + getAmount(record), 0),
     [deployableRecords]
+  );
+
+  const fdExposureRatio = totalActivePortfolio
+    ? totalFixedDeposits / totalActivePortfolio
+    : 0;
+
+  const liquidityRatio = totalActivePortfolio
+    ? totalDeployableFunds / totalActivePortfolio
+    : 0;
+
+  const largestBankExposure = useMemo(
+    () => getLargestBankExposure(activeRecords, totalActivePortfolio),
+    [activeRecords, totalActivePortfolio]
   );
 
   const maturityMap = useMemo(() => {
@@ -258,9 +269,7 @@ function getCapitalHealthScore({
 
     activeFDRecords.forEach((record) => {
       const key = getMonthKey(getMaturityDate(record));
-
       if (key === "-") return;
-
       map[key] = (map[key] || 0) + getAmount(record);
     });
 
@@ -333,33 +342,19 @@ function getCapitalHealthScore({
     ]
   );
 
-  const fdRatio = totalActivePortfolio
-    ? totalFixedDeposits / totalActivePortfolio
-    : 0;
-
   const capitalSignal = useMemo(() => {
-    if (!totalActivePortfolio) {
-      return "neutral";
-    }
+    if (!totalActivePortfolio) return "neutral";
 
-    if (totalDeployableFunds < reserveAmount) {
-      return "danger";
-    }
-
-    if (fdRatio > 0.9) {
-      return "moderate";
-    }
-
-    if (idleCash > 0) {
-      return "healthy";
-    }
+    if (totalDeployableFunds < reserveAmount) return "danger";
+    if (fdExposureRatio > 0.9) return "moderate";
+    if (idleCash > 0) return "healthy";
 
     return "stable";
   }, [
     totalActivePortfolio,
     totalDeployableFunds,
     reserveAmount,
-    fdRatio,
+    fdExposureRatio,
     idleCash,
   ]);
 
@@ -371,192 +366,176 @@ function getCapitalHealthScore({
   }, [activeFDRecords]);
 
   const handleExecuteDeployment = () => {
-  if (idleCash <= 0) {
-    setToastMessage("No deployable idle cash available.");
-    return;
-  }
+    if (idleCash <= 0) {
+      setToastMessage("No deployable idle cash available.");
+      return;
+    }
 
-  let remainingAmount = idleCash;
+    let remainingAmount = idleCash;
 
-  const sourceBreakdown = deployableRecords.map((record) => {
-    if (remainingAmount <= 0) return null;
+    const sourceBreakdown = deployableRecords
+      .map((record) => {
+        if (remainingAmount <= 0) return null;
 
-    const availableAmount = getAmount(record);
-    const usedAmount = Math.min(availableAmount, remainingAmount);
+        const availableAmount = getAmount(record);
+        const usedAmount = Math.min(availableAmount, remainingAmount);
 
-    remainingAmount -= usedAmount;
+        remainingAmount -= usedAmount;
 
-    return {
-      id: record.id,
-      bank: record.bank,
-      recordType: normalizeType(record),
-      amount: usedAmount,
+        return {
+          id: record.id,
+          bank: record.bank,
+          recordType: normalizeType(record),
+          amount: usedAmount,
+        };
+      })
+      .filter(Boolean);
+
+    const executionRecord = {
+      id: `AUTO-${Date.now()}`,
+      bank: bestOffer?.bank || "Suggested FD",
+      principal: idleCash,
+      rate: bestOffer?.rate || 0,
+      tenureMonths: bestOffer?.tenureMonths || 6,
+      startDate: new Date().toISOString().split("T")[0],
+      maturityDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30 * 6)
+        .toISOString()
+        .split("T")[0],
+      status: "ACTIVE",
+      tag: "AUTO_EXECUTED",
+      recordType: "FD",
+      sourceBreakdown,
     };
-  }).filter(Boolean);
 
-  const executionRecord = {
-    id: `AUTO-${Date.now()}`,
-    bank: bestOffer?.bank || "Suggested FD",
-    principal: idleCash,
-    rate: bestOffer?.rate || 0,
-    tenureMonths: bestOffer?.tenureMonths || 6,
-    startDate: new Date().toISOString().split("T")[0],
+    sourceBreakdown.forEach((source) => {
+      const originalRecord = safeRecords.find((record) => record.id === source.id);
+      if (!originalRecord) return;
 
-    maturityDate: new Date(
-      Date.now() + 1000 * 60 * 60 * 24 * 30 * 6
-    )
-      .toISOString()
-      .split("T")[0],
+      const newAmount = getAmount(originalRecord) - Number(source.amount || 0);
 
-    status: "ACTIVE",
-    tag: "AUTO_EXECUTED",
-    recordType: "FD",
-    sourceBreakdown,
+      onUpdateRecord?.({
+        ...originalRecord,
+        principal: Math.max(newAmount, 0),
+        amount: Math.max(newAmount, 0),
+        note: `${originalRecord.note || ""} | Used for execution ${
+          executionRecord.id
+        }`,
+      });
+    });
+
+    onAddRecord?.(executionRecord);
+
+    writeLedgerEntry({
+      type: "EXECUTE",
+      amount: getAmount(executionRecord),
+      currency,
+      recordId: executionRecord.id,
+      sourceBreakdown,
+      note: "Auto execution created FD from deployable capital.",
+    });
+
+    window.dispatchEvent(new Event("ledgerUpdated"));
+
+    const auditEntry = {
+      id: `AUDIT-${Date.now()}`,
+      type: "EXECUTE",
+      amount: idleCash,
+      currency,
+      batchId: executionRecord.id,
+      timestamp: new Date().toISOString(),
+    };
+
+    const existingAudit = JSON.parse(
+      localStorage.getItem("fd_execution_history") || "[]"
+    );
+
+    localStorage.setItem(
+      "fd_execution_history",
+      JSON.stringify([...existingAudit, auditEntry])
+    );
+
+    window.dispatchEvent(new Event("auditTrailUpdated"));
+
+    setToastMessage(
+      `Execution completed. ${currency} ${idleCash.toLocaleString()} deployed.`
+    );
+
+    setTimeout(() => {
+      setToastMessage("");
+    }, 3000);
   };
-
-  sourceBreakdown.forEach((source) => {
-  const originalRecord = safeRecords.find(
-    (record) => record.id === source.id
-  );
-
-  if (!originalRecord) return;
-
-  const newAmount =
-    getAmount(originalRecord) - Number(source.amount || 0);
-
-  onUpdateRecord?.({
-    ...originalRecord,
-    principal: Math.max(newAmount, 0),
-    amount: Math.max(newAmount, 0),
-    note: `${originalRecord.note || ""} | Used for execution ${
-      executionRecord.id
-    }`,
-  });
-});
-
-onAddRecord?.(executionRecord);
-
-writeLedgerEntry({
-  type: "EXECUTE",
-  amount: getAmount(executionRecord),
-  currency,
-  recordId: executionRecord.id,
-  sourceBreakdown,
-  note: "Auto execution created FD from deployable capital.",
-});
-
-window.dispatchEvent(
-  new Event("ledgerUpdated")
-);
-
-  const auditEntry = {
-    id: `AUDIT-${Date.now()}`,
-    type: "EXECUTE",
-    amount: idleCash,
-    currency,
-    batchId: executionRecord.id,
-    timestamp: new Date().toISOString(),
-  };
-
-  const existingAudit = JSON.parse(
-    localStorage.getItem("fd_execution_history") || "[]"
-  );
-
-  localStorage.setItem(
-    "fd_execution_history",
-    JSON.stringify([...existingAudit, auditEntry])
-  );
-
-  window.dispatchEvent(
-    new Event("auditTrailUpdated")
-  );
-
-  setToastMessage(
-    `Execution completed. ${currency} ${idleCash.toLocaleString()} deployed.`
-  );
-
-  setTimeout(() => {
-    setToastMessage("");
-  }, 3000);
-};
 
   const handleUndoExecution = () => {
-  const autoRecords = safeRecords.filter(
-    (record) => record.tag === "AUTO_EXECUTED"
-  );
+    const autoRecords = safeRecords.filter(
+      (record) => record.tag === "AUTO_EXECUTED"
+    );
 
-  if (!autoRecords.length) {
-    setToastMessage("No auto execution to undo.");
-    return;
-  }
+    if (!autoRecords.length) {
+      setToastMessage("No auto execution to undo.");
+      return;
+    }
 
-  const latestAutoRecord = autoRecords[autoRecords.length - 1];
+    const latestAutoRecord = autoRecords[autoRecords.length - 1];
 
-  onDeleteRecord?.(latestAutoRecord.id);
+    onDeleteRecord?.(latestAutoRecord.id);
 
-  (latestAutoRecord.sourceBreakdown || []).forEach((source) => {
-  const originalRecord = safeRecords.find(
-    (record) => record.id === source.id
-  );
+    (latestAutoRecord.sourceBreakdown || []).forEach((source) => {
+      const originalRecord = safeRecords.find((record) => record.id === source.id);
+      if (!originalRecord) return;
 
-  if (!originalRecord) return;
+      const restoredAmount = getAmount(originalRecord) + Number(source.amount || 0);
 
-  const restoredAmount =
-    getAmount(originalRecord) + Number(source.amount || 0);
+      onUpdateRecord?.({
+        ...originalRecord,
+        principal: restoredAmount,
+        amount: restoredAmount,
+        note: `${originalRecord.note || ""} | Restored from undo ${
+          latestAutoRecord.id
+        }`,
+      });
+    });
 
-  onUpdateRecord?.({
-    ...originalRecord,
-    principal: restoredAmount,
-    amount: restoredAmount,
-    note: `${originalRecord.note || ""} | Restored from undo ${
-      latestAutoRecord.id
-    }`,
-  });
-});
+    writeLedgerEntry({
+      type: "UNDO",
+      amount: getAmount(latestAutoRecord),
+      currency,
+      recordId: latestAutoRecord.id,
+      sourceBreakdown: latestAutoRecord.sourceBreakdown || [],
+      note: "Undo reversed auto execution and restored original source balances.",
+    });
 
-writeLedgerEntry({
-  type: "UNDO",
-  amount: getAmount(latestAutoRecord),
-  currency,
-  recordId: latestAutoRecord.id,
-  sourceBreakdown: latestAutoRecord.sourceBreakdown || [],
-  note: "Undo reversed auto execution and restored original source balances.",
-});
+    window.dispatchEvent(new Event("ledgerUpdated"));
 
-window.dispatchEvent(
-  new Event("ledgerUpdated")
-);
+    const auditEntry = {
+      id: `AUDIT-${Date.now()}`,
+      type: "UNDO",
+      amount: getAmount(latestAutoRecord),
+      currency,
+      batchId: latestAutoRecord.id,
+      timestamp: new Date().toISOString(),
+    };
 
-  const auditEntry = {
-    id: `AUDIT-${Date.now()}`,
-    type: "UNDO",
-    amount: getAmount(latestAutoRecord),
-    currency,
-    batchId: latestAutoRecord.id,
-    timestamp: new Date().toISOString(),
+    const existingAudit = JSON.parse(
+      localStorage.getItem("fd_execution_history") || "[]"
+    );
+
+    localStorage.setItem(
+      "fd_execution_history",
+      JSON.stringify([...existingAudit, auditEntry])
+    );
+
+    window.dispatchEvent(new Event("auditTrailUpdated"));
+
+    setToastMessage(
+      `Undo completed. ${currency} ${getAmount(
+        latestAutoRecord
+      ).toLocaleString()} reversed.`
+    );
+
+    setTimeout(() => {
+      setToastMessage("");
+    }, 3000);
   };
-
-  const existingAudit = JSON.parse(
-    localStorage.getItem("fd_execution_history") || "[]"
-  );
-
-  localStorage.setItem(
-    "fd_execution_history",
-    JSON.stringify([...existingAudit, auditEntry])
-  );
-
-  window.dispatchEvent(
-    new Event("auditTrailUpdated")
-  );
-
-  setToastMessage(
-    `Undo completed. ${currency} ${getAmount(latestAutoRecord).toLocaleString()} reversed.`
-  );
-
-  setTimeout(() => {
-    setToastMessage("");
-  }, 3000);
-};
 
   const summaryItems = [
     {
@@ -589,21 +568,15 @@ window.dispatchEvent(
 
   return (
     <main className="dashboard-page">
-      {toastMessage && (
-        <div className="toast-message">
-          {toastMessage}
-        </div>
-      )}
+      {toastMessage && <div className="toast-message">{toastMessage}</div>}
 
       <section className="dashboard-hero">
         <div>
           <p className="eyebrow">FD Wealth Engine</p>
-
           <h1>Private Banking Console</h1>
-
           <p className="muted">
-            V33.2 Stable Refactor with Capital Intelligence,
-            Advisor Panel, Maturity Watch, Execution Panel and Audit Trail.
+            V33.2-F6A Exposure Ratio Foundation with capital exposure,
+            liquidity ratio and concentration monitoring.
           </p>
         </div>
 
@@ -627,6 +600,9 @@ window.dispatchEvent(
         totalParkingCash={totalParkingCash}
         totalDeployableFunds={totalDeployableFunds}
         totalDeployableWithUpcoming={totalDeployableWithUpcoming}
+        fdExposureRatio={fdExposureRatio}
+        liquidityRatio={liquidityRatio}
+        largestBankExposure={largestBankExposure}
         capitalSignal={capitalSignal}
         nextTargetMonth={nextTargetMonth}
         strongestMonth={strongestMonth}
@@ -635,35 +611,30 @@ window.dispatchEvent(
         liquidityBuffer={liquidityBuffer}
       />
 
-      {/* Dashboard Main Composition Layer */}
       <div className="dashboard-main-grid">
-   {/* Left Intelligence Column */}   
-  <div className="dashboard-main-side">
-    <AdvisorPanel
-      currency={currency}
-      targetMonth={nextTargetMonth?.month || "-"}
-      weakMonth={weakestMonth?.month || "-"}
-      deployable={totalDeployableWithUpcoming}
-      bestOffer={bestOffer}
-    />
+        <div className="dashboard-main-side">
+          <AdvisorPanel
+            currency={currency}
+            targetMonth={nextTargetMonth?.month || "-"}
+            weakMonth={weakestMonth?.month || "-"}
+            deployable={totalDeployableWithUpcoming}
+            bestOffer={bestOffer}
+          />
 
-    <MaturityAlerts
-      records={safeRecords}
-      currency={currency}
-    />
+          <MaturityAlerts records={safeRecords} currency={currency} />
 
-  <ExecutionPanel
-    currency={currency}
-    upcomingMaturityAmount={upcomingMaturityAmount}
-    idleCash={idleCash}
-    onExecute={handleExecuteDeployment}
-    onUndoExecution={handleUndoExecution}
-  />
-  </div>
-  {/* Right Governance Column */}
-  <AuditTrail />
-  <LedgerViewer />
-</div>
-</main>
+          <ExecutionPanel
+            currency={currency}
+            upcomingMaturityAmount={upcomingMaturityAmount}
+            idleCash={idleCash}
+            onExecute={handleExecuteDeployment}
+            onUndoExecution={handleUndoExecution}
+          />
+        </div>
+
+        <AuditTrail />
+        <LedgerViewer />
+      </div>
+    </main>
   );
 }

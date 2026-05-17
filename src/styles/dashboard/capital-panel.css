@@ -5,29 +5,68 @@
   margin-top: 22px;
 }
 
+/* =========================
+   Treasury Signal Layer
+========================= */
+
 .capital-signal {
   margin-top: 24px;
   padding: 20px;
   border-radius: 22px;
   background: #f8fafc;
   border-left: 6px solid #3b82f6;
+  transition: all 0.25s ease;
+}
+
+.capital-signal:hover {
+  transform: translateY(-2px);
 }
 
 .capital-signal.danger {
   border-left-color: #ef4444;
-  background: #fff5f5;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 240, 240, 0.95),
+    rgba(255, 248, 248, 0.98)
+  );
+
+  box-shadow:
+    0 0 0 1px rgba(239, 68, 68, 0.12),
+    0 12px 28px rgba(239, 68, 68, 0.08);
 }
 
 .capital-signal.warning {
   border-left-color: #f59e0b;
-  background: #fffbeb;
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 251, 235, 0.98),
+    rgba(255, 248, 220, 0.98)
+  );
+
+  box-shadow:
+    0 0 0 1px rgba(245, 158, 11, 0.12),
+    0 12px 28px rgba(245, 158, 11, 0.08);
 }
 
 .capital-signal.good,
 .capital-signal.stable {
   border-left-color: #22c55e;
-  background: #f0fdf4;
+
+  background: linear-gradient(
+    135deg,
+    rgba(240, 253, 244, 0.98),
+    rgba(247, 255, 250, 0.98)
+  );
+
+  box-shadow:
+    0 0 0 1px rgba(34, 197, 94, 0.1),
+    0 12px 28px rgba(34, 197, 94, 0.06);
 }
+
+/* =========================
+   Main Layout
+========================= */
 
 .dashboard-main-grid {
   display: grid;
@@ -42,17 +81,9 @@
   gap: 24px;
 }
 
-@media (max-width: 1100px) {
-  .capital-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 700px) {
-  .capital-grid {
-    grid-template-columns: 1fr;
-  }
-}
+/* =========================
+   Main Panels
+========================= */
 
 .dashboard-hero,
 .dashboard-section {
@@ -61,8 +92,17 @@
   border-radius: 28px;
   padding: 28px;
   margin-bottom: 24px;
-  box-shadow: 0 18px 40px rgba(20, 40, 80, 0.08);
+
+  box-shadow:
+    0 18px 40px rgba(20, 40, 80, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.45);
+
+  backdrop-filter: blur(18px);
 }
+
+/* =========================
+   Cards
+========================= */
 
 .summary-card,
 .projection-card,
@@ -72,8 +112,78 @@
   border: 1px solid rgba(190, 205, 230, 0.7);
   border-radius: 22px;
   padding: 22px;
-  box-shadow: 0 10px 28px rgba(20, 40, 80, 0.06);
+
+  box-shadow:
+    0 10px 28px rgba(20, 40, 80, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.6);
+
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
 }
+
+.summary-card:hover,
+.projection-card:hover,
+.score-card:hover,
+.hero-alert:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 16px 38px rgba(20, 40, 80, 0.12),
+    0 0 0 1px rgba(69, 104, 255, 0.08);
+}
+
+/* =========================
+   Exposure Severity Cards
+========================= */
+
+.projection-card.danger {
+  border: 1px solid rgba(239, 68, 68, 0.3);
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 245, 245, 0.98),
+    rgba(255, 250, 250, 1)
+  );
+
+  box-shadow:
+    0 12px 30px rgba(239, 68, 68, 0.12),
+    0 0 0 1px rgba(239, 68, 68, 0.08);
+}
+
+.projection-card.warning {
+  border: 1px solid rgba(245, 158, 11, 0.28);
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 251, 235, 0.98),
+    rgba(255, 249, 230, 1)
+  );
+
+  box-shadow:
+    0 12px 30px rgba(245, 158, 11, 0.1),
+    0 0 0 1px rgba(245, 158, 11, 0.08);
+}
+
+.projection-card.good,
+.projection-card.stable {
+  border: 1px solid rgba(34, 197, 94, 0.22);
+
+  background: linear-gradient(
+    135deg,
+    rgba(240, 253, 244, 0.98),
+    rgba(250, 255, 252, 1)
+  );
+
+  box-shadow:
+    0 12px 30px rgba(34, 197, 94, 0.08),
+    0 0 0 1px rgba(34, 197, 94, 0.05);
+}
+
+/* =========================
+   Typography
+========================= */
 
 .summary-card span,
 .projection-card span,
@@ -95,6 +205,7 @@
 .hero-alert strong {
   font-size: 24px;
   color: #071b45;
+  letter-spacing: -0.02em;
 }
 
 .summary-card span,
@@ -106,9 +217,415 @@
 }
 
 /* Risk Monitor */
+
 .score-card span {
   color: #f59e0b;
   font-weight: 800;
   letter-spacing: 0.8px;
   text-transform: uppercase;
+}
+
+/* =========================
+   Severity Glow
+========================= */
+
+.projection-card.danger strong {
+  color: #dc2626;
+}
+
+.projection-card.warning strong {
+  color: #d97706;
+}
+
+.projection-card.good strong,
+.projection-card.stable strong {
+  color: #15803d;
+}
+
+/* =========================
+   Inputs
+========================= */
+
+.projection-card input {
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px 14px;
+
+  border-radius: 14px;
+  border: 1px solid rgba(190, 205, 230, 0.8);
+
+  background: rgba(255, 255, 255, 0.9);
+
+  font-size: 15px;
+  color: #071b45;
+
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.projection-card input:focus {
+  border-color: #4568ff;
+
+  box-shadow:
+    0 0 0 3px rgba(69, 104, 255, 0.12);
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 1100px) {
+  .capital-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-main-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .capital-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================
+   Treasury Banner
+========================= */
+
+.treasury-banner {
+  margin-top: 24px;
+  margin-bottom: 26px;
+
+  padding: 26px;
+
+  border-radius: 28px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+
+  transition: all 0.25s ease;
+}
+
+.treasury-banner h2 {
+  margin-top: 8px;
+  margin-bottom: 10px;
+
+  font-size: 34px;
+  letter-spacing: -0.03em;
+}
+
+.treasury-banner p {
+  max-width: 720px;
+  line-height: 1.7;
+}
+
+.treasury-label {
+  display: inline-block;
+
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+
+  margin-bottom: 8px;
+}
+
+.treasury-side-metric {
+  min-width: 180px;
+
+  padding: 18px;
+
+  border-radius: 22px;
+
+  background: rgba(255,255,255,0.28);
+
+  backdrop-filter: blur(10px);
+}
+
+.treasury-side-metric span {
+  display: block;
+
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.treasury-side-metric strong {
+  font-size: 28px;
+}
+
+/* =========================
+   Treasury Status Colors
+========================= */
+
+.treasury-banner.danger {
+  background: linear-gradient(
+    135deg,
+    rgba(220, 38, 38, 0.94),
+    rgba(239, 68, 68, 0.88)
+  );
+
+  color: white;
+
+  box-shadow:
+    0 18px 44px rgba(239, 68, 68, 0.28);
+}
+
+.treasury-banner.warning {
+  background: linear-gradient(
+    135deg,
+    rgba(217, 119, 6, 0.96),
+    rgba(245, 158, 11, 0.88)
+  );
+
+  color: white;
+
+  box-shadow:
+    0 18px 44px rgba(245, 158, 11, 0.24);
+}
+
+.treasury-banner.good {
+  background: linear-gradient(
+    135deg,
+    rgba(22, 163, 74, 0.96),
+    rgba(34, 197, 94, 0.88)
+  );
+
+  color: white;
+
+  box-shadow:
+    0 18px 44px rgba(34, 197, 94, 0.22);
+}
+
+@media (max-width: 900px) {
+  .treasury-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .treasury-side-metric {
+    width: 100%;
+  }
+}
+
+/* =========================
+   F6D Dynamic Treasury Recommendation
+========================= */
+
+.treasury-recommendation-panel {
+  margin-top: 24px;
+  margin-bottom: 26px;
+  padding: 22px;
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(180, 195, 220, 0.45);
+  box-shadow: 0 14px 34px rgba(20, 40, 80, 0.07);
+}
+
+.section-header.compact {
+  margin-bottom: 16px;
+}
+
+.treasury-recommendation-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.treasury-recommendation-card {
+  padding: 18px;
+  border-radius: 22px;
+  background: #ffffff;
+  border: 1px solid rgba(190, 205, 230, 0.7);
+  box-shadow: 0 10px 26px rgba(20, 40, 80, 0.06);
+}
+
+.treasury-recommendation-card span {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.treasury-recommendation-card strong {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #071b45;
+}
+
+.treasury-recommendation-card p {
+  line-height: 1.6;
+  color: #526179;
+}
+
+.treasury-recommendation-card.danger {
+  border-color: rgba(239, 68, 68, 0.28);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 245, 245, 0.98),
+    rgba(255, 250, 250, 1)
+  );
+}
+
+.treasury-recommendation-card.danger span {
+  color: #991b1b;
+  background: rgba(239, 68, 68, 0.14);
+}
+
+.treasury-recommendation-card.warning {
+  border-color: rgba(245, 158, 11, 0.28);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 251, 235, 0.98),
+    rgba(255, 249, 230, 1)
+  );
+}
+
+.treasury-recommendation-card.warning span {
+  color: #92400e;
+  background: rgba(245, 158, 11, 0.16);
+}
+
+.treasury-recommendation-card.good {
+  border-color: rgba(34, 197, 94, 0.24);
+  background: linear-gradient(
+    135deg,
+    rgba(240, 253, 244, 0.98),
+    rgba(250, 255, 252, 1)
+  );
+}
+
+.treasury-recommendation-card.good span {
+  color: #166534;
+  background: rgba(34, 197, 94, 0.14);
+}
+
+@media (max-width: 900px) {
+  .treasury-recommendation-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================
+   F6E Treasury Stress Simulation
+========================= */
+
+.treasury-stress-panel {
+  margin-top: 24px;
+  margin-bottom: 26px;
+  padding: 22px;
+  border-radius: 26px;
+  background: rgba(248, 250, 252, 0.78);
+  border: 1px solid rgba(180, 195, 220, 0.45);
+  box-shadow: 0 14px 34px rgba(20, 40, 80, 0.07);
+}
+
+.treasury-stress-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.treasury-stress-card {
+  padding: 18px;
+  border-radius: 22px;
+  background: #ffffff;
+  border: 1px solid rgba(190, 205, 230, 0.7);
+  box-shadow: 0 10px 26px rgba(20, 40, 80, 0.06);
+}
+
+.treasury-stress-card span {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 12px;
+  font-weight: 900;
+  color: #4568ff;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.treasury-stress-card strong {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 22px;
+  color: #071b45;
+}
+
+.treasury-stress-card p {
+  margin-top: 14px;
+  line-height: 1.6;
+  color: #526179;
+}
+
+.stress-metrics {
+  display: grid;
+  gap: 8px;
+}
+
+.stress-metrics small {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(240, 245, 255, 0.7);
+  color: #526179;
+}
+
+.stress-metrics b {
+  color: #071b45;
+}
+
+.treasury-stress-card.danger {
+  border-color: rgba(239, 68, 68, 0.28);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 245, 245, 0.98),
+    rgba(255, 250, 250, 1)
+  );
+}
+
+.treasury-stress-card.danger strong {
+  color: #dc2626;
+}
+
+.treasury-stress-card.warning {
+  border-color: rgba(245, 158, 11, 0.28);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 251, 235, 0.98),
+    rgba(255, 249, 230, 1)
+  );
+}
+
+.treasury-stress-card.warning strong {
+  color: #d97706;
+}
+
+.treasury-stress-card.good {
+  border-color: rgba(34, 197, 94, 0.24);
+  background: linear-gradient(
+    135deg,
+    rgba(240, 253, 244, 0.98),
+    rgba(250, 255, 252, 1)
+  );
+}
+
+.treasury-stress-card.good strong {
+  color: #15803d;
+}
+
+@media (max-width: 1100px) {
+  .treasury-stress-grid {
+    grid-template-columns: 1fr;
+  }
 }
