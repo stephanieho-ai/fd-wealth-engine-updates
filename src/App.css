@@ -2456,3 +2456,225 @@ input {
   color: white;
   box-shadow: 0 4px 14px rgba(69, 104, 255, 0.22);
 }
+
+.ledger-severity {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  width: fit-content;
+}
+
+.ledger-severity-low {
+  background: rgba(34, 197, 94, 0.10);
+  color: #16a34a;
+}
+
+.ledger-severity-medium {
+  background: rgba(245, 158, 11, 0.12);
+  color: #d97706;
+}
+
+.ledger-severity-high {
+  background: rgba(239, 68, 68, 0.12);
+  color: #dc2626;
+}
+
+.ledger-compliance-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(69, 104, 255, 0.08);
+  color: #4568ff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  width: fit-content;
+}
+
+.ledger-search-input {
+  width: 100%;
+  margin-bottom: 18px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(90, 120, 255, 0.12);
+  background: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+  color: #10214d;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.ledger-search-input:focus {
+  border-color: rgba(69, 104, 255, 0.35);
+  box-shadow:
+    0 0 0 4px rgba(69, 104, 255, 0.08);
+}
+
+.ledger-insight-box {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(69, 104, 255, 0.05);
+  border: 1px solid rgba(69, 104, 255, 0.08);
+}
+
+.ledger-insight-box span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(40, 55, 110, 0.55);
+}
+
+.ledger-insight-box p {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #344267;
+}
+
+/* =========================
+   Ledger Severity Engine
+========================= */
+
+.ledger-entry-low {
+  border-color: rgba(60, 180, 120, 0.18);
+}
+
+.ledger-entry-medium {
+  border-color: rgba(255, 180, 0, 0.24);
+  background: rgba(255, 248, 230, 0.55);
+
+  box-shadow:
+    0 0 0 1px rgba(255, 180, 0, 0.05),
+    0 6px 18px rgba(255, 180, 0, 0.10);
+}
+
+.ledger-entry-high {
+  border-color: rgba(255, 90, 90, 0.32);
+  background: rgba(255, 242, 242, 0.72);
+
+  box-shadow:
+    0 0 0 1px rgba(255, 90, 90, 0.08),
+    0 10px 24px rgba(255, 90, 90, 0.16);
+}
+
+.ledger-entry-critical {
+  border-color: rgba(120, 60, 255, 0.34);
+  background: rgba(246, 241, 255, 0.82);
+
+  box-shadow:
+    0 0 0 1px rgba(120, 60, 255, 0.10),
+    0 12px 28px rgba(120, 60, 255, 0.18);
+}
+
+/* Severity Pills */
+
+.ledger-severity-low {
+  background: rgba(60, 180, 120, 0.14);
+  color: #0f7a43;
+}
+
+.ledger-severity-medium {
+  background: rgba(255, 180, 0, 0.18);
+  color: #a16207;
+}
+
+.ledger-severity-high {
+  background: rgba(255, 90, 90, 0.16);
+  color: #dc2626;
+}
+
+.ledger-severity-critical {
+  background: rgba(120, 60, 255, 0.16);
+  color: #6d28d9;
+ } 
+
+ /* =========================
+   V33.2-F5G Ledger Escalation Layer
+========================= */
+
+.ledger-escalation-strip {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.ledger-escalation-low {
+  background: rgba(60, 180, 120, 0.10);
+  color: #15803d;
+}
+
+.ledger-escalation-medium {
+  background: rgba(255, 180, 0, 0.14);
+  color: #a16207;
+}
+
+.ledger-escalation-high {
+  background: rgba(255, 90, 90, 0.14);
+  color: #dc2626;
+}
+
+.ledger-escalation-critical {
+  background: rgba(120, 60, 255, 0.16);
+  color: #6d28d9;
+}
+
+.ledger-entry-low {
+  border-color: rgba(60, 180, 120, 0.18);
+}
+
+.ledger-entry-medium {
+  border-color: rgba(255, 180, 0, 0.28);
+  background: rgba(255, 248, 230, 0.62);
+}
+
+.ledger-entry-high {
+  border-color: rgba(255, 90, 90, 0.38);
+  background: rgba(255, 242, 242, 0.78);
+  box-shadow:
+    0 0 0 1px rgba(255, 90, 90, 0.08),
+    0 10px 24px rgba(255, 90, 90, 0.14);
+}
+
+.ledger-entry-critical {
+  border-color: rgba(120, 60, 255, 0.42);
+  background: rgba(246, 241, 255, 0.88);
+  box-shadow:
+    0 0 0 1px rgba(120, 60, 255, 0.12),
+    0 14px 32px rgba(120, 60, 255, 0.18);
+}
+
+.ledger-insight-medium {
+  background: rgba(255, 180, 0, 0.06);
+  border-color: rgba(255, 180, 0, 0.12);
+}
+
+.ledger-insight-high {
+  background: rgba(255, 90, 90, 0.06);
+  border-color: rgba(255, 90, 90, 0.14);
+}
+
+.ledger-insight-critical {
+  background: rgba(120, 60, 255, 0.07);
+  border-color: rgba(120, 60, 255, 0.16);
+}
+
+.ledger-severity-critical {
+  background: rgba(120, 60, 255, 0.16);
+  color: #6d28d9;
+}
