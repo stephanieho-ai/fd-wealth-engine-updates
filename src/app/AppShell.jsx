@@ -1,15 +1,17 @@
 import DashboardPage from "../pages/DashboardPage";
 import RecordsPage from "../pages/RecordsPage";
+import TreasuryPage from "../pages/TreasuryPage";
 import MorePage from "../pages/MorePage";
 import SettingsPage from "../pages/SettingsPage";
 
 function Sidebar({ tabs, activeTab, onTabChange, currency, totalActivePortfolio }) {
   const items = [
-    { key: tabs.HOME, label: "Home", icon: "⌂" },
-    { key: tabs.RECORDS, label: "Records", icon: "▣" },
-    { key: tabs.MORE, label: "More", icon: "≡" },
-    { key: tabs.SETTINGS, label: "Settings", icon: "⚙" },
-  ];
+  { key: tabs.HOME, label: "Home", icon: "⌂" },
+  { key: tabs.RECORDS, label: "Records", icon: "▣" },
+  { key: "TREASURY", label: "Treasury", icon: "◇" },
+  { key: tabs.MORE, label: "More", icon: "≡" },
+  { key: tabs.SETTINGS, label: "Settings", icon: "⚙" },
+];
 
   return (
     <aside className="app-sidebar">
@@ -120,6 +122,11 @@ export default function AppShell({
           onRolloverRecord={onRolloverRecord}
         />
       );
+      break;
+
+    case "TREASURY":
+      pageTitle = "Treasury Console";
+      page = <TreasuryPage />;
       break;
 
     case tabs.MORE:

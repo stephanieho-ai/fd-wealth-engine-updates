@@ -1,7 +1,7 @@
 import TreasuryTimeline from "../components/dashboard/TreasuryTimeline";
 import PolicyBreachPanel from "../components/dashboard/PolicyBreachPanel";
 import { validateTreasuryPolicies } from "../selectors/policyValidator";
-import LedgerViewer from "../components/dashboard/LedgerViewer";
+
 import { writeLedgerEntry } from "../utils/ledgerUtils";
 import React, { useMemo, useState } from "react";
 
@@ -869,7 +869,7 @@ export default function DashboardPage({
           <TreasuryTimeline records={safeRecords} currency={currency} />
         </div>
 
-        <LedgerViewer />
+       
 
         <div id="policy-breach-section">
           <PolicyBreachPanel decision={treasuryPolicyDecision} />

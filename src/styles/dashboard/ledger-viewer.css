@@ -1,13 +1,28 @@
 .ledger-viewer-panel {
   display: grid;
-  gap: 14px;
+  gap: 24px;
+  padding: 28px;
+  border-radius: 30px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 251, 255, 0.98));
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08);
 }
 
 .ledger-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  gap: 14px;
+  align-items: flex-start;
+  gap: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+.ledger-header h2 {
+  margin: 6px 0 8px;
+  font-size: 28px;
+  letter-spacing: -0.03em;
+  color: #0f172a;
 }
 
 .ledger-filter-row {
@@ -18,68 +33,238 @@
 
 .ledger-filter-btn {
   border: none;
-  padding: 8px 14px;
+  padding: 9px 15px;
   border-radius: 999px;
-  background: #eef2ff;
-  color: #1e3a8a;
+  background: #eef3ff;
+  color: #1e40af;
   font-size: 10px;
   font-weight: 900;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.ledger-filter-btn:hover {
+  transform: translateY(-1px);
+  background: #dbe7ff;
 }
 
 .ledger-filter-btn-active {
-  background: #2563eb;
+  background: linear-gradient(135deg, #356dff, #2555df);
   color: #ffffff;
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.24);
 }
+
+/* Summary cards */
+
+.treasury-queue-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.treasury-queue-card {
+  padding: 20px;
+  border-radius: 24px;
+  background: #ffffff;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+}
+
+.treasury-queue-card span {
+  display: block;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #4568ff;
+  margin-bottom: 12px;
+}
+
+.treasury-queue-card strong {
+  display: block;
+  font-size: 34px;
+  line-height: 1;
+  font-weight: 950;
+  color: #0f172a;
+}
+
+/* Queue panel */
+
+.treasury-queue-panel {
+  display: grid;
+  gap: 18px;
+  padding: 22px;
+  border-radius: 26px;
+  background: linear-gradient(180deg, #f8fbff, #ffffff);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+.treasury-queue-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.treasury-queue-header h3 {
+  margin: 6px 0 0;
+  font-size: 24px;
+  color: #0f172a;
+}
+
+.treasury-queue-list {
+  display: grid;
+  gap: 12px;
+}
+
+.treasury-queue-row {
+  display: grid;
+  grid-template-columns: 1.1fr 0.8fr 1.4fr;
+  align-items: center;
+  gap: 18px;
+  padding: 18px;
+  border-radius: 22px;
+  background: #ffffff;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.045);
+}
+
+.treasury-queue-row:hover {
+  transform: translateY(-1px);
+  border-color: rgba(69, 104, 255, 0.22);
+}
+
+.treasury-queue-row p {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.treasury-queue-escalated {
+  background: #fff1f2;
+  border-color: rgba(239, 68, 68, 0.22);
+}
+
+.treasury-queue-ready {
+  background: #fff7ed;
+  border-color: rgba(245, 158, 11, 0.22);
+}
+
+.treasury-queue-review {
+  background: #f8fafc;
+  border-color: rgba(100, 116, 139, 0.18);
+}
+
+.treasury-queue-resolved {
+  background: #f0fdf4;
+  border-color: rgba(34, 197, 94, 0.18);
+}
+
+.treasury-status-pill {
+  display: inline-flex;
+  width: fit-content;
+  justify-content: center;
+  align-items: center;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+}
+
+.treasury-status-escalated {
+  background: #fecaca;
+  color: #b91c1c;
+}
+
+.treasury-status-ready {
+  background: #fed7aa;
+  color: #c2410c;
+}
+
+.treasury-status-review {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.treasury-status-pending {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.treasury-status-resolved {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+/* Search */
 
 .ledger-search-row {
   display: grid;
-  grid-template-columns: 1fr 150px;
+  grid-template-columns: 1fr 160px;
   gap: 12px;
+  align-items: stretch;
 }
 
 .ledger-search-input {
   width: 100%;
-  padding: 12px 14px;
-  border-radius: 14px;
+  padding: 14px 16px;
+  border-radius: 18px;
   border: 1px solid rgba(148, 163, 184, 0.24);
   background: #ffffff;
-  font-size: 12px;
+  font-size: 13px;
+  color: #0f172a;
+}
+
+.ledger-search-input:focus {
+  outline: none;
+  border-color: rgba(69, 104, 255, 0.38);
+  box-shadow: 0 0 0 4px rgba(69, 104, 255, 0.08);
 }
 
 .ledger-show-button {
   border: none;
-  border-radius: 14px;
-  background: #eef2ff;
+  border-radius: 18px;
+  background: #eef3ff;
   color: #2563eb;
   font-size: 11px;
-  font-weight: 900;
+  font-weight: 950;
   cursor: pointer;
 }
 
+/* Ledger table */
+
 .ledger-table-list {
   display: grid;
-  gap: 8px;
+  gap: 10px;
 }
 
 .ledger-table-row {
   display: grid;
-  grid-template-columns: 86px 82px 1.3fr 120px 130px 72px;
+  grid-template-columns: 92px 90px 1.3fr 130px 150px 82px 110px;
   align-items: center;
   gap: 12px;
-  padding: 14px 16px;
-  border-radius: 16px;
+  padding: 16px 18px;
+  border-radius: 20px;
   background: #ffffff;
   border: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.035);
 }
 
 .ledger-row-critical {
   background: #fff1f2;
+  border-color: rgba(239, 68, 68, 0.22);
 }
 
 .ledger-row-high {
   background: #fff7ed;
+  border-color: rgba(245, 158, 11, 0.22);
+}
+
+.ledger-row-recovery {
+  background: #f0fdf4;
+  border-color: rgba(34, 197, 94, 0.2);
 }
 
 .ledger-pill,
@@ -88,11 +273,11 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  padding: 7px 10px;
+  padding: 7px 11px;
   border-radius: 999px;
   font-size: 10px;
-  font-weight: 900;
-  letter-spacing: 0.04em;
+  font-weight: 950;
+  letter-spacing: 0.06em;
 }
 
 .ledger-pill-critical {
@@ -115,6 +300,11 @@
   color: #15803d;
 }
 
+.ledger-pill-recovered {
+  background: #dcfce7;
+  color: #15803d;
+}
+
 .ledger-type-execute {
   background: #dbeafe;
   color: #1d4ed8;
@@ -125,11 +315,21 @@
   color: #b91c1c;
 }
 
+.ledger-type-recovery {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.ledger-type-system {
+  background: #e2e8f0;
+  color: #334155;
+}
+
 .ledger-record-id,
 .ledger-amount {
   color: #0f172a;
   font-size: 13px;
-  font-weight: 900;
+  font-weight: 950;
 }
 
 .ledger-time {
@@ -144,22 +344,563 @@
 }
 
 .ledger-empty {
-  padding: 22px;
-  border-radius: 16px;
+  padding: 26px;
+  border-radius: 20px;
   background: #f8fafc;
-  border: 1px dashed rgba(148, 163, 184, 0.35);
+  border: 1px dashed rgba(148, 163, 184, 0.38);
   color: #64748b;
   text-align: center;
+  font-weight: 900;
+}
+
+/* Dark mode */
+
+body.theme-dark .ledger-viewer-panel,
+body.theme-dark .treasury-queue-panel,
+body.theme-dark .treasury-queue-card,
+body.theme-dark .treasury-queue-row,
+body.theme-dark .ledger-table-row {
+  background: linear-gradient(145deg, #162033, #1b2740) !important;
+  border-color: #2d3a55 !important;
+}
+
+body.theme-dark .ledger-header h2,
+body.theme-dark .treasury-queue-header h3,
+body.theme-dark .treasury-queue-card strong,
+body.theme-dark .ledger-record-id,
+body.theme-dark .ledger-amount {
+  color: #ffffff !important;
+}
+
+body.theme-dark .ledger-search-input {
+  background: #162033 !important;
+  color: #ffffff !important;
+  border-color: #2d3a55 !important;
+}
+
+body.theme-dark .ledger-time,
+body.theme-dark .treasury-queue-row p {
+  color: #c9d6ea !important;
+}
+
+/* Responsive */
+
+@media (max-width: 1100px) {
+  .treasury-queue-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .treasury-queue-row,
+  .ledger-table-row {
+    grid-template-columns: 1fr;
+  }
+
+  .ledger-search-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .ledger-viewer-panel {
+    padding: 20px;
+  }
+
+  .ledger-header,
+  .treasury-queue-header {
+    flex-direction: column;
+  }
+
+  .treasury-queue-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================
+   V33.2-F7D Treasury Institutional Layout
+========================= */
+
+.treasury-console-page {
+  display: grid;
+  gap: 22px;
+}
+
+.treasury-hero {
+  margin-bottom: 0;
+}
+
+.treasury-signal-ribbon {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.treasury-signal-card {
+  padding: 18px;
+  border-radius: 22px;
+  background: #ffffff;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+}
+
+.treasury-signal-card span {
+  display: block;
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.treasury-signal-card strong {
+  display: block;
+  font-size: 24px;
+  color: #0f172a;
+}
+
+.treasury-signal-card small {
+  display: block;
+  margin-top: 8px;
+  color: #64748b;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.treasury-signal-card.critical {
+  background: #fff1f2;
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.treasury-signal-card.critical span {
+  color: #dc2626;
+}
+
+.treasury-signal-card.warning {
+  background: #fff7ed;
+  border-color: rgba(245, 158, 11, 0.2);
+}
+
+.treasury-signal-card.warning span {
+  color: #ea580c;
+}
+
+.treasury-signal-card.info {
+  background: #eff6ff;
+  border-color: rgba(59, 130, 246, 0.18);
+}
+
+.treasury-signal-card.info span {
+  color: #2563eb;
+}
+
+.treasury-signal-card.success {
+  background: #f0fdf4;
+  border-color: rgba(34, 197, 94, 0.18);
+}
+
+.treasury-signal-card.success span {
+  color: #16a34a;
+}
+
+.treasury-command-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 0.75fr;
+  gap: 16px;
+}
+
+.treasury-command-panel,
+.treasury-health-panel {
+  padding: 24px;
+  border-radius: 28px;
+  background: #ffffff;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
+}
+
+.treasury-command-panel h2,
+.treasury-health-panel h3 {
+  margin: 8px 0 10px;
+  color: #0f172a;
+}
+
+.treasury-health-panel strong {
+  display: inline-flex;
+  margin: 10px 0;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: #dcfce7;
+  color: #15803d;
+  font-size: 13px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+}
+
+.treasury-command-points {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.treasury-command-points span {
+  padding: 9px 13px;
+  border-radius: 999px;
+  background: #eef3ff;
+  color: #1e40af;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+@media (max-width: 1100px) {
+  .treasury-signal-ribbon {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .treasury-command-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .treasury-signal-ribbon {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================
+   V33.2-F7E Treasury Action Infrastructure
+========================= */
+
+.treasury-action-center {
+  padding: 26px;
+  border-radius: 30px;
+  background: #ffffff;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.06);
+}
+
+.treasury-action-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+.treasury-action-header h2 {
+  margin: 8px 0 8px;
+  color: #0f172a;
+}
+
+.treasury-action-mode {
+  display: inline-flex;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: #eef3ff;
+  color: #1e40af;
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+}
+
+.treasury-action-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.treasury-action-card {
+  padding: 20px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, #f8fbff, #ffffff);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.treasury-action-card span {
+  display: block;
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #4568ff;
+  margin-bottom: 10px;
+}
+
+.treasury-action-card strong {
+  display: block;
+  font-size: 24px;
+  color: #0f172a;
+}
+
+.treasury-action-card p {
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.treasury-action-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.treasury-action-buttons button {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: #eef3ff;
+  color: #1e40af;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+@media (max-width: 1100px) {
+  .treasury-action-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .treasury-action-header {
+    flex-direction: column;
+  }
+}
+
+/* =========================
+   V33.2-F7F Treasury Executive Layer
+========================= */
+
+.treasury-executive-ribbon {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.treasury-exec-card {
+  padding: 18px;
+  border-radius: 24px;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  background: #ffffff;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+}
+
+.treasury-exec-card span {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.treasury-exec-card strong {
+  display: block;
+  font-size: 28px;
+  font-weight: 900;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.treasury-exec-card small {
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.treasury-exec-card.danger {
+  background: #fff5f5;
+}
+
+.treasury-exec-card.danger span {
+  color: #dc2626;
+}
+
+.treasury-exec-card.warning {
+  background: #fffaf0;
+}
+
+.treasury-exec-card.warning span {
+  color: #d97706;
+}
+
+.treasury-exec-card.info {
+  background: #f8fbff;
+}
+
+.treasury-exec-card.info span {
+  color: #2563eb;
+}
+
+.treasury-exec-card.success {
+  background: #f0fdf4;
+}
+
+.treasury-exec-card.success span {
+  color: #16a34a;
+}
+
+.treasury-exec-card.neutral {
+  background: #f8fafc;
+}
+
+.treasury-exec-card.neutral span {
+  color: #475569;
+}
+
+@media (max-width: 1300px) {
+  .treasury-executive-ribbon {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .treasury-executive-ribbon {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================
+   V33.2-F7I Treasury Escalation Intelligence
+========================= */
+
+.treasury-intelligence-banner {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: center;
+  padding: 24px;
+  border-radius: 28px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: #ffffff;
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
+}
+
+.treasury-intelligence-banner h2 {
+  margin: 6px 0 8px;
+  color: #0f172a;
+}
+
+.treasury-intelligence-banner p {
+  margin: 0;
+  color: #64748b;
+}
+
+.treasury-intelligence-banner.danger {
+  background: #fff1f2;
+  border-color: rgba(239, 68, 68, 0.22);
+}
+
+.treasury-intelligence-banner.warning {
+  background: #fff7ed;
+  border-color: rgba(245, 158, 11, 0.22);
+}
+
+.treasury-intelligence-banner.stable {
+  background: #f0fdf4;
+  border-color: rgba(34, 197, 94, 0.18);
+}
+
+.treasury-intelligence-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.treasury-intelligence-metrics span {
+  padding: 9px 13px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: #0f172a;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+@media (max-width: 900px) {
+  .treasury-intelligence-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .treasury-intelligence-metrics {
+    justify-content: flex-start;
+  }
+}
+
+/* =========================
+   V33.2-F7J Treasury Governance Recommendation
+========================= */
+
+.treasury-governance-recommendation {
+  display: grid;
+  grid-template-columns: 1.4fr 0.7fr;
+  gap: 18px;
+  align-items: center;
+  padding: 26px;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #0d1f59, #17328a);
+  color: #ffffff;
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.18);
+}
+
+.treasury-governance-recommendation .eyebrow {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.treasury-governance-recommendation h2 {
+  margin: 8px 0;
+  color: #ffffff;
+}
+
+.treasury-governance-recommendation p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.55;
+}
+
+.treasury-recommendation-side {
+  display: grid;
+  gap: 12px;
+  justify-items: end;
+}
+
+.treasury-recommendation-side > span {
+  display: inline-flex;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+}
+
+.treasury-recommendation-side div {
+  display: grid;
+  gap: 8px;
+}
+
+.treasury-recommendation-side small {
+  display: inline-flex;
+  justify-content: flex-end;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 11px;
   font-weight: 800;
 }
 
 @media (max-width: 900px) {
-  .ledger-search-row {
+  .treasury-governance-recommendation {
     grid-template-columns: 1fr;
   }
 
-  .ledger-table-row {
-    grid-template-columns: 1fr;
-    gap: 8px;
+  .treasury-recommendation-side {
+    justify-items: start;
+  }
+
+  .treasury-recommendation-side small {
+    justify-content: flex-start;
   }
 }
