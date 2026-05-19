@@ -2,5 +2,84 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(180px, 1fr));
   gap: 18px;
-  margin-top: 22px;
+  margin: 18px 0 20px;
+}
+
+.summary-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-height: 106px;
+  padding: 22px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.07);
+}
+
+.summary-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.summary-card-bell .summary-icon {
+  background: #f5f3ff;
+  color: #8b5cf6;
+}
+
+.summary-card-pulse .summary-icon {
+  background: #ecfdf5;
+  color: #22c55e;
+}
+
+.summary-card-shield .summary-icon {
+  background: #fff1f2;
+  color: #ef4444;
+}
+
+.summary-icon-svg {
+  width: 28px;
+  height: 28px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.summary-content span {
+  display: block;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #2563eb;
+  margin-bottom: 8px;
+}
+
+.summary-content strong {
+  display: block;
+  font-size: 22px;
+  line-height: 1.1;
+  color: #0f172a;
+  font-weight: 900;
+}
+
+.summary-content small {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+@media (max-width: 1100px) {
+  .summary-grid {
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+  }
 }

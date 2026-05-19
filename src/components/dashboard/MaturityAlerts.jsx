@@ -31,105 +31,219 @@ function formatMoney(value, currency = "MYR") {
   })}`;
 }
 
+function getTimelineLabel(daysLeft) {
+  if (daysLeft < 0) return "Overdue";
+  if (daysLeft === 0) return "Due Today";
+  if (daysLeft === 1) return "1 Day";
+  if (daysLeft <= 3) return "3 Days";
+  if (daysLeft <= 5) return "5 Days";
+  if (daysLeft <= 7) return "7 Days";
+  if (daysLeft <= 14) return "14 Days";
+
+  return null;
+}
+
+function getSeverity(daysLeft) {
+  if (daysLeft < 0 || daysLeft === 0) {
+    return "critical";
+  }
+
+  if (daysLeft <= 3) {
+    return "high";
+  }
+
+  if (daysLeft <= 7) {
+    return "medium";
+  }
+
+  return "low";
+}
+
 export default function MaturityAlerts({
   records = [],
   currency = "MYR",
 }) {
-  const safeRecords = Array.isArray(records) ? records : [];
+  const safeRecords = Array.isArray(records)
+    ? records
+    : [];
 
   const maturityAlerts = safeRecords
     .filter((record) => {
-      const type = String(record?.recordType || record?.type || "FD")
+      const type = String(
+        record?.recordType ||
+          record?.type ||
+          "FD"
+      )
         .toUpperCase()
         .replace(/\s+/g, "_");
 
-      const status = String(record?.status || "ACTIVE").toUpperCase();
+      const status = String(
+        record?.status || "ACTIVE"
+      ).toUpperCase();
 
-      return type === "FD" && status !== "CLOSED";
+      return (
+        type === "FD" &&
+        status !== "CLOSED"
+      );
     })
     .map((record) => {
-      const daysLeft = getDaysLeft(getMaturityDate(record));
+      const daysLeft = getDaysLeft(
+        getMaturityDate(record)
+      );
 
-      let level = null;
+      const timeline =
+        daysLeft !== null
+          ? getTimelineLabel(daysLeft)
+          : null;
 
-      if (daysLeft !== null && daysLeft < 0) {
-        level = "Overdue";
-      } else if (daysLeft === 0) {
-        level = "Due Today";
-      } else if (daysLeft > 0 && daysLeft <= 3) {
-        level = "Urgent";
-      } else if (daysLeft > 3 && daysLeft <= 7) {
-        level = "Upcoming";
-      }
+      const severity =
+        daysLeft !== null
+          ? getSeverity(daysLeft)
+          : "low";
 
       return {
         ...record,
         daysLeft,
-        level,
+        timeline,
+        severity,
       };
     })
-    .filter((record) => record.level)
-    .sort((a, b) => a.daysLeft - b.daysLeft);
+    .filter((record) => record.timeline)
+    .sort(
+      (a, b) => a.daysLeft - b.daysLeft
+    );
+
+  const nextMajorMaturity =
+    maturityAlerts.reduce(
+      (largest, current) => {
+        return getAmount(current) >
+          getAmount(largest)
+          ? current
+          : largest;
+      },
+      maturityAlerts[0]
+    );
 
   return (
     <section className="dashboard-section maturity-alerts">
       <div className="section-header">
         <div>
-          <p className="eyebrow">Maturity Alerts</p>
-          <h2>Upcoming FD Watch</h2>
+          <p className="eyebrow">
+            Treasury Maturity Operations
+          </p>
+
+          <h2>
+            FD Maturity Command Center
+          </h2>
+
           <p className="muted">
-            Monitor fixed deposits that are overdue, due today, or maturing
-            within the next 7 days.
+            Monitor operational maturity
+            timeline, upcoming deployable
+            capital and liquidity readiness.
           </p>
         </div>
 
         <div className="score-card">
-          <span>Alerts</span>
-          <strong>{maturityAlerts.length}</strong>
+          <span>Active Alerts</span>
+          <strong>
+            {maturityAlerts.length}
+          </strong>
         </div>
       </div>
 
       {!maturityAlerts.length ? (
         <div className="empty-state">
-          No FD maturing within 7 days.
+          No upcoming maturity events.
         </div>
       ) : (
-        <div className="audit-list">
-          {maturityAlerts.map((record) => (
-            <div
-              key={record.id || record.generationId || record.maturityDate}
-              className={`projection-card ${
-                record.level === "Overdue" ? "overdue-card" : ""
-              }`}
-            >
-              <div>
-                <span>{record.level}</span>
+        <>
+          <div className="maturity-command-list">
+            {maturityAlerts.map((record) => (
+              <div
+                key={
+                  record.id ||
+                  record.generationId ||
+                  record.maturityDate
+                }
+                className={`maturity-command-row maturity-${record.severity}`}
+              >
+                <div className="maturity-timeline">
+                  {record.timeline}
+                </div>
 
-                <strong>
-                  {record.id || record.generationId || "FD Record"}
-                </strong>
+                <div className="maturity-record">
+                  <strong>
+                    {record.id ||
+                      record.generationId ||
+                      "FD"}
+                  </strong>
 
-                <p className="muted">
-                  {record.bank || "Bank"} · {getMaturityDate(record)}
-                </p>
-              </div>
+                  <span>
+                    {record.bank || "Bank"} ·{" "}
+                    {getMaturityDate(record)}
+                  </span>
+                </div>
 
-              <div>
-                <strong>
+                <div className="maturity-days">
                   {record.daysLeft < 0
-                    ? `${Math.abs(record.daysLeft)}D overdue`
+                    ? `${Math.abs(
+                        record.daysLeft
+                      )}D overdue`
                     : record.daysLeft === 0
                     ? "Due today"
                     : `${record.daysLeft}D left`}
-                </strong>
+                </div>
 
-                <p className="muted">
-                  {formatMoney(getAmount(record), currency)}
-                </p>
+                <div className="maturity-amount">
+                  {formatMoney(
+                    getAmount(record),
+                    currency
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {nextMajorMaturity && (
+            <div className="next-major-maturity">
+              <div>
+                <span>
+                  Next Major Maturity
+                </span>
+
+                <strong>
+                  {nextMajorMaturity.bank ||
+                    "Bank"}
+                </strong>
+              </div>
+
+              <div>
+                <span>
+                  Expected Capital
+                </span>
+
+                <strong>
+                  {formatMoney(
+                    getAmount(
+                      nextMajorMaturity
+                    ),
+                    currency
+                  )}
+                </strong>
+              </div>
+
+              <div>
+                <span>Maturity Date</span>
+
+                <strong>
+                  {getMaturityDate(
+                    nextMajorMaturity
+                  )}
+                </strong>
               </div>
             </div>
-          ))}
-        </div>
+          )}
+        </>
       )}
     </section>
   );

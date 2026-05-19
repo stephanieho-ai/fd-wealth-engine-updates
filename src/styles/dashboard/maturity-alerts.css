@@ -1,151 +1,160 @@
-
-/* =========================
-   Alerts / notification center
-   ========================= */
-
-.alerts-grid {
+.maturity-alerts {
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 16px;
+  min-width: 0;
+  overflow: hidden;
 }
 
-.notification-center,
-.maturity-monitoring,
-.alerts-panel {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 28px;
-  box-shadow: var(--shadow);
-  padding: 22px;
+.maturity-alerts .section-header h2 {
+  font-size: 22px;
+  line-height: 1.15;
+  white-space: normal;
 }
 
-.alert-box,
-.notification-card,
-.maturity-box {
-  padding: 18px;
+.maturity-command-list {
+  display: grid;
+  gap: 10px;
 }
 
-.alert-box-head,
-.notification-card-head,
-.maturity-box-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.alert-box-head span,
-.notification-card-head span,
-.maturity-box-head span {
-  background: #f5f7fb;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 6px 10px;
-  font-weight: 800;
-  color: var(--text);
-}
-
-.alert-record,
-.notification-item,
-.alert-item {
+.maturity-command-row {
+  display: grid;
+  grid-template-columns: 86px minmax(0, 1fr);
+  gap: 10px 12px;
+  padding: 14px;
   border-radius: 18px;
-  padding: 16px;
-  background: #f8fbff;
-  border: 1px solid var(--line);
+  background: #ffffff;
+  border: 1px solid rgba(148, 163, 184, 0.18);
 }
 
-.alert-record.overdue,
-.notification-item.overdue,
-.alert-item.overdue {
-  background: linear-gradient(
-    135deg,
-    #fff1f1 0%,
-    #ffe4e4 100%
-  );
-
-  border: 1px solid rgba(239, 68, 68, 0.18);
-
-  border-left: 4px solid #ef4444;
-
-  box-shadow: 0 10px 24px rgba(239, 68, 68, 0.08);
+.maturity-critical {
+  background: #fff5f5;
+  border-color: #fecaca;
 }
 
-/* =========================
-   OVERDUE TEXT
-========================= */
-
-.alert-record.overdue strong,
-.notification-item.overdue strong,
-.alert-item.overdue strong {
-  color: #dc2626;
+.maturity-high {
+  background: #fff7ed;
+  border-color: #fed7aa;
 }
 
-.alert-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
+.maturity-medium {
+  background: #fffbea;
+  border-color: #fde68a;
 }
 
-.pill.overdue,
-.overdue-badge {
-  background: #ffd8d8;
-  color: #d82424;
+.maturity-low {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+
+.maturity-timeline {
+  grid-row: span 3;
+  align-self: center;
+  justify-self: start;
+  padding: 7px 10px;
   border-radius: 999px;
-  padding: 8px 12px;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  background: #eef2ff;
+  color: #1d4ed8;
+  white-space: nowrap;
+}
+
+.maturity-critical .maturity-timeline {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.maturity-high .maturity-timeline {
+  background: #ffedd5;
+  color: #c2410c;
+}
+
+.maturity-medium .maturity-timeline {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.maturity-low .maturity-timeline {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.maturity-record {
+  min-width: 0;
+}
+
+.maturity-record strong {
+  display: block;
+  font-size: 14px;
+  color: #0f172a;
+  font-weight: 900;
+}
+
+.maturity-record span {
+  display: block;
+  margin-top: 4px;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.35;
+  word-break: normal;
+}
+
+.maturity-days {
   font-size: 12px;
   font-weight: 900;
-  border: 1px solid rgba(216, 36, 36, 0.15);
+  color: #ef4444;
+  white-space: nowrap;
 }
 
-.alert-empty,
-.notification-card .empty,
-.alert-box .empty,
-.maturity-box .empty {
-  min-height: 120px;
+.maturity-medium .maturity-days {
+  color: #d97706;
+}
+
+.maturity-low .maturity-days {
+  color: #2563eb;
+}
+
+.maturity-amount {
+  color: #0f172a;
+  font-size: 12px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.next-major-maturity {
   display: grid;
-  place-items: center;
-  color: var(--muted);
-  border: 1px dashed var(--line);
+  grid-template-columns: 1fr;
+  gap: 10px;
+  padding: 14px;
   border-radius: 18px;
-  background: #fafcff;
+  background: linear-gradient(135deg, #eff6ff, #ffffff);
+  border: 1px solid rgba(37, 99, 235, 0.16);
 }
 
-/* =========================
-   MATURITY OVERDUE CRITICAL OVERRIDE
-========================= */
-
-.maturity-panel .projection-card,
-.maturity-panel .alert-item,
-.maturity-panel .alert-record {
-  position: relative;
+.next-major-maturity span {
+  display: block;
+  margin-bottom: 4px;
+  color: #2563eb;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-.maturity-panel .projection-card:has(.overdue),
-.maturity-panel .alert-item.overdue,
-.maturity-panel .alert-record.overdue {
-  background: linear-gradient(135deg, #fff1f1 0%, #ffe4e4 100%) !important;
-  border: 1px solid rgba(239, 68, 68, 0.28) !important;
-  border-left: 5px solid #ef4444 !important;
-  box-shadow: 0 12px 26px rgba(239, 68, 68, 0.12) !important;
+.next-major-maturity strong {
+  color: #0f172a;
+  font-size: 13px;
+  font-weight: 900;
+  word-break: normal;
 }
 
-.maturity-panel .projection-card:has(.overdue) strong,
-.maturity-panel .projection-card:has(.overdue) span,
-.maturity-panel .projection-card:has(.overdue) h3,
-.maturity-panel .projection-card:has(.overdue) p,
-.maturity-panel .overdue {
-  color: #dc2626 !important;
+.maturity-command-list {
+  max-height: 360px;
+  overflow-y: auto;
+  padding-right: 4px;
 }
 
-.projection-card.overdue-card {
-  background: linear-gradient(135deg, #fff1f1 0%, #ffe4e4 100%) !important;
-  border: 1px solid rgba(239, 68, 68, 0.28) !important;
-  border-left: 5px solid #ef4444 !important;
-  box-shadow: 0 12px 26px rgba(239, 68, 68, 0.12) !important;
-}
-
-.projection-card.overdue-card span,
-.projection-card.overdue-card strong {
-  color: #dc2626 !important;
+.next-major-maturity {
+  margin-top: 4px;
 }

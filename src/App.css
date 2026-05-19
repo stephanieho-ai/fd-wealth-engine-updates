@@ -2678,3 +2678,44 @@ input {
   background: rgba(120, 60, 255, 0.16);
   color: #6d28d9;
 }
+
+.treasury-toast {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+
+  background: linear-gradient(
+    135deg,
+    #1e40af,
+    #2563eb
+  );
+
+  color: white;
+
+  padding: 16px 22px;
+
+  border-radius: 16px;
+
+  font-weight: 700;
+
+  font-size: 14px;
+
+  z-index: 99999;
+
+  box-shadow:
+    0 10px 30px rgba(37, 99, 235, 0.28);
+
+  animation: treasuryToastSlide 0.35s ease;
+}
+
+@keyframes treasuryToastSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

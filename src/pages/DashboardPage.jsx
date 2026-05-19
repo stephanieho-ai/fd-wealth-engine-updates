@@ -1,3 +1,6 @@
+import TreasuryTimeline from "../components/dashboard/TreasuryTimeline";
+import PolicyBreachPanel from "../components/dashboard/PolicyBreachPanel";
+import { validateTreasuryPolicies } from "../selectors/policyValidator";
 import LedgerViewer from "../components/dashboard/LedgerViewer";
 import { writeLedgerEntry } from "../utils/ledgerUtils";
 import React, { useMemo, useState } from "react";
@@ -8,6 +11,7 @@ import AuditTrail from "../components/dashboard/AuditTrail";
 import ExecutionPanel from "../components/dashboard/ExecutionPanel";
 import MaturityAlerts from "../components/dashboard/MaturityAlerts";
 import SummaryGrid from "../components/dashboard/SummaryGrid";
+import TreasuryAlertModal from "../components/dashboard/TreasuryAlertModal";
 
 function toNumber(value) {
   const number = Number(value);
@@ -201,6 +205,8 @@ export default function DashboardPage({
   );
 
   const [toastMessage, setToastMessage] = useState("");
+  const [treasuryToast, setTreasuryToast] = useState("");
+  const [activeAlert, setActiveAlert] = useState(null);
 
   const safeRecords = Array.isArray(records) ? records : [];
   const safeOffers = Array.isArray(offers) ? offers : [];
@@ -365,6 +371,198 @@ export default function DashboardPage({
     }).length;
   }, [activeFDRecords]);
 
+  const treasuryPolicyDecision = useMemo(
+    () =>
+      validateTreasuryPolicies({
+        deploymentAmount: totalDeployableFunds,
+        deployableAmount: totalDeployableFunds,
+        reserveAmount,
+        liquidityRatio: liquidityRatio * 100,
+        highestBankExposureRatio: largestBankExposure.ratio * 100,
+      }),
+    [
+      totalDeployableFunds,
+      reserveAmount,
+      liquidityRatio,
+      largestBankExposure.ratio,
+    ]
+  );
+
+  const treasuryAlerts = useMemo(() => {
+  const alerts = [];
+
+  if (liquidityRatio < 0.05) {
+    alerts.push({
+      level: "critical",
+      label: "LIQUIDITY CRITICAL",
+      title: "Treasury Liquidity Alert",
+
+      message:
+        "Liquidity ratio has fallen below treasury reserve threshold. Immediate liquidity review is recommended.",
+
+      metrics: [
+        {
+          label: "Liquidity Ratio",
+          value: `${(liquidityRatio * 100).toFixed(1)}%`,
+        },
+        {
+          label: "Deployable Funds",
+          value: formatMoney(totalDeployableFunds, currency),
+        },
+        {
+          label: "Reserve Target",
+          value: formatMoney(reserveAmount, currency),
+        },
+      ],
+
+      actions: [
+        "Review liquidity buffer",
+        "Pause deployment",
+        "Increase reserve capital",
+      ],
+    });
+  }
+
+  const overdueRecords = activeFDRecords.filter((record) => {
+    const days = daysUntil(getMaturityDate(record));
+    return days !== null && days < 0;
+  });
+
+  if (overdueRecords.length > 0) {
+    alerts.push({
+      level: "danger",
+      label: `${overdueRecords.length} FD OVERDUE`,
+      title: "FD Maturity Escalation",
+
+      message:
+        "One or more FD positions have matured and require treasury action.",
+
+      metrics: [
+        {
+          label: "Overdue Positions",
+          value: overdueRecords.length,
+        },
+        {
+          label: "Affected Capital",
+          value: formatMoney(
+            overdueRecords.reduce(
+              (sum, record) => sum + getAmount(record),
+              0
+            ),
+            currency
+          ),
+        },
+      ],
+
+      records: overdueRecords.map((record) => ({
+        id: record.id,
+        bank: record.bank,
+        date: getMaturityDate(record),
+        amount: formatMoney(getAmount(record), currency),
+      })),
+
+      actions: [
+        "Review matured FD",
+        "Move to savings",
+        "Redeploy capital",
+      ],
+    });
+  }
+
+  if (upcomingMaturityAmount > 0) {
+    const nextRecords = activeFDRecords
+      .filter((record) => {
+        const days = daysUntil(getMaturityDate(record));
+        return days !== null && days >= 0 && days <= 30;
+      })
+      .slice(0, 5);
+
+    alerts.push({
+      level: "info",
+      label: `NEXT MATURITY ${formatMoney(
+        upcomingMaturityAmount,
+        currency
+      )}`,
+
+      title: "Upcoming Treasury Maturity",
+
+      message:
+        "Upcoming maturity events detected within treasury operational window.",
+
+      metrics: [
+        {
+          label: "Upcoming Capital",
+          value: formatMoney(upcomingMaturityAmount, currency),
+        },
+        {
+          label: "Affected Records",
+          value: nextRecords.length,
+        },
+      ],
+
+      records: nextRecords.map((record) => ({
+        id: record.id,
+        bank: record.bank,
+        date: getMaturityDate(record),
+        amount: formatMoney(getAmount(record), currency),
+      })),
+
+      actions: [
+        "Prepare reinvestment",
+        "Review maturity ladder",
+        "Monitor timeline",
+      ],
+    });
+  }
+
+  if (treasuryPolicyDecision.blocked) {
+    alerts.push({
+      level: "blocked",
+      label: "POLICY ENGINE BLOCKED",
+
+      title: "Treasury Governance Block",
+
+      message:
+        "Treasury policy engine has restricted deployment execution.",
+
+      metrics: [
+        {
+          label: "Liquidity Ratio",
+          value: `${(liquidityRatio * 100).toFixed(1)}%`,
+        },
+        {
+          label: "FD Exposure",
+          value: `${(fdExposureRatio * 100).toFixed(1)}%`,
+        },
+        {
+          label: "Largest Bank",
+          value: `${largestBankExposure.bank}`,
+        },
+      ],
+
+      actions: [
+        "Review treasury policy",
+        "Reduce concentration risk",
+        "Increase liquidity ratio",
+      ],
+    });
+  }
+
+  return alerts;
+}, [
+  liquidityRatio,
+  totalDeployableFunds,
+  reserveAmount,
+  activeFDRecords,
+  upcomingMaturityAmount,
+  treasuryPolicyDecision,
+  currency,
+  fdExposureRatio,
+  largestBankExposure,
+]);
+
+
+
   const handleExecuteDeployment = () => {
     if (idleCash <= 0) {
       setToastMessage("No deployable idle cash available.");
@@ -443,6 +641,11 @@ export default function DashboardPage({
       currency,
       batchId: executionRecord.id,
       timestamp: new Date().toISOString(),
+      governanceSeverity: treasuryPolicyDecision.severity,
+      policyVersion: treasuryPolicyDecision.policyVersion,
+      approvalRequired: treasuryPolicyDecision.approvalRequired,
+      escalationRequired: treasuryPolicyDecision.escalationRequired,
+      blocked: treasuryPolicyDecision.blocked,
     };
 
     const existingAudit = JSON.parse(
@@ -554,87 +757,273 @@ export default function DashboardPage({
       note: capitalHealth.label,
     },
     {
-      label: "Best Offer",
-      value: bestOffer
-        ? `${bestOffer.bank || "Bank"} · ${Number(
-            bestOffer.ratePa ?? bestOffer.rate ?? 0
-          ).toFixed(2)}%`
-        : "No active offer",
-      note: bestOffer
-        ? `${bestOffer.tenureMonths ?? bestOffer.tenure ?? "-"} months`
-        : "Add offer in Rates Center",
+      label: "Policy Engine",
+      value: treasuryPolicyDecision.severity,
+      note: treasuryPolicyDecision.allowed
+        ? "Treasury governance active"
+        : "Deployment restriction active",
     },
   ];
 
   return (
     <main className="dashboard-page">
-      {toastMessage && <div className="toast-message">{toastMessage}</div>}
+      {toastMessage && (
+        <div className="toast-message">
+          {toastMessage}
+        </div>
+      )}
+
+      {treasuryToast && (
+        <div className="treasury-toast">
+          {treasuryToast}
+        </div>
+      )}
 
       <section className="dashboard-hero">
         <div>
           <p className="eyebrow">FD Wealth Engine</p>
           <h1>Private Banking Console</h1>
           <p className="muted">
-            V33.2-F6A Exposure Ratio Foundation with capital exposure,
-            liquidity ratio and concentration monitoring.
+            V33.2-F6I Treasury Alert Ribbon Layer with real-time liquidity,
+            maturity and policy visibility.
           </p>
         </div>
 
         <div className="hero-alert">
-          <span>FD Alerts</span>
-          <strong>{notificationCount}</strong>
+          <span>Policy Engine</span>
+          <strong>{treasuryPolicyDecision.severity}</strong>
         </div>
       </section>
 
+      {treasuryAlerts.length > 0 && (
+        <section className="treasury-alert-ribbon">
+          {treasuryAlerts.map((alert, index) => (
+        <button
+            key={`${alert.label}-${index}`}
+            type="button"
+            className={`treasury-alert-pill ${alert.level}`}
+            onClick={() => setActiveAlert(alert)}
+          >
+            {alert.label}
+          </button>  
+          ))}
+        </section>
+      )}
+
       <SummaryGrid items={summaryItems} />
 
-      <CapitalPanel
-        currency={currency}
-        reserveAmount={reserveAmount}
-        setReserveAmount={setReserveAmount}
-        capitalHealth={capitalHealth}
-        formatMoney={formatMoney}
-        totalActivePortfolio={totalActivePortfolio}
-        totalFixedDeposits={totalFixedDeposits}
-        totalSavings={totalSavings}
-        totalParkingCash={totalParkingCash}
-        totalDeployableFunds={totalDeployableFunds}
-        totalDeployableWithUpcoming={totalDeployableWithUpcoming}
-        fdExposureRatio={fdExposureRatio}
-        liquidityRatio={liquidityRatio}
-        largestBankExposure={largestBankExposure}
-        capitalSignal={capitalSignal}
-        nextTargetMonth={nextTargetMonth}
-        strongestMonth={strongestMonth}
-        weakestMonth={weakestMonth}
-        idleCash={idleCash}
-        liquidityBuffer={liquidityBuffer}
-      />
+      <div id="capital-engine-section">
+        <CapitalPanel
+          currency={currency}
+          reserveAmount={reserveAmount}
+          setReserveAmount={setReserveAmount}
+          capitalHealth={capitalHealth}
+          formatMoney={formatMoney}
+          totalActivePortfolio={totalActivePortfolio}
+          totalFixedDeposits={totalFixedDeposits}
+          totalSavings={totalSavings}
+          totalParkingCash={totalParkingCash}
+          totalDeployableFunds={totalDeployableFunds}
+          totalDeployableWithUpcoming={totalDeployableWithUpcoming}
+          fdExposureRatio={fdExposureRatio}
+          liquidityRatio={liquidityRatio}
+          largestBankExposure={largestBankExposure}
+          capitalSignal={capitalSignal}
+          nextTargetMonth={nextTargetMonth}
+          strongestMonth={strongestMonth}
+          weakestMonth={weakestMonth}
+          idleCash={idleCash}
+          liquidityBuffer={liquidityBuffer}
+        />
+      </div>
 
-      <div className="dashboard-main-grid">
-        <div className="dashboard-main-side">
-          <AdvisorPanel
-            currency={currency}
-            targetMonth={nextTargetMonth?.month || "-"}
-            weakMonth={weakestMonth?.month || "-"}
-            deployable={totalDeployableWithUpcoming}
-            bestOffer={bestOffer}
-          />
+      <div className="dashboard-console-grid">
+        <AdvisorPanel
+          currency={currency}
+          targetMonth={nextTargetMonth?.month || "-"}
+          weakMonth={weakestMonth?.month || "-"}
+          deployable={totalDeployableWithUpcoming}
+          bestOffer={bestOffer}
+        />
 
+        <div id="maturity-command-section">
           <MaturityAlerts records={safeRecords} currency={currency} />
+        </div>
 
+       <div id="execution-section">
           <ExecutionPanel
             currency={currency}
             upcomingMaturityAmount={upcomingMaturityAmount}
             idleCash={idleCash}
             onExecute={handleExecuteDeployment}
             onUndoExecution={handleUndoExecution}
+            treasuryPolicyDecision={treasuryPolicyDecision}
           />
-        </div>
+        </div> 
 
         <AuditTrail />
-        <LedgerViewer />
       </div>
+
+      <div className="dashboard-bottom-grid">
+        <div id="treasury-timeline-section">
+          <TreasuryTimeline records={safeRecords} currency={currency} />
+        </div>
+
+        <LedgerViewer />
+
+        <div id="policy-breach-section">
+          <PolicyBreachPanel decision={treasuryPolicyDecision} />
+        </div>
+      </div>
+        <TreasuryAlertModal
+        alert={activeAlert}
+        onClose={() => setActiveAlert(null)}
+        onAction={(action, payload) => {
+      if (action === "Move to savings") {
+        const recordsToMove =
+          payload?.records ||
+          activeAlert?.records ||
+          [];
+
+    if (!recordsToMove.length) {
+      setToastMessage("No matured FD record selected.");
+      setActiveAlert(null);
+      return;
+    }
+
+    recordsToMove.forEach((item) => {
+      const originalFD = safeRecords.find(
+        (record) => record.id === item.id
+      );
+
+      if (!originalFD) return;
+
+      const recoveryAmount = getAmount(originalFD);
+      const recoveryId = `SAV-${Date.now()}-${item.id}`;
+
+      onUpdateRecord?.({
+        ...originalFD,
+        status: "CLOSED",
+        closedDate: new Date().toISOString().split("T")[0],
+        note: `${originalFD.note || ""} | Moved to savings via Treasury Recovery Engine`,
+      });
+
+      onAddRecord?.({
+        id: recoveryId,
+        bank: originalFD.bank || "Treasury Savings",
+        recordType: "SAVINGS",
+        type: "SAVINGS",
+        principal: recoveryAmount,
+        amount: recoveryAmount,
+        status: "ACTIVE",
+        startDate: new Date().toISOString().split("T")[0],
+        note: `Recovered from matured FD ${originalFD.id}`,
+      });
+
+      writeLedgerEntry({
+        type: "TREASURY_RECOVERY",
+        amount: recoveryAmount,
+        currency,
+        recordId: recoveryId,
+        sourceBreakdown: [
+          {
+            id: originalFD.id,
+            bank: originalFD.bank,
+            recordType: "FD",
+            amount: recoveryAmount,
+          },
+        ],
+        note: `Matured FD ${originalFD.id} moved to savings.`,
+      });
+    });
+
+    const auditEntry = {
+      id: `AUDIT-${Date.now()}`,
+      type: "TREASURY_RECOVERY",
+      amount: recordsToMove.reduce((sum, item) => {
+        const originalFD = safeRecords.find(
+          (record) => record.id === item.id
+        );
+        return sum + getAmount(originalFD);
+      }, 0),
+      currency,
+      batchId: `RECOVERY-${Date.now()}`,
+      timestamp: new Date().toISOString(),
+      note: "Matured FD moved to savings account.",
+    };
+
+    const existingAudit = JSON.parse(
+      localStorage.getItem("fd_execution_history") || "[]"
+    );
+
+    localStorage.setItem(
+      "fd_execution_history",
+      JSON.stringify([...existingAudit, auditEntry])
+    );
+
+    window.dispatchEvent(new Event("ledgerUpdated"));
+    window.dispatchEvent(new Event("auditTrailUpdated"));
+
+    setActiveAlert(null);
+
+    setToastMessage(
+      `Treasury recovery completed. ${recordsToMove.length} FD moved to savings.`
+    );
+
+    setTreasuryToast(
+      `✅ Treasury Recovery Completed — ${recordsToMove.length} FD restored to liquidity reserve`
+    );
+
+    setTimeout(() => {
+      setToastMessage("");
+    }, 3000);
+
+    setTimeout(() => {
+      setTreasuryToast("");
+    }, 4000);
+
+    return;
+  }
+
+  const targetMap = {
+    "Review liquidity buffer": "capital-engine-section",
+    "Increase reserve capital": "capital-engine-section",
+    "Pause deployment": "policy-breach-section",
+
+    "Review matured FD": "maturity-command-section",
+    "Redeploy capital": "execution-section",
+
+    "Prepare reinvestment": "treasury-timeline-section",
+    "Review maturity ladder": "treasury-timeline-section",
+    "Monitor timeline": "treasury-timeline-section",
+
+    "Review treasury policy": "policy-breach-section",
+    "Reduce concentration risk": "capital-engine-section",
+    "Increase liquidity ratio": "capital-engine-section",
+
+    OPEN_RECORD: "maturity-command-section",
+  };
+
+  const targetId = targetMap[action];
+
+  setActiveAlert(null);
+
+  setTimeout(() => {
+    if (targetId) {
+      document.getElementById(targetId)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+
+    setToastMessage(`Opened treasury action: ${action}`);
+
+    setTimeout(() => {
+      setToastMessage("");
+    }, 2500);
+  }, 120);
+}}
+/>
     </main>
   );
 }

@@ -4,7 +4,6 @@ function formatLedgerTime(value) {
   if (!value) return "-";
 
   const date = new Date(value);
-
   if (Number.isNaN(date.getTime())) return value;
 
   return date.toLocaleString(undefined, {
@@ -17,6 +16,8 @@ function formatLedgerTime(value) {
 }
 
 function getSeverity(entry) {
+  if (entry.type === "TREASURY_RECOVERY") return "RECOVERED";
+
   const amount = Number(entry.amount || 0);
 
   if (amount >= 100000) return "CRITICAL";
@@ -27,33 +28,19 @@ function getSeverity(entry) {
 }
 
 function getComplianceTag(entry) {
+  if (entry.type === "TREASURY_RECOVERY") return "SYSTEM";
   if (entry.type === "UNDO") return "REVERSAL";
   if (entry.type === "EXECUTE") return "AUTO";
 
   return "SYSTEM";
 }
 
-function getEscalationLabel(severity) {
-  if (severity === "CRITICAL") return "Compliance Escalation";
-  if (severity === "HIGH") return "Treasury Warning";
-  if (severity === "MEDIUM") return "Operational Attention";
+function getTypeClass(type) {
+  if (type === "TREASURY_RECOVERY") return "ledger-type-recovery";
+  if (type === "EXECUTE") return "ledger-type-execute";
+  if (type === "UNDO") return "ledger-type-undo";
 
-  return "Normal Activity";
-}
-
-function getRiskInsight(entry) {
-  const severity = getSeverity(entry);
-  const escalation = getEscalationLabel(severity);
-
-  if (entry.type === "UNDO") {
-    return `${severity} risk reversal event. ${escalation}. Capital was returned to liquidity source after an execution rollback.`;
-  }
-
-  if (entry.type === "EXECUTE") {
-    return `${severity} risk system-generated deployment event. ${escalation}. Capital was automatically deployed into an FD execution record.`;
-  }
-
-  return `${severity} risk system ledger event recorded for audit visibility. ${escalation}.`;
+  return "ledger-type-system";
 }
 
 export default function LedgerViewer() {
@@ -68,9 +55,10 @@ export default function LedgerViewer() {
         const savedLedger =
           JSON.parse(localStorage.getItem("fd_immutable_ledger")) || [];
 
-        setLedgerEntries(savedLedger);
+        setLedgerEntries(Array.isArray(savedLedger) ? savedLedger : []);
       } catch (error) {
         console.error("Failed to load immutable ledger:", error);
+        setLedgerEntries([]);
       }
     };
 
@@ -86,13 +74,18 @@ export default function LedgerViewer() {
   const latestLedger = ledgerEntries.slice().reverse();
 
   const filteredLedger = latestLedger.filter((entry) => {
-    const matchesType = filter === "ALL" ? true : entry.type === filter;
+    const entryType = String(entry?.type || "").toUpperCase();
+
+    const matchesType =
+      filter === "ALL"
+        ? true
+        : filter === "RECOVERY"
+        ? entryType === "TREASURY_RECOVERY"
+        : entryType === filter;
 
     const keyword = searchTerm.trim().toLowerCase();
     const severity = getSeverity(entry);
     const compliance = getComplianceTag(entry);
-    const escalation = getEscalationLabel(severity);
-    const insight = getRiskInsight(entry);
 
     const matchesSearch =
       !keyword ||
@@ -103,144 +96,117 @@ export default function LedgerViewer() {
       String(entry.amount || "").toLowerCase().includes(keyword) ||
       String(severity || "").toLowerCase().includes(keyword) ||
       String(compliance || "").toLowerCase().includes(keyword) ||
-      String(escalation || "").toLowerCase().includes(keyword) ||
-      String(insight || "").toLowerCase().includes(keyword);
+      String(entry.note || "").toLowerCase().includes(keyword);
 
     return matchesType && matchesSearch;
   });
 
   const visibleLedger = showAllLedger
     ? filteredLedger
-    : filteredLedger.slice(0, 3);
+    : filteredLedger.slice(0, 5);
 
   return (
-    <section className="projection-card">
-      <div className="card-header">
+    <section className="dashboard-section ledger-viewer-panel">
+      <div className="ledger-header">
         <div>
           <p className="eyebrow">Immutable Ledger</p>
+          <h2>Ledger Viewer</h2>
+          <p className="muted">
+            Permanent treasury execution, undo and recovery history.
+          </p>
+        </div>
 
-          <h3>Ledger Viewer</h3>
-
-          <div className="ledger-filter-row">
-            {["ALL", "EXECUTE", "UNDO"].map((item) => (
-              <button
-                key={item}
-                className={`ledger-filter-btn ${
-                  filter === item ? "ledger-filter-btn-active" : ""
-                }`}
-                onClick={() => {
-                  setFilter(item);
-                  setShowAllLedger(false);
-                }}
-              >
-                {item}
-              </button>
-            ))}
-          </div>
-
-          <input
-            type="text"
-            className="ledger-search-input"
-            placeholder="Search Record ID / Event ID / Amount / Type / Severity / Compliance"
-            value={searchTerm}
-            onChange={(event) => {
-              setSearchTerm(event.target.value);
-              setShowAllLedger(false);
-            }}
-          />
+        <div className="ledger-filter-row">
+          {["ALL", "EXECUTE", "UNDO", "RECOVERY"].map((item) => (
+            <button
+              key={item}
+              className={`ledger-filter-btn ${
+                filter === item ? "ledger-filter-btn-active" : ""
+              }`}
+              onClick={() => {
+                setFilter(item);
+                setShowAllLedger(false);
+              }}
+              type="button"
+            >
+              {item}
+            </button>
+          ))}
         </div>
       </div>
 
-      {filteredLedger.length > 3 && (
-        <button
-          className="secondary-button"
-          onClick={() => setShowAllLedger(!showAllLedger)}
-        >
-          {showAllLedger ? "Show Less" : "Show All Ledger"}
-        </button>
-      )}
+      <div className="ledger-search-row">
+        <input
+          type="text"
+          className="ledger-search-input"
+          placeholder="Search Record ID / Event ID / Amount / Type / Severity / Compliance"
+          value={searchTerm}
+          onChange={(event) => {
+            setSearchTerm(event.target.value);
+            setShowAllLedger(false);
+          }}
+        />
 
-      <div className="projection-list">
+        {filteredLedger.length > 5 && (
+          <button
+            className="ledger-show-button"
+            type="button"
+            onClick={() => setShowAllLedger(!showAllLedger)}
+          >
+            {showAllLedger
+              ? "Show Less"
+              : `Show All ${filteredLedger.length} Ledger Events`}
+          </button>
+        )}
+      </div>
+
+      <div className="ledger-table-list">
         {!filteredLedger.length ? (
-          <p className="muted">No matching ledger entries found.</p>
+          <div className="ledger-empty">
+            No matching ledger entries found.
+          </div>
         ) : (
           visibleLedger.map((entry, index) => {
             const severity = getSeverity(entry);
             const compliance = getComplianceTag(entry);
-            const escalation = getEscalationLabel(severity);
-            const riskInsight = getRiskInsight(entry);
             const severityClass = severity.toLowerCase();
+            const entryType = String(entry.type || "EVENT").toUpperCase();
 
             return (
               <div
-                key={entry.id || index}
-                className={`projection-card ledger-entry ledger-entry-${severityClass} ${
-                  index === 0 ? "latest-ledger-entry" : ""
+                key={entry.id || `${entry.recordId}-${index}`}
+                className={`ledger-table-row ledger-row-${severityClass} ${
+                  entryType === "TREASURY_RECOVERY"
+                    ? "ledger-row-recovery"
+                    : ""
                 }`}
               >
-                <div className={`ledger-escalation-strip ledger-escalation-${severityClass}`}>
-                  {escalation}
-                </div>
-
-                <p className="ledger-sequence">
-                  #{String(filteredLedger.length - index).padStart(4, "0")}
-                </p>
-
-                <span
-                  className={`ledger-badge ${
-                    entry.type === "EXECUTE"
-                      ? "ledger-badge-execute"
-                      : "ledger-badge-undo"
-                  }`}
-                >
-                  {entry.type}
+                <span className={`ledger-pill ledger-pill-${severityClass}`}>
+                  {severity}
                 </span>
 
-                <div className="ledger-meta-grid">
-                  <div>
-                    <span>Amount</span>
-                    <strong>
-                      {entry.currency}{" "}
-                      {Number(entry.amount || 0).toLocaleString()}
-                    </strong>
-                  </div>
+                <span className={`ledger-type-pill ${getTypeClass(entryType)}`}>
+                  {entryType === "TREASURY_RECOVERY"
+                    ? "RECOVERY"
+                    : entryType}
+                </span>
 
-                  <div>
-                    <span>Record ID</span>
-                    <strong>{entry.recordId || "-"}</strong>
-                  </div>
+                <strong className="ledger-record-id">
+                  {entry.recordId || "-"}
+                </strong>
 
-                  <div>
-                    <span>Event ID</span>
-                    <strong>{entry.id || "-"}</strong>
-                  </div>
+                <strong className="ledger-amount">
+                  {entry.currency || "MYR"}{" "}
+                  {Number(entry.amount || 0).toLocaleString()}
+                </strong>
 
-                  <div>
-                    <span>Timestamp</span>
-                    <strong>{formatLedgerTime(entry.timestamp)}</strong>
-                  </div>
+                <span className="ledger-time">
+                  {formatLedgerTime(entry.timestamp)}
+                </span>
 
-                  <div>
-                    <span>Severity</span>
-                    <strong
-                      className={`ledger-severity ledger-severity-${severityClass}`}
-                    >
-                      {severity}
-                    </strong>
-                  </div>
-
-                  <div>
-                    <span>Compliance</span>
-                    <strong className="ledger-compliance-tag">
-                      {compliance}
-                    </strong>
-                  </div>
-                </div>
-
-                <div className={`ledger-insight-box ledger-insight-${severityClass}`}>
-                  <span>Risk Insight</span>
-                  <p>{riskInsight}</p>
-                </div>
+                <span className="ledger-compliance">
+                  {compliance}
+                </span>
               </div>
             );
           })

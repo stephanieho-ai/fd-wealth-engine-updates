@@ -1,0 +1,92 @@
+.treasury-timeline {
+  display: grid;
+  gap: 18px;
+}
+
+.timeline-list {
+  display: grid;
+  gap: 12px;
+}
+
+.timeline-row {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  align-items: center;
+  gap: 18px;
+
+  padding: 16px 18px;
+  border-radius: 18px;
+
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: #ffffff;
+}
+
+.timeline-days {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 52px;
+
+  border-radius: 14px;
+
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.timeline-content strong {
+  display: block;
+  font-size: 15px;
+  color: #0f172a;
+}
+
+.timeline-content p {
+  margin-top: 4px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.timeline-amount {
+  font-size: 15px;
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.timeline-overdue {
+  background: #fff5f5;
+  border-color: #fecaca;
+}
+
+.timeline-overdue .timeline-days {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.timeline-urgent {
+  background: #fff7ed;
+  border-color: #fed7aa;
+}
+
+.timeline-urgent .timeline-days {
+  background: #ffedd5;
+  color: #c2410c;
+}
+
+.timeline-upcoming {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+
+.timeline-upcoming .timeline-days {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.timeline-future {
+  background: #f8fafc;
+}
+
+.timeline-future .timeline-days {
+  background: #e2e8f0;
+  color: #475569;
+}
