@@ -324,6 +324,77 @@ export default function TreasuryPage() {
       ? "Treasury routing action is in progress."
       : "No active treasury pressure detected.";
 
+     const recoveryScore =
+    openQueueCount * 25 +
+    reviewQueueCount * 18 +
+    escalatedCount * 20 +
+    criticalTimelineEvents * 8 -
+    resolvedQueueCount * 10;
+
+  const liquidityStressLevel =
+    recoveryScore >= 90
+      ? "CRITICAL"
+      : recoveryScore >= 60
+      ? "HIGH"
+      : recoveryScore >= 35
+      ? "ELEVATED"
+      : "STABLE";
+
+  const treasuryInterventionSeverity =
+    recoveryScore >= 90
+      ? "IMMEDIATE INTERVENTION"
+      : recoveryScore >= 60
+      ? "TREASURY INTERVENTION REQUIRED"
+      : recoveryScore >= 35
+      ? "ACTIVE MONITORING"
+      : "NORMAL";
+
+  const autoRecoveryRecommendation =
+    recoveryScore >= 90
+      ? {
+          title: "Emergency Liquidity Recovery",
+          message:
+            "Treasury pressure is critical. Immediate reserve recovery and deployment restriction recommended.",
+          action: "BLOCK NEW DEPLOYMENT",
+        }
+      : recoveryScore >= 60
+      ? {
+          title: "High Treasury Recovery Pressure",
+          message:
+            "Treasury queue pressure is elevated. Recovery routing and reserve balancing should begin immediately.",
+          action: "INITIATE RECOVERY ROUTING",
+        }
+      : recoveryScore >= 35
+      ? {
+          title: "Moderate Recovery Monitoring",
+          message:
+            "Treasury workflow is under moderate stress. Continue monitoring and prioritize unresolved queue items.",
+          action: "PRIORITIZE REVIEW QUEUE",
+        }
+      : {
+          title: "Treasury Stable",
+          message:
+            "Treasury recovery environment is stable. No immediate intervention required.",
+          action: "CONTINUE MONITORING",
+        };
+
+  const autoEscalationSignal =
+    escalatedCount >= 2 || recoveryScore >= 80
+      ? "AUTO ESCALATION ACTIVE"
+      : openQueueCount >= 2
+      ? "WATCHLIST"
+      : "NORMAL"; 
+      
+  const autoInterventionTriggered =
+    liquidityStressLevel === "HIGH" || liquidityStressLevel === "CRITICAL";
+
+  const autoInterventionReason =
+    liquidityStressLevel === "CRITICAL"
+      ? "Critical recovery pressure detected. Treasury should block new deployment and prioritize liquidity recovery."
+      : liquidityStressLevel === "HIGH"
+      ? "High recovery pressure detected. Treasury intervention is required before further execution."
+      : "No treasury intervention required.";
+
   const treasuryGovernanceRecommendation =
     openQueueCount >= 2
       ? {
@@ -461,6 +532,57 @@ export default function TreasuryPage() {
           <span>Review: {reviewQueueCount}</span>
           <span>Ready: {readyQueueCount}</span>
           <span>Resolved: {resolvedQueueCount}</span>
+        </div>
+      </section>
+      
+          {autoInterventionTriggered && (
+        <section className="treasury-governance-recommendation">
+          <div>
+            <p className="eyebrow">Auto Treasury Intervention</p>
+            <h2>Treasury Intervention Triggered</h2>
+            <p>{autoInterventionReason}</p>
+          </div>
+
+          <div className="treasury-recommendation-side">
+            <span>INTERVENTION</span>
+
+            <div>
+              <small>Action: Pause New Deployment</small>
+              <small>Desk: Recovery Execution Desk</small>
+              <small>Status: Requires Treasury Review</small>
+            </div>
+          </div>
+        </section>
+      )}
+    
+
+     <section className="treasury-governance-recommendation">
+        <div>
+          <p className="eyebrow">Treasury Auto Recovery Intelligence</p>
+
+          <h2>{autoRecoveryRecommendation.title}</h2>
+
+          <p>{autoRecoveryRecommendation.message}</p>
+        </div>
+
+        <div className="treasury-recommendation-side">
+          <span>{liquidityStressLevel}</span>
+
+          <div>
+            <small>Recovery Score: {recoveryScore}</small>
+
+            <small>
+              Treasury Severity: {treasuryInterventionSeverity}
+            </small>
+
+            <small>
+              Escalation Engine: {autoEscalationSignal}
+            </small>
+
+            <small>
+              Recommended Action: {autoRecoveryRecommendation.action}
+            </small>
+          </div>
         </div>
       </section>
 
