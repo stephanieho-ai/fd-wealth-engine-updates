@@ -1,17 +1,19 @@
 import DashboardPage from "../pages/DashboardPage";
 import RecordsPage from "../pages/RecordsPage";
 import TreasuryPage from "../pages/TreasuryPage";
+import TreasuryManualPage from "../pages/TreasuryManualPage";
 import MorePage from "../pages/MorePage";
 import SettingsPage from "../pages/SettingsPage";
 
 function Sidebar({ tabs, activeTab, onTabChange, currency, totalActivePortfolio }) {
   const items = [
-  { key: tabs.HOME, label: "Home", icon: "⌂" },
-  { key: tabs.RECORDS, label: "Records", icon: "▣" },
-  { key: "TREASURY", label: "Treasury", icon: "◇" },
-  { key: tabs.MORE, label: "More", icon: "≡" },
-  { key: tabs.SETTINGS, label: "Settings", icon: "⚙" },
-];
+    { key: tabs.HOME, label: "Home", icon: "⌂" },
+    { key: tabs.RECORDS, label: "Records", icon: "▣" },
+    { key: "TREASURY", label: "Treasury", icon: "◇" },
+    { key: "TREASURY_MANUAL", label: "Treasury Manual", icon: "📘" },
+    { key: tabs.MORE, label: "More", icon: "≡" },
+    { key: tabs.SETTINGS, label: "Settings", icon: "⚙" },
+  ];
 
   return (
     <aside className="app-sidebar">
@@ -36,25 +38,24 @@ function Sidebar({ tabs, activeTab, onTabChange, currency, totalActivePortfolio 
         ))}
       </nav>
 
-     <div className="sidebar-footer-cards">
-  <div className="sidebar-mini-card">
-    <span>BASE CURRENCY</span>
-    <strong>{currency}</strong>
-  </div>
+      <div className="sidebar-footer-cards">
+        <div className="sidebar-mini-card">
+          <span>BASE CURRENCY</span>
+          <strong>{currency}</strong>
+        </div>
 
-  <div className="sidebar-mini-card">
-    <span>ACTIVE PORTFOLIO</span>
-    <strong>
-      {currency} {Number(totalActivePortfolio || 0).toLocaleString()}
-    </strong>
-  </div>
+        <div className="sidebar-mini-card">
+          <span>ACTIVE PORTFOLIO</span>
+          <strong>
+            {currency} {Number(totalActivePortfolio || 0).toLocaleString()}
+          </strong>
+        </div>
 
-  <div className="sidebar-mini-card version-card">
-    <span>SYSTEM VERSION</span>
-    <strong>V33.2-F4A IMMUTABLE LEDGER</strong>
-  </div>
-</div>
-
+        <div className="sidebar-mini-card version-card">
+          <span>SYSTEM VERSION</span>
+         <strong>V33.2-F9J TREASURY MANUAL SYSTEM</strong>
+        </div>
+      </div>
     </aside>
   );
 }
@@ -63,7 +64,9 @@ function TopBar({ title, currency }) {
   return (
     <header className="topbar">
       <div>
-        <div className="topbar-version">FD WEALTH ENGINE • V33.2-F4A IMMUTABLE LEDGER</div>
+        <div className="topbar-version">
+       FD WEALTH ENGINE • V33.2-F9J TREASURY OPERATING MANUAL SYSTEM 
+        </div>
         <h1 className="topbar-title">{title}</h1>
       </div>
 
@@ -88,10 +91,7 @@ export default function AppShell({
   onAddRecord,
   onUpdateRecord,
   onDeleteRecord,
-
-  // 🔥 加这里
   onUndoExecution,
-
   onCloseRecord,
   onRolloverRecord,
 }) {
@@ -99,15 +99,15 @@ export default function AppShell({
   let page = null;
 
   const sharedPageProps = {
-  tabs,
-  onTabChange: setActiveTab,
-  currency,
-  records,
-  activeRecords,
-  onAddRecord,
-  onUpdateRecord,
-  onDeleteRecord,
-};
+    tabs,
+    onTabChange: setActiveTab,
+    currency,
+    records,
+    activeRecords,
+    onAddRecord,
+    onUpdateRecord,
+    onDeleteRecord,
+  };
 
   switch (activeTab) {
     case tabs.RECORDS:
@@ -115,9 +115,6 @@ export default function AppShell({
       page = (
         <RecordsPage
           {...sharedPageProps}
-          onAddRecord={onAddRecord}
-          onUpdateRecord={onUpdateRecord}
-          onDeleteRecord={onDeleteRecord}
           onCloseRecord={onCloseRecord}
           onRolloverRecord={onRolloverRecord}
         />
@@ -129,14 +126,16 @@ export default function AppShell({
       page = <TreasuryPage />;
       break;
 
+    case "TREASURY_MANUAL":
+      pageTitle = "Treasury Operating Manual";
+      page = <TreasuryManualPage />;
+      break;
+
     case tabs.MORE:
       pageTitle = "Execution Center";
       page = (
         <MorePage
           {...sharedPageProps}
-          onAddRecord={onAddRecord}
-          onUpdateRecord={onUpdateRecord}
-          onDeleteRecord={onDeleteRecord}
           onCloseRecord={onCloseRecord}
           onRolloverRecord={onRolloverRecord}
         />
@@ -167,6 +166,7 @@ export default function AppShell({
       );
       break;
   }
+
   return (
     <div className="app-shell">
       <Sidebar
@@ -185,14 +185,12 @@ export default function AppShell({
 
           <footer className="system-footer">
             <div>FD Wealth Engine · Private Banking Console</div>
-
             <div>
-             V33.2-F4A IMMUTABLE LEDGER • Built with React + Electron
-            </div>
+              V33.2-F9J TREASURY OPERATING MANUAL SYSTEM • Built with React + Electron
+              </div>
           </footer>
         </div>
       </div>
     </div>
   );
 }
-  

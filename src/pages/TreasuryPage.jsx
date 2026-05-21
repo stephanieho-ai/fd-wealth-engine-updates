@@ -1,5 +1,6 @@
 import { useState } from "react";
 import LedgerViewer from "../components/dashboard/LedgerViewer";
+import { getTreasuryDecisionBrain } from "../utils/treasuryDecisionBrain";
 
 export default function TreasuryPage() {
   const STORAGE_KEY = "fd_treasury_workflow_state";
@@ -394,6 +395,17 @@ export default function TreasuryPage() {
       : liquidityStressLevel === "HIGH"
       ? "High recovery pressure detected. Treasury intervention is required before further execution."
       : "No treasury intervention required.";
+  
+  const treasuryDecisionBrain = getTreasuryDecisionBrain({
+    recoveryScore,
+    liquidityStressLevel,
+    openQueueCount,
+    reviewQueueCount,
+    readyQueueCount,
+    resolvedQueueCount,
+    escalatedCount,
+    criticalTimelineEvents,
+  });
 
   const treasuryGovernanceRecommendation =
     openQueueCount >= 2
@@ -512,29 +524,108 @@ export default function TreasuryPage() {
         </div>
       </section>
 
-      <section
-        className={`treasury-intelligence-banner ${
-          openQueueCount >= 2 || escalatedCount >= 1
-            ? "danger"
-            : reviewQueueCount >= 1
-            ? "warning"
-            : "stable"
-        }`}
-      >
-        <div>
-          <p className="eyebrow">Treasury Recovery Intelligence</p>
-          <h2>{treasurySignal}</h2>
-          <p>{treasurySignalMessage}</p>
+    <section
+  className={`treasury-intelligence-banner ${
+    openQueueCount >= 2 || escalatedCount >= 1
+      ? "danger"
+      : reviewQueueCount >= 1
+      ? "warning"
+      : "stable"
+  }`}
+>
+  <div>
+    <p className="eyebrow">Treasury Recovery Intelligence</p>
+    <h2>{treasurySignal}</h2>
+    <p>{treasurySignalMessage}</p>
+  </div>
+
+  <div className="treasury-intelligence-metrics">
+    <span>Open: {openQueueCount}</span>
+    <span>Review: {reviewQueueCount}</span>
+    <span>Ready: {readyQueueCount}</span>
+    <span>Resolved: {resolvedQueueCount}</span>
+  </div>
+</section>
+
+<section
+  className={`treasury-governance-recommendation ${
+    treasuryDecisionBrain.controlState === "LOCKDOWN"
+      ? "danger"
+      : treasuryDecisionBrain.controlState === "RESTRICTED"
+      ? "warning"
+      : treasuryDecisionBrain.controlState === "WARNING"
+      ? "warning"
+      : "stable"
+  }`}
+>
+  <div>
+    <p className="eyebrow">Treasury Decision Intelligence</p>
+    <h2>{treasuryDecisionBrain.decisionTitle}</h2>
+    <p>{treasuryDecisionBrain.decisionMessage}</p>
+  </div>
+
+  <div className="treasury-recommendation-side">
+    <span>{treasuryDecisionBrain.controlState}</span>
+
+    <div>
+      <small>
+        Enforcement: {treasuryDecisionBrain.enforcementLevel}
+      </small>
+
+      <small>
+        Deployment Block:{" "}
+        {treasuryDecisionBrain.shouldBlockDeployment
+          ? "YES"
+          : "NO"}
+      </small>
+
+      <small>
+        Reserve Protection:{" "}
+        {treasuryDecisionBrain.shouldProtectReserve
+          ? "ACTIVE"
+          : "NORMAL"}
+      </small>
+
+      <small>
+        Lockdown:{" "}
+        {treasuryDecisionBrain.shouldLockdown
+          ? "ACTIVE"
+          : "NO"}
+      </small>
+    </div>
+  </div>
+</section>
+
+      <section className="treasury-action-center">
+        <div className="treasury-action-header">
+          <div>
+            <p className="eyebrow">Operational Restriction Layer</p>
+            <h2>Treasury Control Restrictions</h2>
+            <p className="muted">
+              Decision Brain converts treasury risk into operational control
+              rules.
+            </p>
+          </div>
+
+          <span className="treasury-action-mode">
+            {treasuryDecisionBrain.enforcementLevel}
+          </span>
         </div>
 
-        <div className="treasury-intelligence-metrics">
-          <span>Open: {openQueueCount}</span>
-          <span>Review: {reviewQueueCount}</span>
-          <span>Ready: {readyQueueCount}</span>
-          <span>Resolved: {resolvedQueueCount}</span>
+        <div className="treasury-action-grid">
+          {treasuryDecisionBrain.restrictions.map((restriction) => (
+            <div key={restriction} className="treasury-action-card">
+              <span>Restriction Rule</span>
+              <strong>{restriction}</strong>
+              <p>
+                This rule is automatically generated from recovery score,
+                liquidity stress, escalation count and incident timeline.
+              </p>
+            </div>
+          ))}
         </div>
       </section>
-      
+
           {autoInterventionTriggered && (
         <section className="treasury-governance-recommendation">
           <div>
