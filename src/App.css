@@ -3218,12 +3218,20 @@ input {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  width: 100%;
+}
+
+.architecture-stack > div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .architecture-node {
-  width: min(100%, 540px);
-  padding: 18px;
+  width: min(100%, 420px);
+  padding: 16px 18px;
   text-align: center;
   border-radius: 18px;
   background: rgba(37, 99, 235, 0.08);
@@ -3233,11 +3241,15 @@ input {
 }
 
 .architecture-arrow {
-  font-size: 22px;
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1;
   font-weight: 900;
   color: #2563eb;
+  margin: 2px 0;
 }
-
 .simulator-grid,
 .brain-grid {
   margin-top: 22px;
