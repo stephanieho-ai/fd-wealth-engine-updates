@@ -325,7 +325,7 @@ export default function TreasuryPage() {
       ? "Treasury routing action is in progress."
       : "No active treasury pressure detected.";
 
-     const recoveryScore =
+  const recoveryScore =
     openQueueCount * 25 +
     reviewQueueCount * 18 +
     escalatedCount * 20 +
@@ -384,8 +384,8 @@ export default function TreasuryPage() {
       ? "AUTO ESCALATION ACTIVE"
       : openQueueCount >= 2
       ? "WATCHLIST"
-      : "NORMAL"; 
-      
+      : "NORMAL";
+
   const autoInterventionTriggered =
     liquidityStressLevel === "HIGH" || liquidityStressLevel === "CRITICAL";
 
@@ -395,7 +395,7 @@ export default function TreasuryPage() {
       : liquidityStressLevel === "HIGH"
       ? "High recovery pressure detected. Treasury intervention is required before further execution."
       : "No treasury intervention required.";
-  
+
   const treasuryDecisionBrain = getTreasuryDecisionBrain({
     recoveryScore,
     liquidityStressLevel,
@@ -406,6 +406,31 @@ export default function TreasuryPage() {
     escalatedCount,
     criticalTimelineEvents,
   });
+
+  const liveTreasurySignalSeverity =
+    liquidityStressLevel === "CRITICAL" || treasuryDecisionBrain.shouldLockdown
+      ? "critical"
+      : liquidityStressLevel === "HIGH" ||
+        treasuryDecisionBrain.controlState === "RESTRICTED"
+      ? "warning"
+      : liquidityStressLevel === "ELEVATED" ||
+        treasuryDecisionBrain.controlState === "WARNING"
+      ? "watch"
+      : "normal";
+
+  const livePolicyStatus = treasuryDecisionBrain.shouldBlockDeployment
+    ? "BLOCKED"
+    : treasuryDecisionBrain.shouldProtectReserve
+    ? "PROTECTED"
+    : "COMPLIANT";
+
+  const liveActionSignal = treasuryDecisionBrain.shouldLockdown
+    ? "LOCKDOWN ACTIVE"
+    : treasuryDecisionBrain.shouldBlockDeployment
+    ? "PAUSE DEPLOYMENT"
+    : treasuryDecisionBrain.shouldProtectReserve
+    ? "PROTECT RESERVE"
+    : "MONITOR";
 
   const treasuryGovernanceRecommendation =
     openQueueCount >= 2
@@ -498,6 +523,558 @@ export default function TreasuryPage() {
         </div>
       </section>
 
+      <section className="treasury-command-center">
+        <div className="treasury-command-header">
+          <div>
+            <p className="treasury-command-label">
+                🏛️ LIVE TREASURY OPERATIONS
+                </p>
+
+            <h2>Treasury Command Center</h2>
+
+            <p className="treasury-command-description">
+              Institutional live monitoring wall for liquidity, policy
+              governance, escalation intelligence, and treasury operational
+              visibility.
+            </p>
+          </div>
+
+          <div className={`treasury-live-status ${liveTreasurySignalSeverity}`}>
+            <span className="live-dot"></span>
+
+            <div>
+              <strong>{treasurySignal}</strong>
+              <p>Live Treasury Signal</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="treasury-command-grid">
+          <div className="treasury-command-card">
+            <span>Active Alerts</span>
+            <strong>{warningTimelineEvents + criticalTimelineEvents}</strong>
+            <p>Institutional alert center activity</p>
+          </div>
+
+          <div className="treasury-command-card">
+            <span>Recovery Queue</span>
+            <strong>{openQueueCount + reviewQueueCount + readyQueueCount}</strong>
+            <p>Recovery orchestration workload</p>
+          </div>
+
+          <div className="treasury-command-card">
+            <span>Liquidity Status</span>
+            <strong>{liquidityStressLevel}</strong>
+            <p>Real-time deployable liquidity condition</p>
+          </div>
+
+          <div className="treasury-command-card">
+            <span>Policy Status</span>
+            <strong>{livePolicyStatus}</strong>
+            <p>Governance monitoring system</p>
+          </div>
+
+          <div className="treasury-command-card">
+            <span>Reserve Protection</span>
+            <strong>
+              {treasuryDecisionBrain.shouldProtectReserve ? "ACTIVE" : "NORMAL"}
+            </strong>
+            <p>Capital reserve protection status</p>
+          </div>
+
+          <div className="treasury-command-card">
+            <span>Action Signal</span>
+            <strong>{liveActionSignal}</strong>
+            <p>Live treasury operating instruction</p>
+          </div>
+        </div>
+      </section>
+
+        <section className="treasury-monitoring-wall">
+
+            <div className="treasury-monitoring-header">
+
+                <div>
+                <p className="treasury-command-label">
+                  🌐 GLOBAL TREASURY MONITORING
+                </p>
+
+                <h2>Institutional Treasury Monitoring Wall</h2>
+
+                <p className="treasury-command-description">
+                    Global treasury monitoring overview for liquidity,
+                    governance exposure, deployment permission,
+                    reserve protection and operational pressure.
+                </p>
+                </div>
+
+                <div className="treasury-monitoring-mode">
+                    🗼 LIVE CONTROL TOWER
+                </div>
+
+            </div>
+
+            <div className="treasury-monitoring-grid">
+
+                <div className="treasury-monitor-card">
+                <span>Global Treasury State</span>
+
+                <strong>{treasurySignal}</strong>
+
+                <p>
+                    Institutional treasury operating condition.
+                </p>
+                </div>
+
+                <div className="treasury-monitor-card">
+                <span>Liquidity Severity</span>
+
+                <strong>{liquidityStressLevel}</strong>
+
+                <p>
+                    Real-time liquidity governance pressure.
+                </p>
+                </div>
+
+                <div className="treasury-monitor-card">
+                <span>Deployment Permission</span>
+
+                <strong>
+                    {treasuryDecisionBrain.shouldBlockDeployment
+                    ? "RESTRICTED"
+                    : "ALLOWED"}
+                </strong>
+
+                <p>
+                    Treasury deployment execution permission.
+                </p>
+                </div>
+
+                <div className="treasury-monitor-card">
+                <span>Reserve Protection</span>
+
+                <strong>
+                    {treasuryDecisionBrain.shouldProtectReserve
+                    ? "ACTIVE"
+                    : "NORMAL"}
+                </strong>
+
+                <p>
+                    Institutional reserve protection layer.
+                </p>
+                </div>
+
+                <div className="treasury-monitor-card">
+                <span>Recovery Queue</span>
+
+                <strong>
+                    {openQueueCount + reviewQueueCount + readyQueueCount}
+                </strong>
+
+                <p>
+                    Active recovery orchestration workload.
+                </p>
+                </div>
+
+                <div className="treasury-monitor-card">
+                <span>Governance Status</span>
+
+                <strong>{livePolicyStatus}</strong>
+
+                <p>
+                    Treasury policy governance condition.
+                </p>
+                </div>
+
+            </div>
+
+            </section>
+
+            <section className="treasury-executive-action-bar">
+
+                <div className="treasury-executive-header">
+
+                    <div>
+                    <p className="treasury-command-label">
+                        ⚡ EXECUTIVE TREASURY ACTIONS
+                    </p>
+
+                    <h2>Live Executive Action Bar</h2>
+
+                    <p className="treasury-command-description">
+                        Institutional treasury operating instructions generated
+                        from liquidity pressure, governance exposure,
+                        recovery routing and deployment policy signals.
+                    </p>
+                    </div>
+
+                    <div className="treasury-executive-mode">
+                          🚀 LIVE ACTION ENGINE
+                    </div>
+
+                </div>
+
+                <div className="treasury-executive-grid">
+
+                    <div className="treasury-executive-card">
+                    <span>Primary Action</span>
+
+                    <strong>
+                        {treasuryDecisionBrain.shouldLockdown
+                        ? "LOCKDOWN TREASURY"
+                        : treasuryDecisionBrain.shouldBlockDeployment
+                        ? "RESTRICT DEPLOYMENT"
+                        : treasuryDecisionBrain.shouldProtectReserve
+                        ? "PROTECT RESERVE"
+                        : "CONTINUE MONITORING"}
+                    </strong>
+
+                    <p>
+                        Main treasury operating instruction generated by
+                        Treasury Decision Brain.
+                    </p>
+                    </div>
+
+                    <div className="treasury-executive-card">
+                    <span>Recovery Routing</span>
+
+                    <strong>
+                        {primaryRoutingTarget.routingDecision.desk}
+                    </strong>
+
+                    <p>
+                        Recommended institutional routing destination
+                        for treasury recovery workflow.
+                    </p>
+                    </div>
+
+                    <div className="treasury-executive-card">
+                    <span>Liquidity Command</span>
+
+                    <strong>{liquidityStressLevel}</strong>
+
+                    <p>
+                        Current treasury liquidity governance pressure level.
+                    </p>
+                    </div>
+
+                    <div className="treasury-executive-card">
+                    <span>Governance Action</span>
+
+                    <strong>
+                        {treasuryGovernanceRecommendation.level}
+                    </strong>
+
+                    <p>
+                        Institutional treasury governance operating posture.
+                    </p>
+                    </div>
+
+                </div>
+
+                </section>
+
+      <section className="treasury-heatmap-panel">
+  <div className="treasury-heatmap-header">
+    <div>
+      <p className="treasury-command-label">
+        🌡️ TREASURY HEATMAP
+      </p>
+
+      <h2>Live Treasury Risk Heatmap</h2>
+
+      <p className="treasury-command-description">
+        Institutional treasury visualization of liquidity,
+        escalation exposure, recovery stress,
+        policy governance and deployment pressure.
+      </p>
+    </div>
+
+    <div className="treasury-heatmap-mode">
+      📡 LIVE RISK MAP
+    </div>
+  </div>
+
+  <div className="treasury-heatmap-grid">
+
+    <div
+      className={`treasury-heat-cell ${
+        liquidityStressLevel === "CRITICAL"
+          ? "critical"
+          : liquidityStressLevel === "HIGH"
+          ? "warning"
+          : liquidityStressLevel === "ELEVATED"
+          ? "watch"
+          : "normal"
+      }`}
+    >
+      <span>Liquidity</span>
+      <strong>{liquidityStressLevel}</strong>
+    </div>
+
+    <div
+      className={`treasury-heat-cell ${
+        treasuryDecisionBrain.shouldBlockDeployment
+          ? "critical"
+          : treasuryDecisionBrain.shouldProtectReserve
+          ? "warning"
+          : "normal"
+      }`}
+    >
+      <span>Policy</span>
+      <strong>{livePolicyStatus}</strong>
+    </div>
+
+    <div
+      className={`treasury-heat-cell ${
+        escalatedCount >= 2
+          ? "critical"
+          : escalatedCount >= 1
+          ? "warning"
+          : "normal"
+      }`}
+    >
+      <span>Escalation</span>
+      <strong>{escalatedCount} ACTIVE</strong>
+    </div>
+
+    <div
+      className={`treasury-heat-cell ${
+        openQueueCount >= 2
+          ? "critical"
+          : openQueueCount >= 1
+          ? "watch"
+          : "normal"
+      }`}
+    >
+      <span>Recovery Queue</span>
+      <strong>{openQueueCount} OPEN</strong>
+    </div>
+
+    <div
+      className={`treasury-heat-cell ${
+        treasuryDecisionBrain.shouldLockdown
+          ? "critical"
+          : treasuryDecisionBrain.shouldBlockDeployment
+          ? "warning"
+          : "normal"
+      }`}
+    >
+      <span>Deployment</span>
+      <strong>{liveActionSignal}</strong>
+    </div>
+
+    <div
+      className={`treasury-heat-cell ${
+        criticalTimelineEvents >= 2
+          ? "critical"
+          : criticalTimelineEvents >= 1
+          ? "warning"
+          : "normal"
+      }`}
+    >
+      <span>Timeline Events</span>
+      <strong>{criticalTimelineEvents} CRITICAL</strong>
+    </div>
+
+  </div>
+</section>
+
+      <section className="treasury-alert-center">
+
+  <div className="treasury-alert-header">
+    <div>
+      <p className="treasury-command-label">
+        🚨 INSTITUTIONAL ALERT CENTER
+      </p>
+
+      <h2>Live Treasury Alerts</h2>
+
+      <p className="treasury-command-description">
+        Real-time treasury monitoring alerts for liquidity,
+        escalation exposure, governance pressure,
+        deployment restrictions and recovery orchestration.
+      </p>
+    </div>
+
+    <div className="treasury-alert-mode">
+      📢 LIVE ALERT FEED
+    </div>
+  </div>
+
+  <div className="treasury-alert-feed">
+
+    {(liquidityStressLevel === "CRITICAL" ||
+      liquidityStressLevel === "HIGH") && (
+      <div className="treasury-alert-card critical">
+        <span>CRITICAL</span>
+
+        <strong>
+          Treasury Liquidity Pressure
+        </strong>
+
+        <p>
+          Treasury recovery pressure is elevated.
+          Recovery routing and reserve balancing
+          should begin immediately.
+        </p>
+      </div>
+    )}
+
+    {treasuryDecisionBrain.shouldBlockDeployment && (
+      <div className="treasury-alert-card critical">
+        <span>BLOCKED</span>
+
+        <strong>
+          Deployment Restriction Active
+        </strong>
+
+        <p>
+          Treasury Decision Brain has restricted
+          deployment due to institutional risk exposure.
+        </p>
+      </div>
+    )}
+
+    {treasuryDecisionBrain.shouldProtectReserve && (
+      <div className="treasury-alert-card warning">
+        <span>WARNING</span>
+
+        <strong>
+          Reserve Protection Active
+        </strong>
+
+        <p>
+          Treasury reserve protection layer is active.
+          Maintain reserve discipline before deployment.
+        </p>
+      </div>
+    )}
+
+    {openQueueCount >= 1 && (
+      <div className="treasury-alert-card watch">
+        <span>WATCH</span>
+
+        <strong>
+          Recovery Queue Monitoring
+        </strong>
+
+        <p>
+          Treasury recovery queue contains unresolved
+          items requiring operational monitoring.
+        </p>
+      </div>
+    )}
+
+    {escalatedCount >= 1 && (
+      <div className="treasury-alert-card critical">
+        <span>ESCALATED</span>
+
+        <strong>
+          Treasury Escalation Active
+        </strong>
+
+        <p>
+          One or more treasury workflows have been
+          escalated for institutional review.
+        </p>
+      </div>
+    )}
+
+    {liquidityStressLevel === "STABLE" &&
+      escalatedCount === 0 &&
+      !treasuryDecisionBrain.shouldBlockDeployment && (
+        <div className="treasury-alert-card normal">
+          <span>NORMAL</span>
+
+          <strong>
+            Treasury Environment Stable
+          </strong>
+
+          <p>
+            Treasury monitoring environment is stable.
+            No institutional intervention required.
+          </p>
+        </div>
+      )}
+
+  </div>
+</section>
+
+      <section className="treasury-live-risk-strip">
+  <div
+    className={`treasury-risk-pill ${
+      liquidityStressLevel === "CRITICAL"
+        ? "critical"
+        : liquidityStressLevel === "HIGH"
+        ? "warning"
+        : liquidityStressLevel === "ELEVATED"
+        ? "watch"
+        : "normal"
+    }`}
+  >
+    <span className="risk-dot"></span>
+    <strong>Liquidity</strong>
+    <small>{liquidityStressLevel}</small>
+  </div>
+
+  <div
+    className={`treasury-risk-pill ${
+      treasuryDecisionBrain.shouldBlockDeployment
+        ? "critical"
+        : treasuryDecisionBrain.shouldProtectReserve
+        ? "warning"
+        : "normal"
+    }`}
+  >
+    <span className="risk-dot"></span>
+    <strong>Policy</strong>
+    <small>{livePolicyStatus}</small>
+  </div>
+
+  <div
+    className={`treasury-risk-pill ${
+      escalatedCount >= 2
+        ? "critical"
+        : escalatedCount >= 1
+        ? "warning"
+        : "normal"
+    }`}
+  >
+    <span className="risk-dot"></span>
+    <strong>Escalation</strong>
+    <small>{escalatedCount} Active</small>
+  </div>
+
+  <div
+    className={`treasury-risk-pill ${
+      openQueueCount >= 2
+        ? "critical"
+        : openQueueCount >= 1
+        ? "watch"
+        : "normal"
+    }`}
+  >
+    <span className="risk-dot"></span>
+    <strong>Recovery Queue</strong>
+    <small>{openQueueCount} Open</small>
+  </div>
+
+  <div
+    className={`treasury-risk-pill ${
+      treasuryDecisionBrain.shouldLockdown
+        ? "critical"
+        : treasuryDecisionBrain.shouldBlockDeployment
+        ? "warning"
+        : "normal"
+    }`}
+  >
+    <span className="risk-dot"></span>
+    <strong>Deployment</strong>
+    <small>{liveActionSignal}</small>
+  </div>
+</section>
+
       <section className="treasury-signal-ribbon">
         <div className="treasury-signal-card critical">
           <span>Open Queue</span>
@@ -524,77 +1101,68 @@ export default function TreasuryPage() {
         </div>
       </section>
 
-    <section
-  className={`treasury-intelligence-banner ${
-    openQueueCount >= 2 || escalatedCount >= 1
-      ? "danger"
-      : reviewQueueCount >= 1
-      ? "warning"
-      : "stable"
-  }`}
->
-  <div>
-    <p className="eyebrow">Treasury Recovery Intelligence</p>
-    <h2>{treasurySignal}</h2>
-    <p>{treasurySignalMessage}</p>
-  </div>
+      <section
+        className={`treasury-intelligence-banner ${
+          openQueueCount >= 2 || escalatedCount >= 1
+            ? "danger"
+            : reviewQueueCount >= 1
+            ? "warning"
+            : "stable"
+        }`}
+      >
+        <div>
+          <p className="eyebrow">Treasury Recovery Intelligence</p>
+          <h2>{treasurySignal}</h2>
+          <p>{treasurySignalMessage}</p>
+        </div>
 
-  <div className="treasury-intelligence-metrics">
-    <span>Open: {openQueueCount}</span>
-    <span>Review: {reviewQueueCount}</span>
-    <span>Ready: {readyQueueCount}</span>
-    <span>Resolved: {resolvedQueueCount}</span>
-  </div>
-</section>
+        <div className="treasury-intelligence-metrics">
+          <span>Open: {openQueueCount}</span>
+          <span>Review: {reviewQueueCount}</span>
+          <span>Ready: {readyQueueCount}</span>
+          <span>Resolved: {resolvedQueueCount}</span>
+        </div>
+      </section>
 
-<section
-  className={`treasury-governance-recommendation ${
-    treasuryDecisionBrain.controlState === "LOCKDOWN"
-      ? "danger"
-      : treasuryDecisionBrain.controlState === "RESTRICTED"
-      ? "warning"
-      : treasuryDecisionBrain.controlState === "WARNING"
-      ? "warning"
-      : "stable"
-  }`}
->
-  <div>
-    <p className="eyebrow">Treasury Decision Intelligence</p>
-    <h2>{treasuryDecisionBrain.decisionTitle}</h2>
-    <p>{treasuryDecisionBrain.decisionMessage}</p>
-  </div>
+      <section
+        className={`treasury-governance-recommendation ${
+          treasuryDecisionBrain.controlState === "LOCKDOWN"
+            ? "danger"
+            : treasuryDecisionBrain.controlState === "RESTRICTED"
+            ? "warning"
+            : treasuryDecisionBrain.controlState === "WARNING"
+            ? "warning"
+            : "stable"
+        }`}
+      >
+        <div>
+          <p className="eyebrow">Treasury Decision Intelligence</p>
+          <h2>{treasuryDecisionBrain.decisionTitle}</h2>
+          <p>{treasuryDecisionBrain.decisionMessage}</p>
+        </div>
 
-  <div className="treasury-recommendation-side">
-    <span>{treasuryDecisionBrain.controlState}</span>
+        <div className="treasury-recommendation-side">
+          <span>{treasuryDecisionBrain.controlState}</span>
 
-    <div>
-      <small>
-        Enforcement: {treasuryDecisionBrain.enforcementLevel}
-      </small>
+          <div>
+            <small>Enforcement: {treasuryDecisionBrain.enforcementLevel}</small>
 
-      <small>
-        Deployment Block:{" "}
-        {treasuryDecisionBrain.shouldBlockDeployment
-          ? "YES"
-          : "NO"}
-      </small>
+            <small>
+              Deployment Block:{" "}
+              {treasuryDecisionBrain.shouldBlockDeployment ? "YES" : "NO"}
+            </small>
 
-      <small>
-        Reserve Protection:{" "}
-        {treasuryDecisionBrain.shouldProtectReserve
-          ? "ACTIVE"
-          : "NORMAL"}
-      </small>
+            <small>
+              Reserve Protection:{" "}
+              {treasuryDecisionBrain.shouldProtectReserve ? "ACTIVE" : "NORMAL"}
+            </small>
 
-      <small>
-        Lockdown:{" "}
-        {treasuryDecisionBrain.shouldLockdown
-          ? "ACTIVE"
-          : "NO"}
-      </small>
-    </div>
-  </div>
-</section>
+            <small>
+              Lockdown: {treasuryDecisionBrain.shouldLockdown ? "ACTIVE" : "NO"}
+            </small>
+          </div>
+        </div>
+      </section>
 
       <section className="treasury-action-center">
         <div className="treasury-action-header">
@@ -626,7 +1194,7 @@ export default function TreasuryPage() {
         </div>
       </section>
 
-          {autoInterventionTriggered && (
+      {autoInterventionTriggered && (
         <section className="treasury-governance-recommendation">
           <div>
             <p className="eyebrow">Auto Treasury Intervention</p>
@@ -645,9 +1213,8 @@ export default function TreasuryPage() {
           </div>
         </section>
       )}
-    
 
-     <section className="treasury-governance-recommendation">
+      <section className="treasury-governance-recommendation">
         <div>
           <p className="eyebrow">Treasury Auto Recovery Intelligence</p>
 
@@ -662,13 +1229,9 @@ export default function TreasuryPage() {
           <div>
             <small>Recovery Score: {recoveryScore}</small>
 
-            <small>
-              Treasury Severity: {treasuryInterventionSeverity}
-            </small>
+            <small>Treasury Severity: {treasuryInterventionSeverity}</small>
 
-            <small>
-              Escalation Engine: {autoEscalationSignal}
-            </small>
+            <small>Escalation Engine: {autoEscalationSignal}</small>
 
             <small>
               Recommended Action: {autoRecoveryRecommendation.action}
@@ -693,6 +1256,206 @@ export default function TreasuryPage() {
           </div>
         </div>
       </section>
+
+      <section className="treasury-capital-command">
+        <div className="treasury-capital-command-header">
+            <div>
+            <p className="treasury-command-label">
+               💠 CAPITAL ALLOCATION COMMAND
+            </p>
+
+            <h2>Institutional Capital Allocation Control</h2>
+
+            <p className="treasury-command-description">
+                Treasury capital command layer converts recovery
+                intelligence, liquidity stress and governance
+                signals into deployment instructions.
+            </p>
+            </div>
+
+            <div className="treasury-capital-mode">
+            CAPITAL COMMAND
+            </div>
+        </div>
+
+        <div className="treasury-capital-grid">
+
+            <div className="treasury-capital-card">
+            <span>Current Treasury Command</span>
+
+            <strong>
+                {treasuryDecisionBrain.shouldLockdown
+                ? "LOCKDOWN"
+                : treasuryDecisionBrain.shouldBlockDeployment
+                ? "RESTRICT DEPLOYMENT"
+                : treasuryDecisionBrain.shouldProtectReserve
+                ? "PROTECT RESERVE"
+                : "NORMAL DEPLOYMENT"}
+            </strong>
+
+            <p>
+                Treasury command generated from recovery
+                score and governance intelligence.
+            </p>
+            </div>
+
+            <div className="treasury-capital-card">
+            <span>Deployment Permission</span>
+
+            <strong>
+                {treasuryDecisionBrain.shouldBlockDeployment
+                ? "BLOCKED"
+                : "ALLOWED"}
+            </strong>
+
+            <p>
+                Controls whether treasury deployment
+                execution should continue.
+            </p>
+            </div>
+
+            <div className="treasury-capital-card">
+            <span>Reserve Action</span>
+
+            <strong>
+                {treasuryDecisionBrain.shouldProtectReserve
+                ? "RESERVE PROTECTION"
+                : "STANDARD RESERVE"}
+            </strong>
+
+            <p>
+                Treasury reserve discipline and
+                liquidity protection instruction.
+            </p>
+            </div>
+
+            <div className="treasury-capital-card">
+            <span>Recovery Priority</span>
+
+            <strong>
+                {openQueueCount >= 2
+                ? "HIGH PRIORITY"
+                : reviewQueueCount >= 1
+                ? "UNDER REVIEW"
+                : "NORMAL"}
+            </strong>
+
+            <p>
+                Recovery queue priority for
+                treasury routing operations.
+            </p>
+            </div>
+
+        </div>
+        </section>
+
+        <section className="treasury-live-policy-monitor">
+
+            <div className="treasury-policy-header">
+                <div>
+                <p className="treasury-command-label">
+                   🛡️ LIVE POLICY MONITORING
+                </p>
+
+                <h2>Institutional Treasury Policy Governance</h2>
+
+                <p className="treasury-command-description">
+                    Real-time treasury governance monitoring for deployment,
+                    reserve protection, liquidity compliance and escalation policy control.
+                </p>
+                </div>
+
+                <div className="treasury-policy-mode">
+                     🛡️ POLICY ENGINE
+                </div>
+            </div>
+
+            <div className="treasury-policy-grid">
+
+                <div
+                className={`treasury-policy-card ${
+                    treasuryDecisionBrain.shouldBlockDeployment
+                    ? "critical"
+                    : "normal"
+                }`}
+                >
+                <span>Deployment Policy</span>
+
+                <strong>
+                    {treasuryDecisionBrain.shouldBlockDeployment
+                    ? "RESTRICTED"
+                    : "COMPLIANT"}
+                </strong>
+
+                <p>
+                    Controls institutional treasury deployment execution policy.
+                </p>
+                </div>
+
+                <div
+                className={`treasury-policy-card ${
+                    treasuryDecisionBrain.shouldProtectReserve
+                    ? "warning"
+                    : "normal"
+                }`}
+                >
+                <span>Reserve Policy</span>
+
+                <strong>
+                    {treasuryDecisionBrain.shouldProtectReserve
+                    ? "PROTECTED"
+                    : "NORMAL"}
+                </strong>
+
+                <p>
+                    Treasury reserve protection governance monitoring.
+                </p>
+                </div>
+
+                <div
+                className={`treasury-policy-card ${
+                    escalatedCount >= 1
+                    ? "warning"
+                    : "normal"
+                }`}
+                >
+                <span>Escalation Policy</span>
+
+                <strong>
+                    {escalatedCount >= 1
+                    ? "ACTIVE REVIEW"
+                    : "STABLE"}
+                </strong>
+
+                <p>
+                    Governance escalation monitoring and approval control.
+                </p>
+                </div>
+
+                <div
+                className={`treasury-policy-card ${
+                    liquidityStressLevel === "HIGH" ||
+                    liquidityStressLevel === "CRITICAL"
+                    ? "critical"
+                    : liquidityStressLevel === "ELEVATED"
+                    ? "watch"
+                    : "normal"
+                }`}
+                >
+                <span>Liquidity Compliance</span>
+
+                <strong>
+                    {liquidityStressLevel}
+                </strong>
+
+                <p>
+                    Institutional liquidity governance and compliance monitoring.
+                </p>
+                </div>
+
+            </div>
+
+            </section>
 
       <section className="treasury-executive-ribbon">
         <div className="treasury-exec-card danger">
@@ -753,7 +1516,7 @@ export default function TreasuryPage() {
         </div>
       </section>
 
-      <section className="treasury-action-center">
+      <section className="treasury-action-center treasury-routing-engine-section">
         <div className="treasury-action-header">
           <div>
             <p className="eyebrow">Treasury Routing Intelligence</p>
@@ -788,7 +1551,7 @@ export default function TreasuryPage() {
         </div>
       </section>
 
-      <section className="treasury-action-center">
+     <section className="treasury-action-center treasury-lifecycle-section">
         <div className="treasury-action-header">
           <div>
             <p className="eyebrow">Treasury Recovery Infrastructure</p>

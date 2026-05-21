@@ -3524,3 +3524,1662 @@ input {
     grid-template-columns: 1fr;
   }
 }
+
+/* =========================================================
+   V33.2-G1 Treasury Command Center / Live Monitoring Wall
+   ========================================================= */
+
+.treasury-command-center {
+  margin-top: 22px;
+  padding: 24px;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at top left, rgba(56, 189, 248, 0.16), transparent 34%),
+    linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(2, 6, 23, 0.98));
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  box-shadow: 0 24px 70px rgba(2, 6, 23, 0.38);
+  color: #e5e7eb;
+}
+
+.treasury-command-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-start;
+  margin-bottom: 22px;
+}
+
+.treasury-command-label {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #38bdf8;
+}
+
+.treasury-command-header h2 {
+  margin: 0;
+  font-size: 28px;
+  letter-spacing: -0.04em;
+  color: #f8fafc;
+}
+
+.treasury-command-description {
+  margin: 8px 0 0;
+  max-width: 720px;
+  color: #94a3b8;
+  line-height: 1.6;
+}
+
+.treasury-live-status {
+  min-width: 240px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 22px;
+  background: rgba(15, 23, 42, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.treasury-live-status strong {
+  display: block;
+  color: #f8fafc;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+
+.treasury-live-status p {
+  margin: 3px 0 0;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.live-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 999px;
+  background: #22c55e;
+  box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.14),
+    0 0 24px rgba(34, 197, 94, 0.72);
+}
+
+.treasury-live-status.watch .live-dot {
+  background: #38bdf8;
+  box-shadow: 0 0 0 6px rgba(56, 189, 248, 0.14),
+    0 0 24px rgba(56, 189, 248, 0.72);
+}
+
+.treasury-live-status.warning .live-dot {
+  background: #f59e0b;
+  box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.14),
+    0 0 24px rgba(245, 158, 11, 0.72);
+}
+
+.treasury-live-status.critical .live-dot {
+  background: #ef4444;
+  box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.14),
+    0 0 28px rgba(239, 68, 68, 0.82);
+}
+
+.treasury-command-center .treasury-command-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.treasury-command-card {
+  min-height: 150px;
+  padding: 18px;
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(30, 41, 59, 0.84), rgba(15, 23, 42, 0.92));
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.treasury-command-card span {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #93c5fd;
+}
+
+.treasury-command-card strong {
+  display: block;
+  margin-top: 14px;
+  font-size: 25px;
+  color: #f8fafc;
+  letter-spacing: -0.04em;
+}
+
+.treasury-command-card p {
+  margin: 10px 0 0;
+  color: #94a3b8;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+@media (max-width: 980px) {
+  .treasury-command-header {
+    flex-direction: column;
+  }
+
+  .treasury-live-status {
+    width: 100%;
+  }
+
+  .treasury-command-center .treasury-command-grid {
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .treasury-command-center {
+    padding: 18px;
+    border-radius: 22px;
+  }
+
+  .treasury-command-center .treasury-command-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   V33.2-G2 Live Treasury Risk Signal Strip
+   ========================================================= */
+
+.treasury-live-risk-strip {
+  margin-top: 18px;
+  margin-bottom: 18px;
+
+  display: grid;
+  grid-template-columns: repeat(5, minmax(160px, 1fr));
+  gap: 14px;
+}
+
+.treasury-risk-pill {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  padding: 16px 18px;
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(15, 23, 42, 0.92),
+      rgba(2, 6, 23, 0.96)
+    );
+
+  border: 1px solid rgba(148, 163, 184, 0.18);
+
+  overflow: hidden;
+}
+
+.treasury-risk-pill strong {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: #f8fafc;
+}
+
+.treasury-risk-pill small {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.risk-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+
+  margin-bottom: 8px;
+
+  background: #22c55e;
+
+  box-shadow:
+    0 0 0 6px rgba(34, 197, 94, 0.12),
+    0 0 20px rgba(34, 197, 94, 0.5);
+}
+
+.treasury-risk-pill.watch .risk-dot {
+  background: #38bdf8;
+
+  box-shadow:
+    0 0 0 6px rgba(56, 189, 248, 0.12),
+    0 0 20px rgba(56, 189, 248, 0.5);
+}
+
+.treasury-risk-pill.warning .risk-dot {
+  background: #f59e0b;
+
+  box-shadow:
+    0 0 0 6px rgba(245, 158, 11, 0.12),
+    0 0 20px rgba(245, 158, 11, 0.5);
+}
+
+.treasury-risk-pill.critical .risk-dot {
+  background: #ef4444;
+
+  box-shadow:
+    0 0 0 6px rgba(239, 68, 68, 0.12),
+    0 0 24px rgba(239, 68, 68, 0.7);
+}
+
+@media (max-width: 1100px) {
+  .treasury-live-risk-strip {
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .treasury-live-risk-strip {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   V33.2-G3 Treasury Heatmap Foundation
+   ========================================================= */
+
+.treasury-heatmap-panel {
+  margin-top: 18px;
+  margin-bottom: 18px;
+
+  padding: 24px;
+
+  border-radius: 28px;
+
+  background:
+    radial-gradient(circle at top right,
+      rgba(59, 130, 246, 0.14),
+      transparent 30%),
+    linear-gradient(
+      135deg,
+      rgba(15, 23, 42, 0.96),
+      rgba(2, 6, 23, 0.98)
+    );
+
+  border: 1px solid rgba(148, 163, 184, 0.16);
+
+  box-shadow:
+    0 24px 60px rgba(2, 6, 23, 0.34);
+}
+
+.treasury-heatmap-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-start;
+
+  margin-bottom: 24px;
+}
+
+.treasury-heatmap-mode {
+  padding: 12px 16px;
+
+  border-radius: 16px;
+
+  background: rgba(15, 23, 42, 0.72);
+
+  border: 1px solid rgba(148, 163, 184, 0.16);
+
+  color: #38bdf8;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.treasury-heatmap-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+
+  gap: 16px;
+}
+
+.treasury-heat-cell {
+  position: relative;
+
+  min-height: 140px;
+
+  padding: 18px;
+
+  border-radius: 22px;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(148, 163, 184, 0.14);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.treasury-heat-cell:hover {
+  transform: translateY(-3px);
+}
+
+.treasury-heat-cell span {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  color: rgba(255,255,255,0.82);
+}
+
+.treasury-heat-cell strong {
+  font-size: 24px;
+  line-height: 1.2;
+
+  color: white;
+
+  letter-spacing: -0.04em;
+}
+
+.treasury-heat-cell.normal {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(22, 163, 74, 0.22),
+      rgba(15, 23, 42, 0.94)
+    );
+
+  box-shadow:
+    inset 0 0 40px rgba(34, 197, 94, 0.08);
+}
+
+.treasury-heat-cell.watch {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(56, 189, 248, 0.22),
+      rgba(15, 23, 42, 0.94)
+    );
+
+  box-shadow:
+    inset 0 0 40px rgba(56, 189, 248, 0.08);
+}
+
+.treasury-heat-cell.warning {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(245, 158, 11, 0.24),
+      rgba(15, 23, 42, 0.94)
+    );
+
+  box-shadow:
+    inset 0 0 40px rgba(245, 158, 11, 0.10);
+}
+
+.treasury-heat-cell.critical {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(239, 68, 68, 0.26),
+      rgba(15, 23, 42, 0.96)
+    );
+
+  box-shadow:
+    inset 0 0 46px rgba(239, 68, 68, 0.14),
+    0 0 24px rgba(239, 68, 68, 0.14);
+}
+
+@media (max-width: 980px) {
+  .treasury-heatmap-grid {
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+  }
+
+  .treasury-heatmap-header {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .treasury-heatmap-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   V33.2-G4 Institutional Alert Center
+   ========================================================= */
+
+.treasury-alert-center {
+  margin-top: 18px;
+  margin-bottom: 18px;
+
+  padding: 24px;
+
+  border-radius: 28px;
+
+  background:
+    radial-gradient(circle at top left,
+      rgba(59, 130, 246, 0.10),
+      transparent 30%),
+    linear-gradient(
+      135deg,
+      rgba(15, 23, 42, 0.96),
+      rgba(2, 6, 23, 0.98)
+    );
+
+  border: 1px solid rgba(148, 163, 184, 0.16);
+
+  box-shadow:
+    0 24px 60px rgba(2, 6, 23, 0.34);
+}
+
+.treasury-alert-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-start;
+
+  margin-bottom: 24px;
+}
+
+.treasury-alert-mode {
+  padding: 12px 16px;
+
+  border-radius: 16px;
+
+  background: rgba(15, 23, 42, 0.72);
+
+  border: 1px solid rgba(148, 163, 184, 0.16);
+
+  color: #38bdf8;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.treasury-alert-feed {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(260px, 1fr));
+
+  gap: 16px;
+}
+
+.treasury-alert-card {
+  position: relative;
+
+  padding: 20px;
+
+  border-radius: 22px;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(148, 163, 184, 0.16);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.treasury-alert-card:hover {
+  transform: translateY(-2px);
+}
+
+.treasury-alert-card span {
+  display: inline-flex;
+
+  padding: 6px 10px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+
+  margin-bottom: 14px;
+
+  background: rgba(255,255,255,0.10);
+
+  color: white;
+}
+
+.treasury-alert-card strong {
+  display: block;
+
+  font-size: 22px;
+
+  color: white;
+
+  line-height: 1.3;
+
+  margin-bottom: 12px;
+}
+
+.treasury-alert-card p {
+  color: rgba(255,255,255,0.76);
+
+  line-height: 1.6;
+}
+
+.treasury-alert-card.normal {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(22, 163, 74, 0.18),
+      rgba(15, 23, 42, 0.96)
+    );
+}
+
+.treasury-alert-card.watch {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(56, 189, 248, 0.18),
+      rgba(15, 23, 42, 0.96)
+    );
+}
+
+.treasury-alert-card.warning {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(245, 158, 11, 0.22),
+      rgba(15, 23, 42, 0.96)
+    );
+}
+
+.treasury-alert-card.critical {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(239, 68, 68, 0.24),
+      rgba(15, 23, 42, 0.98)
+    );
+
+  box-shadow:
+    inset 0 0 40px rgba(239, 68, 68, 0.10),
+    0 0 24px rgba(239, 68, 68, 0.12);
+}
+
+@media (max-width: 980px) {
+  .treasury-alert-feed {
+    grid-template-columns: 1fr;
+  }
+
+  .treasury-alert-header {
+    flex-direction: column;
+  }
+}
+
+/* =========================================================
+   V33.2-G4A International Friendly Treasury Colors
+   ========================================================= */
+
+.treasury-heatmap-panel,
+.treasury-alert-center {
+  background:
+    radial-gradient(circle at top right, rgba(59, 130, 246, 0.16), transparent 32%),
+    linear-gradient(135deg, #10233f, #071526);
+}
+
+.treasury-heatmap-panel h2,
+.treasury-alert-center h2 {
+  color: #f8fafc;
+}
+
+.treasury-heatmap-panel .treasury-command-description,
+.treasury-alert-center .treasury-command-description {
+  color: #cbd5e1;
+}
+
+.treasury-heat-cell.normal,
+.treasury-alert-card.normal {
+  background: linear-gradient(135deg, #0f766e, #12372f);
+  border-color: rgba(45, 212, 191, 0.35);
+}
+
+.treasury-heat-cell.watch,
+.treasury-alert-card.watch {
+  background: linear-gradient(135deg, #0369a1, #12345a);
+  border-color: rgba(56, 189, 248, 0.35);
+}
+
+.treasury-heat-cell.warning,
+.treasury-alert-card.warning {
+  background: linear-gradient(135deg, #b45309, #4a2c0a);
+  border-color: rgba(251, 191, 36, 0.4);
+}
+
+.treasury-heat-cell.critical,
+.treasury-alert-card.critical {
+  background: linear-gradient(135deg, #b91c1c, #450a0a);
+  border-color: rgba(248, 113, 113, 0.45);
+}
+
+.treasury-alert-card strong,
+.treasury-heat-cell strong {
+  color: #ffffff;
+}
+
+.treasury-alert-card p,
+.treasury-heat-cell span {
+  color: #e5e7eb;
+}
+
+/* =========================================================
+   V33.2-G5 Capital Allocation Command
+   ========================================================= */
+
+.treasury-capital-command {
+  margin-top: 18px;
+  margin-bottom: 18px;
+
+  padding: 24px;
+
+  border-radius: 28px;
+
+  background:
+    radial-gradient(circle at top left,
+      rgba(37, 99, 235, 0.16),
+      transparent 30%),
+    linear-gradient(
+      135deg,
+      #0f172a,
+      #081120
+    );
+
+  border: 1px solid rgba(148, 163, 184, 0.16);
+
+  box-shadow:
+    0 24px 60px rgba(2, 6, 23, 0.34);
+}
+
+.treasury-capital-command-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-start;
+
+  margin-bottom: 24px;
+}
+
+.treasury-capital-mode {
+  padding: 12px 16px;
+
+  border-radius: 16px;
+
+  background: rgba(15, 23, 42, 0.72);
+
+  border: 1px solid rgba(148, 163, 184, 0.16);
+
+  color: #60a5fa;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.treasury-capital-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+
+  gap: 16px;
+}
+
+.treasury-capital-card {
+  min-height: 180px;
+
+  padding: 20px;
+
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(30, 41, 59, 0.92),
+      rgba(15, 23, 42, 0.96)
+    );
+
+  border: 1px solid rgba(148, 163, 184, 0.16);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.treasury-capital-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 12px 32px rgba(37, 99, 235, 0.18);
+}
+
+.treasury-capital-card span {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  color: #93c5fd;
+}
+
+.treasury-capital-card strong {
+  font-size: 24px;
+
+  line-height: 1.2;
+
+  color: white;
+
+  letter-spacing: -0.04em;
+}
+
+.treasury-capital-card p {
+  color: #cbd5e1;
+
+  line-height: 1.6;
+
+  font-size: 13px;
+}
+
+@media (max-width: 1100px) {
+  .treasury-capital-grid {
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+  }
+
+  .treasury-capital-command-header {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .treasury-capital-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   V33.2-G5A International Treasury Command Theme
+   ========================================================= */
+
+.treasury-capital-command {
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(59, 130, 246, 0.18),
+      transparent 34%
+    ),
+    linear-gradient(
+      135deg,
+      #11284a,
+      #081528
+    );
+
+  border: 1px solid rgba(148, 163, 184, 0.22);
+}
+
+.treasury-capital-command h2 {
+  color: #f8fafc;
+}
+
+.treasury-capital-command
+.treasury-command-description {
+  color: #cbd5e1;
+}
+
+.treasury-capital-card {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(30, 41, 59, 0.92),
+      rgba(15, 23, 42, 0.96)
+    );
+
+  border: 1px solid rgba(148, 163, 184, 0.22);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+.treasury-capital-card strong {
+  color: #ffffff;
+}
+
+.treasury-capital-card p {
+  color: #dbe4ee;
+}
+
+.treasury-capital-card span {
+  color: #60a5fa;
+}
+
+.treasury-capital-mode {
+  background:
+    rgba(15, 23, 42, 0.74);
+
+  border: 1px solid rgba(96, 165, 250, 0.22);
+
+  color: #60a5fa;
+}
+
+/* =========================================================
+   V33.2-G7 Live Policy Monitoring Layer
+   ========================================================= */
+
+.treasury-live-policy-monitor {
+  margin-top: 18px;
+  margin-bottom: 18px;
+
+  padding: 24px;
+
+  border-radius: 28px;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(59, 130, 246, 0.18),
+      transparent 34%
+    ),
+    linear-gradient(
+      135deg,
+      #11284a,
+      #081528
+    );
+
+  border: 1px solid rgba(148, 163, 184, 0.22);
+
+  box-shadow:
+    0 24px 60px rgba(2, 6, 23, 0.34);
+}
+
+.treasury-policy-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-start;
+
+  margin-bottom: 24px;
+}
+
+.treasury-policy-header h2 {
+  color: #f8fafc;
+}
+
+.treasury-policy-mode {
+  padding: 12px 16px;
+
+  border-radius: 16px;
+
+  background: rgba(15, 23, 42, 0.72);
+
+  border: 1px solid rgba(96, 165, 250, 0.22);
+
+  color: #60a5fa;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.treasury-policy-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+
+  gap: 16px;
+}
+
+.treasury-policy-card {
+  min-height: 180px;
+
+  padding: 20px;
+
+  border-radius: 22px;
+
+  border: 1px solid rgba(148, 163, 184, 0.18);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.treasury-policy-card:hover {
+  transform: translateY(-3px);
+}
+
+.treasury-policy-card span {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  color: #93c5fd;
+}
+
+.treasury-policy-card strong {
+  font-size: 24px;
+
+  line-height: 1.2;
+
+  color: white;
+}
+
+.treasury-policy-card p {
+  color: #dbe4ee;
+
+  line-height: 1.6;
+
+  font-size: 13px;
+}
+
+.treasury-policy-card.normal {
+  background:
+    linear-gradient(
+      135deg,
+      #0f766e,
+      #12372f
+    );
+}
+
+.treasury-policy-card.watch {
+  background:
+    linear-gradient(
+      135deg,
+      #0369a1,
+      #12345a
+    );
+}
+
+.treasury-policy-card.warning {
+  background:
+    linear-gradient(
+      135deg,
+      #b45309,
+      #4a2c0a
+    );
+}
+
+.treasury-policy-card.critical {
+  background:
+    linear-gradient(
+      135deg,
+      #b91c1c,
+      #450a0a
+    );
+
+  box-shadow:
+    inset 0 0 40px rgba(239, 68, 68, 0.10),
+    0 0 24px rgba(239, 68, 68, 0.12);
+}
+
+@media (max-width: 1100px) {
+  .treasury-policy-grid {
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+  }
+
+  .treasury-policy-header {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .treasury-policy-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   V33.2-G9 Treasury Monitoring Wall
+   ========================================================= */
+
+.treasury-monitoring-wall {
+  margin-top: 18px;
+  margin-bottom: 18px;
+
+  padding: 28px;
+
+  border-radius: 30px;
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(59, 130, 246, 0.18),
+      transparent 32%
+    ),
+    linear-gradient(
+      135deg,
+      #0f294d,
+      #071425
+    );
+
+  border: 1px solid rgba(148, 163, 184, 0.18);
+
+  box-shadow:
+    0 24px 60px rgba(2, 6, 23, 0.30);
+}
+
+.treasury-monitoring-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  gap: 24px;
+
+  margin-bottom: 28px;
+}
+
+.treasury-monitoring-header h2 {
+  color: #f8fafc;
+}
+
+.treasury-monitoring-mode {
+  padding: 12px 18px;
+
+  border-radius: 16px;
+
+  background:
+    rgba(15, 23, 42, 0.72);
+
+  border: 1px solid rgba(96, 165, 250, 0.20);
+
+  color: #60a5fa;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.treasury-monitoring-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(220px, 1fr));
+
+  gap: 18px;
+}
+
+.treasury-monitor-card {
+  min-height: 180px;
+
+  padding: 22px;
+
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(30, 41, 59, 0.94),
+      rgba(15, 23, 42, 0.98)
+    );
+
+  border: 1px solid rgba(148, 163, 184, 0.16);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.treasury-monitor-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 16px 32px rgba(59, 130, 246, 0.16);
+}
+
+.treasury-monitor-card span {
+  color: #93c5fd;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+}
+
+.treasury-monitor-card strong {
+  color: white;
+
+  font-size: 32px;
+
+  line-height: 1.1;
+
+  letter-spacing: -0.04em;
+}
+
+.treasury-monitor-card p {
+  color: #dbe4ee;
+
+  line-height: 1.6;
+
+  font-size: 13px;
+}
+
+@media (max-width: 1100px) {
+
+  .treasury-monitoring-grid {
+    grid-template-columns:
+      repeat(2, minmax(180px, 1fr));
+  }
+
+  .treasury-monitoring-header {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+
+  .treasury-monitoring-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   V33.2-G10 Executive Treasury Action Bar
+   ========================================================= */
+
+.treasury-executive-action-bar {
+  margin-top: 18px;
+  margin-bottom: 18px;
+  padding: 26px;
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at top right, rgba(14, 165, 233, 0.18), transparent 32%),
+    linear-gradient(135deg, #0f294d, #071425);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 0 24px 60px rgba(2, 6, 23, 0.3);
+}
+
+.treasury-executive-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.treasury-executive-header h2 {
+  color: #f8fafc;
+}
+
+.treasury-executive-mode {
+  padding: 12px 18px;
+  border-radius: 16px;
+  background: rgba(15, 23, 42, 0.72);
+  border: 1px solid rgba(96, 165, 250, 0.22);
+  color: #60a5fa;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.treasury-executive-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.treasury-executive-card {
+  min-height: 180px;
+  padding: 22px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.94), rgba(15, 23, 42, 0.98));
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.treasury-executive-card span {
+  color: #93c5fd;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.treasury-executive-card strong {
+  color: #ffffff;
+  font-size: 26px;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+}
+
+.treasury-executive-card p {
+  color: #dbe4ee;
+  line-height: 1.6;
+  font-size: 13px;
+}
+
+@media (max-width: 1100px) {
+  .treasury-executive-grid {
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+  }
+
+  .treasury-executive-header {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .treasury-executive-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   V33.2-G10A Softer Institutional Treasury Theme
+   Make Treasury Console closer to Home / Manual pages
+   ========================================================= */
+
+.treasury-monitoring-wall,
+.treasury-executive-action-bar,
+.treasury-heatmap-panel,
+.treasury-alert-center,
+.treasury-capital-command,
+.treasury-live-policy-monitor {
+  background:
+    linear-gradient(135deg, #ffffff, #f3f7ff) !important;
+  border: 1px solid rgba(203, 213, 225, 0.9) !important;
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08) !important;
+  color: #0f172a !important;
+}
+
+.treasury-monitoring-header h2,
+.treasury-executive-header h2,
+.treasury-heatmap-header h2,
+.treasury-alert-header h2,
+.treasury-capital-command h2,
+.treasury-policy-header h2 {
+  color: #0f172a !important;
+}
+
+.treasury-monitoring-wall .treasury-command-description,
+.treasury-executive-action-bar .treasury-command-description,
+.treasury-heatmap-panel .treasury-command-description,
+.treasury-alert-center .treasury-command-description,
+.treasury-capital-command .treasury-command-description,
+.treasury-live-policy-monitor .treasury-command-description {
+  color: #64748b !important;
+}
+
+.treasury-monitoring-mode,
+.treasury-executive-mode,
+.treasury-heatmap-mode,
+.treasury-alert-mode,
+.treasury-capital-mode,
+.treasury-policy-mode {
+  background: #eef4ff !important;
+  border: 1px solid rgba(147, 197, 253, 0.6) !important;
+  color: #2563eb !important;
+}
+
+.treasury-monitor-card,
+.treasury-executive-card,
+.treasury-capital-card {
+  background: #ffffff !important;
+  border: 1px solid rgba(203, 213, 225, 0.9) !important;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.06) !important;
+}
+
+.treasury-monitor-card span,
+.treasury-executive-card span,
+.treasury-capital-card span {
+  color: #2563eb !important;
+}
+
+.treasury-monitor-card strong,
+.treasury-executive-card strong,
+.treasury-capital-card strong {
+  color: #0f172a !important;
+}
+
+.treasury-monitor-card p,
+.treasury-executive-card p,
+.treasury-capital-card p {
+  color: #475569 !important;
+}
+
+.treasury-heat-cell.normal,
+.treasury-policy-card.normal,
+.treasury-alert-card.normal {
+  background: #ecfdf5 !important;
+  border-color: #bbf7d0 !important;
+}
+
+.treasury-heat-cell.watch,
+.treasury-policy-card.watch,
+.treasury-alert-card.watch {
+  background: #eff6ff !important;
+  border-color: #bfdbfe !important;
+}
+
+.treasury-heat-cell.warning,
+.treasury-policy-card.warning,
+.treasury-alert-card.warning {
+  background: #fffbeb !important;
+  border-color: #fde68a !important;
+}
+
+.treasury-heat-cell.critical,
+.treasury-policy-card.critical,
+.treasury-alert-card.critical {
+  background: #fef2f2 !important;
+  border-color: #fecaca !important;
+}
+
+.treasury-heat-cell span,
+.treasury-policy-card span,
+.treasury-alert-card span {
+  color: #2563eb !important;
+}
+
+.treasury-heat-cell strong,
+.treasury-policy-card strong,
+.treasury-alert-card strong {
+  color: #0f172a !important;
+}
+
+.treasury-heat-cell p,
+.treasury-policy-card p,
+.treasury-alert-card p {
+  color: #475569 !important;
+}
+
+/* =========================================================
+   V33.2-G10C Treasury Command Center Softer Redesign
+   ========================================================= */
+
+.treasury-command-center {
+  background: linear-gradient(135deg, #ffffff, #f3f7ff) !important;
+  border: 1px solid rgba(203, 213, 225, 0.9) !important;
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08) !important;
+  color: #0f172a !important;
+}
+
+.treasury-command-header {
+  align-items: center !important;
+}
+
+.treasury-command-header h2 {
+  color: #0f172a !important;
+}
+
+.treasury-command-description {
+  color: #64748b !important;
+}
+
+.treasury-live-status {
+  background: #eef4ff !important;
+  border: 1px solid rgba(147, 197, 253, 0.7) !important;
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.08) !important;
+}
+
+.treasury-live-status strong {
+  color: #0f172a !important;
+}
+
+.treasury-live-status p {
+  color: #64748b !important;
+}
+
+.treasury-command-card {
+  background: #ffffff !important;
+  border: 1px solid rgba(203, 213, 225, 0.9) !important;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.06) !important;
+}
+
+.treasury-command-card span {
+  color: #2563eb !important;
+}
+
+.treasury-command-card strong {
+  color: #0f172a !important;
+}
+
+.treasury-command-card p {
+  color: #64748b !important;
+}
+
+.treasury-command-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 36px rgba(37, 99, 235, 0.12) !important;
+}
+
+/* =========================================================
+   V33.2-G10D Soft Risk Strip + Route Note Polish
+   ========================================================= */
+
+.treasury-risk-pill {
+  background: #ffffff !important;
+  border: 1px solid rgba(203, 213, 225, 0.9) !important;
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06) !important;
+}
+
+.treasury-risk-pill strong {
+  color: #0f172a !important;
+}
+
+.treasury-risk-pill small {
+  color: #64748b !important;
+}
+
+.treasury-route-note {
+  display: flex !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  align-items: center !important;
+}
+
+.treasury-route-note small {
+  color: #64748b !important;
+}
+
+.treasury-route-note b {
+  color: #0f172a !important;
+}
+
+/* =========================================================
+   V33.2-G10E Soft Intelligence Panels
+   ========================================================= */
+
+.treasury-governance-recommendation {
+  background: linear-gradient(135deg, #ffffff, #f3f7ff) !important;
+  border: 1px solid rgba(203, 213, 225, 0.9) !important;
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08) !important;
+  color: #0f172a !important;
+}
+
+.treasury-governance-recommendation h2,
+.treasury-governance-recommendation p {
+  color: #0f172a !important;
+}
+
+.treasury-governance-recommendation .eyebrow {
+  color: #2563eb !important;
+}
+
+.treasury-recommendation-side span,
+.treasury-recommendation-side small {
+  background: #eef4ff !important;
+  color: #2563eb !important;
+  border: 1px solid rgba(147, 197, 253, 0.55) !important;
+}
+
+.treasury-intelligence-banner {
+  background: linear-gradient(135deg, #fffaf0, #ffffff) !important;
+  border: 1px solid rgba(253, 230, 138, 0.9) !important;
+  box-shadow: 0 16px 34px rgba(15, 23, 42, 0.06) !important;
+  color: #0f172a !important;
+}
+
+.treasury-intelligence-banner h2,
+.treasury-intelligence-banner p {
+  color: #0f172a !important;
+}
+
+.treasury-intelligence-metrics span {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid rgba(203, 213, 225, 0.8) !important;
+}
+
+/* =========================================================
+   V33.2-G10F Treasury Layout Hierarchy System
+   Mixed horizontal + vertical institutional layout
+   ========================================================= */
+
+.treasury-routing-engine-section .treasury-action-grid {
+  display: grid;
+  grid-template-columns: 1.45fr 1fr;
+  gap: 18px;
+}
+
+.treasury-routing-engine-section .treasury-action-card:first-child {
+  grid-row: span 2;
+  min-height: 420px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.treasury-routing-engine-section .treasury-action-card:not(:first-child) {
+  min-height: 200px;
+}
+
+.treasury-lifecycle-section .treasury-action-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 18px;
+}
+
+.treasury-lifecycle-section .treasury-action-card {
+  min-height: 260px;
+}
+
+@media (max-width: 1100px) {
+  .treasury-routing-engine-section .treasury-action-grid,
+  .treasury-lifecycle-section .treasury-action-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .treasury-routing-engine-section .treasury-action-card:first-child {
+    grid-row: auto;
+  }
+}
+
+/* =========================================================
+   V33.2-G10G Treasury Visual Weight System
+   Action sections become soft operation floor
+   ========================================================= */
+
+.treasury-action-center {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(248, 250, 255, 0.98) 0%,
+      rgba(240, 245, 255, 0.96) 100%
+    ) !important;
+
+  border: 1px solid rgba(90, 120, 255, 0.08) !important;
+
+  box-shadow:
+    0 12px 30px rgba(15, 23, 42, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+}
+
+.treasury-action-card {
+  background: #ffffff !important;
+  border: 1px solid rgba(203, 213, 225, 0.9) !important;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.045) !important;
+}
+
+.treasury-action-card span {
+  color: #2563eb !important;
+}
+
+.treasury-action-card strong {
+  color: #0f172a !important;
+}
+
+.treasury-action-card p,
+.treasury-action-card small {
+  color: #64748b !important;
+}
+
+/* =========================================================
+   V33.2-G11 Treasury Decision Panel Soft Alignment
+   ========================================================= */
+
+.treasury-decision-state,
+.treasury-auto-recovery-panel,
+.treasury-governance-panel {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.98) 0%,
+      rgba(248,250,255,0.98) 100%
+    ) !important;
+
+  border: 1px solid rgba(203, 213, 225, 0.75) !important;
+
+  border-radius: 28px !important;
+
+  box-shadow:
+    0 12px 28px rgba(15, 23, 42, 0.045),
+    inset 0 1px 0 rgba(255,255,255,0.6) !important;
+
+  color: #0f172a !important;
+}
+
+/* titles */
+
+.treasury-decision-state h2,
+.treasury-auto-recovery-panel h2,
+.treasury-governance-panel h2 {
+  color: #0f172a !important;
+}
+
+/* descriptions */
+
+.treasury-decision-state p,
+.treasury-auto-recovery-panel p,
+.treasury-governance-panel p {
+  color: #64748b !important;
+}
+
+/* right-side pills */
+
+.treasury-decision-state .treasury-pill,
+.treasury-auto-recovery-panel .treasury-pill,
+.treasury-governance-panel .treasury-pill {
+  background: rgba(37, 99, 235, 0.08) !important;
+
+  color: #2563eb !important;
+
+  border: 1px solid rgba(37, 99, 235, 0.12) !important;
+}
