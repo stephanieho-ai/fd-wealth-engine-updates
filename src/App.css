@@ -5183,3 +5183,810 @@ input {
 
   border: 1px solid rgba(37, 99, 235, 0.12) !important;
 }
+
+/* =========================
+   V33.2-G12A Treasury Intelligence Rail Architecture FIX
+========================= */
+
+.dashboard-console-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 28px;
+  align-items: start;
+}
+
+.dashboard-console-main {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(280px, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+
+.dashboard-intelligence-rail {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 90px;
+}
+
+.treasury-intelligence-panel {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 1350px) {
+  .dashboard-console-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-console-main {
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+  }
+
+  .dashboard-intelligence-rail {
+    position: relative;
+    top: unset;
+  }
+}
+
+@media (max-width: 900px) {
+  .dashboard-console-main {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* FORCE FIX - G12A Rail Layout */
+.dashboard-console-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 640px) 360px !important;
+  gap: 32px !important;
+  align-items: start !important;
+  justify-content: center !important;
+  width: 100% !important;
+}
+
+.dashboard-console-main {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 24px !important;
+  align-items: start !important;
+  min-width: 0 !important;
+}
+
+.dashboard-intelligence-rail {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+  width: 360px !important;
+  min-width: 360px !important;
+  position: relative !important;
+  top: auto !important;
+}
+
+.treasury-intelligence-panel {
+  width: 100% !important;
+  max-width: 360px !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 1200px) {
+  .dashboard-console-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .dashboard-console-main {
+    grid-template-columns: 1fr !important;
+  }
+
+  .dashboard-intelligence-rail {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .treasury-intelligence-panel {
+    max-width: 100% !important;
+  }
+}
+
+/* =========================
+   FINAL FIX - G12A Natural Dashboard Balance
+========================= */
+
+.dashboard-console-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 760px) minmax(340px, 380px) !important;
+  gap: 32px !important;
+  align-items: start !important;
+  justify-content: center !important;
+  max-width: 1120px !important;
+  margin: 28px auto 0 !important;
+}
+
+.dashboard-console-main {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(280px, 1fr)) !important;
+  gap: 24px !important;
+  align-items: start !important;
+}
+
+.dashboard-console-main > * {
+  height: auto !important;
+  min-height: 0 !important;
+  align-self: start !important;
+}
+
+.dashboard-intelligence-rail {
+  width: 100% !important;
+  min-width: 0 !important;
+  align-self: start !important;
+  position: static !important;
+}
+
+.treasury-intelligence-panel {
+  width: 100% !important;
+  max-width: 380px !important;
+  align-self: start !important;
+}
+
+.dashboard-bottom-grid {
+  max-width: 1120px !important;
+  margin: 32px auto 0 !important;
+}
+
+@media (max-width: 1200px) {
+  .dashboard-console-grid {
+    grid-template-columns: 1fr !important;
+    max-width: 760px !important;
+  }
+
+  .dashboard-console-main {
+    grid-template-columns: 1fr !important;
+  }
+
+  .treasury-intelligence-panel {
+    max-width: 100% !important;
+  }
+}
+
+/* G12A Compact Intelligence Rail */
+.dashboard-intelligence-rail .treasury-intelligence-panel {
+  padding: 18px !important;
+}
+
+.dashboard-intelligence-rail .treasury-intelligence-panel h2 {
+  font-size: 22px !important;
+  line-height: 1.15 !important;
+}
+
+.dashboard-intelligence-rail .treasury-intelligence-panel p {
+  font-size: 13px !important;
+  line-height: 1.35 !important;
+}
+
+.dashboard-intelligence-rail .treasury-intelligence-panel ul {
+  margin-top: 8px !important;
+}
+
+.dashboard-intelligence-rail .treasury-intelligence-panel li {
+  font-size: 13px !important;
+  line-height: 1.35 !important;
+  margin-bottom: 4px !important;
+}
+
+.dashboard-intelligence-rail .treasury-intelligence-panel > div {
+  gap: 10px !important;
+}
+
+.dashboard-intelligence-rail .treasury-intelligence-panel strong {
+  font-size: 18px !important;
+}
+
+.dashboard-intelligence-rail .treasury-intelligence-panel [style*="font-size: 34"] {
+  font-size: 28px !important;
+}
+
+.dashboard-console-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.15fr;
+  gap: 24px;
+  align-items: start;
+  margin-top: 28px;
+}
+
+.dashboard-console-left,
+.dashboard-console-center,
+.dashboard-console-right {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.dashboard-execution-horizontal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 24px;
+  align-items: start;
+}
+
+.dashboard-execution-left,
+.dashboard-execution-right {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* FINAL G12D - Image 1 + Image 2 Layout */
+.dashboard-console-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(240px, 1fr)) !important;
+  gap: 24px !important;
+  max-width: 1600px !important;
+  margin: 32px auto !important;
+  align-items: start !important;
+}
+
+.dashboard-command-center,
+.treasury-intelligence-panel {
+  width: 100% !important;
+  max-width: 1600px !important;
+  margin: 32px auto !important;
+}
+
+.dashboard-execution-horizontal {
+  display: contents !important;
+}
+
+.dashboard-console-left,
+.dashboard-console-center,
+.dashboard-console-right,
+.dashboard-execution-left,
+.dashboard-execution-right {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+@media (max-width: 1300px) {
+  .dashboard-console-grid {
+    grid-template-columns: repeat(2, minmax(260px, 1fr)) !important;
+  }
+}
+
+@media (max-width: 800px) {
+  .dashboard-console-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* FINAL WIDTH ALIGNMENT */
+
+.treasury-timeline-section,
+.policy-breach-monitor,
+.policy-monitor-section {
+  width: 100% !important;
+  max-width: 1600px !important;
+  margin: 32px auto !important;
+}
+
+/* optional smoother Apple spacing */
+.treasury-timeline-section {
+  margin-top: 36px !important;
+}
+
+.policy-breach-monitor,
+.policy-monitor-section {
+  margin-top: 36px !important;
+  margin-bottom: 60px !important;
+}
+
+/* ========================================
+   FINAL FULL-WIDTH TREASURY LAYOUT
+======================================== */
+
+.treasury-timeline-section,
+.policy-breach-monitor,
+.policy-monitor-section {
+  width: 100% !important;
+  max-width: 1600px !important;
+  min-width: 1600px !important;
+
+  margin-left: auto !important;
+  margin-right: auto !important;
+
+  box-sizing: border-box !important;
+}
+
+/* timeline card */
+.treasury-timeline-card,
+.policy-breach-card {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* remove legacy narrow container */
+.dashboard-content,
+.dashboard-main,
+.dashboard-section {
+  max-width: unset !important;
+}
+
+/* FORCE bottom sections same width as upper sections */
+.dashboard-bottom-grid {
+  width: 100% !important;
+  max-width: 1600px !important;
+  margin: 40px auto 80px !important;
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 36px !important;
+}
+
+#treasury-timeline-section,
+#policy-breach-section {
+  width: 100% !important;
+  max-width: 1600px !important;
+}
+
+#treasury-timeline-section > *,
+#policy-breach-section > * {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* =========================================
+   V33.2-G13-A Treasury Workspace Rhythm
+========================================= */
+
+.dashboard-section {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 22px;
+
+  margin-bottom: 34px;
+
+  position: relative;
+}
+
+/* Workspace harmony */
+
+.dashboard-page {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Better operational breathing */
+
+.dashboard-section > .bank-panel,
+.dashboard-section > .dashboard-section-card,
+.dashboard-section > .analytics-panel,
+.dashboard-section > .content-card {
+  width: 100%;
+}
+
+/* Treasury flow rhythm */
+
+.dashboard-section.compact {
+  margin-bottom: 24px;
+}
+
+.dashboard-section.spacious {
+  margin-bottom: 46px;
+}
+
+/* Workspace depth consistency */
+
+.dashboard-section::before {
+  content: "";
+  position: absolute;
+
+  top: -10px;
+  left: 12px;
+  right: 12px;
+
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(148, 163, 184, 0.14),
+    transparent
+  );
+
+  pointer-events: none;
+}
+
+/* =========================================
+   V33.2-G13 Typography Harmonization
+========================================= */
+
+/* Institutional section titles */
+
+.dashboard-section-title,
+.panel-title,
+.bank-panel h3,
+.intelligence-title,
+.workspace-title {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.04;
+}
+
+/* Premium operational numbers */
+
+.metric-box strong,
+.summary-card strong,
+.dashboard-stat-card strong,
+.metric-value,
+.hero-metric-value,
+.intelligence-score,
+.capital-value {
+  letter-spacing: -0.04em;
+  font-weight: 900;
+}
+
+/* Apple-style intelligence labels */
+
+.signal-item span,
+.action-item span,
+.analytics-item span,
+.policy-label,
+.intelligence-label,
+.workspace-label {
+  letter-spacing: 0.08em;
+  font-weight: 800;
+}
+
+/* Recommended orchestration refinement */
+
+.recommended-orchestration-card,
+.recommendation-card {
+  backdrop-filter: blur(12px);
+}
+
+.recommended-orchestration-card h3,
+.recommendation-card h3 {
+  font-size: 34px;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+}
+
+/* Intelligence score */
+
+.intelligence-score-card strong,
+.intelligence-score {
+  font-size: 72px;
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  line-height: 0.92;
+}
+
+/* Treasury policy status */
+
+.policy-status-card strong,
+.policy-status {
+  font-size: 48px;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  line-height: 0.94;
+}
+
+/* Treasury operational chips */
+
+.recommendation-chip,
+.orchestration-chip,
+.policy-chip {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* =========================================
+   V33.2-G13 Metric Chip Typography Fix
+========================================= */
+
+.recommendation-chip,
+.orchestration-chip,
+.policy-chip,
+.metric-mini-card,
+.intelligence-mini-card {
+  min-width: 88px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 14px 10px;
+}
+
+/* label */
+
+.recommendation-chip span,
+.orchestration-chip span,
+.policy-chip span,
+.metric-mini-card span,
+.intelligence-mini-card span {
+  font-size: 10px;
+
+  letter-spacing: 0.06em;
+
+  line-height: 1.25;
+
+  text-align: center;
+
+  white-space: normal;
+
+  word-break: break-word;
+}
+
+/* value */
+
+.recommendation-chip strong,
+.orchestration-chip strong,
+.policy-chip strong,
+.metric-mini-card strong,
+.intelligence-mini-card strong {
+  font-size: 20px;
+
+  line-height: 1;
+
+  letter-spacing: -0.03em;
+}
+
+/* =========================================
+   V33.2-G13-A Recommended Orchestration Metric Fix
+   Fix label collision: CONCENTRATION / MATURITY
+========================================= */
+
+.recommended-orchestration-card div,
+.recommendation-card div {
+  min-width: 0;
+}
+
+.recommended-orchestration-card span,
+.recommendation-card span {
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+  text-align: center !important;
+  line-height: 1.15 !important;
+}
+
+.recommended-orchestration-card strong,
+.recommendation-card strong {
+  line-height: 1 !important;
+}
+
+/* More specific: small score boxes inside Recommended Orchestration */
+.recommended-orchestration-card div:has(> span):has(> strong),
+.recommendation-card div:has(> span):has(> strong) {
+  min-width: 88px !important;
+  max-width: 96px !important;
+  padding: 14px 8px !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  gap: 8px !important;
+}
+
+.recommended-orchestration-card div:has(> span):has(> strong) span,
+.recommendation-card div:has(> span):has(> strong) span {
+  font-size: 9.5px !important;
+  letter-spacing: 0.04em !important;
+  max-width: 78px !important;
+}
+
+/* =========================================
+   V33.2-G13-A Apple-style Treasury Depth Layer
+========================================= */
+
+.treasury-intelligence-panel,
+.capital-engine-panel,
+.dashboard-bottom-grid > div,
+#treasury-timeline-section,
+#policy-breach-section {
+  position: relative;
+}
+
+.treasury-intelligence-panel::after,
+#treasury-timeline-section::after,
+#policy-breach-section::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.42),
+    transparent 42%,
+    rgba(69,104,255,0.05)
+  );
+}
+
+.dashboard-page .bank-panel,
+.dashboard-page .content-card,
+.dashboard-page .summary-card,
+.dashboard-page .metric-box,
+.dashboard-page .dashboard-stat-card {
+  box-shadow:
+    0 18px 45px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72);
+}
+
+.dashboard-console-grid > * {
+  box-shadow:
+    0 20px 52px rgba(15, 23, 42, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+/* softer institutional background depth */
+
+.shell-content {
+  background:
+    radial-gradient(circle at 20% 0%, rgba(96, 165, 250, 0.14), transparent 34%),
+    radial-gradient(circle at 88% 14%, rgba(34, 197, 94, 0.08), transparent 28%),
+    var(--bg);
+}
+
+/* =========================================
+   V33.2-G13-A Section Spacing Orchestration
+========================================= */
+
+.dashboard-page > * + * {
+  margin-top: 28px;
+}
+
+.dashboard-page .treasury-intelligence-panel {
+  margin-top: 54px !important;
+  margin-bottom: 54px !important;
+}
+
+.dashboard-console-grid {
+  margin-top: 48px !important;
+  margin-bottom: 58px !important;
+}
+
+.dashboard-bottom-grid {
+  margin-top: 64px !important;
+  gap: 56px !important;
+}
+
+#treasury-timeline-section,
+#policy-breach-section {
+  scroll-margin-top: 120px;
+}
+
+/* reduce crowded first area */
+.treasury-alert-ribbon {
+  margin-top: 24px;
+  margin-bottom: 28px;
+}
+
+.dashboard-hero {
+  margin-bottom: 28px;
+}
+
+/* =========================================
+   V33.2-G13-A Treasury Focus Routing System
+========================================= */
+
+/* Main operating zones */
+
+.treasury-intelligence-panel {
+  position: relative;
+  z-index: 3;
+
+  transform: translateY(-4px);
+
+  border: 1px solid rgba(96, 165, 250, 0.14);
+
+  box-shadow:
+    0 28px 70px rgba(37, 99, 235, 0.08),
+    0 8px 24px rgba(15, 23, 42, 0.06),
+    inset 0 1px 0 rgba(255,255,255,0.75);
+}
+
+/* Execution focus */
+
+.execution-snapshot-panel,
+.execution-control-panel {
+  position: relative;
+
+  border: 1px solid rgba(59,130,246,0.12);
+
+  box-shadow:
+    0 18px 40px rgba(37,99,235,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.72);
+}
+
+/* Governance depth */
+
+#policy-breach-section {
+  border: 1px solid rgba(239,68,68,0.08);
+
+  box-shadow:
+    0 24px 58px rgba(15,23,42,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.75);
+}
+
+/* Timeline operational flow */
+
+#treasury-timeline-section {
+  border: 1px solid rgba(59,130,246,0.08);
+
+  box-shadow:
+    0 22px 50px rgba(15,23,42,0.05),
+    inset 0 1px 0 rgba(255,255,255,0.75);
+}
+
+/* =========================================
+   V33.2-G13-B Console Grid Alignment Polish
+========================================= */
+
+.dashboard-console-grid {
+  align-items: stretch;
+}
+
+/* unify console card structure */
+
+.dashboard-console-grid > div,
+.dashboard-bottom-grid > div {
+  display: flex;
+  flex-direction: column;
+
+  min-height: 100%;
+}
+
+/* equal visual rhythm */
+
+.advisor-panel,
+.maturity-command-panel,
+.execution-snapshot-panel,
+.audit-trail-panel {
+  height: 100%;
+}
+
+/* internal spacing rhythm */
+
+.advisor-panel > * + *,
+.maturity-command-panel > * + *,
+.execution-snapshot-panel > * + *,
+.audit-trail-panel > * + * {
+  margin-top: 18px;
+}
+
+/* remove awkward bottom floating feel */
+
+.execution-snapshot-panel::after,
+.maturity-command-panel::after {
+  display: none;
+}
+
+/* execution section balance */
+
+.execution-snapshot-panel button {
+  min-height: 52px;
+}
+
+/* audit panel breathing */
+
+.audit-trail-panel .audit-empty-state {
+  min-height: 120px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -352,6 +352,622 @@ function getTreasuryPolicyBreachEngine({
   };
 }
 
+function getTreasuryIntelligenceModel({
+  totalActivePortfolio,
+  totalFixedDeposits,
+  totalDeployableFunds,
+  totalDeployableWithUpcoming,
+  reserveAmount,
+  liquidityBuffer,
+  upcomingMaturityAmount,
+  fdExposureRatio,
+  liquidityRatio,
+  largestBankExposure,
+  weakestMonth,
+  strongestMonth,
+  treasuryPolicyDecision,
+}) {
+  if (!totalActivePortfolio) {
+    return {
+      score: 0,
+      level: "STANDBY",
+      outlook: "NO DATA",
+      forecastSignal: "Portfolio records are required before intelligence scoring can begin.",
+      liquidityProjection: "No active capital available for projection.",
+      stabilityLevel: "Standby",
+      riskOutlook: "No treasury risk detected because no active portfolio exists.",
+      reasoning: [
+        "Add FD, Savings or Parking Cash records to activate Treasury Intelligence.",
+        "Once records exist, the system will evaluate liquidity, concentration, reserve coverage and maturity balance.",
+      ],
+      actions: ["Add records", "Set reserve target", "Review capital structure"],
+      metrics: {
+        liquidityScore: 0,
+        reserveScore: 0,
+        concentrationScore: 0,
+        maturityScore: 0,
+        policyScore: 0,
+      },
+    };
+  }
+
+  const liquidityPercent = liquidityRatio * 100;
+  const fdConcentrationPercent = fdExposureRatio * 100;
+  const bankExposurePercent = (largestBankExposure?.ratio || 0) * 100;
+  const reserveCoveragePercent = reserveAmount
+    ? (totalDeployableFunds / reserveAmount) * 100
+    : 100;
+
+  const liquidityScore =
+    liquidityPercent >= 20
+      ? 95
+      : liquidityPercent >= 15
+      ? 85
+      : liquidityPercent >= 10
+      ? 70
+      : liquidityPercent >= 5
+      ? 45
+      : 20;
+
+  const reserveScore =
+    reserveCoveragePercent >= 150
+      ? 95
+      : reserveCoveragePercent >= 100
+      ? 85
+      : reserveCoveragePercent >= 75
+      ? 60
+      : reserveCoveragePercent >= 50
+      ? 40
+      : 20;
+
+  const concentrationScore =
+    fdConcentrationPercent > 92
+      ? 30
+      : fdConcentrationPercent > 85
+      ? 50
+      : fdConcentrationPercent >= 55
+      ? 88
+      : fdConcentrationPercent >= 30
+      ? 78
+      : 65;
+
+  const bankExposureScore =
+    bankExposurePercent > 75
+      ? 35
+      : bankExposurePercent > 60
+      ? 55
+      : bankExposurePercent > 45
+      ? 75
+      : 90;
+
+  const maturityScore =
+    weakestMonth && strongestMonth
+      ? strongestMonth.amount > 0 &&
+        weakestMonth.amount / Math.max(strongestMonth.amount, 1) >= 0.65
+        ? 88
+        : strongestMonth.amount > 0 &&
+          weakestMonth.amount / Math.max(strongestMonth.amount, 1) >= 0.35
+        ? 68
+        : 48
+      : 55;
+
+  const policyScore = treasuryPolicyDecision?.blocked
+    ? 25
+    : treasuryPolicyDecision?.escalationRequired
+    ? 45
+    : treasuryPolicyDecision?.approvalRequired
+    ? 62
+    : 88;
+
+  const score = Math.round(
+    liquidityScore * 0.24 +
+      reserveScore * 0.22 +
+      concentrationScore * 0.18 +
+      bankExposureScore * 0.12 +
+      maturityScore * 0.12 +
+      policyScore * 0.12
+  );
+
+  let level = "STABLE";
+  if (score >= 85) level = "INTELLIGENTLY STABLE";
+  else if (score >= 72) level = "STABLE";
+  else if (score >= 58) level = "WATCH";
+  else if (score >= 42) level = "DEFENSIVE";
+  else level = "CRITICAL";
+
+  let outlook = "BALANCED";
+  if (treasuryPolicyDecision?.blocked) outlook = "RESTRICTED";
+  else if (liquidityPercent < 8) outlook = "LIQUIDITY PRESSURE";
+  else if (fdConcentrationPercent > 90) outlook = "LOCKED CAPITAL RISK";
+  else if (totalDeployableWithUpcoming > totalDeployableFunds * 1.5)
+    outlook = "MATURITY SUPPORTED";
+  else if (score >= 85) outlook = "STRONG";
+
+  const reasoning = [];
+
+  if (liquidityPercent < 10) {
+    reasoning.push(
+      "Liquidity is below preferred treasury comfort range. The system should reduce aggressive deployment."
+    );
+  } else {
+    reasoning.push(
+      "Liquidity remains within an acceptable operating range for current treasury monitoring."
+    );
+  }
+
+  if (reserveAmount > 0 && totalDeployableFunds < reserveAmount) {
+    reasoning.push(
+      "Reserve target is not fully covered. Treasury should prioritize reserve restoration before new placement."
+    );
+  } else {
+    reasoning.push(
+      "Reserve coverage is currently supported by available deployable capital."
+    );
+  }
+
+  if (fdConcentrationPercent > 90) {
+    reasoning.push(
+      "FD concentration is high. Capital is efficient for yield but less flexible during liquidity pressure."
+    );
+  } else {
+    reasoning.push(
+      "FD concentration is not currently breaching the strongest treasury lock-up threshold."
+    );
+  }
+
+  if (treasuryPolicyDecision?.blocked) {
+    reasoning.push(
+      "Policy engine is blocking execution. Intelligence layer recommends governance review before action."
+    );
+  } else if (treasuryPolicyDecision?.approvalRequired) {
+    reasoning.push(
+      "Policy engine allows monitoring but requires higher review before aggressive deployment."
+    );
+  } else {
+    reasoning.push(
+      "Policy engine is not blocking treasury execution at this moment."
+    );
+  }
+
+  const forecastSignal =
+    liquidityPercent < 8
+      ? "Forecast: liquidity pressure may continue unless maturity recovery or fresh savings increases deployable funds."
+      : upcomingMaturityAmount > 0
+      ? "Forecast: upcoming maturity will strengthen deployable capital and improve short-term treasury flexibility."
+      : fdConcentrationPercent > 90
+      ? "Forecast: high FD lock-up may reduce response speed if emergency liquidity is needed."
+      : "Forecast: treasury position is stable under current portfolio structure.";
+
+  const liquidityProjection =
+    totalDeployableWithUpcoming > totalDeployableFunds
+      ? "Liquidity projection improves with upcoming maturity support."
+      : liquidityPercent >= 15
+      ? "Liquidity projection remains comfortable under current reserve setting."
+      : "Liquidity projection should be monitored because deployable funds are limited.";
+
+  const stabilityLevel =
+    score >= 85
+      ? "Institutional Stable"
+      : score >= 72
+      ? "Operational Stable"
+      : score >= 58
+      ? "Monitoring Required"
+      : score >= 42
+      ? "Defensive Mode"
+      : "Critical Governance";
+
+  const riskOutlook =
+    treasuryPolicyDecision?.blocked
+      ? "Risk outlook is restricted because policy engine has blocked deployment."
+      : liquidityPercent < 10
+      ? "Risk outlook is liquidity-sensitive. Avoid large deployment until reserve improves."
+      : fdConcentrationPercent > 90
+      ? "Risk outlook is concentration-sensitive. Consider staggered maturity recovery."
+      : "Risk outlook is manageable. Continue monitoring maturity ladder and reserve coverage.";
+
+  const actions = [];
+
+  if (treasuryPolicyDecision?.blocked) {
+    actions.push("Resolve policy block");
+  }
+
+  if (totalDeployableFunds < reserveAmount) {
+    actions.push("Restore reserve coverage");
+  }
+
+  if (liquidityPercent < 10) {
+    actions.push("Pause aggressive deployment");
+  }
+
+  if (fdConcentrationPercent > 90) {
+    actions.push("Reduce FD lock-up concentration");
+  }
+
+  if (weakestMonth?.month) {
+    actions.push(`Strengthen weak maturity month ${weakestMonth.month}`);
+  }
+
+  if (!actions.length) {
+    actions.push("Maintain current treasury structure");
+    actions.push("Continue maturity monitoring");
+  }
+
+  return {
+    score,
+    level,
+    outlook,
+    forecastSignal,
+    liquidityProjection,
+    stabilityLevel,
+    riskOutlook,
+
+    reasoning,
+    actions,
+    metrics: {
+      liquidityScore,
+      reserveScore,
+      concentrationScore,
+      bankExposureScore,
+      maturityScore,
+      policyScore,
+    },
+  };
+}
+
+function IntelligenceMetric({ label, value, note }) {
+  return (
+    <div
+      style={{
+        border: "1px solid rgba(148, 163, 184, 0.24)",
+        borderRadius: 18,
+        padding: 14,
+        background: "rgba(15, 23, 42, 0.04)",
+      }}
+    >
+      <div style={{ fontSize: 11, opacity: 0.72, textTransform: "uppercase" }}>
+        {label}
+      </div>
+      <strong style={{ display: "block", fontSize: 22, marginTop: 6 }}>
+        {value}
+      </strong>
+      {note && (
+        <p style={{ margin: "6px 0 0", fontSize: 12, opacity: 0.72 }}>{note}</p>
+      )}
+    </div>
+  );
+}
+
+function TreasuryIntelligencePanel({
+  currency,
+  formatMoney,
+  totalActivePortfolio,
+  totalFixedDeposits,
+  totalDeployableFunds,
+  totalDeployableWithUpcoming,
+  reserveAmount,
+  liquidityBuffer,
+  upcomingMaturityAmount,
+  fdExposureRatio,
+  liquidityRatio,
+  largestBankExposure,
+  weakestMonth,
+  strongestMonth,
+  treasuryPolicyDecision,
+}) {
+  const intelligence = useMemo(
+    () =>
+      getTreasuryIntelligenceModel({
+        totalActivePortfolio,
+        totalFixedDeposits,
+        totalDeployableFunds,
+        totalDeployableWithUpcoming,
+        reserveAmount,
+        liquidityBuffer,
+        upcomingMaturityAmount,
+        fdExposureRatio,
+        liquidityRatio,
+        largestBankExposure,
+        weakestMonth,
+        strongestMonth,
+        treasuryPolicyDecision,
+      }),
+    [
+      totalActivePortfolio,
+      totalFixedDeposits,
+      totalDeployableFunds,
+      totalDeployableWithUpcoming,
+      reserveAmount,
+      liquidityBuffer,
+      upcomingMaturityAmount,
+      fdExposureRatio,
+      liquidityRatio,
+      largestBankExposure,
+      weakestMonth,
+      strongestMonth,
+      treasuryPolicyDecision,
+    ]
+  );
+
+  const scoreTone =
+    intelligence.level === "CRITICAL" || intelligence.level === "DEFENSIVE"
+      ? {
+          background: "linear-gradient(135deg, #fff1f2, #ffe4e6)",
+          borderColor: "rgba(244, 63, 94, 0.32)",
+          color: "#9f1239",
+        }
+      : intelligence.level === "WATCH"
+      ? {
+          background: "linear-gradient(135deg, #fffbeb, #fef3c7)",
+          borderColor: "rgba(245, 158, 11, 0.36)",
+          color: "#92400e",
+        }
+      : {
+          background: "linear-gradient(135deg, #ecfdf5, #d1fae5)",
+          borderColor: "rgba(16, 185, 129, 0.32)",
+          color: "#065f46",
+        };
+
+  const commandMetrics = [
+    {
+      label: "Risk Outlook",
+      value: intelligence.outlook,
+      note: intelligence.stabilityLevel,
+      style: {
+        background: "linear-gradient(135deg, #fff1f2, #ffe4e6)",
+        borderColor: "rgba(244, 63, 94, 0.25)",
+      },
+    },
+    {
+      label: "Deployable Now",
+      value: formatMoney(totalDeployableFunds, currency),
+      note: "Current liquidity base",
+      style: {
+        background: "linear-gradient(135deg, #eff6ff, #dbeafe)",
+        borderColor: "rgba(59, 130, 246, 0.22)",
+      },
+    },
+    {
+      label: "With Upcoming FD",
+      value: formatMoney(totalDeployableWithUpcoming, currency),
+      note: "Projected liquidity support",
+      style: {
+        background: "linear-gradient(135deg, #f0fdf4, #dcfce7)",
+        borderColor: "rgba(34, 197, 94, 0.22)",
+      },
+    },
+    {
+      label: "Policy Status",
+      value: treasuryPolicyDecision?.severity || "SAFE",
+      note: treasuryPolicyDecision?.blocked
+        ? "Execution restricted"
+        : "Execution governance active",
+      style: {
+        background: "linear-gradient(135deg, #fef2f2, #fee2e2)",
+        borderColor: "rgba(239, 68, 68, 0.24)",
+      },
+    },
+  ];
+
+  const scoreMetrics = [
+    ["Liquidity", intelligence.metrics.liquidityScore],
+    ["Reserve", intelligence.metrics.reserveScore],
+    ["Concentration", intelligence.metrics.concentrationScore],
+    ["Maturity", intelligence.metrics.maturityScore],
+    ["Policy", intelligence.metrics.policyScore],
+  ];
+
+  return (
+    <section
+      className="treasury-intelligence-panel treasury-intelligence-horizontal"
+      style={{
+        width: "100%",
+        border: "1px solid rgba(148, 163, 184, 0.28)",
+        borderRadius: 30,
+        padding: 28,
+        margin: "28px 0",
+        background:
+          "linear-gradient(135deg, rgba(255,255,255,0.96), rgba(239,246,255,0.96))",
+        boxShadow: "0 24px 60px rgba(15, 23, 42, 0.12)",
+        overflow: "hidden",
+      }}
+    >
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "minmax(0, 1fr) 150px",
+          gap: 24,
+          alignItems: "start",
+          marginBottom: 22,
+        }}
+      >
+        <div>
+          <p className="eyebrow" style={{ margin: "0 0 8px" }}>
+            V33.2-G12 Treasury Intelligence
+          </p>
+          <h2 style={{ margin: 0, fontSize: 34, lineHeight: 1.05 }}>
+            Intelligence Command Center
+          </h2>
+          <p className="muted" style={{ marginTop: 10, maxWidth: 760 }}>
+            Horizontal treasury intelligence layer for AI reasoning, liquidity
+            forecast, risk scoring and predictive orchestration.
+          </p>
+        </div>
+
+        <div
+          style={{
+            textAlign: "center",
+            border: "1px solid rgba(148, 163, 184, 0.28)",
+            borderRadius: 24,
+            padding: "16px 18px",
+            ...scoreTone,
+          }}
+        >
+          <div style={{ fontSize: 11, opacity: 0.75 }}>INTELLIGENCE SCORE</div>
+          <strong style={{ display: "block", fontSize: 40, lineHeight: 1 }}>
+            {intelligence.score}
+          </strong>
+          <div style={{ fontSize: 12, marginTop: 7 }}>{intelligence.level}</div>
+        </div>
+      </div>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+          gap: 14,
+          marginBottom: 16,
+        }}
+      >
+        {commandMetrics.map((metric) => (
+          <div
+            key={metric.label}
+            style={{
+              border: "1px solid rgba(148, 163, 184, 0.22)",
+              borderRadius: 22,
+              padding: "16px 18px",
+              ...metric.style,
+            }}
+          >
+            <div
+              style={{
+                fontSize: 11,
+                opacity: 0.72,
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
+                marginBottom: 8,
+              }}
+            >
+              {metric.label}
+            </div>
+            <strong style={{ display: "block", fontSize: 24, lineHeight: 1.05 }}>
+              {metric.value}
+            </strong>
+            <p className="muted" style={{ margin: "8px 0 0", fontSize: 12 }}>
+              {metric.note}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1.25fr 0.9fr 0.9fr",
+          gap: 14,
+          alignItems: "stretch",
+        }}
+      >
+        <div
+          style={{
+            border: "1px solid rgba(99, 102, 241, 0.18)",
+            borderRadius: 22,
+            padding: 18,
+            background: "linear-gradient(135deg, #f8fafc, #eef2ff)",
+          }}
+        >
+          <strong>AI Treasury Reasoning</strong>
+          <ul style={{ margin: "10px 0 0", paddingLeft: 18 }}>
+            {intelligence.reasoning.map((item, index) => (
+              <li key={`${item}-${index}`} style={{ marginBottom: 6 }}>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div
+          style={{
+            border: "1px solid rgba(59, 130, 246, 0.2)",
+            borderRadius: 22,
+            padding: 18,
+            background: "linear-gradient(135deg, #eff6ff, #dbeafe)",
+          }}
+        >
+          <strong>Forecast Signal</strong>
+          <p className="muted" style={{ marginTop: 10 }}>
+            {intelligence.forecastSignal}
+          </p>
+          <strong style={{ display: "block", marginTop: 14 }}>
+            Liquidity Projection
+          </strong>
+          <p className="muted" style={{ marginBottom: 0 }}>
+            {intelligence.liquidityProjection}
+          </p>
+        </div>
+
+        <div
+          style={{
+            border: "1px solid rgba(168, 85, 247, 0.18)",
+            borderRadius: 22,
+            padding: 18,
+            background: "linear-gradient(135deg, #faf5ff, #eef2ff)",
+          }}
+        >
+          <strong>Recommended Orchestration</strong>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 12 }}>
+            {intelligence.actions.map((action) => (
+              <span
+                key={action}
+                style={{
+                  border: "1px solid rgba(99, 102, 241, 0.22)",
+                  borderRadius: 999,
+                  padding: "6px 10px",
+                  fontSize: 12,
+                  background: "rgba(255, 255, 255, 0.72)",
+                }}
+              >
+                {action}
+              </span>
+            ))}
+          </div>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(5, minmax(110px, 1fr))",
+                gap: 10,
+                marginTop: 16,
+              }}
+            >
+          
+            {scoreMetrics.map(([label, value]) => (
+              <div
+                key={label}
+                style={{
+                  border: "1px solid rgba(148, 163, 184, 0.2)",
+                  borderRadius: 14,
+                  padding: 10,
+                  background: "rgba(255,255,255,0.7)",
+                }}
+              >
+           <div
+              style={{
+                fontSize: 9,
+                opacity: 0.65,
+                textTransform: "uppercase",
+                lineHeight: 1.2,
+                letterSpacing: "0.04em",
+                wordBreak: "break-word",
+              }}
+            >
+              {label}
+            </div>
+                <strong style={{ display: "block", fontSize: 20, marginTop: 4 }}>
+                  {value}
+                </strong>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <p className="muted" style={{ marginTop: 14, marginBottom: 0, fontSize: 12 }}>
+        {intelligence.riskOutlook}
+      </p>
+    </section>
+  );
+}
+
+
 export default function DashboardPage({
   records = [],
   offers = [],
@@ -1019,8 +1635,8 @@ export default function DashboardPage({
           <p className="eyebrow">FD Wealth Engine</p>
           <h1>Private Banking Console</h1>
           <p className="muted">
-            V33.2-F7B Treasury Policy Breach Engine with liquidity protection,
-            reserve threshold monitoring and governance escalation.
+            V33.2-G12 Treasury Intelligence Orchestration Layer with AI reasoning,
+            predictive scoring, forecast signals and treasury simulation foundation.
           </p>
         </div>
 
@@ -1072,39 +1688,194 @@ export default function DashboardPage({
         />
       </div>
 
-      <div className="dashboard-console-grid">
-        <AdvisorPanel
-          currency={currency}
-          targetMonth={nextTargetMonth?.month || "-"}
-          weakMonth={weakestMonth?.month || "-"}
-          deployable={totalDeployableWithUpcoming}
-          bestOffer={bestOffer}
-        />
+      <TreasuryIntelligencePanel
+        currency={currency}
+        formatMoney={formatMoney}
+        totalActivePortfolio={totalActivePortfolio}
+        totalFixedDeposits={totalFixedDeposits}
+        totalDeployableFunds={totalDeployableFunds}
+        totalDeployableWithUpcoming={totalDeployableWithUpcoming}
+        reserveAmount={reserveAmount}
+        liquidityBuffer={liquidityBuffer}
+        upcomingMaturityAmount={upcomingMaturityAmount}
+        fdExposureRatio={fdExposureRatio}
+        liquidityRatio={liquidityRatio}
+        largestBankExposure={largestBankExposure}
+        weakestMonth={weakestMonth}
+        strongestMonth={strongestMonth}
+        treasuryPolicyDecision={treasuryPolicyDecision}
+      />
 
-        <div id="maturity-command-section">
-          <MaturityAlerts records={safeRecords} currency={currency} />
-        </div>
+      <section
+  className="treasury-operations-workspace"
+  style={{
+    width: "100%",
+    marginTop: 36,
+    padding: 30,
+    borderRadius: 36,
+    background:
+      "linear-gradient(135deg, rgba(255,255,255,0.96), rgba(239,246,255,0.92))",
+    border: "1px solid rgba(148, 163, 184, 0.18)",
+    boxShadow: "0 30px 70px rgba(15, 23, 42, 0.08)",
+    overflow: "hidden",
+  }}
+>
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: 24,
+      gap: 20,
+      flexWrap: "wrap",
+    }}
+  >
+    <div>
+      <p
+        className="eyebrow"
+        style={{
+          margin: "0 0 8px",
+        }}
+      >
+        TREASURY OPERATIONS DESK
+      </p>
 
-        <div id="execution-section">
-          <ExecutionPanel
-            currency={currency}
-            upcomingMaturityAmount={upcomingMaturityAmount}
-            idleCash={idleCash}
-            onExecute={handleExecuteDeployment}
-            onUndoExecution={handleUndoExecution}
-            treasuryPolicyDecision={treasuryPolicyDecision}
-          />
-        </div>
+      <h2
+        style={{
+          margin: 0,
+          fontSize: 34,
+          lineHeight: 1.05,
+        }}
+      >
+        Institutional Treasury Workspace
+      </h2>
 
-        <AuditTrail />
+      <p
+        className="muted"
+        style={{
+          marginTop: 10,
+          maxWidth: 720,
+        }}
+      >
+        Operational treasury coordination layer for deployment execution,
+        maturity monitoring, liquidity orchestration and governance oversight.
+      </p>
+    </div>
+
+    <div
+      style={{
+        minWidth: 160,
+        borderRadius: 24,
+        padding: "16px 20px",
+        background:
+          "linear-gradient(135deg, rgba(59,130,246,0.12), rgba(99,102,241,0.14))",
+        border: "1px solid rgba(59,130,246,0.16)",
+      }}
+    >
+      <div
+        style={{
+          fontSize: 11,
+          opacity: 0.7,
+          marginBottom: 6,
+          letterSpacing: "0.05em",
+        }}
+      >
+        ACTIVE OPERATIONS
       </div>
 
-      <div className="dashboard-bottom-grid">
-        <div id="treasury-timeline-section">
+      <strong
+        style={{
+          fontSize: 34,
+          lineHeight: 1,
+          display: "block",
+        }}
+      >
+        4
+      </strong>
+
+      <div
+        style={{
+          fontSize: 12,
+          marginTop: 6,
+          opacity: 0.72,
+        }}
+      >
+        Treasury modules online
+      </div>
+    </div>
+  </div>
+
+  <div
+    className="dashboard-console-grid"
+      style={{
+        display: "grid",
+        gridTemplateColumns: "1.1fr 1.1fr 0.92fr 0.92fr",
+        gap: 24,
+        alignItems: "start",
+        alignContent: "start",
+        width: "100%",
+      }}
+    >
+      <AdvisorPanel
+        currency={currency}
+        targetMonth={nextTargetMonth?.month || "-"}
+        weakMonth={weakestMonth?.month || "-"}
+        deployable={totalDeployableWithUpcoming}
+        bestOffer={bestOffer}
+      />
+
+      <div id="maturity-command-section">
+        <MaturityAlerts
+          records={safeRecords}
+          currency={currency}
+        />
+      </div>
+
+      <div id="execution-section">
+        <ExecutionPanel
+          currency={currency}
+          upcomingMaturityAmount={upcomingMaturityAmount}
+          idleCash={idleCash}
+          onExecute={handleExecuteDeployment}
+          onUndoExecution={handleUndoExecution}
+          treasuryPolicyDecision={treasuryPolicyDecision}
+        />
+      </div>
+
+      <AuditTrail />
+    </div>
+  </section>
+
+
+      <div
+        className="dashboard-bottom-grid"
+        style={{
+          width: "100%",
+          maxWidth: 1600,
+          margin: "40px auto 0",
+          display: "grid",
+          gridTemplateColumns: "1fr",
+          gap: 36,
+          alignItems: "stretch",
+        }}
+      >
+        <div
+          id="treasury-timeline-section"
+          style={{
+            width: "100%",
+            maxWidth: "100%",
+          }}
+        >
           <TreasuryTimeline records={safeRecords} currency={currency} />
         </div>
 
-        <div id="policy-breach-section">
+        <div
+          id="policy-breach-section"
+          style={{
+            width: "100%",
+            maxWidth: "100%",
+          }}
+        >
           <PolicyBreachPanel decision={treasuryPolicyDecision} />
         </div>
       </div>
