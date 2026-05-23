@@ -5990,3 +5990,110 @@ input {
   align-items: center;
   justify-content: center;
 }
+
+/* =========================================
+   FINAL TREASURY MODAL RECORD FIX
+   FORCE OVERRIDE
+========================================= */
+
+.treasury-modal-record-row,
+.treasury-modal-clean-record-row {
+  display: grid !important;
+
+  grid-template-columns:
+    minmax(260px, 1.2fr)
+    minmax(180px, 0.9fr)
+    minmax(160px, 0.7fr)
+    minmax(320px, 1.5fr) !important;
+
+  gap: 28px !important;
+
+  align-items: center !important;
+
+  width: 100% !important;
+
+  text-align: left !important;
+
+  padding: 24px 28px !important;
+
+  border-radius: 24px !important;
+
+  overflow: hidden !important;
+}
+
+/* remove ugly overlapping */
+.treasury-modal-record-row * {
+  min-width: 0 !important;
+}
+
+/* code */
+.treasury-modal-record-code {
+  font-size: 24px !important;
+  font-weight: 900 !important;
+  color: #0f172a !important;
+
+  white-space: normal !important;
+  word-break: break-word !important;
+  line-height: 1.2 !important;
+}
+
+/* bank / label */
+.treasury-modal-record-label {
+  font-size: 18px !important;
+  color: #334155 !important;
+
+  white-space: normal !important;
+  word-break: break-word !important;
+}
+
+/* severity/date */
+.treasury-modal-record-date {
+  font-size: 16px !important;
+  color: #475569 !important;
+
+  white-space: normal !important;
+}
+
+/* message */
+.treasury-modal-record-message {
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+
+  white-space: normal !important;
+  word-break: break-word !important;
+  line-height: 1.45 !important;
+}
+
+/* mobile */
+@media (max-width: 980px) {
+  .treasury-modal-record-row,
+  .treasury-modal-clean-record-row {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+}
+
+/* =========================================
+   FINAL MODAL RECORD WIDTH SAFE PATCH
+========================================= */
+
+.treasury-modal-record-row,
+.treasury-modal-clean-record-row {
+  grid-template-columns:
+    minmax(210px, 0.9fr)
+    minmax(150px, 0.7fr)
+    minmax(260px, 1.2fr) !important;
+
+  gap: 22px !important;
+  overflow: visible !important;
+}
+
+.treasury-modal-record-date {
+  display: none !important;
+}
+
+.treasury-modal-record-message {
+  font-size: 16px !important;
+  line-height: 1.35 !important;
+}

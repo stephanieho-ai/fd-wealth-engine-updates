@@ -40,6 +40,13 @@ function PolicyIcon({ severity }) {
   );
 }
 
+function formatPolicyLabel(value) {
+  return String(value || "")
+    .replace(/_/g, " ")
+    .toLowerCase()
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
 export default function PolicyBreachPanel({ decision }) {
   if (!decision) return null;
 
@@ -91,8 +98,7 @@ export default function PolicyBreachPanel({ decision }) {
             </div>
 
             <div className="policy-main">
-              <p>{item.policy}</p>
-              <strong>{item.title}</strong>
+            <p>{formatPolicyLabel(item.policy)}</p>
             </div>
 
             <div className="policy-message">{item.message}</div>

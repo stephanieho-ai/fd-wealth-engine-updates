@@ -7,6 +7,13 @@ export default function TreasuryAlertModal({ alert, onClose, onAction }) {
     }
   };
 
+  const formatRecordCode = (value) => {
+    return String(value || "-")
+      .replace(/_/g, " ")
+      .toLowerCase()
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+  };
+
   return (
     <div className="treasury-modal-backdrop" onClick={onClose}>
       <div
@@ -52,17 +59,28 @@ export default function TreasuryAlertModal({ alert, onClose, onAction }) {
           <div className="treasury-modal-records">
             <h3>Affected Records</h3>
 
-            {alert.records.map((record) => (
+            {alert.records.map((record, index) => (
               <button
-                key={record.id}
+                key={record.id || record.code || `${record.label}-${index}`}
                 type="button"
-                className="treasury-modal-record-row treasury-modal-clickable-row"
+                className="treasury-modal-record-row treasury-modal-clickable-row treasury-modal-clean-record-row"
                 onClick={() => handleAction("OPEN_RECORD", record)}
               >
-                <strong>{record.id || "-"}</strong>
-                <span>{record.bank || "Bank"}</span>
-                <span>{record.date || "-"}</span>
-                <b>{record.amount || "-"}</b>
+                <strong className="treasury-modal-record-code">
+                  {formatRecordCode(record.id || record.code || record.policy)}
+                </strong>
+
+                <span className="treasury-modal-record-label">
+                  {record.bank || record.label || record.title || "-"}
+                </span>
+
+                <span className="treasury-modal-record-date">
+                  {record.date || record.severity || "-"}
+                </span>
+
+                <b className="treasury-modal-record-message">
+                  {record.amount || record.message || "-"}
+                </b>
               </button>
             ))}
           </div>

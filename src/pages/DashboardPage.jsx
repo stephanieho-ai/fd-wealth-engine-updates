@@ -2025,7 +2025,23 @@ function TreasuryFlowDynamicsEngine({
   return (
     <section
       id="treasury-flow-dynamics-section"
-      className="treasury-flow-dynamics-engine liquidity-flow-surface treasury-route-container treasury-particle-layer"
+      className={`
+        treasury-flow-dynamics-engine
+        liquidity-flow-surface
+        treasury-route-container
+        treasury-particle-layer
+        treasury-heat-zone
+        pressure-wall
+        ${
+          pressureScore >= 75
+            ? "heat-critical heat-pulse heat-flicker"
+            : pressureScore >= 55
+            ? "heat-high heat-pulse"
+            : pressureScore >= 35
+            ? "heat-medium"
+            : "heat-low"
+        }
+      `}
       style={{
         width: "100%",
         margin: "28px 0",
@@ -2038,6 +2054,7 @@ function TreasuryFlowDynamicsEngine({
           "0 34px 86px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255,255,255,0.82)",
         overflow: "hidden",
         position: "relative",
+        transition: "all 0.45s ease",
       }}
     >
       <div
@@ -2061,8 +2078,13 @@ function TreasuryFlowDynamicsEngine({
           position: "absolute",
           inset: 0,
           background:
-            "radial-gradient(circle at 12% 18%, rgba(59,130,246,0.12), transparent 28%), radial-gradient(circle at 82% 30%, rgba(124,58,237,0.10), transparent 30%), radial-gradient(circle at 48% 105%, rgba(16,185,129,0.10), transparent 34%)",
+            pressureScore >= 75
+              ? "radial-gradient(circle at 18% 20%, rgba(239,68,68,0.18), transparent 30%), radial-gradient(circle at 82% 28%, rgba(220,38,38,0.16), transparent 32%), radial-gradient(circle at 50% 100%, rgba(239,68,68,0.12), transparent 40%)"
+              : pressureScore >= 55
+              ? "radial-gradient(circle at 18% 20%, rgba(245,158,11,0.16), transparent 30%), radial-gradient(circle at 82% 28%, rgba(249,115,22,0.14), transparent 32%), radial-gradient(circle at 50% 100%, rgba(245,158,11,0.10), transparent 40%)"
+              : "radial-gradient(circle at 12% 18%, rgba(59,130,246,0.12), transparent 28%), radial-gradient(circle at 82% 30%, rgba(124,58,237,0.10), transparent 30%), radial-gradient(circle at 48% 105%, rgba(16,185,129,0.10), transparent 34%)",
           pointerEvents: "none",
+          transition: "all 0.45s ease",
         }}
       />
 
@@ -2078,20 +2100,20 @@ function TreasuryFlowDynamicsEngine({
         >
           <div>
             <p className="eyebrow" style={{ margin: "0 0 8px" }}>
-              V33.2-G18-C Treasury Live Motion Intelligence
+              V33.2-G18-D Treasury Congestion Heat Intelligence
             </p>
             <h2 style={{ margin: 0, fontSize: 34, lineHeight: 1.05 }}>
-              Treasury Live Motion Intelligence Engine
+              Treasury Congestion Heat Engine
             </h2>
             <p className="muted" style={{ marginTop: 10, maxWidth: 820 }}>
-              Executive motion layer for animated treasury flow, liquidity
-              pressure pulse, velocity scoring, drain simulation and bottleneck
-              detection.
+              Institutional situational awareness layer for congestion detection,
+              treasury pressure heat mapping, liquidity compression monitoring,
+              reserve stress visualization and live treasury hotspot orchestration.
             </p>
           </div>
 
           <div
-            className={`flow-pulse treasury-route-pulse ${pressureScore >= 42 ? "treasury-congestion-heat" : ""}`}
+            className={`flow-pulse treasury-route-pulse treasury-live-particle ${pressureScore >= 55 ? "treasury-congestion-heat" : ""}`}
             style={{
               borderRadius: 26,
               padding: "18px 18px",
@@ -2110,7 +2132,7 @@ function TreasuryFlowDynamicsEngine({
                 opacity: 0.75,
               }}
             >
-              LIVE FLOW STATE
+              TREASURY HEAT STATE
             </div>
             <strong
               style={{
@@ -2123,7 +2145,7 @@ function TreasuryFlowDynamicsEngine({
               {pressureTone.label}
             </strong>
             <div style={{ fontSize: 12, marginTop: 8 }}>
-              Velocity {flowVelocity}% · Pressure {pressureScore}%
+              Pressure {pressureScore}% · Velocity {flowVelocity}%
             </div>
           </div>
         </div>
