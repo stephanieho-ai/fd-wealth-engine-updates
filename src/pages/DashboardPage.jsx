@@ -50,6 +50,60 @@ const treasuryRuntimeStyle = `
   }
 }
 
+
+@keyframes treasuryFlowStream {
+  0% { transform: translateX(-22%); opacity: 0; }
+  12% { opacity: 0.85; }
+  50% { opacity: 1; }
+  88% { opacity: 0.85; }
+  100% { transform: translateX(122%); opacity: 0; }
+}
+
+@keyframes treasuryFlowPulse {
+  0% { transform: scale(0.96); opacity: 0.62; }
+  50% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(0.96); opacity: 0.62; }
+}
+
+@keyframes treasuryPressureWave {
+  0% { transform: scaleX(0.25); opacity: 0.35; }
+  50% { transform: scaleX(1); opacity: 0.9; }
+  100% { transform: scaleX(0.25); opacity: 0.35; }
+}
+
+@keyframes treasuryOrbitGlow {
+  0% { transform: rotate(0deg); opacity: 0.55; }
+  50% { opacity: 0.9; }
+  100% { transform: rotate(360deg); opacity: 0.55; }
+}
+
+@keyframes treasuryNodeBreath {
+  0% { box-shadow: 0 0 0 rgba(59,130,246,0.18); transform: translateY(0); }
+  50% { box-shadow: 0 0 24px rgba(59,130,246,0.28); transform: translateY(-2px); }
+  100% { box-shadow: 0 0 0 rgba(59,130,246,0.18); transform: translateY(0); }
+}
+
+.treasury-flow-dynamics-engine .flow-stream {
+  animation: treasuryFlowStream 4.6s linear infinite;
+}
+
+.treasury-flow-dynamics-engine .flow-pulse {
+  animation: treasuryFlowPulse 2.4s ease-in-out infinite;
+}
+
+.treasury-flow-dynamics-engine .pressure-wave {
+  animation: treasuryPressureWave 2.8s ease-in-out infinite;
+  transform-origin: left center;
+}
+
+.treasury-flow-dynamics-engine .orbit-glow {
+  animation: treasuryOrbitGlow 13s linear infinite;
+}
+
+.treasury-flow-dynamics-engine .flow-node {
+  animation: treasuryNodeBreath 4.8s ease-in-out infinite;
+}
+
 .treasury-runtime-shell {
   animation: treasuryWallBreathing 8s ease-in-out infinite;
   transition: all 0.4s ease;
@@ -1583,6 +1637,798 @@ function TreasuryLiquidityFlowMatrix({
 }
 
 
+function TreasuryFlowDynamicsEngine({
+  currency,
+  formatMoney,
+  totalSavings,
+  totalParkingCash,
+  totalFixedDeposits,
+  totalDeployableFunds,
+  totalDeployableWithUpcoming,
+  reserveAmount,
+  idleCash,
+  upcomingMaturityAmount,
+  liquidityRatio,
+  fdExposureRatio,
+  maturityMonths,
+  bestOffer,
+  treasuryPolicyDecision,
+}) {
+  const reserveGap = Math.max(reserveAmount - totalDeployableFunds, 0);
+  const liquidityPercent = liquidityRatio * 100;
+  const fdLockPercent = fdExposureRatio * 100;
+  const reserveCoverage = reserveAmount
+    ? (totalDeployableFunds / Math.max(reserveAmount, 1)) * 100
+    : 100;
+
+  const flowVelocity = Math.round(
+    Math.min(
+      100,
+      Math.max(
+        8,
+        liquidityPercent * 2.1 +
+          (upcomingMaturityAmount > 0 ? 18 : 0) +
+          (idleCash > 0 ? 14 : 0) -
+          (treasuryPolicyDecision?.blocked ? 28 : 0) -
+          (reserveGap > 0 ? 18 : 0)
+      )
+    )
+  );
+
+  const pressureScore = Math.round(
+    Math.min(
+      100,
+      Math.max(
+        0,
+        (100 - Math.min(liquidityPercent * 4, 100)) * 0.34 +
+          Math.min(fdLockPercent, 100) * 0.28 +
+          (reserveGap > 0 ? 24 : 0) +
+          (treasuryPolicyDecision?.blocked ? 22 : 0) +
+          (upcomingMaturityAmount <= 0 ? 8 : 0)
+      )
+    )
+  );
+
+  const drainSimulation = Math.round(
+    Math.min(
+      100,
+      Math.max(
+        0,
+        (reserveGap / Math.max(reserveAmount || totalDeployableFunds || 1, 1)) *
+          100 +
+          (liquidityPercent < 10 ? 22 : liquidityPercent < 15 ? 10 : 0) +
+          (fdLockPercent > 90 ? 18 : fdLockPercent > 80 ? 8 : 0)
+      )
+    )
+  );
+
+  const bottlenecks = [];
+
+  if (reserveGap > 0) {
+    bottlenecks.push({
+      label: "Reserve Shortfall",
+      severity: "CRITICAL",
+      note: `${formatMoney(reserveGap, currency)} required to restore reserve route.`,
+      color: "#dc2626",
+      bg: "linear-gradient(135deg, #fff1f2, #ffe4e6)",
+    });
+  }
+
+  if (liquidityPercent < 10) {
+    bottlenecks.push({
+      label: "Liquidity Compression",
+      severity: "HIGH",
+      note: "Deployable liquidity is moving below operating comfort range.",
+      color: "#ea580c",
+      bg: "linear-gradient(135deg, #fffbeb, #fed7aa)",
+    });
+  }
+
+  if (fdLockPercent > 90) {
+    bottlenecks.push({
+      label: "FD Lock-up Pressure",
+      severity: "WATCH",
+      note: "Large portion of capital is locked inside FD positions.",
+      color: "#7c3aed",
+      bg: "linear-gradient(135deg, #faf5ff, #ede9fe)",
+    });
+  }
+
+  if (upcomingMaturityAmount <= 0 && liquidityPercent < 15) {
+    bottlenecks.push({
+      label: "Recovery Inflow Gap",
+      severity: "WATCH",
+      note: "No 30-day FD maturity inflow is available to support recovery.",
+      color: "#0891b2",
+      bg: "linear-gradient(135deg, #ecfeff, #cffafe)",
+    });
+  }
+
+  if (treasuryPolicyDecision?.blocked) {
+    bottlenecks.push({
+      label: "Governance Block",
+      severity: "BLOCKED",
+      note: "Policy engine has restricted treasury execution movement.",
+      color: "#be123c",
+      bg: "linear-gradient(135deg, #fff1f2, #ffe4e6)",
+    });
+  }
+
+  const visibleBottlenecks = bottlenecks.length
+    ? bottlenecks
+    : [
+        {
+          label: "No Major Bottleneck",
+          severity: "STABLE",
+          note: "Treasury flow remains balanced under current policy conditions.",
+          color: "#16a34a",
+          bg: "linear-gradient(135deg, #ecfdf5, #d1fae5)",
+        },
+      ];
+
+  const pressureTone =
+    pressureScore >= 70 || treasuryPolicyDecision?.blocked
+      ? {
+          label: "PRESSURE PULSE",
+          color: "#b91c1c",
+          bg: "linear-gradient(135deg, #fff1f2, #ffe4e6)",
+          border: "rgba(239,68,68,0.24)",
+          glow: "rgba(239,68,68,0.16)",
+        }
+      : pressureScore >= 42
+      ? {
+          label: "WATCH PULSE",
+          color: "#b45309",
+          bg: "linear-gradient(135deg, #fffbeb, #fef3c7)",
+          border: "rgba(245,158,11,0.26)",
+          glow: "rgba(245,158,11,0.14)",
+        }
+      : {
+          label: "SMOOTH FLOW",
+          color: "#047857",
+          bg: "linear-gradient(135deg, #ecfdf5, #d1fae5)",
+          border: "rgba(16,185,129,0.24)",
+          glow: "rgba(16,185,129,0.14)",
+        };
+
+  const movementNodes = [
+    {
+      label: "Savings",
+      value: totalSavings,
+      sub: "Liquid origin",
+      color: "#2563eb",
+      bg: "linear-gradient(135deg, #eff6ff, #dbeafe)",
+    },
+    {
+      label: "Parking Cash",
+      value: totalParkingCash,
+      sub: "Waiting capital",
+      color: "#7c3aed",
+      bg: "linear-gradient(135deg, #faf5ff, #ede9fe)",
+    },
+    {
+      label: "Reserve Gate",
+      value: Math.min(totalDeployableFunds, reserveAmount),
+      sub: reserveGap > 0 ? "Underfilled" : "Protected",
+      color: reserveGap > 0 ? "#dc2626" : "#16a34a",
+      bg:
+        reserveGap > 0
+          ? "linear-gradient(135deg, #fff1f2, #ffe4e6)"
+          : "linear-gradient(135deg, #ecfdf5, #d1fae5)",
+    },
+    {
+      label: "Deployable Route",
+      value: idleCash,
+      sub: "Placement capacity",
+      color: idleCash > 0 ? "#0891b2" : "#64748b",
+      bg: "linear-gradient(135deg, #ecfeff, #e0f2fe)",
+    },
+    {
+      label: "FD Engine",
+      value: totalFixedDeposits,
+      sub: bestOffer
+        ? `${bestOffer.bank || "Offer"} · ${bestOffer.tenureMonths || "-"}M`
+        : "Locked yield layer",
+      color: "#f59e0b",
+      bg: "linear-gradient(135deg, #fffbeb, #fef3c7)",
+    },
+    {
+      label: "Recovery Inflow",
+      value: upcomingMaturityAmount,
+      sub: "30-day maturity",
+      color: upcomingMaturityAmount > 0 ? "#16a34a" : "#94a3b8",
+      bg: "linear-gradient(135deg, #f0fdf4, #f8fafc)",
+    },
+  ];
+
+  const strongestMaturityAmount = Math.max(
+    ...maturityMonths.map((item) => toNumber(item.amount)),
+    1
+  );
+
+  const orchestrationSignals = [
+    {
+      label: "Flow Velocity",
+      value: `${flowVelocity}%`,
+      note:
+        flowVelocity >= 70
+          ? "Capital can move quickly through the treasury route."
+          : flowVelocity >= 40
+          ? "Capital movement is active but should be monitored."
+          : "Capital movement is slow due to pressure or policy restriction.",
+      bg: "linear-gradient(135deg, #eff6ff, #dbeafe)",
+    },
+    {
+      label: "Pressure Pulse",
+      value: `${pressureScore}%`,
+      note:
+        pressureScore >= 70
+          ? "Treasury pressure is elevated. Review bottlenecks immediately."
+          : pressureScore >= 42
+          ? "Pressure is visible but still manageable."
+          : "Pressure pulse is calm under current liquidity structure.",
+      bg: pressureTone.bg,
+    },
+    {
+      label: "Drain Simulation",
+      value: `${drainSimulation}%`,
+      note:
+        drainSimulation >= 65
+          ? "Potential liquidity drain is high if deployment continues."
+          : drainSimulation >= 35
+          ? "Drain risk exists. Keep reserve route protected."
+          : "Drain simulation is currently low.",
+      bg: "linear-gradient(135deg, #faf5ff, #eef2ff)",
+    },
+    {
+      label: "Orchestration Mode",
+      value: treasuryPolicyDecision?.blocked
+        ? "RESTRICTED"
+        : reserveGap > 0
+        ? "DEFENSIVE"
+        : idleCash > 0
+        ? "ACTIVE"
+        : "OBSERVE",
+      note: treasuryPolicyDecision?.blocked
+        ? "Policy governance is controlling movement."
+        : reserveGap > 0
+        ? "Reserve restoration should come first."
+        : idleCash > 0
+        ? "Excess deployable cash is available for routing."
+        : "No excess flow detected.",
+      bg: "linear-gradient(135deg, #f8fafc, #e0f2fe)",
+    },
+  ];
+
+  return (
+    <section
+      id="treasury-flow-dynamics-section"
+      className="treasury-flow-dynamics-engine"
+      style={{
+        width: "100%",
+        margin: "28px 0",
+        padding: 30,
+        borderRadius: 36,
+        background:
+          "linear-gradient(135deg, rgba(255,255,255,0.98), rgba(248,250,252,0.96), rgba(239,246,255,0.92))",
+        border: "1px solid rgba(148, 163, 184, 0.22)",
+        boxShadow:
+          "0 34px 86px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255,255,255,0.82)",
+        overflow: "hidden",
+        position: "relative",
+      }}
+    >
+      <div
+        className="orbit-glow"
+        style={{
+          position: "absolute",
+          width: 460,
+          height: 460,
+          right: -180,
+          top: -220,
+          borderRadius: "50%",
+          background:
+            "conic-gradient(from 90deg, rgba(59,130,246,0.0), rgba(59,130,246,0.16), rgba(124,58,237,0.16), rgba(16,185,129,0.14), rgba(59,130,246,0.0))",
+          filter: "blur(4px)",
+          pointerEvents: "none",
+        }}
+      />
+
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "radial-gradient(circle at 12% 18%, rgba(59,130,246,0.12), transparent 28%), radial-gradient(circle at 82% 30%, rgba(124,58,237,0.10), transparent 30%), radial-gradient(circle at 48% 105%, rgba(16,185,129,0.10), transparent 34%)",
+          pointerEvents: "none",
+        }}
+      />
+
+      <div style={{ position: "relative", zIndex: 1 }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "minmax(0, 1fr) 230px",
+            gap: 22,
+            alignItems: "start",
+            marginBottom: 24,
+          }}
+        >
+          <div>
+            <p className="eyebrow" style={{ margin: "0 0 8px" }}>
+              V33.2-G18-B Treasury Flow Dynamics Engine
+            </p>
+            <h2 style={{ margin: 0, fontSize: 34, lineHeight: 1.05 }}>
+              Treasury Flow Dynamics Engine
+            </h2>
+            <p className="muted" style={{ marginTop: 10, maxWidth: 820 }}>
+              Executive motion layer for animated treasury flow, liquidity
+              pressure pulse, velocity scoring, drain simulation and bottleneck
+              detection.
+            </p>
+          </div>
+
+          <div
+            className="flow-pulse"
+            style={{
+              borderRadius: 26,
+              padding: "18px 18px",
+              textAlign: "center",
+              background: pressureTone.bg,
+              border: `1px solid ${pressureTone.border}`,
+              color: pressureTone.color,
+              boxShadow: `0 20px 46px ${pressureTone.glow}`,
+            }}
+          >
+            <div
+              style={{
+                fontSize: 11,
+                fontWeight: 900,
+                letterSpacing: "0.08em",
+                opacity: 0.75,
+              }}
+            >
+              LIVE FLOW STATE
+            </div>
+            <strong
+              style={{
+                display: "block",
+                marginTop: 8,
+                fontSize: 24,
+                lineHeight: 1,
+              }}
+            >
+              {pressureTone.label}
+            </strong>
+            <div style={{ fontSize: 12, marginTop: 8 }}>
+              Velocity {flowVelocity}% · Pressure {pressureScore}%
+            </div>
+          </div>
+        </div>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+            gap: 14,
+            marginBottom: 18,
+          }}
+        >
+          {orchestrationSignals.map((signal) => (
+            <div
+              key={signal.label}
+              style={{
+                borderRadius: 22,
+                padding: "18px 18px",
+                background: signal.bg,
+                border: "1px solid rgba(148,163,184,0.18)",
+                boxShadow: "0 16px 34px rgba(15,23,42,0.06)",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 11,
+                  fontWeight: 900,
+                  letterSpacing: "0.07em",
+                  color: "#64748b",
+                  textTransform: "uppercase",
+                  marginBottom: 8,
+                }}
+              >
+                {signal.label}
+              </div>
+              <strong
+                style={{
+                  display: "block",
+                  fontSize: 30,
+                  lineHeight: 1,
+                  color: "#0f172a",
+                }}
+              >
+                {signal.value}
+              </strong>
+              <p className="muted" style={{ margin: "9px 0 0", fontSize: 12 }}>
+                {signal.note}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div
+          style={{
+            borderRadius: 30,
+            padding: 22,
+            background:
+              "linear-gradient(135deg, rgba(255,255,255,0.78), rgba(239,246,255,0.70))",
+            border: "1px solid rgba(148,163,184,0.18)",
+            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.76)",
+            marginBottom: 18,
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: 16,
+              marginBottom: 16,
+              flexWrap: "wrap",
+            }}
+          >
+            <div>
+              <strong style={{ display: "block", fontSize: 18 }}>
+                Animated Capital Movement
+              </strong>
+              <p className="muted" style={{ margin: "6px 0 0", fontSize: 13 }}>
+                Source capital moves through reserve gate, deployable route, FD
+                engine and recovery inflow.
+              </p>
+            </div>
+            <span
+              style={{
+                borderRadius: 999,
+                padding: "8px 12px",
+                fontSize: 12,
+                fontWeight: 800,
+                color: pressureTone.color,
+                background: pressureTone.bg,
+                border: `1px solid ${pressureTone.border}`,
+              }}
+            >
+              Reserve Coverage {Math.min(reserveCoverage, 999).toFixed(0)}%
+            </span>
+          </div>
+
+          <div
+            style={{
+              position: "relative",
+              display: "grid",
+              gridTemplateColumns: "repeat(6, minmax(0, 1fr))",
+              gap: 12,
+              alignItems: "stretch",
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                left: 0,
+                right: 0,
+                top: "50%",
+                height: 10,
+                transform: "translateY(-50%)",
+                borderRadius: 999,
+                background:
+                  "linear-gradient(90deg, rgba(59,130,246,0.16), rgba(124,58,237,0.18), rgba(16,185,129,0.16), rgba(245,158,11,0.16))",
+                overflow: "hidden",
+                zIndex: 0,
+              }}
+            >
+              <div
+                className="flow-stream"
+                style={{
+                  width: "34%",
+                  height: "100%",
+                  borderRadius: 999,
+                  background:
+                    "linear-gradient(90deg, transparent, rgba(255,255,255,0.92), rgba(59,130,246,0.72), transparent)",
+                  animationDuration: `${Math.max(2.2, 6 - flowVelocity / 22)}s`,
+                }}
+              />
+            </div>
+
+            {movementNodes.map((node, index) => (
+              <div
+                key={node.label}
+                className="flow-node"
+                style={{
+                  position: "relative",
+                  zIndex: 1,
+                  borderRadius: 24,
+                  padding: 16,
+                  minHeight: 150,
+                  background: node.bg,
+                  border: "1px solid rgba(148,163,184,0.18)",
+                  boxShadow: "0 20px 42px rgba(15,23,42,0.08)",
+                  animationDelay: `${index * 0.25}s`,
+                }}
+              >
+                <span
+                  style={{
+                    display: "inline-flex",
+                    width: 12,
+                    height: 12,
+                    borderRadius: 999,
+                    background: node.color,
+                    boxShadow: `0 0 18px ${node.color}66`,
+                    marginBottom: 12,
+                  }}
+                />
+                <div
+                  style={{
+                    fontSize: 11,
+                    fontWeight: 900,
+                    letterSpacing: "0.06em",
+                    color: "#64748b",
+                    textTransform: "uppercase",
+                    marginBottom: 8,
+                  }}
+                >
+                  {node.label}
+                </div>
+                <strong
+                  style={{
+                    display: "block",
+                    fontSize: 22,
+                    lineHeight: 1.08,
+                    color: "#0f172a",
+                  }}
+                >
+                  {formatMoney(node.value, currency)}
+                </strong>
+                <p className="muted" style={{ margin: "8px 0 0", fontSize: 12 }}>
+                  {node.sub}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: 16,
+          }}
+        >
+          <div
+            style={{
+              borderRadius: 26,
+              padding: 20,
+              background: "linear-gradient(135deg, #f8fafc, #eef2ff)",
+              border: "1px solid rgba(99,102,241,0.18)",
+            }}
+          >
+            <strong style={{ display: "block", marginBottom: 14 }}>
+              Bottleneck Detection
+            </strong>
+            <div style={{ display: "grid", gap: 10 }}>
+              {visibleBottlenecks.map((item) => (
+                <div
+                  key={item.label}
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "minmax(0, 1fr) auto",
+                    gap: 12,
+                    alignItems: "center",
+                    borderRadius: 18,
+                    padding: "12px 14px",
+                    background: item.bg,
+                    border: "1px solid rgba(148,163,184,0.18)",
+                  }}
+                >
+                  <div>
+                    <strong style={{ color: "#0f172a", fontSize: 14 }}>
+                      {item.label}
+                    </strong>
+                    <p
+                      className="muted"
+                      style={{ margin: "5px 0 0", fontSize: 12 }}
+                    >
+                      {item.note}
+                    </p>
+                  </div>
+                  <span
+                    style={{
+                      borderRadius: 999,
+                      padding: "6px 10px",
+                      fontSize: 11,
+                      fontWeight: 900,
+                      color: item.color,
+                      background: "rgba(255,255,255,0.68)",
+                      border: `1px solid ${item.color}33`,
+                    }}
+                  >
+                    {item.severity}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div
+            style={{
+              borderRadius: 26,
+              padding: 20,
+              background: "linear-gradient(135deg, #ecfeff, #eff6ff)",
+              border: "1px solid rgba(6,182,212,0.18)",
+            }}
+          >
+            <strong style={{ display: "block", marginBottom: 14 }}>
+              Real-time Flow Orchestration
+            </strong>
+
+            <div style={{ display: "grid", gap: 12 }}>
+              <div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    fontSize: 12,
+                    fontWeight: 800,
+                    color: "#475569",
+                    marginBottom: 6,
+                  }}
+                >
+                  <span>Pressure Pulse</span>
+                  <span>{pressureScore}%</span>
+                </div>
+                <div
+                  style={{
+                    height: 10,
+                    borderRadius: 999,
+                    background: "rgba(148,163,184,0.18)",
+                    overflow: "hidden",
+                  }}
+                >
+                  <div
+                    className="pressure-wave"
+                    style={{
+                      width: `${Math.max(8, pressureScore)}%`,
+                      height: "100%",
+                      borderRadius: 999,
+                      background:
+                        pressureScore >= 70
+                          ? "linear-gradient(90deg, #fb7185, #dc2626)"
+                          : pressureScore >= 42
+                          ? "linear-gradient(90deg, #fbbf24, #f97316)"
+                          : "linear-gradient(90deg, #34d399, #2563eb)",
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    fontSize: 12,
+                    fontWeight: 800,
+                    color: "#475569",
+                    marginBottom: 6,
+                  }}
+                >
+                  <span>Drain Simulation</span>
+                  <span>{drainSimulation}%</span>
+                </div>
+                <div
+                  style={{
+                    height: 10,
+                    borderRadius: 999,
+                    background: "rgba(148,163,184,0.18)",
+                    overflow: "hidden",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: `${Math.max(6, drainSimulation)}%`,
+                      height: "100%",
+                      borderRadius: 999,
+                      background:
+                        drainSimulation >= 65
+                          ? "linear-gradient(90deg, #fb7185, #be123c)"
+                          : drainSimulation >= 35
+                          ? "linear-gradient(90deg, #facc15, #f97316)"
+                          : "linear-gradient(90deg, #22c55e, #06b6d4)",
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div
+                style={{
+                  borderRadius: 18,
+                  padding: 14,
+                  background: "rgba(255,255,255,0.72)",
+                  border: "1px solid rgba(148,163,184,0.16)",
+                }}
+              >
+                <strong style={{ display: "block", fontSize: 14 }}>
+                  Executive Flow Decision
+                </strong>
+                <p className="muted" style={{ margin: "7px 0 0", fontSize: 13 }}>
+                  {treasuryPolicyDecision?.blocked
+                    ? "Hold execution. Governance block is active until liquidity or policy risk improves."
+                    : reserveGap > 0
+                    ? "Route new liquidity toward reserve restoration before new FD placement."
+                    : idleCash > 0
+                    ? "Flow route is open. Review best offer and execute only after policy check."
+                    : upcomingMaturityAmount > 0
+                    ? "Observe current route. Upcoming maturity may unlock new deployable movement."
+                    : "Maintain monitoring mode. No immediate movement is required."}
+                </p>
+              </div>
+
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+                  gap: 10,
+                }}
+              >
+                {maturityMonths.slice(0, 3).map((item) => {
+                  const amount = toNumber(item.amount);
+                  const width = Math.min(
+                    (amount / Math.max(strongestMaturityAmount, 1)) * 100,
+                    100
+                  );
+
+                  return (
+                    <div
+                      key={item.month}
+                      style={{
+                        borderRadius: 16,
+                        padding: 12,
+                        background: "rgba(255,255,255,0.72)",
+                        border: "1px solid rgba(148,163,184,0.16)",
+                      }}
+                    >
+                      <strong style={{ fontSize: 12 }}>{item.month}</strong>
+                      <div
+                        style={{
+                          height: 7,
+                          borderRadius: 999,
+                          background: "rgba(148,163,184,0.18)",
+                          overflow: "hidden",
+                          marginTop: 8,
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: `${width}%`,
+                            height: "100%",
+                            borderRadius: 999,
+                            background:
+                              "linear-gradient(90deg, #2563eb, #7c3aed, #16a34a)",
+                          }}
+                        />
+                      </div>
+                      <div className="muted" style={{ fontSize: 11, marginTop: 6 }}>
+                        {formatMoney(amount, currency)}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
 export default function DashboardPage({
   records = [],
   offers = [],
@@ -2887,6 +3733,25 @@ export default function DashboardPage({
       />
 
       <TreasuryLiquidityFlowMatrix
+        currency={currency}
+        formatMoney={formatMoney}
+        totalSavings={totalSavings}
+        totalParkingCash={totalParkingCash}
+        totalFixedDeposits={totalFixedDeposits}
+        totalDeployableFunds={totalDeployableFunds}
+        totalDeployableWithUpcoming={totalDeployableWithUpcoming}
+        reserveAmount={reserveAmount}
+        idleCash={idleCash}
+        upcomingMaturityAmount={upcomingMaturityAmount}
+        liquidityRatio={liquidityRatio}
+        fdExposureRatio={fdExposureRatio}
+        maturityMonths={maturityMonths}
+        bestOffer={bestOffer}
+        treasuryPolicyDecision={treasuryPolicyDecision}
+      />
+
+
+      <TreasuryFlowDynamicsEngine
         currency={currency}
         formatMoney={formatMoney}
         totalSavings={totalSavings}
