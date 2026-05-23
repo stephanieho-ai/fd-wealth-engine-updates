@@ -47,6 +47,22 @@ function formatPolicyLabel(value) {
     .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
+function getPolicyTitle(item) {
+  const policy = String(item?.policy || "").toUpperCase();
+  const severity = String(item?.severity || "").toLowerCase();
+
+  if (policy.includes("RESERVE")) return "Reserve Floor Breach";
+  if (policy.includes("APPROVAL")) return "Approval Policy Clear";
+  if (policy.includes("EXPOSURE")) return "Bank Exposure Escalation";
+  if (policy.includes("LIQUIDITY")) return "Liquidity Policy Breach";
+
+  if (severity === "ok") return "Policy Clear";
+  if (severity === "escalation") return "Policy Escalation";
+  if (severity === "critical" || severity === "blocked") return "Policy Breach";
+
+  return "Policy Watch";
+}
+
 export default function PolicyBreachPanel({ decision }) {
   if (!decision) return null;
 
@@ -63,7 +79,7 @@ export default function PolicyBreachPanel({ decision }) {
           </p>
         </div>
 
-        <div className={`policy-status-badge ${decision.severity.toLowerCase()}`}>
+        <div className={`policy-status-badge ${String(decision.severity || "").toLowerCase()}`}>
           {decision.severity}
         </div>
       </div>
@@ -91,31 +107,34 @@ export default function PolicyBreachPanel({ decision }) {
       </div>
 
       <div className="policy-table-list">
-        {allPolicies.map((item, index) => (
-          <div key={`${item.policy}-${index}`} className="policy-table-row">
-            <div className={`policy-icon ${item.severity.toLowerCase()}`}>
-              <PolicyIcon severity={item.severity} />
-            </div>
+        {allPolicies.map((item, index) => {
+          const severityClass = String(item.severity || "").toLowerCase();
 
-            <div className="policy-main">
-            <p>{formatPolicyLabel(item.policy)}</p>
-            </div>
+          return (
+            <div key={`${item.policy}-${index}`} className="policy-table-row">
+              <div className={`policy-icon ${severityClass}`}>
+                <PolicyIcon severity={item.severity} />
+              </div>
 
-            <div className="policy-message">{item.message}</div>
+              <div className="policy-main">
+                <p>{formatPolicyLabel(item.policy)}</p>
+                <strong>{getPolicyTitle(item)}</strong>
+              </div>
 
-            <div className="policy-meta">
-              <span>SEVERITY</span>
-              <strong className={item.severity.toLowerCase()}>
-                {item.severity}
-              </strong>
-            </div>
+              <div className="policy-message">{item.message}</div>
 
-            <div className="policy-meta">
-              <span>ACTION</span>
-              <strong>{item.action}</strong>
+              <div className="policy-meta">
+                <span>SEVERITY</span>
+                <strong className={severityClass}>{item.severity}</strong>
+              </div>
+
+              <div className="policy-meta">
+                <span>ACTION</span>
+                <strong>{item.action}</strong>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

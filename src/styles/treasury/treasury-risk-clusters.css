@@ -1,0 +1,622 @@
+/* ========================================
+   TREASURY RISK CLUSTER INTELLIGENCE
+   V33.2-G18-E
+======================================== */
+
+:root {
+  --risk-red:
+    rgba(239, 68, 68, 0.22);
+
+  --risk-orange:
+    rgba(249, 115, 22, 0.22);
+
+  --risk-yellow:
+    rgba(250, 204, 21, 0.16);
+
+  --risk-blue:
+    rgba(59, 130, 246, 0.18);
+
+  --risk-purple:
+    rgba(168, 85, 247, 0.18);
+
+  --threat-glow:
+    0 0 40px rgba(239, 68, 68, 0.18);
+
+  --escalation-glow:
+    0 0 48px rgba(249, 115, 22, 0.2);
+
+  --cluster-glow:
+    0 0 60px rgba(59, 130, 246, 0.12);
+}
+
+/* ========================================
+   THREAT CLUSTER PANELS
+======================================== */
+
+.risk-cluster-panel {
+  position: relative;
+  overflow: hidden;
+
+  border-radius: 32px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.95),
+      rgba(248,250,252,0.92)
+    );
+
+  border:
+    1px solid rgba(148,163,184,0.16);
+
+  backdrop-filter: blur(18px);
+
+  box-shadow:
+    0 18px 60px rgba(15,23,42,0.08);
+
+  isolation: isolate;
+}
+
+/* ========================================
+   CLUSTER GLOW
+======================================== */
+
+.risk-cluster-panel::before {
+  content: "";
+
+  position: absolute;
+  inset: -120px;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(239,68,68,0.14),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at bottom left,
+      rgba(249,115,22,0.12),
+      transparent 42%
+    );
+
+  opacity: 0.8;
+
+  z-index: 0;
+
+  animation:
+    treasuryThreatPulse 9s ease-in-out infinite;
+}
+
+/* ========================================
+   THREAT PULSE
+======================================== */
+
+@keyframes treasuryThreatPulse {
+  0% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(1.03);
+  }
+
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+}
+
+/* ========================================
+   ESCALATION WAVE
+======================================== */
+
+.risk-escalation-wave {
+  position: relative;
+  overflow: hidden;
+}
+
+.risk-escalation-wave::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      120deg,
+      transparent,
+      rgba(255,255,255,0.2),
+      transparent
+    );
+
+  transform: translateX(-120%);
+
+  animation:
+    treasuryWaveMove 6s linear infinite;
+}
+
+@keyframes treasuryWaveMove {
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+/* ========================================
+   RISK LEVELS
+======================================== */
+
+.risk-critical {
+  box-shadow:
+    var(--threat-glow);
+}
+
+.risk-escalation {
+  box-shadow:
+    var(--escalation-glow);
+}
+
+.risk-watch {
+  box-shadow:
+    var(--cluster-glow);
+}
+
+/* ========================================
+   LIQUIDITY SHOCK
+======================================== */
+
+.liquidity-shock {
+  position: relative;
+}
+
+.liquidity-shock::before {
+  content: "";
+
+  position: absolute;
+  inset: -40%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(239,68,68,0.18),
+      transparent 60%
+    );
+
+  animation:
+    liquidityShockPulse 4s ease-in-out infinite;
+}
+
+@keyframes liquidityShockPulse {
+  0% {
+    opacity: 0.15;
+    transform: scale(0.95);
+  }
+
+  50% {
+    opacity: 0.4;
+    transform: scale(1.08);
+  }
+
+  100% {
+    opacity: 0.15;
+    transform: scale(0.95);
+  }
+}
+
+/* ========================================
+   TREASURY DENSITY RADAR
+======================================== */
+
+.treasury-density-radar {
+  position: relative;
+}
+
+.treasury-density-radar::after {
+  content: "";
+
+  position: absolute;
+
+  inset: -60px;
+
+  border-radius: 50%;
+
+  border:
+    1px solid rgba(59,130,246,0.12);
+
+  animation:
+    treasuryRadarSpin 18s linear infinite;
+}
+
+@keyframes treasuryRadarSpin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========================================
+   THREAT BADGES
+======================================== */
+
+.threat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 16px;
+
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+
+  backdrop-filter: blur(10px);
+
+  border:
+    1px solid rgba(255,255,255,0.3);
+}
+
+.threat-badge.critical {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(254,226,226,0.92),
+      rgba(254,202,202,0.82)
+    );
+
+  color: #b91c1c;
+}
+
+.threat-badge.escalation {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,237,213,0.92),
+      rgba(254,215,170,0.82)
+    );
+
+  color: #c2410c;
+}
+
+.threat-badge.watch {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(219,234,254,0.92),
+      rgba(191,219,254,0.82)
+    );
+
+  color: #2563eb;
+}
+
+/* ========================================
+   INSTITUTIONAL HOVER
+======================================== */
+
+.risk-cluster-panel:hover {
+  transform:
+    translateY(-2px);
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+/* ========================================
+   MULTI-ZONE THREAT RADAR
+   V33.2-G18-E
+======================================== */
+
+.risk-danger {
+  box-shadow:
+    0 0 60px rgba(239,68,68,0.24);
+}
+
+.risk-warning {
+  box-shadow:
+    0 0 45px rgba(249,115,22,0.18);
+}
+
+.treasury-flow-cluster {
+  position: relative;
+  overflow: hidden;
+}
+
+.treasury-flow-cluster::before {
+  content: "";
+
+  position: absolute;
+  inset: -30%;
+
+  background:
+    linear-gradient(
+      120deg,
+      transparent,
+      rgba(59,130,246,0.08),
+      transparent
+    );
+
+  animation:
+    treasuryFlowSweep 8s linear infinite;
+}
+
+@keyframes treasuryFlowSweep {
+  0% {
+    transform:
+      translateX(-120%);
+  }
+
+  100% {
+    transform:
+      translateX(120%);
+  }
+}
+
+/* ========================================
+   ALERT PULSE
+======================================== */
+
+.treasury-alert-pulse {
+  position: relative;
+}
+
+.treasury-alert-pulse::after {
+  content: "";
+
+  position: absolute;
+  inset: -40px;
+
+  border-radius: 40px;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(239,68,68,0.12),
+      transparent 60%
+    );
+
+  animation:
+    treasuryAlertPulse 5s ease-in-out infinite;
+}
+
+@keyframes treasuryAlertPulse {
+  0% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.55;
+    transform: scale(1.03);
+  }
+
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+}
+
+/* ========================================
+   RADAR SCAN RING
+======================================== */
+
+.treasury-density-radar::before {
+  content: "";
+
+  position: absolute;
+
+  width: 420px;
+  height: 420px;
+
+  top: -180px;
+  right: -140px;
+
+  border-radius: 50%;
+
+  border:
+    1px solid rgba(59,130,246,0.12);
+
+  animation:
+    treasuryRadarPulse 7s linear infinite;
+}
+
+@keyframes treasuryRadarPulse {
+  0% {
+    opacity: 0.15;
+    transform: scale(0.92);
+  }
+
+  50% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0.15;
+    transform: scale(1.08);
+  }
+}
+
+/* ========================================
+   THREAT INTENSITY OVERLAY
+======================================== */
+
+.risk-critical::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(239,68,68,0.04),
+      transparent
+    );
+
+  pointer-events: none;
+}
+
+.risk-escalation::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(249,115,22,0.04),
+      transparent
+    );
+
+  pointer-events: none;
+}
+
+.risk-watch::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(59,130,246,0.04),
+      transparent
+    );
+
+  pointer-events: none;
+}
+
+/* ========================================
+   TREASURY RISK CLUSTER PANEL
+======================================== */
+
+.treasury-risk-cluster-panel {
+  margin: 28px 0;
+  padding: 32px;
+  border-radius: 32px;
+}
+
+.treasury-risk-cluster-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+
+  margin-bottom: 28px;
+}
+
+.treasury-risk-cluster-mode {
+  padding: 12px 18px;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(239,68,68,0.14),
+      rgba(249,115,22,0.12)
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.22);
+
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+
+  color: #b91c1c;
+
+  backdrop-filter: blur(12px);
+}
+
+.treasury-risk-cluster-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(220px, 1fr));
+
+  gap: 20px;
+}
+
+.treasury-risk-cluster-card {
+  position: relative;
+
+  overflow: hidden;
+
+  padding: 24px;
+
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.92),
+      rgba(248,250,252,0.82)
+    );
+
+  border:
+    1px solid rgba(148,163,184,0.16);
+
+  backdrop-filter: blur(16px);
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.treasury-risk-cluster-card:hover {
+  transform:
+    translateY(-3px);
+}
+
+.treasury-risk-cluster-card span {
+  display: block;
+
+  margin-bottom: 12px;
+
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  color: #64748b;
+}
+
+.treasury-risk-cluster-card strong {
+  display: block;
+
+  margin-bottom: 12px;
+
+  font-size: 28px;
+  font-weight: 900;
+
+  color: #0f172a;
+}
+
+.treasury-risk-cluster-card p {
+  font-size: 13px;
+  line-height: 1.6;
+
+  color: #64748b;
+}
+
+.treasury-risk-cluster-card.critical {
+  box-shadow:
+    0 0 35px rgba(239,68,68,0.14);
+}
+
+.treasury-risk-cluster-card.warning {
+  box-shadow:
+    0 0 35px rgba(249,115,22,0.12);
+}
+
+.treasury-risk-cluster-card.watch {
+  box-shadow:
+    0 0 35px rgba(59,130,246,0.12);
+}

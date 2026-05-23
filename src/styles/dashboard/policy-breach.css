@@ -79,13 +79,19 @@
 
 .policy-table-row {
   display: grid;
-  grid-template-columns: 76px 260px 1fr 140px 150px;
+  grid-template-columns: 84px 240px 1fr 150px 160px;
   align-items: center;
-  gap: 20px;
-  min-height: 104px;
-  padding: 20px 24px;
-  background: #ffffff;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+  gap: 18px;
+  min-height: 108px;
+  padding: 22px 24px;
+  background: rgba(255, 255, 255, 0.86);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+  transition: background 0.28s ease, transform 0.28s ease;
+}
+
+.policy-table-row:hover {
+  background: rgba(59, 130, 246, 0.04);
+  transform: translateY(-1px);
 }
 
 .policy-table-row:last-child {
@@ -93,69 +99,91 @@
 }
 
 .policy-icon {
-  width: 54px;
-  height: 54px;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  background: #ffffff;
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow:
+    0 10px 24px rgba(15, 23, 42, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(10px);
 }
 
-.policy-svg {
-  width: 44px;
-  height: 44px;
-  fill: none;
+.policy-icon svg {
+  width: 22px;
+  height: 22px;
   stroke: currentColor;
-  stroke-width: 1.9;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  fill: none;
+  stroke-width: 2;
 }
 
-.policy-icon.critical,
-.policy-icon.blocked {
-  color: #ef4444;
-}
-
-.policy-icon.escalation {
-  color: #f59e0b;
+.policy-emoji {
+  font-size: 16px;
+  line-height: 1;
 }
 
 .policy-icon.ok {
-  color: #22c55e;
+  color: #16a34a;
+  background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+}
+
+.policy-icon.escalation {
+  color: #ea580c;
+  background: linear-gradient(135deg, #fff7ed, #fed7aa);
+}
+
+.policy-icon.critical {
+  color: #dc2626;
+  background: linear-gradient(135deg, #fff1f2, #ffe4e6);
+}
+
+.policy-icon.blocked {
+  color: #be123c;
+  background: linear-gradient(135deg, #fff1f2, #fecdd3);
+}
+
+.policy-main {
+  min-width: 0;
 }
 
 .policy-main p {
-  margin: 0 0 7px;
-  font-size: 11px;
-  color: #2563eb;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
+  margin: 0;
+  font-size: 15px;
+  color: #0f172a;
   font-weight: 900;
+  line-height: 1.25;
 }
 
 .policy-main strong {
-  font-size: 16px;
-  color: #0f172a;
-  font-weight: 900;
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 800;
 }
 
 .policy-message {
   color: #64748b;
-  font-size: 15px;
-  line-height: 1.5;
+  font-size: 14px;
+  line-height: 1.45;
 }
 
 .policy-meta span {
   display: block;
-  font-size: 11px;
-  color: #64748b;
+  font-size: 10px;
+  color: #94a3b8;
   text-transform: uppercase;
   font-weight: 900;
-  margin-bottom: 8px;
+  letter-spacing: 0.08em;
+  margin-bottom: 7px;
 }
 
 .policy-meta strong {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 900;
   color: #0f172a;
 }
@@ -178,145 +206,22 @@
     padding: 24px;
   }
 
-.policy-table-row {
-  display: grid;
-  grid-template-columns: 42px minmax(220px, 1.1fr) minmax(260px, 1.3fr) 120px 140px;
-  gap: 18px;
-  align-items: center;
-  padding: 18px 20px;
-  border-radius: 20px;
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  background: rgba(255, 255, 255, 0.78);
-}
+  .policy-breach-top {
+    flex-direction: column;
+  }
 
-.policy-main p {
-  margin: 0 0 6px;
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: 0.04em;
-  color: #64748b;
-  text-transform: uppercase;
-  white-space: normal;
-  word-break: break-word;
-  line-height: 1.25;
-}
+  .policy-decision-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-.policy-main strong,
-.policy-message,
-.policy-meta strong {
-  white-space: normal;
-  word-break: break-word;
-  line-height: 1.3;
-}
+  .policy-table-row {
+    grid-template-columns: 64px 1fr;
+    gap: 14px;
+  }
 
-.policy-message,
+  .policy-message,
   .policy-meta {
     grid-column: 2;
   }
-
-.policy-decision-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
-/* FINAL FIX - Policy Breach Modal Row Layout */
-.policy-table-row {
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) minmax(180px, 0.8fr) minmax(220px, 1.2fr) !important;
-  gap: 22px !important;
-  align-items: center !important;
-  padding: 22px 24px !important;
-  min-height: 120px !important;
-}
-
-.policy-icon {
-  display: none !important;
-}
-
-.policy-main {
-  min-width: 0 !important;
-}
-
-.policy-main p {
-  margin: 0 0 8px !important;
-  font-size: 15px !important;
-  font-weight: 900 !important;
-  letter-spacing: -0.02em !important;
-  color: #0f172a !important;
-  text-transform: none !important;
-  white-space: normal !important;
-  word-break: break-word !important;
-  line-height: 1.25 !important;
-}
-
-.policy-main strong {
-  display: block !important;
-  font-size: 12px !important;
-  color: #64748b !important;
-  white-space: normal !important;
-  word-break: break-word !important;
-}
-
-.policy-message {
-  font-size: 14px !important;
-  line-height: 1.35 !important;
-  white-space: normal !important;
-  word-break: break-word !important;
-}
-
-.policy-meta {
-  min-width: 0 !important;
-}
-
-.policy-meta span {
-  display: none !important;
-}
-
-.policy-meta strong {
-  font-size: 13px !important;
-  white-space: normal !important;
-  word-break: break-word !important;
-}
-
-/* FINAL FINAL FIX - Policy Breach Modal Clean Layout */
-.policy-table-row {
-  display: grid !important;
-  grid-template-columns: minmax(180px, 1fr) minmax(220px, 1.1fr) minmax(120px, 0.6fr) minmax(160px, 0.8fr) !important;
-  gap: 28px !important;
-  align-items: center !important;
-  padding: 22px 26px !important;
-  min-height: 118px !important;
-}
-
-.policy-icon {
-  display: none !important;
-}
-
-.policy-main p {
-  margin: 0 !important;
-  font-size: 15px !important;
-  font-weight: 900 !important;
-  letter-spacing: 0 !important;
-  color: #0f172a !important;
-  text-transform: none !important;
-  white-space: normal !important;
-  word-break: break-word !important;
-}
-
-.policy-message {
-  font-size: 14px !important;
-  line-height: 1.35 !important;
-  color: #475569 !important;
-  white-space: normal !important;
-  word-break: break-word !important;
-}
-
-.policy-meta span {
-  display: none !important;
-}
-
-.policy-meta strong {
-  font-size: 13px !important;
-  white-space: normal !important;
-  word-break: break-word !important;
-}

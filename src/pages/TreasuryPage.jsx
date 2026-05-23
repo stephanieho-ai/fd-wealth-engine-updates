@@ -523,7 +523,7 @@ export default function TreasuryPage() {
         </div>
       </section>
 
-      <section className="treasury-command-center">
+      <section className="treasury-command-center risk-cluster-panel risk-watch treasury-density-radar">
         <div className="treasury-command-header">
           <div>
             <p className="treasury-command-label">
@@ -590,7 +590,7 @@ export default function TreasuryPage() {
         </div>
       </section>
 
-        <section className="treasury-monitoring-wall">
+        <section className="treasury-monitoring-wall risk-cluster-panel risk-escalation risk-escalation-wave">
 
             <div className="treasury-monitoring-header">
 
@@ -690,7 +690,7 @@ export default function TreasuryPage() {
 
             </section>
 
-            <section className="treasury-executive-action-bar">
+            <section className="treasury-executive-action-bar risk-cluster-panel risk-warning treasury-flow-cluster">
 
                 <div className="treasury-executive-header">
 
@@ -774,7 +774,7 @@ export default function TreasuryPage() {
 
                 </section>
 
-      <section className="treasury-heatmap-panel">
+     <section className="treasury-heatmap-panel risk-cluster-panel risk-critical liquidity-shock">
   <div className="treasury-heatmap-header">
     <div>
       <p className="treasury-command-label">
@@ -880,7 +880,7 @@ export default function TreasuryPage() {
   </div>
 </section>
 
-      <section className="treasury-alert-center">
+      <section className="treasury-alert-center risk-cluster-panel risk-danger treasury-alert-pulse">
 
   <div className="treasury-alert-header">
     <div>
@@ -997,6 +997,105 @@ export default function TreasuryPage() {
           </p>
         </div>
       )}
+
+  </div>
+</section>
+
+      <section className="treasury-risk-cluster-panel risk-cluster-panel risk-danger treasury-density-radar">
+
+  <div className="treasury-risk-cluster-header">
+    <div>
+      <p className="treasury-command-label">
+        🧠 TREASURY RISK CLUSTER INTELLIGENCE
+      </p>
+
+      <h2>Institutional Threat Cluster Detection</h2>
+
+      <p className="treasury-command-description">
+        Live institutional threat mapping for escalation density,
+        liquidity shock propagation, treasury congestion,
+        recovery pressure and operational threat clustering.
+      </p>
+    </div>
+
+    <div className="treasury-risk-cluster-mode">
+      🎯 LIVE CLUSTER RADAR
+    </div>
+  </div>
+
+  <div className="treasury-risk-cluster-grid">
+
+    <div className="treasury-risk-cluster-card critical">
+      <span>Risk Clusters</span>
+
+      <strong>
+        {openQueueCount + escalatedCount + reviewQueueCount}
+      </strong>
+
+      <p>
+        Active treasury operational threat clusters.
+      </p>
+    </div>
+
+    <div className="treasury-risk-cluster-card warning">
+      <span>Highest Threat Zone</span>
+
+      <strong>
+        {liquidityStressLevel}
+      </strong>
+
+      <p>
+        Dominant institutional treasury pressure level.
+      </p>
+    </div>
+
+    <div className="treasury-risk-cluster-card watch">
+      <span>Escalation Density</span>
+
+      <strong>
+        {escalatedCount} ACTIVE
+      </strong>
+
+      <p>
+        Escalation propagation across treasury workflows.
+      </p>
+    </div>
+
+    <div className="treasury-risk-cluster-card critical">
+      <span>Liquidity Shock</span>
+
+      <strong>
+        {recoveryScore >= 60 ? "ACTIVE" : "STABLE"}
+      </strong>
+
+      <p>
+        Treasury liquidity disruption monitoring.
+      </p>
+    </div>
+
+    <div className="treasury-risk-cluster-card warning">
+      <span>Threat Propagation</span>
+
+      <strong>
+        {criticalTimelineEvents >= 2 ? "EXPANDING" : "CONTROLLED"}
+      </strong>
+
+      <p>
+        Institutional treasury risk spread analysis.
+      </p>
+    </div>
+
+    <div className="treasury-risk-cluster-card watch">
+      <span>Radar Signal</span>
+
+      <strong>
+        {autoEscalationSignal}
+      </strong>
+
+      <p>
+        Treasury threat intelligence radar signal.
+      </p>
+    </div>
 
   </div>
 </section>
