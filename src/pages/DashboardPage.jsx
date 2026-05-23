@@ -14,6 +14,49 @@ import MaturityAlerts from "../components/dashboard/MaturityAlerts";
 import SummaryGrid from "../components/dashboard/SummaryGrid";
 import TreasuryAlertModal from "../components/dashboard/TreasuryAlertModal";
 
+const treasuryRuntimeStyle = `
+@keyframes treasuryPulse {
+  0% { transform: scale(1); opacity: 0.85; box-shadow: 0 0 0 rgba(239, 68, 68, 0.22); }
+  50% { transform: scale(1.22); opacity: 1; box-shadow: 0 0 18px rgba(239, 68, 68, 0.9); }
+  100% { transform: scale(1); opacity: 0.85; box-shadow: 0 0 0 rgba(239, 68, 68, 0.22); }
+}
+
+@keyframes treasuryStatusGlow {
+  0% { box-shadow: 0 24px 60px rgba(239,68,68,0.12); }
+  50% { box-shadow: 0 28px 78px rgba(239,68,68,0.22); }
+  100% { box-shadow: 0 24px 60px rgba(239,68,68,0.12); }
+}
+
+@keyframes treasurySignalFloat {
+  0% { transform: translateY(0); opacity: 0.96; }
+  50% { transform: translateY(-1px); opacity: 1; }
+  100% { transform: translateY(0); opacity: 0.96; }
+}
+
+@keyframes treasuryWallBreathing {
+  0% {
+    transform: translateY(0px);
+    filter: saturate(1);
+  }
+
+  50% {
+    transform: translateY(-2px);
+    filter: saturate(1.04);
+  }
+
+  100% {
+    transform: translateY(0px);
+    filter: saturate(1);
+  }
+}
+
+.treasury-runtime-shell {
+  animation: treasuryWallBreathing 8s ease-in-out infinite;
+  transition: all 0.4s ease;
+  transform-style: preserve-3d;
+}
+`;
+
 function toNumber(value) {
   const number = Number(value);
   return Number.isFinite(number) ? number : 0;
@@ -814,7 +857,7 @@ function TreasuryIntelligencePanel({
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
-          gap: 14,
+          gap: 18,
           marginBottom: 16,
         }}
       >
@@ -824,13 +867,13 @@ function TreasuryIntelligencePanel({
             style={{
               border: "1px solid rgba(148, 163, 184, 0.22)",
               borderRadius: 22,
-              padding: "16px 18px",
+              padding: "20px 22px",
               ...metric.style,
             }}
           >
             <div
               style={{
-                fontSize: 11,
+                fontSize: 12,
                 opacity: 0.72,
                 textTransform: "uppercase",
                 letterSpacing: "0.05em",
@@ -839,7 +882,7 @@ function TreasuryIntelligencePanel({
             >
               {metric.label}
             </div>
-            <strong style={{ display: "block", fontSize: 24, lineHeight: 1.05 }}>
+            <strong style={{ display: "block", fontSize: 32, lineHeight: 1.05 }}>
               {metric.value}
             </strong>
             <p className="muted" style={{ margin: "8px 0 0", fontSize: 12 }}>
@@ -1599,6 +1642,108 @@ export default function DashboardPage({
     }, 3000);
   };
 
+  const treasuryHeatmapItems = useMemo(() => {
+    const today = new Date();
+    const nextSixMonths = Array.from({ length: 6 }, (_, index) => {
+      const date = new Date(today.getFullYear(), today.getMonth() + index, 1);
+      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+    });
+
+    const strongestAmount = Math.max(
+      ...maturityMonths.map((item) => toNumber(item.amount)),
+      1
+    );
+
+    return nextSixMonths.map((month) => {
+      const maturity = maturityMonths.find((item) => item.month === month);
+      const amount = toNumber(maturity?.amount ?? 0);
+      const ratioToStrongest = amount / strongestAmount;
+
+      let status = "LOW";
+      let color = "#2563eb";
+      let bg = "rgba(59,130,246,0.10)";
+      let border = "rgba(59,130,246,0.16)";
+      let note = "Thin maturity support. Monitor liquidity dependency.";
+
+      if (amount <= 0 && totalActivePortfolio > 0) {
+        status = "GAP";
+        color = "#dc2626";
+        bg = "rgba(220,38,38,0.10)";
+        border = "rgba(220,38,38,0.18)";
+        note = "No maturity support detected in this treasury cycle.";
+      } else if (ratioToStrongest < 0.25) {
+        status = "CRITICAL";
+        color = "#dc2626";
+        bg = "rgba(220,38,38,0.12)";
+        border = "rgba(220,38,38,0.18)";
+        note = "Weak maturity month with limited liquidity recovery.";
+      } else if (ratioToStrongest < 0.5) {
+        status = "WATCH";
+        color = "#ea580c";
+        bg = "rgba(234,88,12,0.12)";
+        border = "rgba(234,88,12,0.18)";
+        note = "Maturity support exists but remains below comfort range.";
+      } else if (ratioToStrongest >= 0.85) {
+        status = "HIGH";
+        color = "#f59e0b";
+        bg = "rgba(245,158,11,0.12)";
+        border = "rgba(245,158,11,0.18)";
+        note = "High maturity concentration. Review redeployment timing.";
+      } else {
+        status = "NORMAL";
+        color = "#16a34a";
+        bg = "rgba(22,163,74,0.10)";
+        border = "rgba(22,163,74,0.16)";
+        note = "Balanced maturity support for this cycle.";
+      }
+
+      return {
+        month,
+        status,
+        amount,
+        color,
+        bg,
+        border,
+        note,
+      };
+    });
+  }, [maturityMonths, totalActivePortfolio]);
+
+  const heatmapSystemHeat = useMemo(() => {
+    const criticalCount = treasuryHeatmapItems.filter((item) =>
+      ["GAP", "CRITICAL"].includes(item.status)
+    ).length;
+
+    const highCount = treasuryHeatmapItems.filter((item) =>
+      ["HIGH", "WATCH"].includes(item.status)
+    ).length;
+
+    if (treasuryPolicyDecision.blocked || criticalCount >= 2) {
+      return {
+        label: "HIGH",
+        color: "#dc2626",
+        bg: "rgba(220,38,38,0.10)",
+        border: "rgba(220,38,38,0.18)",
+      };
+    }
+
+    if (highCount >= 2) {
+      return {
+        label: "WATCH",
+        color: "#ea580c",
+        bg: "rgba(234,88,12,0.10)",
+        border: "rgba(234,88,12,0.18)",
+      };
+    }
+
+    return {
+      label: "STABLE",
+      color: "#16a34a",
+      bg: "rgba(22,163,74,0.10)",
+      border: "rgba(22,163,74,0.16)",
+    };
+  }, [treasuryHeatmapItems, treasuryPolicyDecision.blocked]);
+
   const summaryItems = [
     {
       label: "Active Portfolio",
@@ -1626,24 +1771,487 @@ export default function DashboardPage({
 
   return (
     <main className="dashboard-page">
+      <style>{treasuryRuntimeStyle}</style>
+
       {toastMessage && <div className="toast-message">{toastMessage}</div>}
 
       {treasuryToast && <div className="treasury-toast">{treasuryToast}</div>}
 
-      <section className="dashboard-hero">
-        <div>
-          <p className="eyebrow">FD Wealth Engine</p>
-          <h1>Private Banking Console</h1>
-          <p className="muted">
-            V33.2-G12 Treasury Intelligence Orchestration Layer with AI reasoning,
-            predictive scoring, forecast signals and treasury simulation foundation.
-          </p>
+      <section
+        className="dashboard-hero treasury-monitoring-wall treasury-runtime-shell"
+        style={{
+          display: "block",
+          position: "relative",
+          overflow: "hidden",
+          isolation: "isolate",
+          borderRadius: 44,
+          padding: "48px 46px",
+          marginBottom: 28,
+          background:
+            treasuryPolicyDecision.blocked
+              ? "linear-gradient(135deg, rgba(255,255,255,0.98), rgba(254,242,242,0.96), rgba(254,226,226,0.92), rgba(255,228,230,0.90))"
+              : treasuryPolicyDecision.severity === "WARNING" ||
+                treasuryPolicyDecision.severity === "WATCH"
+              ? "linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,251,235,0.96), rgba(254,243,199,0.92), rgba(255,237,213,0.90))"
+              : "linear-gradient(135deg, rgba(255,255,255,0.98), rgba(241,245,249,0.96), rgba(219,234,254,0.92), rgba(224,231,255,0.90))",
+          border: treasuryPolicyDecision.blocked
+            ? "1px solid rgba(239,68,68,0.16)"
+            : treasuryPolicyDecision.severity === "WARNING" ||
+              treasuryPolicyDecision.severity === "WATCH"
+            ? "1px solid rgba(245,158,11,0.16)"
+            : "1px solid rgba(59,130,246,0.16)",
+          boxShadow: treasuryPolicyDecision.blocked
+            ? "0 50px 120px rgba(127,29,29,0.12), 0 20px 60px rgba(239,68,68,0.12), inset 0 1px 0 rgba(255,255,255,0.72)"
+            : treasuryPolicyDecision.severity === "WARNING" ||
+              treasuryPolicyDecision.severity === "WATCH"
+            ? "0 50px 120px rgba(120,53,15,0.10), 0 20px 60px rgba(245,158,11,0.10), inset 0 1px 0 rgba(255,255,255,0.72)"
+            : "0 40px 100px rgba(15,23,42,0.08), 0 12px 40px rgba(59,130,246,0.08), inset 0 1px 0 rgba(255,255,255,0.72)",
+          backdropFilter: "blur(26px)",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background:
+              treasuryPolicyDecision.blocked
+                ? "radial-gradient(circle at top right, rgba(239,68,68,0.16), transparent 34%), radial-gradient(circle at bottom left, rgba(251,113,133,0.12), transparent 32%)"
+                : treasuryPolicyDecision.severity === "WARNING" ||
+                  treasuryPolicyDecision.severity === "WATCH"
+                ? "radial-gradient(circle at top right, rgba(245,158,11,0.14), transparent 34%), radial-gradient(circle at bottom left, rgba(251,191,36,0.10), transparent 32%)"
+                : "radial-gradient(circle at top right, rgba(37,99,235,0.16), transparent 34%), radial-gradient(circle at bottom left, rgba(16,185,129,0.10), transparent 32%)",
+            pointerEvents: "none",
+            zIndex: 0,
+            filter: "blur(12px)",
+          }}
+        />
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(6, minmax(130px, 1fr))",
+            gap: 14,
+            marginBottom: 26,
+            position: "relative",
+            zIndex: 2,
+          }}
+        >
+          {[
+            {
+              label: "LIQUIDITY",
+              value: liquidityRatio < 0.1 ? "CRITICAL" : "STABLE",
+              color: liquidityRatio < 0.1 ? "#dc2626" : "#2563eb",
+              glow:
+                liquidityRatio < 0.1
+                  ? "rgba(220,38,38,0.16)"
+                  : "rgba(37,99,235,0.12)",
+            },
+            {
+              label: "TREASURY HEAT",
+              value: fdExposureRatio > 0.9 ? "HIGH" : "NORMAL",
+              color: fdExposureRatio > 0.9 ? "#f59e0b" : "#16a34a",
+              glow:
+                fdExposureRatio > 0.9
+                  ? "rgba(245,158,11,0.14)"
+                  : "rgba(22,163,74,0.12)",
+            },
+            {
+              label: "RESERVE",
+              value: totalDeployableFunds <= reserveAmount ? "TIGHT" : "HEALTHY",
+              color: totalDeployableFunds <= reserveAmount ? "#ea580c" : "#2563eb",
+              glow:
+                totalDeployableFunds <= reserveAmount
+                  ? "rgba(234,88,12,0.14)"
+                  : "rgba(37,99,235,0.12)",
+            },
+            {
+              label: "DEPLOYMENT",
+              value: treasuryPolicyDecision.blocked ? "PAUSED" : "ACTIVE",
+              color: treasuryPolicyDecision.blocked ? "#dc2626" : "#16a34a",
+              glow: treasuryPolicyDecision.blocked
+                ? "rgba(220,38,38,0.16)"
+                : "rgba(22,163,74,0.12)",
+            },
+            {
+              label: "POLICY",
+              value: treasuryPolicyDecision.severity,
+              color:
+                treasuryPolicyDecision.severity === "BLOCKED" ||
+                treasuryPolicyDecision.severity === "CRITICAL" ||
+                treasuryPolicyDecision.blocked
+                  ? "#dc2626"
+                  : "#2563eb",
+              glow:
+                treasuryPolicyDecision.severity === "BLOCKED" ||
+                treasuryPolicyDecision.severity === "CRITICAL" ||
+                treasuryPolicyDecision.blocked
+                  ? "rgba(220,38,38,0.16)"
+                  : "rgba(37,99,235,0.12)",
+            },
+            {
+              label: "CONFIDENCE",
+              value: treasuryPolicyDecision.blocked ? "LOW" : "STABLE",
+              color: treasuryPolicyDecision.blocked ? "#dc2626" : "#16a34a",
+              glow: treasuryPolicyDecision.blocked
+                ? "rgba(220,38,38,0.16)"
+                : "rgba(22,163,74,0.12)",
+            },
+          ].map((signal) => (
+            <div
+              key={signal.label}
+              style={{
+                borderRadius: 18,
+                padding: "14px 16px",
+                background: signal.glow,
+                border: `1px solid ${signal.glow}`,
+                backdropFilter: "blur(10px)",
+                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.55)",
+                animation: "treasurySignalFloat 3.6s infinite ease-in-out",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 10,
+                  fontWeight: 800,
+                  letterSpacing: "0.08em",
+                  color: "#64748b",
+                  marginBottom: 8,
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {signal.label}
+              </div>
+
+              <div
+                style={{
+                  fontSize: 20,
+                  fontWeight: 900,
+                  color: signal.color,
+                  lineHeight: 1,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {signal.value}
+              </div>
+            </div>
+          ))}
         </div>
 
-        <div className="hero-alert">
-          <span>Policy Engine</span>
-          <strong>{treasuryPolicyDecision.severity}</strong>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "minmax(0, 1fr) 300px",
+            gap: 30,
+            alignItems: "stretch",
+            position: "relative",
+            zIndex: 2,
+          }}
+        >
+          <div>
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 10,
+                padding: "8px 14px",
+                borderRadius: 999,
+                background: "rgba(219,234,254,0.92)",
+                border: "1px solid rgba(59,130,246,0.18)",
+                marginBottom: 18,
+                boxShadow: "0 10px 24px rgba(37,99,235,0.10)",
+              }}
+            >
+              <span
+                style={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: "50%",
+                  background:
+                    treasuryPolicyDecision.severity === "BREACH" ||
+                    treasuryPolicyDecision.severity === "CRITICAL" ||
+                    treasuryPolicyDecision.blocked
+                      ? "#ef4444"
+                      : treasuryPolicyDecision.severity === "WARNING" ||
+                        treasuryPolicyDecision.severity === "WATCH"
+                      ? "#f59e0b"
+                      : "#22c55e",
+                  boxShadow:
+                    treasuryPolicyDecision.severity === "BREACH" ||
+                    treasuryPolicyDecision.severity === "CRITICAL" ||
+                    treasuryPolicyDecision.blocked
+                      ? "0 0 14px rgba(239,68,68,0.75)"
+                      : treasuryPolicyDecision.severity === "WARNING" ||
+                        treasuryPolicyDecision.severity === "WATCH"
+                      ? "0 0 14px rgba(245,158,11,0.72)"
+                      : "0 0 14px rgba(34,197,94,0.72)",
+                  animation: "treasuryPulse 2.2s infinite ease-in-out",
+                }}
+              />
+
+              <span
+                style={{
+                  color: "#1d4ed8",
+                  fontSize: 12,
+                  letterSpacing: "0.08em",
+                  fontWeight: 800,
+                }}
+              >
+                LIVE TREASURY MONITORING
+              </span>
+            </div>
+
+            <p
+              className="eyebrow"
+              style={{
+                color: "#2563eb",
+                marginBottom: 12,
+                letterSpacing: "0.10em",
+              }}
+            >
+              FD WEALTH ENGINE · TREASURY COMMAND CENTER
+            </p>
+
+            <h1
+              style={{
+                margin: 0,
+                fontSize: 52,
+                lineHeight: 1,
+                color: "#0f172a",
+                letterSpacing: "-0.045em",
+                textShadow: "0 1px 0 rgba(255,255,255,0.75)",
+              }}
+            >
+              Treasury Operations Wall
+            </h1>
+
+            <p
+              style={{
+                marginTop: 18,
+                maxWidth: 780,
+                color: "#475569",
+                fontSize: 15,
+                lineHeight: 1.7,
+              }}
+            >
+              Real-time treasury monitoring environment for liquidity supervision,
+              deployment governance, operational escalation and institutional capital
+              orchestration.
+            </p>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(3, minmax(220px, 1fr))",
+                gap: 18,
+                marginTop: 28,
+              }}
+            >
+              {[
+                {
+                  label: "ACTIVE FD",
+                  value: activeFDRecords.length,
+                },
+                {
+                  label: "LIQUIDITY",
+                  value: `${(liquidityRatio * 100).toFixed(1)}%`,
+                },
+                {
+                  label: "DEPLOYABLE",
+                  value: formatMoney(totalDeployableFunds, currency),
+                },
+                {
+                  label: "RISK",
+                  value: treasuryPolicyDecision.severity,
+                },
+                {
+                  label: "ALERTS",
+                  value: treasuryAlerts.length,
+                },
+                {
+                  label: "POLICY",
+                  value: treasuryPolicyDecision.blocked ? "BLOCKED" : "ACTIVE",
+                },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  style={{
+                    borderRadius: 20,
+                    padding: "20px 22px",
+                    background: "rgba(255,255,255,0.78)",
+                    border: "1px solid rgba(148,163,184,0.20)",
+                    boxShadow:
+                      "0 16px 36px rgba(15,23,42,0.08), inset 0 1px 0 rgba(255,255,255,0.74)",
+                    backdropFilter: "blur(14px)",
+                    minWidth: 0,
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: 10,
+                      color: "#64748b",
+                      marginBottom: 8,
+                      letterSpacing: "0.07em",
+                      fontWeight: 800,
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {item.label}
+                  </div>
+
+                  <strong
+                    style={{
+                      display: "block",
+                      color:
+                        item.label === "POLICY" && item.value === "BLOCKED"
+                          ? "#dc2626"
+                          : item.label === "RISK" &&
+                            (item.value === "BREACH" ||
+                              item.value === "CRITICAL" ||
+                              item.value === "BLOCKED")
+                          ? "#dc2626"
+                          : "#0f172a",
+                      fontSize: 26,
+                      lineHeight: 1.05,
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {item.value}
+                  </strong>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div
+            style={{
+              borderRadius: 30,
+              padding: "24px 24px",
+              background:
+                treasuryPolicyDecision.severity === "BREACH" ||
+                treasuryPolicyDecision.severity === "CRITICAL" ||
+                treasuryPolicyDecision.blocked
+                  ? "linear-gradient(135deg, rgba(254,242,242,0.98), rgba(255,228,230,0.92))"
+                  : treasuryPolicyDecision.severity === "WARNING" ||
+                    treasuryPolicyDecision.severity === "WATCH"
+                  ? "linear-gradient(135deg, rgba(255,251,235,0.98), rgba(254,243,199,0.92))"
+                  : "linear-gradient(135deg, rgba(236,253,245,0.98), rgba(209,250,229,0.92))",
+              border:
+                treasuryPolicyDecision.severity === "BREACH" ||
+                treasuryPolicyDecision.severity === "CRITICAL" ||
+                treasuryPolicyDecision.blocked
+                  ? "1px solid rgba(239,68,68,0.22)"
+                  : treasuryPolicyDecision.severity === "WARNING" ||
+                    treasuryPolicyDecision.severity === "WATCH"
+                  ? "1px solid rgba(245,158,11,0.24)"
+                  : "1px solid rgba(16,185,129,0.22)",
+              boxShadow:
+                treasuryPolicyDecision.severity === "BREACH" ||
+                treasuryPolicyDecision.severity === "CRITICAL" ||
+                treasuryPolicyDecision.blocked
+                  ? "0 24px 60px rgba(239,68,68,0.14)"
+                  : treasuryPolicyDecision.severity === "WARNING" ||
+                    treasuryPolicyDecision.severity === "WATCH"
+                  ? "0 24px 60px rgba(245,158,11,0.12)"
+                  : "0 24px 60px rgba(16,185,129,0.12)",
+              animation:
+                treasuryPolicyDecision.severity === "BREACH" ||
+                treasuryPolicyDecision.severity === "CRITICAL" ||
+                treasuryPolicyDecision.blocked
+                  ? "treasuryStatusGlow 3.4s infinite ease-in-out"
+                  : "none",
+              backdropFilter: "blur(14px)",
+              alignSelf: "stretch",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <div>
+              <div
+                style={{
+                  fontSize: 11,
+                  color: "#64748b",
+                  letterSpacing: "0.09em",
+                  marginBottom: 10,
+                  fontWeight: 800,
+                }}
+              >
+                TREASURY STATUS
+              </div>
+
+              <strong
+                style={{
+                  display: "block",
+                  fontSize: 38,
+                  color:
+                    treasuryPolicyDecision.severity === "BREACH" ||
+                    treasuryPolicyDecision.severity === "CRITICAL" ||
+                    treasuryPolicyDecision.blocked
+                      ? "#b91c1c"
+                      : treasuryPolicyDecision.severity === "WARNING" ||
+                        treasuryPolicyDecision.severity === "WATCH"
+                      ? "#b45309"
+                      : "#047857",
+                  lineHeight: 1,
+                  letterSpacing: "-0.04em",
+                }}
+              >
+                {treasuryPolicyDecision.severity}
+              </strong>
+
+              <p
+                style={{
+                  marginTop: 14,
+                  marginBottom: 0,
+                  fontSize: 13,
+                  color: "#475569",
+                  lineHeight: 1.65,
+                }}
+              >
+                {treasuryPolicyDecision.blocked
+                  ? "Treasury governance restriction active. Deployment requires review before execution."
+                  : "Treasury operations remain within monitored policy thresholds."}
+              </p>
+            </div>
+
+            <div
+              style={{
+                marginTop: 22,
+                paddingTop: 16,
+                borderTop: "1px solid rgba(148,163,184,0.22)",
+                fontSize: 12,
+                color: "#64748b",
+                lineHeight: 1.55,
+              }}
+            >
+              <strong style={{ color: "#334155" }}>Last Treasury Scan</strong>
+              <br />
+              {new Date().toLocaleString()}
+            </div>
+          </div>
         </div>
+
+
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background:
+              treasuryPolicyDecision.blocked
+                ? "radial-gradient(circle at 78% 20%, rgba(239,68,68,0.12), transparent 28%), radial-gradient(circle at 8% 88%, rgba(251,113,133,0.08), transparent 30%)"
+                : treasuryPolicyDecision.severity === "WARNING" ||
+                  treasuryPolicyDecision.severity === "WATCH"
+                ? "radial-gradient(circle at 78% 20%, rgba(245,158,11,0.10), transparent 28%), radial-gradient(circle at 8% 88%, rgba(251,191,36,0.08), transparent 30%)"
+                : "radial-gradient(circle at 78% 20%, rgba(59,130,246,0.10), transparent 28%), radial-gradient(circle at 8% 88%, rgba(16,185,129,0.08), transparent 30%)",
+            zIndex: 0,
+            pointerEvents: "none",
+            filter: "blur(14px)",
+          }}
+        />
       </section>
 
       {treasuryAlerts.length > 0 && (
@@ -1846,6 +2454,203 @@ export default function DashboardPage({
     </div>
   </section>
 
+
+      <section
+        className="dashboard-section treasury-heatmap-engine"
+        style={{
+          marginTop: 40,
+          width: "100%",
+          maxWidth: 1600,
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
+        <div
+          style={{
+            position: "relative",
+            overflow: "hidden",
+            borderRadius: 36,
+            padding: "34px 32px",
+            background:
+              "linear-gradient(135deg, rgba(255,255,255,0.96), rgba(248,250,252,0.93), rgba(239,246,255,0.88))",
+            border: "1px solid rgba(255,255,255,0.72)",
+            boxShadow:
+              "0 30px 80px rgba(15,23,42,0.08), inset 0 1px 0 rgba(255,255,255,0.76)",
+            backdropFilter: "blur(22px)",
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                heatmapSystemHeat.label === "HIGH"
+                  ? "radial-gradient(circle at top right, rgba(239,68,68,0.12), transparent 32%)"
+                  : heatmapSystemHeat.label === "WATCH"
+                  ? "radial-gradient(circle at top right, rgba(245,158,11,0.12), transparent 32%)"
+                  : "radial-gradient(circle at top right, rgba(37,99,235,0.10), transparent 32%)",
+              pointerEvents: "none",
+            }}
+          />
+
+          <div
+            style={{
+              position: "relative",
+              zIndex: 1,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: 22,
+              marginBottom: 28,
+              flexWrap: "wrap",
+            }}
+          >
+            <div>
+              <div
+                style={{
+                  fontSize: 12,
+                  fontWeight: 900,
+                  letterSpacing: "0.12em",
+                  color: "#4f46e5",
+                  marginBottom: 8,
+                }}
+              >
+                V33.2-G17 · TREASURY HEATMAP ENGINE
+              </div>
+
+              <h2
+                style={{
+                  margin: 0,
+                  fontSize: 36,
+                  fontWeight: 900,
+                  color: "#0f172a",
+                  letterSpacing: "-0.035em",
+                }}
+              >
+                Treasury Maturity Heatmap
+              </h2>
+
+              <p
+                style={{
+                  marginTop: 10,
+                  maxWidth: 820,
+                  color: "#64748b",
+                  fontSize: 15,
+                  lineHeight: 1.7,
+                }}
+              >
+                Monitor maturity pressure, liquidity imbalance and deployment
+                concentration across upcoming treasury cycles.
+              </p>
+            </div>
+
+            <div
+              style={{
+                minWidth: 160,
+                borderRadius: 24,
+                padding: "18px 22px",
+                background: heatmapSystemHeat.bg,
+                border: `1px solid ${heatmapSystemHeat.border}`,
+                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.62)",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 11,
+                  fontWeight: 800,
+                  letterSpacing: "0.08em",
+                  color: "#64748b",
+                  marginBottom: 8,
+                }}
+              >
+                SYSTEM HEAT
+              </div>
+
+              <div
+                style={{
+                  fontSize: 34,
+                  fontWeight: 900,
+                  color: heatmapSystemHeat.color,
+                  lineHeight: 1,
+                }}
+              >
+                {heatmapSystemHeat.label}
+              </div>
+            </div>
+          </div>
+
+          <div
+            style={{
+              position: "relative",
+              zIndex: 1,
+              display: "grid",
+              gridTemplateColumns: "repeat(6, minmax(140px, 1fr))",
+              gap: 18,
+            }}
+          >
+            {treasuryHeatmapItems.map((heat) => (
+              <div
+                key={heat.month}
+                style={{
+                  borderRadius: 26,
+                  padding: "22px 18px",
+                  background: heat.bg,
+                  border: `1px solid ${heat.border}`,
+                  minHeight: 180,
+                  boxShadow:
+                    "0 18px 42px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.62)",
+                  backdropFilter: "blur(14px)",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 900,
+                    letterSpacing: "0.08em",
+                    color: "#64748b",
+                    marginBottom: 18,
+                  }}
+                >
+                  {heat.month}
+                </div>
+
+                <div
+                  style={{
+                    fontSize: 28,
+                    fontWeight: 900,
+                    color: heat.color,
+                    marginBottom: 14,
+                    lineHeight: 1,
+                  }}
+                >
+                  {heat.status}
+                </div>
+
+                <div
+                  style={{
+                    fontSize: 18,
+                    fontWeight: 800,
+                    color: "#0f172a",
+                    marginBottom: 12,
+                  }}
+                >
+                  {formatMoney(heat.amount, currency)}
+                </div>
+
+                <div
+                  style={{
+                    fontSize: 13,
+                    lineHeight: 1.6,
+                    color: "#64748b",
+                  }}
+                >
+                  {heat.note}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <div
         className="dashboard-bottom-grid"
