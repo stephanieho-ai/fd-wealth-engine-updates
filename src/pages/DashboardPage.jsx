@@ -109,6 +109,128 @@ const treasuryRuntimeStyle = `
   transition: all 0.4s ease;
   transform-style: preserve-3d;
 }
+
+/* ========================================
+   V33.2-G18-C TREASURY LIVE MOTION ROUTING ENGINE
+======================================== */
+
+@keyframes treasuryRouteFlow {
+  0% { transform: translateX(-120%); opacity: 0; }
+  12% { opacity: 0.22; }
+  50% { opacity: 1; }
+  88% { opacity: 0.22; }
+  100% { transform: translateX(120%); opacity: 0; }
+}
+
+@keyframes treasuryRoutePulse {
+  0% { opacity: 0.38; transform: scaleY(0.96); }
+  50% { opacity: 1; transform: scaleY(1.06); }
+  100% { opacity: 0.38; transform: scaleY(0.96); }
+}
+
+@keyframes treasuryNodeGlow {
+  0% { box-shadow: 0 0 0 rgba(59,130,246,0.12); }
+  50% { box-shadow: 0 0 24px rgba(59,130,246,0.26); }
+  100% { box-shadow: 0 0 0 rgba(59,130,246,0.12); }
+}
+
+.treasury-route-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.treasury-route-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.treasury-route-line::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -40%;
+  width: 40%;
+  height: 100%;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,0.88),
+      rgba(59,130,246,0.52),
+      transparent
+    );
+  animation: treasuryRouteFlow 4.8s linear infinite;
+}
+
+.treasury-route-pulse {
+  animation: treasuryRoutePulse 3s ease-in-out infinite;
+}
+
+.treasury-live-node {
+  animation: treasuryNodeGlow 4s ease-in-out infinite;
+}
+
+/* ========================================
+   V33.2-G18-C LIVE PARTICLE INTELLIGENCE
+======================================== */
+
+@keyframes treasuryParticleTravel {
+  0% { transform: translateX(-30px) scale(0.72); opacity: 0; }
+  15% { opacity: 0.75; }
+  55% { opacity: 1; }
+  100% { transform: translateX(120px) scale(1.08); opacity: 0; }
+}
+
+@keyframes treasuryParticleFloat {
+  0% { transform: translateY(0px); opacity: 0.56; }
+  50% { transform: translateY(-5px); opacity: 1; }
+  100% { transform: translateY(0px); opacity: 0.56; }
+}
+
+@keyframes treasuryCongestionHeat {
+  0% { filter: saturate(1); box-shadow: 0 0 0 rgba(239,68,68,0); }
+  50% { filter: saturate(1.12); box-shadow: 0 0 28px rgba(239,68,68,0.16); }
+  100% { filter: saturate(1); box-shadow: 0 0 0 rgba(239,68,68,0); }
+}
+
+.treasury-particle-layer {
+  position: relative;
+  overflow: hidden;
+}
+
+.treasury-particle-layer::before,
+.treasury-particle-layer::after {
+  content: "";
+  position: absolute;
+  top: 48%;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(59,130,246,0.72);
+  box-shadow:
+    0 0 14px rgba(59,130,246,0.32),
+    36px -14px 0 rgba(124,58,237,0.45),
+    74px 10px 0 rgba(16,185,129,0.45);
+  pointer-events: none;
+  animation: treasuryParticleTravel 5.4s linear infinite;
+  z-index: 0;
+}
+
+.treasury-particle-layer::after {
+  top: 58%;
+  animation-delay: 1.7s;
+  opacity: 0.75;
+}
+
+.treasury-live-particle {
+  animation: treasuryParticleFloat 4.6s ease-in-out infinite;
+}
+
+.treasury-congestion-heat {
+  animation: treasuryCongestionHeat 3.8s ease-in-out infinite;
+}
+
 `;
 
 function toNumber(value) {
@@ -855,7 +977,7 @@ function TreasuryIntelligencePanel({
 
   return (
     <section
-      className="treasury-intelligence-panel treasury-intelligence-horizontal"
+      className="treasury-intelligence-panel treasury-intelligence-horizontal executive-float"
       style={{
         width: "100%",
         border: "1px solid rgba(148, 163, 184, 0.28)",
@@ -1215,7 +1337,7 @@ function TreasuryLiquidityFlowMatrix({
   return (
     <section
       id="liquidity-flow-matrix-section"
-      className="treasury-liquidity-flow-matrix"
+      className="treasury-liquidity-flow-matrix liquidity-flow-surface"
       style={{
         width: "100%",
         margin: "28px 0",
@@ -1903,7 +2025,7 @@ function TreasuryFlowDynamicsEngine({
   return (
     <section
       id="treasury-flow-dynamics-section"
-      className="treasury-flow-dynamics-engine"
+      className="treasury-flow-dynamics-engine liquidity-flow-surface treasury-route-container treasury-particle-layer"
       style={{
         width: "100%",
         margin: "28px 0",
@@ -1956,10 +2078,10 @@ function TreasuryFlowDynamicsEngine({
         >
           <div>
             <p className="eyebrow" style={{ margin: "0 0 8px" }}>
-              V33.2-G18-B Treasury Flow Dynamics Engine
+              V33.2-G18-C Treasury Live Motion Intelligence
             </p>
             <h2 style={{ margin: 0, fontSize: 34, lineHeight: 1.05 }}>
-              Treasury Flow Dynamics Engine
+              Treasury Live Motion Intelligence Engine
             </h2>
             <p className="muted" style={{ marginTop: 10, maxWidth: 820 }}>
               Executive motion layer for animated treasury flow, liquidity
@@ -1969,7 +2091,7 @@ function TreasuryFlowDynamicsEngine({
           </div>
 
           <div
-            className="flow-pulse"
+            className={`flow-pulse treasury-route-pulse ${pressureScore >= 42 ? "treasury-congestion-heat" : ""}`}
             style={{
               borderRadius: 26,
               padding: "18px 18px",
@@ -2100,6 +2222,7 @@ function TreasuryFlowDynamicsEngine({
           </div>
 
           <div
+            className="treasury-particle-layer"
             style={{
               position: "relative",
               display: "grid",
@@ -2124,7 +2247,7 @@ function TreasuryFlowDynamicsEngine({
               }}
             >
               <div
-                className="flow-stream"
+                className="flow-stream treasury-route-line"
                 style={{
                   width: "34%",
                   height: "100%",
@@ -2139,7 +2262,7 @@ function TreasuryFlowDynamicsEngine({
             {movementNodes.map((node, index) => (
               <div
                 key={node.label}
-                className="flow-node"
+                className="flow-node treasury-live-node"
                 style={{
                   position: "relative",
                   zIndex: 1,
@@ -2153,6 +2276,7 @@ function TreasuryFlowDynamicsEngine({
                 }}
               >
                 <span
+                  className="treasury-live-particle"
                   style={{
                     display: "inline-flex",
                     width: 12,
@@ -2215,6 +2339,7 @@ function TreasuryFlowDynamicsEngine({
               {visibleBottlenecks.map((item) => (
                 <div
                   key={item.label}
+                  className={item.severity === "STABLE" ? "treasury-live-particle" : "treasury-congestion-heat"}
                   style={{
                     display: "grid",
                     gridTemplateColumns: "minmax(0, 1fr) auto",
@@ -3196,7 +3321,7 @@ export default function DashboardPage({
       {treasuryToast && <div className="treasury-toast">{treasuryToast}</div>}
 
       <section
-        className="dashboard-hero treasury-monitoring-wall treasury-runtime-shell"
+        className="dashboard-hero treasury-monitoring-wall treasury-runtime-shell treasury-motion-panel"
         style={{
           display: "block",
           position: "relative",
@@ -3687,9 +3812,11 @@ export default function DashboardPage({
         </section>
       )}
 
-      <SummaryGrid items={summaryItems} />
+      <div className="liquidity-flow-surface">
+        <SummaryGrid items={summaryItems} />
+      </div>
 
-      <div id="capital-engine-section">
+      <div id="capital-engine-section" className="treasury-motion-panel">
         <CapitalPanel
           currency={currency}
           reserveAmount={reserveAmount}
@@ -3770,7 +3897,7 @@ export default function DashboardPage({
       />
 
       <section
-  className="treasury-operations-workspace"
+  className="treasury-operations-workspace executive-float"
   style={{
     width: "100%",
     marginTop: 36,
@@ -3869,7 +3996,7 @@ export default function DashboardPage({
   </div>
 
   <div
-    className="dashboard-console-grid"
+    className="dashboard-console-grid liquidity-flow-surface"
       style={{
         display: "grid",
         gridTemplateColumns: "1.1fr 1.1fr 0.92fr 0.92fr",
@@ -3879,22 +4006,24 @@ export default function DashboardPage({
         width: "100%",
       }}
     >
-      <AdvisorPanel
-        currency={currency}
-        targetMonth={nextTargetMonth?.month || "-"}
-        weakMonth={weakestMonth?.month || "-"}
-        deployable={totalDeployableWithUpcoming}
-        bestOffer={bestOffer}
-      />
+      <div className="executive-float">
+        <AdvisorPanel
+          currency={currency}
+          targetMonth={nextTargetMonth?.month || "-"}
+          weakMonth={weakestMonth?.month || "-"}
+          deployable={totalDeployableWithUpcoming}
+          bestOffer={bestOffer}
+        />
+      </div>
 
-      <div id="maturity-command-section">
+      <div id="maturity-command-section" className="executive-float">
         <MaturityAlerts
           records={safeRecords}
           currency={currency}
         />
       </div>
 
-      <div id="execution-section">
+      <div id="execution-section" className={treasuryPolicyDecision.blocked ? "treasury-pressure-live" : "executive-float"}>
         <ExecutionPanel
           currency={currency}
           upcomingMaturityAmount={upcomingMaturityAmount}
@@ -3905,13 +4034,15 @@ export default function DashboardPage({
         />
       </div>
 
-      <AuditTrail />
+      <div className="executive-float">
+        <AuditTrail />
+      </div>
     </div>
   </section>
 
 
       <section
-        className="dashboard-section treasury-heatmap-engine"
+        className="dashboard-section treasury-heatmap-engine liquidity-flow-surface"
         style={{
           marginTop: 40,
           width: "100%",
@@ -4131,6 +4262,7 @@ export default function DashboardPage({
 
         <div
           id="policy-breach-section"
+          className={treasuryPolicyDecision.blocked ? "treasury-pressure-live" : "executive-float"}
           style={{
             width: "100%",
             maxWidth: "100%",

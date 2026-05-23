@@ -1,0 +1,252 @@
+/* ========================================
+   TREASURY LIVE MOTION ENGINE
+   V33.2-G18-C
+======================================== */
+
+:root {
+  --motion-fast: 180ms;
+  --motion-normal: 320ms;
+  --motion-slow: 620ms;
+
+  --treasury-pulse-opacity: 0.92;
+  --treasury-flow-distance: 12px;
+
+  --motion-glow-soft: 0 0 20px rgba(59, 130, 246, 0.12);
+  --motion-glow-strong: 0 0 40px rgba(59, 130, 246, 0.22);
+}
+
+/* ========================================
+   CORE MOTION
+======================================== */
+
+@keyframes treasuryPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.92;
+  }
+
+  50% {
+    transform: scale(1.012);
+    opacity: 1;
+  }
+}
+
+@keyframes liquidityFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes pressurePulse {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(239, 68, 68, 0);
+  }
+
+  50% {
+    box-shadow: 0 0 24px rgba(239, 68, 68, 0.18);
+  }
+}
+
+@keyframes executiveFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+/* ========================================
+   BASE MOTION CLASSES
+======================================== */
+
+.treasury-motion-panel {
+  animation: treasuryPulse 6s ease-in-out infinite;
+}
+
+.liquidity-flow-surface {
+  background-size: 200% 200%;
+  animation: liquidityFlow 10s linear infinite;
+}
+
+.treasury-pressure-live {
+  animation: pressurePulse 3s ease-in-out infinite;
+}
+
+.executive-float {
+  animation: executiveFloat 5s ease-in-out infinite;
+}
+
+/* ========================================
+   LIVE MOTION ROUTING ENGINE
+======================================== */
+
+@keyframes treasuryRouteFlow {
+  0% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+
+  12% {
+    opacity: 0.22;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  88% {
+    opacity: 0.22;
+  }
+
+  100% {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+}
+
+@keyframes treasuryRoutePulse {
+  0%, 100% {
+    opacity: 0.38;
+    transform: scaleY(0.96);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scaleY(1.06);
+  }
+}
+
+@keyframes treasuryNodeGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(59, 130, 246, 0.12);
+  }
+
+  50% {
+    box-shadow: 0 0 24px rgba(59, 130, 246, 0.26);
+  }
+}
+
+.treasury-route-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.treasury-route-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.treasury-route-line::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -40%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.88),
+    rgba(59, 130, 246, 0.52),
+    transparent
+  );
+  animation: treasuryRouteFlow 4.8s linear infinite;
+}
+
+.treasury-route-pulse {
+  animation: treasuryRoutePulse 3s ease-in-out infinite;
+}
+
+.treasury-live-node {
+  animation: treasuryNodeGlow 4s ease-in-out infinite;
+}
+
+/* ========================================
+   LIVE PARTICLE INTELLIGENCE
+======================================== */
+
+@keyframes treasuryParticleTravel {
+  0% {
+    transform: translateX(-30px) scale(0.72);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 0.75;
+  }
+
+  55% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(120px) scale(1.08);
+    opacity: 0;
+  }
+}
+
+@keyframes treasuryParticleFloat {
+  0%, 100% {
+    transform: translateY(0px);
+    opacity: 0.56;
+  }
+
+  50% {
+    transform: translateY(-5px);
+    opacity: 1;
+  }
+}
+
+@keyframes treasuryCongestionHeat {
+  0%, 100% {
+    filter: saturate(1);
+    box-shadow: 0 0 0 rgba(239, 68, 68, 0);
+  }
+
+  50% {
+    filter: saturate(1.12);
+    box-shadow: 0 0 28px rgba(239, 68, 68, 0.16);
+  }
+}
+
+.treasury-particle-layer {
+  position: relative;
+  overflow: hidden;
+}
+
+.treasury-particle-layer::before,
+.treasury-particle-layer::after {
+  content: "";
+  position: absolute;
+  top: 48%;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.72);
+  box-shadow:
+    0 0 14px rgba(59, 130, 246, 0.32),
+    36px -14px 0 rgba(124, 58, 237, 0.45),
+    74px 10px 0 rgba(16, 185, 129, 0.45);
+  pointer-events: none;
+  animation: treasuryParticleTravel 5.4s linear infinite;
+}
+
+.treasury-particle-layer::after {
+  top: 58%;
+  animation-delay: 1.7s;
+  opacity: 0.75;
+}
+
+.treasury-live-particle {
+  animation: treasuryParticleFloat 4.6s ease-in-out infinite;
+}
+
+.treasury-congestion-heat {
+  animation: treasuryCongestionHeat 3.8s ease-in-out infinite;
+}
