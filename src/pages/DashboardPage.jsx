@@ -1011,6 +1011,578 @@ function TreasuryIntelligencePanel({
 }
 
 
+function TreasuryLiquidityFlowMatrix({
+  currency,
+  formatMoney,
+  totalSavings,
+  totalParkingCash,
+  totalFixedDeposits,
+  totalDeployableFunds,
+  totalDeployableWithUpcoming,
+  reserveAmount,
+  idleCash,
+  upcomingMaturityAmount,
+  liquidityRatio,
+  fdExposureRatio,
+  maturityMonths,
+  bestOffer,
+  treasuryPolicyDecision,
+}) {
+  const reserveGap = Math.max(reserveAmount - totalDeployableFunds, 0);
+  const reserveCoverage = reserveAmount
+    ? Math.min((totalDeployableFunds / Math.max(reserveAmount, 1)) * 100, 999)
+    : 100;
+
+  const suggestedPlacement = Math.max(idleCash, 0);
+  const protectedReserve = Math.min(totalDeployableFunds, reserveAmount);
+  const riskBuffer = Math.max(totalDeployableWithUpcoming - reserveAmount, 0);
+
+  const flowPressure =
+    treasuryPolicyDecision?.blocked || liquidityRatio < 0.08
+      ? "HIGH PRESSURE"
+      : liquidityRatio < 0.15 || fdExposureRatio > 0.9
+      ? "WATCH FLOW"
+      : "BALANCED FLOW";
+
+  const flowTone =
+    flowPressure === "HIGH PRESSURE"
+      ? {
+          color: "#b91c1c",
+          background: "linear-gradient(135deg, #fff1f2, #ffe4e6)",
+          border: "rgba(239,68,68,0.24)",
+          glow: "rgba(239,68,68,0.12)",
+        }
+      : flowPressure === "WATCH FLOW"
+      ? {
+          color: "#b45309",
+          background: "linear-gradient(135deg, #fffbeb, #fef3c7)",
+          border: "rgba(245,158,11,0.26)",
+          glow: "rgba(245,158,11,0.12)",
+        }
+      : {
+          color: "#047857",
+          background: "linear-gradient(135deg, #ecfdf5, #d1fae5)",
+          border: "rgba(16,185,129,0.24)",
+          glow: "rgba(16,185,129,0.12)",
+        };
+
+  const sourceFlows = [
+    {
+      label: "Savings Source",
+      value: totalSavings,
+      note: "Primary liquid capital",
+      accent: "#2563eb",
+      bg: "linear-gradient(135deg, #eff6ff, #dbeafe)",
+    },
+    {
+      label: "Parking Cash",
+      value: totalParkingCash,
+      note: "Short-term waiting capital",
+      accent: "#7c3aed",
+      bg: "linear-gradient(135deg, #faf5ff, #ede9fe)",
+    },
+    {
+      label: "Upcoming FD Recovery",
+      value: upcomingMaturityAmount,
+      note: "30-day maturity inflow",
+      accent: "#16a34a",
+      bg: "linear-gradient(135deg, #f0fdf4, #dcfce7)",
+    },
+    {
+      label: "Locked FD Capital",
+      value: totalFixedDeposits,
+      note: "Yield capital currently locked",
+      accent: "#f59e0b",
+      bg: "linear-gradient(135deg, #fffbeb, #fef3c7)",
+    },
+  ];
+
+  const destinationFlows = [
+    {
+      label: "Reserve Protection",
+      value: protectedReserve,
+      note:
+        reserveGap > 0
+          ? `${formatMoney(reserveGap, currency)} shortfall`
+          : "Reserve currently covered",
+      accent: reserveGap > 0 ? "#dc2626" : "#16a34a",
+      bg:
+        reserveGap > 0
+          ? "linear-gradient(135deg, #fff1f2, #ffe4e6)"
+          : "linear-gradient(135deg, #ecfdf5, #d1fae5)",
+    },
+    {
+      label: "Deployable Route",
+      value: suggestedPlacement,
+      note:
+        suggestedPlacement > 0
+          ? "Available for suggested placement"
+          : "No excess idle cash route",
+      accent: suggestedPlacement > 0 ? "#2563eb" : "#64748b",
+      bg: "linear-gradient(135deg, #eff6ff, #e0f2fe)",
+    },
+    {
+      label: "Suggested FD Placement",
+      value: suggestedPlacement,
+      note: bestOffer
+        ? `${bestOffer.bank || "Best offer"} · ${
+            bestOffer.tenureMonths || "-"
+          }M · ${toNumber(bestOffer.ratePa ?? bestOffer.rate ?? 0).toFixed(2)}%`
+        : "No active offer selected",
+      accent: "#7c3aed",
+      bg: "linear-gradient(135deg, #faf5ff, #eef2ff)",
+    },
+    {
+      label: "Risk Buffer",
+      value: riskBuffer,
+      note: "Liquidity after reserve + maturity support",
+      accent: riskBuffer > 0 ? "#0891b2" : "#dc2626",
+      bg:
+        riskBuffer > 0
+          ? "linear-gradient(135deg, #ecfeff, #cffafe)"
+          : "linear-gradient(135deg, #fff1f2, #ffe4e6)",
+    },
+  ];
+
+  const nextMaturityFlows = maturityMonths.slice(0, 4);
+
+  const flowNotes = [
+    reserveGap > 0
+      ? "Reserve drain detected. Treasury should restore reserve before aggressive deployment."
+      : "Reserve route is protected. Treasury may review deployment after policy checks.",
+    upcomingMaturityAmount > 0
+      ? "Upcoming FD maturity creates a recovery inflow and improves liquidity projection."
+      : "No near-term FD inflow detected. Liquidity depends mainly on Savings and Parking Cash.",
+    treasuryPolicyDecision?.blocked
+      ? "Policy engine is blocking deployment. Flow matrix recommends governance review."
+      : "Policy engine is not blocking current liquidity flow routing.",
+  ];
+
+  return (
+    <section
+      id="liquidity-flow-matrix-section"
+      className="treasury-liquidity-flow-matrix"
+      style={{
+        width: "100%",
+        margin: "28px 0",
+        padding: 30,
+        borderRadius: 34,
+        background:
+          "linear-gradient(135deg, rgba(255,255,255,0.98), rgba(240,249,255,0.94), rgba(238,242,255,0.90))",
+        border: "1px solid rgba(148, 163, 184, 0.22)",
+        boxShadow:
+          "0 30px 76px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255,255,255,0.78)",
+        overflow: "hidden",
+        position: "relative",
+      }}
+    >
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "radial-gradient(circle at 14% 12%, rgba(59,130,246,0.12), transparent 28%), radial-gradient(circle at 86% 18%, rgba(124,58,237,0.10), transparent 30%), radial-gradient(circle at 50% 100%, rgba(16,185,129,0.10), transparent 34%)",
+          pointerEvents: "none",
+          filter: "blur(10px)",
+        }}
+      />
+
+      <div style={{ position: "relative", zIndex: 1 }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "minmax(0, 1fr) 220px",
+            gap: 22,
+            alignItems: "start",
+            marginBottom: 24,
+          }}
+        >
+          <div>
+            <p className="eyebrow" style={{ margin: "0 0 8px" }}>
+              V33.2-G18 Treasury Liquidity Flow Matrix
+            </p>
+            <h2 style={{ margin: 0, fontSize: 34, lineHeight: 1.05 }}>
+              Liquidity Flow Matrix
+            </h2>
+            <p className="muted" style={{ marginTop: 10, maxWidth: 760 }}>
+              Institutional flow layer mapping capital sources, reserve routing,
+              deployable liquidity, upcoming recovery and FD lock-up pressure.
+            </p>
+          </div>
+
+          <div
+            style={{
+              borderRadius: 24,
+              padding: "18px 18px",
+              textAlign: "center",
+              background: flowTone.background,
+              border: `1px solid ${flowTone.border}`,
+              boxShadow: `0 18px 42px ${flowTone.glow}`,
+              color: flowTone.color,
+            }}
+          >
+            <div
+              style={{
+                fontSize: 11,
+                fontWeight: 800,
+                letterSpacing: "0.08em",
+                opacity: 0.75,
+              }}
+            >
+              FLOW STATUS
+            </div>
+            <strong
+              style={{
+                display: "block",
+                marginTop: 8,
+                fontSize: 25,
+                lineHeight: 1,
+              }}
+            >
+              {flowPressure}
+            </strong>
+            <div style={{ fontSize: 12, marginTop: 8 }}>
+              Reserve {reserveCoverage.toFixed(0)}%
+            </div>
+          </div>
+        </div>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "minmax(0, 1fr) 74px minmax(0, 1fr)",
+            gap: 18,
+            alignItems: "stretch",
+          }}
+        >
+          <div
+            style={{
+              borderRadius: 26,
+              padding: 20,
+              background: "rgba(255,255,255,0.72)",
+              border: "1px solid rgba(148,163,184,0.18)",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.72)",
+            }}
+          >
+            <div
+              style={{
+                fontSize: 12,
+                fontWeight: 900,
+                letterSpacing: "0.08em",
+                color: "#475569",
+                marginBottom: 14,
+              }}
+            >
+              CAPITAL SOURCES
+            </div>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+                gap: 12,
+              }}
+            >
+              {sourceFlows.map((item) => (
+                <div
+                  key={item.label}
+                  style={{
+                    borderRadius: 20,
+                    padding: 16,
+                    background: item.bg,
+                    border: "1px solid rgba(148,163,184,0.18)",
+                    minHeight: 118,
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                      marginBottom: 10,
+                    }}
+                  >
+                    <span
+                      style={{
+                        width: 9,
+                        height: 9,
+                        borderRadius: 999,
+                        background: item.accent,
+                        boxShadow: `0 0 14px ${item.accent}66`,
+                      }}
+                    />
+                    <span
+                      style={{
+                        fontSize: 11,
+                        fontWeight: 800,
+                        letterSpacing: "0.05em",
+                        color: "#64748b",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {item.label}
+                    </span>
+                  </div>
+
+                  <strong
+                    style={{
+                      display: "block",
+                      fontSize: 25,
+                      lineHeight: 1,
+                      color: "#0f172a",
+                    }}
+                  >
+                    {formatMoney(item.value, currency)}
+                  </strong>
+
+                  <p className="muted" style={{ margin: "9px 0 0", fontSize: 12 }}>
+                    {item.note}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div
+            style={{
+              borderRadius: 999,
+              background:
+                "linear-gradient(180deg, rgba(59,130,246,0.14), rgba(124,58,237,0.14), rgba(16,185,129,0.14))",
+              border: "1px solid rgba(148,163,184,0.16)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.72)",
+              minHeight: 260,
+            }}
+          >
+            <div
+              style={{
+                width: 42,
+                height: 42,
+                borderRadius: "50%",
+                background: "rgba(255,255,255,0.9)",
+                border: "1px solid rgba(59,130,246,0.22)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#2563eb",
+                fontWeight: 900,
+                boxShadow: "0 12px 28px rgba(37,99,235,0.14)",
+              }}
+            >
+              →
+            </div>
+          </div>
+
+          <div
+            style={{
+              borderRadius: 26,
+              padding: 20,
+              background: "rgba(255,255,255,0.72)",
+              border: "1px solid rgba(148,163,184,0.18)",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.72)",
+            }}
+          >
+            <div
+              style={{
+                fontSize: 12,
+                fontWeight: 900,
+                letterSpacing: "0.08em",
+                color: "#475569",
+                marginBottom: 14,
+              }}
+            >
+              TREASURY DESTINATIONS
+            </div>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+                gap: 12,
+              }}
+            >
+              {destinationFlows.map((item) => (
+                <div
+                  key={item.label}
+                  style={{
+                    borderRadius: 20,
+                    padding: 16,
+                    background: item.bg,
+                    border: "1px solid rgba(148,163,184,0.18)",
+                    minHeight: 118,
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                      marginBottom: 10,
+                    }}
+                  >
+                    <span
+                      style={{
+                        width: 9,
+                        height: 9,
+                        borderRadius: 999,
+                        background: item.accent,
+                        boxShadow: `0 0 14px ${item.accent}66`,
+                      }}
+                    />
+                    <span
+                      style={{
+                        fontSize: 11,
+                        fontWeight: 800,
+                        letterSpacing: "0.05em",
+                        color: "#64748b",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {item.label}
+                    </span>
+                  </div>
+
+                  <strong
+                    style={{
+                      display: "block",
+                      fontSize: 25,
+                      lineHeight: 1,
+                      color: "#0f172a",
+                    }}
+                  >
+                    {formatMoney(item.value, currency)}
+                  </strong>
+
+                  <p className="muted" style={{ margin: "9px 0 0", fontSize: 12 }}>
+                    {item.note}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1.05fr 0.95fr",
+            gap: 16,
+            marginTop: 16,
+          }}
+        >
+          <div
+            style={{
+              borderRadius: 24,
+              padding: 18,
+              background: "linear-gradient(135deg, #f8fafc, #eef2ff)",
+              border: "1px solid rgba(99,102,241,0.18)",
+            }}
+          >
+            <strong style={{ display: "block", marginBottom: 12 }}>
+              Flow Governance Notes
+            </strong>
+            <div style={{ display: "grid", gap: 9 }}>
+              {flowNotes.map((note, index) => (
+                <div
+                  key={`${note}-${index}`}
+                  style={{
+                    borderRadius: 16,
+                    padding: "10px 12px",
+                    background: "rgba(255,255,255,0.72)",
+                    border: "1px solid rgba(148,163,184,0.16)",
+                    fontSize: 13,
+                    color: "#475569",
+                    lineHeight: 1.45,
+                  }}
+                >
+                  {note}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div
+            style={{
+              borderRadius: 24,
+              padding: 18,
+              background: "linear-gradient(135deg, #ecfeff, #eff6ff)",
+              border: "1px solid rgba(6,182,212,0.18)",
+            }}
+          >
+            <strong style={{ display: "block", marginBottom: 12 }}>
+              Upcoming Recovery Flow
+            </strong>
+
+            {nextMaturityFlows.length > 0 ? (
+              <div style={{ display: "grid", gap: 8 }}>
+                {nextMaturityFlows.map((item) => (
+                  <div
+                    key={item.month}
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "90px minmax(0, 1fr)",
+                      alignItems: "center",
+                      gap: 10,
+                      borderRadius: 16,
+                      padding: "10px 12px",
+                      background: "rgba(255,255,255,0.76)",
+                      border: "1px solid rgba(148,163,184,0.16)",
+                    }}
+                  >
+                    <strong style={{ color: "#0f172a", fontSize: 13 }}>
+                      {item.month}
+                    </strong>
+                    <div>
+                      <div
+                        style={{
+                          height: 8,
+                          borderRadius: 999,
+                          background: "rgba(148,163,184,0.20)",
+                          overflow: "hidden",
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: `${Math.min(
+                              (toNumber(item.amount) /
+                                Math.max(totalFixedDeposits, 1)) *
+                                100 *
+                                3,
+                              100
+                            )}%`,
+                            height: "100%",
+                            borderRadius: 999,
+                            background:
+                              "linear-gradient(90deg, #2563eb, #7c3aed, #16a34a)",
+                          }}
+                        />
+                      </div>
+                      <div
+                        className="muted"
+                        style={{ fontSize: 12, marginTop: 5 }}
+                      >
+                        {formatMoney(item.amount, currency)}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="muted" style={{ margin: 0 }}>
+                No FD maturity flow available yet. Add FD maturity dates to
+                activate recovery flow mapping.
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
 export default function DashboardPage({
   records = [],
   offers = [],
@@ -2311,6 +2883,24 @@ export default function DashboardPage({
         largestBankExposure={largestBankExposure}
         weakestMonth={weakestMonth}
         strongestMonth={strongestMonth}
+        treasuryPolicyDecision={treasuryPolicyDecision}
+      />
+
+      <TreasuryLiquidityFlowMatrix
+        currency={currency}
+        formatMoney={formatMoney}
+        totalSavings={totalSavings}
+        totalParkingCash={totalParkingCash}
+        totalFixedDeposits={totalFixedDeposits}
+        totalDeployableFunds={totalDeployableFunds}
+        totalDeployableWithUpcoming={totalDeployableWithUpcoming}
+        reserveAmount={reserveAmount}
+        idleCash={idleCash}
+        upcomingMaturityAmount={upcomingMaturityAmount}
+        liquidityRatio={liquidityRatio}
+        fdExposureRatio={fdExposureRatio}
+        maturityMonths={maturityMonths}
+        bestOffer={bestOffer}
         treasuryPolicyDecision={treasuryPolicyDecision}
       />
 
