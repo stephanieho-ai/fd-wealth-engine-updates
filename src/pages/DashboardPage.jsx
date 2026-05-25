@@ -22,6 +22,7 @@ import TreasuryResolutionIntelligence from "../components/treasury/TreasuryResol
 import TreasuryOverrideControl from "../components/treasury/TreasuryOverrideControl";
 import TreasuryAuthorityChain from "../components/treasury/TreasuryAuthorityChain";
 
+
 const treasuryRuntimeStyle = `
 @keyframes treasuryPulse {
   0% { transform: scale(1); opacity: 0.85; box-shadow: 0 0 0 rgba(239, 68, 68, 0.22); }
@@ -3956,7 +3957,6 @@ export default function DashboardPage({
 
       <TreasuryAuthorityChain />
 
-      <TreasuryAuthorityTransmission />
 
       <section
   className="treasury-operations-workspace executive-float"
