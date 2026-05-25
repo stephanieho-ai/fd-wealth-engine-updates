@@ -1,0 +1,311 @@
+/* ========================================
+   TREASURY AUTHORITY CHAIN
+   V33.2-G18-G STABLE
+======================================== */
+
+.authority-chain-card {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ========================================
+   GRID
+======================================== */
+
+.authority-chain-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 26px;
+  position: relative;
+}
+
+/* ========================================
+   NODE
+======================================== */
+
+.authority-chain-node {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  min-height: 230px;
+
+  padding: 22px;
+
+  border-radius: 26px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.88),
+      rgba(248,250,252,0.82)
+    );
+
+  border:
+    1px solid rgba(148,163,184,0.14);
+
+  backdrop-filter: blur(18px);
+
+  overflow: hidden;
+
+  transition:
+    transform 240ms ease,
+    box-shadow 240ms ease,
+    border-color 240ms ease;
+
+  box-shadow:
+    0 12px 40px rgba(15,23,42,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.72);
+}
+
+.authority-chain-node:hover {
+  transform: translateY(-4px);
+
+  border-color:
+    rgba(59,130,246,0.22);
+
+  box-shadow:
+    0 18px 50px rgba(59,130,246,0.10),
+    0 10px 24px rgba(15,23,42,0.08);
+}
+
+/* ========================================
+   TOP
+======================================== */
+
+.authority-chain-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 18px;
+}
+
+/* ========================================
+   LEVEL
+======================================== */
+
+.authority-chain-level {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 999px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(59,130,246,0.22),
+      rgba(37,99,235,0.12)
+    );
+
+  color: #2563eb;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  border:
+    1px solid rgba(59,130,246,0.18);
+
+  box-shadow:
+    0 6px 16px rgba(59,130,246,0.12);
+}
+
+/* ========================================
+   STATUS
+======================================== */
+
+.authority-chain-status {
+  padding: 7px 12px;
+
+  border-radius: 999px;
+
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  background:
+    rgba(59,130,246,0.10);
+
+  color: #2563eb;
+
+  border:
+    1px solid rgba(59,130,246,0.10);
+}
+
+/* ========================================
+   TITLES
+======================================== */
+
+.authority-chain-node h3 {
+  margin: 0 0 14px;
+
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+
+  color: #0f172a;
+}
+
+/* ========================================
+   TEXT
+======================================== */
+
+.authority-chain-node p {
+  margin: 0;
+
+  font-size: 13px;
+  line-height: 1.8;
+
+  color: #64748b;
+}
+
+/* ========================================
+   CONNECTION LINE
+======================================== */
+
+.authority-chain-line {
+  position: absolute;
+
+  top: 50%;
+  right: -24px;
+
+  width: 48px;
+  height: 2px;
+
+  transform: translateY(-50%);
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(59,130,246,0.45),
+      rgba(59,130,246,0)
+    );
+
+  z-index: 2;
+}
+
+.authority-chain-node:last-child .authority-chain-line {
+  display: none;
+}
+
+/* ========================================
+   CARD WRAPPER
+======================================== */
+
+.treasury-escalation-card {
+  margin-top: 28px;
+
+  padding: 26px 30px 30px;
+
+  border-radius: 34px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.96),
+      rgba(239,246,255,0.94),
+      rgba(238,242,255,0.92)
+    );
+
+  border:
+    1px solid rgba(148,163,184,0.16);
+
+  backdrop-filter: blur(22px);
+
+  box-shadow:
+    0 24px 60px rgba(15,23,42,0.08);
+}
+
+/* ========================================
+   HEADER
+======================================== */
+
+.treasury-escalation-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 24px;
+}
+
+.treasury-eyebrow {
+  margin: 0 0 8px;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+
+  color: rgba(59,130,246,0.78);
+}
+
+.treasury-section-title {
+  margin: 0;
+
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+
+  color: #0f172a;
+}
+
+/* ========================================
+   STATUS PILL
+======================================== */
+
+.treasury-status-pill {
+  padding: 10px 16px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.treasury-status-pill-red {
+  background:
+    rgba(239,68,68,0.12);
+
+  color: #dc2626;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 1400px) {
+  .authority-chain-grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 980px) {
+  .authority-chain-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .authority-chain-line {
+    display: none;
+  }
+
+  .treasury-escalation-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

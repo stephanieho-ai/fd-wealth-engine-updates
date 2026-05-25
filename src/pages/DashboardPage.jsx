@@ -21,6 +21,8 @@ import TreasuryResolutionProtocol from "../components/treasury/TreasuryResolutio
 import TreasuryResolutionIntelligence from "../components/treasury/TreasuryResolutionIntelligence";
 import TreasuryOverrideControl from "../components/treasury/TreasuryOverrideControl";
 import TreasuryAuthorityChain from "../components/treasury/TreasuryAuthorityChain";
+import TreasuryAuthorityTransmission from "../components/treasury/TreasuryAuthorityTransmission";
+import TreasuryAuthorityNetwork from "../components/treasury/TreasuryAuthorityNetwork";
 
 
 const treasuryRuntimeStyle = `
@@ -3956,6 +3958,10 @@ export default function DashboardPage({
       />
 
       <TreasuryAuthorityChain />
+
+      <TreasuryAuthorityTransmission />
+
+      <TreasuryAuthorityNetwork />
 
 
       <section
