@@ -1,32 +1,18 @@
 /* ========================================
    TREASURY RISK CLUSTER INTELLIGENCE
-   V33.2-G18-E
+   V33.2-G18-F
 ======================================== */
 
 :root {
-  --risk-red:
-    rgba(239, 68, 68, 0.22);
+  --risk-red: rgba(239, 68, 68, 0.22);
+  --risk-orange: rgba(249, 115, 22, 0.22);
+  --risk-yellow: rgba(250, 204, 21, 0.16);
+  --risk-blue: rgba(59, 130, 246, 0.18);
+  --risk-purple: rgba(168, 85, 247, 0.18);
 
-  --risk-orange:
-    rgba(249, 115, 22, 0.22);
-
-  --risk-yellow:
-    rgba(250, 204, 21, 0.16);
-
-  --risk-blue:
-    rgba(59, 130, 246, 0.18);
-
-  --risk-purple:
-    rgba(168, 85, 247, 0.18);
-
-  --threat-glow:
-    0 0 40px rgba(239, 68, 68, 0.18);
-
-  --escalation-glow:
-    0 0 48px rgba(249, 115, 22, 0.2);
-
-  --cluster-glow:
-    0 0 60px rgba(59, 130, 246, 0.12);
+  --threat-glow: 0 0 40px rgba(239, 68, 68, 0.18);
+  --escalation-glow: 0 0 48px rgba(249, 115, 22, 0.2);
+  --cluster-glow: 0 0 60px rgba(59, 130, 246, 0.12);
 }
 
 /* ========================================
@@ -36,60 +22,32 @@
 .risk-cluster-panel {
   position: relative;
   overflow: hidden;
-
   border-radius: 32px;
 
   background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,0.95),
-      rgba(248,250,252,0.92)
-    );
+    linear-gradient(135deg, rgba(255,255,255,0.95), rgba(248,250,252,0.92));
 
-  border:
-    1px solid rgba(148,163,184,0.16);
-
+  border: 1px solid rgba(148,163,184,0.16);
   backdrop-filter: blur(18px);
 
-  box-shadow:
-    0 18px 60px rgba(15,23,42,0.08);
-
+  box-shadow: 0 18px 60px rgba(15,23,42,0.08);
   isolation: isolate;
 }
 
-/* ========================================
-   CLUSTER GLOW
-======================================== */
-
 .risk-cluster-panel::before {
   content: "";
-
   position: absolute;
   inset: -120px;
 
   background:
-    radial-gradient(
-      circle at top right,
-      rgba(239,68,68,0.14),
-      transparent 45%
-    ),
-    radial-gradient(
-      circle at bottom left,
-      rgba(249,115,22,0.12),
-      transparent 42%
-    );
+    radial-gradient(circle at top right, rgba(239,68,68,0.14), transparent 45%),
+    radial-gradient(circle at bottom left, rgba(249,115,22,0.12), transparent 42%);
 
   opacity: 0.8;
-
   z-index: 0;
 
-  animation:
-    treasuryThreatPulse 9s ease-in-out infinite;
+  animation: treasuryThreatPulse 9s ease-in-out infinite;
 }
-
-/* ========================================
-   THREAT PULSE
-======================================== */
 
 @keyframes treasuryThreatPulse {
   0% {
@@ -119,23 +77,15 @@
 
 .risk-escalation-wave::after {
   content: "";
-
   position: absolute;
-
   inset: 0;
 
   background:
-    linear-gradient(
-      120deg,
-      transparent,
-      rgba(255,255,255,0.2),
-      transparent
-    );
+    linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
 
   transform: translateX(-120%);
-
-  animation:
-    treasuryWaveMove 6s linear infinite;
+  animation: treasuryWaveMove 6s linear infinite;
+  pointer-events: none;
 }
 
 @keyframes treasuryWaveMove {
@@ -149,18 +99,15 @@
 ======================================== */
 
 .risk-critical {
-  box-shadow:
-    var(--threat-glow);
+  box-shadow: var(--threat-glow);
 }
 
 .risk-escalation {
-  box-shadow:
-    var(--escalation-glow);
+  box-shadow: var(--escalation-glow);
 }
 
 .risk-watch {
-  box-shadow:
-    var(--cluster-glow);
+  box-shadow: var(--cluster-glow);
 }
 
 /* ========================================
@@ -173,19 +120,13 @@
 
 .liquidity-shock::before {
   content: "";
-
   position: absolute;
   inset: -40%;
 
   background:
-    radial-gradient(
-      circle,
-      rgba(239,68,68,0.18),
-      transparent 60%
-    );
+    radial-gradient(circle, rgba(239,68,68,0.18), transparent 60%);
 
-  animation:
-    liquidityShockPulse 4s ease-in-out infinite;
+  animation: liquidityShockPulse 4s ease-in-out infinite;
 }
 
 @keyframes liquidityShockPulse {
@@ -215,18 +156,14 @@
 
 .treasury-density-radar::after {
   content: "";
-
   position: absolute;
-
   inset: -60px;
 
   border-radius: 50%;
+  border: 1px solid rgba(59,130,246,0.12);
 
-  border:
-    1px solid rgba(59,130,246,0.12);
-
-  animation:
-    treasuryRadarSpin 18s linear infinite;
+  animation: treasuryRadarSpin 18s linear infinite;
+  pointer-events: none;
 }
 
 @keyframes treasuryRadarSpin {
@@ -245,7 +182,6 @@
   gap: 8px;
 
   padding: 10px 16px;
-
   border-radius: 999px;
 
   font-size: 12px;
@@ -253,41 +189,24 @@
   letter-spacing: 0.08em;
 
   backdrop-filter: blur(10px);
-
-  border:
-    1px solid rgba(255,255,255,0.3);
+  border: 1px solid rgba(255,255,255,0.3);
 }
 
 .threat-badge.critical {
   background:
-    linear-gradient(
-      135deg,
-      rgba(254,226,226,0.92),
-      rgba(254,202,202,0.82)
-    );
-
+    linear-gradient(135deg, rgba(254,226,226,0.92), rgba(254,202,202,0.82));
   color: #b91c1c;
 }
 
 .threat-badge.escalation {
   background:
-    linear-gradient(
-      135deg,
-      rgba(255,237,213,0.92),
-      rgba(254,215,170,0.82)
-    );
-
+    linear-gradient(135deg, rgba(255,237,213,0.92), rgba(254,215,170,0.82));
   color: #c2410c;
 }
 
 .threat-badge.watch {
   background:
-    linear-gradient(
-      135deg,
-      rgba(219,234,254,0.92),
-      rgba(191,219,254,0.82)
-    );
-
+    linear-gradient(135deg, rgba(219,234,254,0.92), rgba(191,219,254,0.82));
   color: #2563eb;
 }
 
@@ -296,8 +215,7 @@
 ======================================== */
 
 .risk-cluster-panel:hover {
-  transform:
-    translateY(-2px);
+  transform: translateY(-2px);
 
   transition:
     transform 0.35s ease,
@@ -306,17 +224,14 @@
 
 /* ========================================
    MULTI-ZONE THREAT RADAR
-   V33.2-G18-E
 ======================================== */
 
 .risk-danger {
-  box-shadow:
-    0 0 60px rgba(239,68,68,0.24);
+  box-shadow: 0 0 60px rgba(239,68,68,0.24);
 }
 
 .risk-warning {
-  box-shadow:
-    0 0 45px rgba(249,115,22,0.18);
+  box-shadow: 0 0 45px rgba(249,115,22,0.18);
 }
 
 .treasury-flow-cluster {
@@ -326,31 +241,23 @@
 
 .treasury-flow-cluster::before {
   content: "";
-
   position: absolute;
   inset: -30%;
 
   background:
-    linear-gradient(
-      120deg,
-      transparent,
-      rgba(59,130,246,0.08),
-      transparent
-    );
+    linear-gradient(120deg, transparent, rgba(59,130,246,0.08), transparent);
 
-  animation:
-    treasuryFlowSweep 8s linear infinite;
+  animation: treasuryFlowSweep 8s linear infinite;
+  pointer-events: none;
 }
 
 @keyframes treasuryFlowSweep {
   0% {
-    transform:
-      translateX(-120%);
+    transform: translateX(-120%);
   }
 
   100% {
-    transform:
-      translateX(120%);
+    transform: translateX(120%);
   }
 }
 
@@ -364,21 +271,16 @@
 
 .treasury-alert-pulse::after {
   content: "";
-
   position: absolute;
   inset: -40px;
 
   border-radius: 40px;
 
   background:
-    radial-gradient(
-      circle at top right,
-      rgba(239,68,68,0.12),
-      transparent 60%
-    );
+    radial-gradient(circle at top right, rgba(239,68,68,0.12), transparent 60%);
 
-  animation:
-    treasuryAlertPulse 5s ease-in-out infinite;
+  animation: treasuryAlertPulse 5s ease-in-out infinite;
+  pointer-events: none;
 }
 
 @keyframes treasuryAlertPulse {
@@ -404,7 +306,6 @@
 
 .treasury-density-radar::before {
   content: "";
-
   position: absolute;
 
   width: 420px;
@@ -414,12 +315,10 @@
   right: -140px;
 
   border-radius: 50%;
+  border: 1px solid rgba(59,130,246,0.12);
 
-  border:
-    1px solid rgba(59,130,246,0.12);
-
-  animation:
-    treasuryRadarPulse 7s linear infinite;
+  animation: treasuryRadarPulse 7s linear infinite;
+  pointer-events: none;
 }
 
 @keyframes treasuryRadarPulse {
@@ -445,48 +344,33 @@
 
 .risk-critical::after {
   content: "";
-
   position: absolute;
   inset: 0;
 
   background:
-    linear-gradient(
-      135deg,
-      rgba(239,68,68,0.04),
-      transparent
-    );
+    linear-gradient(135deg, rgba(239,68,68,0.04), transparent);
 
   pointer-events: none;
 }
 
 .risk-escalation::after {
   content: "";
-
   position: absolute;
   inset: 0;
 
   background:
-    linear-gradient(
-      135deg,
-      rgba(249,115,22,0.04),
-      transparent
-    );
+    linear-gradient(135deg, rgba(249,115,22,0.04), transparent);
 
   pointer-events: none;
 }
 
 .risk-watch::after {
   content: "";
-
   position: absolute;
   inset: 0;
 
   background:
-    linear-gradient(
-      135deg,
-      rgba(59,130,246,0.04),
-      transparent
-    );
+    linear-gradient(135deg, rgba(59,130,246,0.04), transparent);
 
   pointer-events: none;
 }
@@ -512,56 +396,38 @@
 
 .treasury-risk-cluster-mode {
   padding: 12px 18px;
-
   border-radius: 999px;
 
   background:
-    linear-gradient(
-      135deg,
-      rgba(239,68,68,0.14),
-      rgba(249,115,22,0.12)
-    );
+    linear-gradient(135deg, rgba(239,68,68,0.14), rgba(249,115,22,0.12));
 
-  border:
-    1px solid rgba(255,255,255,0.22);
+  border: 1px solid rgba(255,255,255,0.22);
 
   font-size: 12px;
   font-weight: 900;
   letter-spacing: 0.08em;
 
   color: #b91c1c;
-
   backdrop-filter: blur(12px);
 }
 
 .treasury-risk-cluster-grid {
   display: grid;
-
-  grid-template-columns:
-    repeat(auto-fit, minmax(220px, 1fr));
-
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
 }
 
 .treasury-risk-cluster-card {
   position: relative;
-
   overflow: hidden;
 
   padding: 24px;
-
   border-radius: 24px;
 
   background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,0.92),
-      rgba(248,250,252,0.82)
-    );
+    linear-gradient(180deg, rgba(255,255,255,0.92), rgba(248,250,252,0.82));
 
-  border:
-    1px solid rgba(148,163,184,0.16);
-
+  border: 1px solid rgba(148,163,184,0.16);
   backdrop-filter: blur(16px);
 
   transition:
@@ -570,19 +436,16 @@
 }
 
 .treasury-risk-cluster-card:hover {
-  transform:
-    translateY(-3px);
+  transform: translateY(-3px);
 }
 
 .treasury-risk-cluster-card span {
   display: block;
-
   margin-bottom: 12px;
 
   font-size: 11px;
   font-weight: 900;
   letter-spacing: 0.08em;
-
   text-transform: uppercase;
 
   color: #64748b;
@@ -590,7 +453,6 @@
 
 .treasury-risk-cluster-card strong {
   display: block;
-
   margin-bottom: 12px;
 
   font-size: 28px;
@@ -602,21 +464,237 @@
 .treasury-risk-cluster-card p {
   font-size: 13px;
   line-height: 1.6;
-
   color: #64748b;
 }
 
 .treasury-risk-cluster-card.critical {
-  box-shadow:
-    0 0 35px rgba(239,68,68,0.14);
+  box-shadow: 0 0 35px rgba(239,68,68,0.14);
 }
 
 .treasury-risk-cluster-card.warning {
-  box-shadow:
-    0 0 35px rgba(249,115,22,0.12);
+  box-shadow: 0 0 35px rgba(249,115,22,0.12);
 }
 
 .treasury-risk-cluster-card.watch {
-  box-shadow:
-    0 0 35px rgba(59,130,246,0.12);
+  box-shadow: 0 0 35px rgba(59,130,246,0.12);
+}
+
+/* ========================================
+   TREASURY ESCALATION WAVE ENGINE
+   V33.2-G18-F
+======================================== */
+
+.treasury-wave-engine {
+  position: relative;
+  overflow: hidden;
+}
+
+.treasury-wave-engine::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(circle at top right, rgba(255,80,80,0.10), transparent 40%),
+    radial-gradient(circle at bottom left, rgba(59,130,246,0.08), transparent 42%);
+
+  pointer-events: none;
+  z-index: 0;
+}
+
+.treasury-wave-engine::after {
+  content: "";
+  position: absolute;
+
+    top: 18%;
+    left: -35%;
+
+    width: 28%;
+    height: 95%;
+
+  background:
+    linear-gradient(
+      120deg,
+      transparent,
+      rgba(56,189,248,0.22),
+      rgba(255,255,255,0.42),
+      rgba(248,113,113,0.18),
+      transparent
+    );
+
+  transform: translateX(-120%) rotate(10deg);
+  animation: treasuryEscalationSweep 5.5s linear infinite;
+
+  pointer-events: none;
+  z-index: 1;
+}
+
+.treasury-wave-engine > * {
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes treasuryEscalationSweep {
+  0% {
+    transform: translateX(-140%) rotate(10deg);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 0.85;
+  }
+
+  85% {
+    opacity: 0.85;
+  }
+
+  100% {
+   transform: translateX(520%) rotate(10deg);
+    opacity: 0;
+  }
+}
+
+/* ========================================
+   ESCALATION PULSE RING
+======================================== */
+
+.treasury-wave-engine .treasury-risk-cluster-grid {
+  position: relative;
+  z-index: 2;
+}
+
+.treasury-wave-engine .treasury-risk-cluster-grid::before {
+  content: "";
+  position: absolute;
+
+  width: 520px;
+  height: 520px;
+
+  top: -240px;
+  right: -180px;
+
+  border-radius: 50%;
+  border: 1px solid rgba(255,120,120,0.12);
+
+  animation: treasuryEscalationPulse 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes treasuryEscalationPulse {
+  0% {
+    opacity: 0.12;
+    transform: scale(0.92);
+  }
+
+  50% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0.12;
+    transform: scale(1.08);
+  }
+}
+
+/* ========================================
+   LIVE PROPAGATION ZONES
+======================================== */
+
+.treasury-escalation-zones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  margin-top: 22px;
+}
+
+.treasury-escalation-zone {
+  position: relative;
+  overflow: hidden;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 16px;
+  border-radius: 999px;
+
+  background: rgba(255,255,255,0.72);
+  border: 1px solid rgba(255,120,120,0.16);
+  backdrop-filter: blur(10px);
+
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+
+  color: #b42318;
+
+  box-shadow: 0 8px 24px rgba(255,80,80,0.08);
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
+}
+
+.treasury-escalation-zone::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(120deg, transparent, rgba(255,255,255,0.38), transparent);
+
+  transform: translateX(-120%);
+  animation: treasuryZoneSweep 4.8s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes treasuryZoneSweep {
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+.treasury-escalation-zone:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 14px 28px rgba(255,80,80,0.14);
+}
+
+/* Fix Escalation Wave top-left overlap */
+.treasury-wave-engine.risk-cluster-panel::before {
+  inset: 0;
+
+  background:
+    radial-gradient(circle at top right, rgba(255,80,80,0.08), transparent 42%),
+    radial-gradient(circle at bottom left, rgba(59,130,246,0.06), transparent 45%);
+
+  opacity: 0.55;
+  animation: treasuryThreatPulse 9s ease-in-out infinite;
+}
+
+.treasury-wave-engine .treasury-command-label,
+.treasury-wave-engine h2,
+.treasury-wave-engine .treasury-command-description,
+.treasury-wave-engine .treasury-risk-cluster-mode {
+  position: relative;
+  z-index: 5;
+}
+
+/* Fix Escalation Wave panel spacing */
+.treasury-escalation-wave-panel {
+  margin: 28px 0;
+  padding: 36px 40px 32px;
+  border-radius: 32px;
+}
+
+.treasury-escalation-wave-panel .treasury-command-label {
+  margin-top: 0;
+  margin-left: 0;
+}
+
+.treasury-escalation-wave-panel .treasury-risk-cluster-header {
+  margin-bottom: 32px;
 }

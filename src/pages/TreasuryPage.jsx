@@ -386,6 +386,58 @@ export default function TreasuryPage() {
       ? "WATCHLIST"
       : "NORMAL";
 
+   const escalationWaveIntensity =
+  recoveryScore >= 120
+    ? "SYSTEMIC SHOCK"
+    : recoveryScore >= 90
+    ? "CRITICAL SURGE"
+    : recoveryScore >= 60
+    ? "ESCALATING"
+    : recoveryScore >= 35
+    ? "EXPANDING"
+    : "RIPPLE";
+
+const threatVelocity =
+  recoveryScore >= 120
+    ? "CRITICAL VELOCITY"
+    : recoveryScore >= 80
+    ? "FAST SPREAD"
+    : recoveryScore >= 45
+    ? "ACCELERATING"
+    : "SLOW DRIFT";
+
+const escalationDirection =
+  liquidityStressLevel === "CRITICAL"
+    ? [
+        "Liquidity Buffer",
+        "FD Ladder",
+        "Treasury Reserve",
+        "Recovery Queue",
+      ]
+    : liquidityStressLevel === "HIGH"
+    ? [
+        "Recovery Queue",
+        "Weak Month",
+        "Deployment Policy",
+      ]
+    : liquidityStressLevel === "ELEVATED"
+    ? [
+        "Governance Review",
+        "Liquidity Routing",
+      ]
+    : ["Monitoring Zone"];
+
+const institutionalEscalationPath =
+  recoveryScore >= 120
+    ? "EMERGENCY INTERVENTION"
+    : recoveryScore >= 90
+    ? "EXECUTIVE ESCALATION"
+    : recoveryScore >= 60
+    ? "RISK COMMITTEE"
+    : recoveryScore >= 35
+    ? "TREASURY WATCH"
+    : "DESK REVIEW"; 
+
   const autoInterventionTriggered =
     liquidityStressLevel === "HIGH" || liquidityStressLevel === "CRITICAL";
 
@@ -1098,6 +1150,97 @@ export default function TreasuryPage() {
     </div>
 
   </div>
+</section>
+
+<section className="treasury-escalation-wave-panel risk-cluster-panel risk-escalation treasury-wave-engine">
+
+  <div className="treasury-risk-cluster-header">
+
+    <div>
+      <p className="treasury-command-label">
+        🌊 TREASURY ESCALATION WAVE ENGINE
+      </p>
+
+      <h2>Institutional Threat Propagation Monitor</h2>
+
+      <p className="treasury-command-description">
+        Live institutional escalation tracking for threat spread,
+        treasury wave intensity, propagation velocity,
+        cluster expansion and executive escalation routing.
+      </p>
+    </div>
+
+    <div className="treasury-risk-cluster-mode">
+      🌐 LIVE ESCALATION RADAR
+    </div>
+
+  </div>
+
+  <div className="treasury-risk-cluster-grid">
+
+    <div className="treasury-risk-cluster-card critical">
+      <span>Wave Intensity</span>
+
+      <strong>
+        {escalationWaveIntensity}
+      </strong>
+
+      <p>
+        Institutional treasury escalation pressure.
+      </p>
+    </div>
+
+    <div className="treasury-risk-cluster-card warning">
+      <span>Threat Velocity</span>
+
+      <strong>
+        {threatVelocity}
+      </strong>
+
+      <p>
+        Treasury threat spread acceleration monitoring.
+      </p>
+    </div>
+
+    <div className="treasury-risk-cluster-card watch">
+      <span>Escalation Path</span>
+
+      <strong>
+        {institutionalEscalationPath}
+      </strong>
+
+      <p>
+        Institutional escalation routing layer.
+      </p>
+    </div>
+
+    <div className="treasury-risk-cluster-card critical">
+      <span>Threat Spread Zones</span>
+
+      <strong>
+        {escalationDirection.length}
+      </strong>
+
+      <p>
+        Treasury propagation target zones detected.
+      </p>
+    </div>
+
+  </div>
+
+  <div className="treasury-escalation-zones">
+
+    {escalationDirection.map((zone) => (
+      <div
+        key={zone}
+        className="treasury-escalation-zone"
+      >
+        ⚠️ {zone}
+      </div>
+    ))}
+
+  </div>
+
 </section>
 
       <section className="treasury-live-risk-strip">
