@@ -13,6 +13,14 @@ import ExecutionPanel from "../components/dashboard/ExecutionPanel";
 import MaturityAlerts from "../components/dashboard/MaturityAlerts";
 import SummaryGrid from "../components/dashboard/SummaryGrid";
 import TreasuryAlertModal from "../components/dashboard/TreasuryAlertModal";
+import EscalationCommandCard from "../components/treasury/EscalationCommandCard";
+import TreasuryActionRouter from "../components/treasury/TreasuryActionRouter";
+import TreasuryResponseTimeline from "../components/treasury/TreasuryResponseTimeline";
+import TreasuryInterventionPanel from "../components/treasury/TreasuryInterventionPanel";
+import TreasuryResolutionProtocol from "../components/treasury/TreasuryResolutionProtocol";
+import TreasuryResolutionIntelligence from "../components/treasury/TreasuryResolutionIntelligence";
+import TreasuryOverrideControl from "../components/treasury/TreasuryOverrideControl";
+import TreasuryAuthorityChain from "../components/treasury/TreasuryAuthorityChain";
 
 const treasuryRuntimeStyle = `
 @keyframes treasuryPulse {
@@ -3917,6 +3925,38 @@ export default function DashboardPage({
         bestOffer={bestOffer}
         treasuryPolicyDecision={treasuryPolicyDecision}
       />
+
+      <EscalationCommandCard
+        severity={treasuryPolicyDecision?.severity}
+      />
+
+      <TreasuryActionRouter
+        severity={treasuryPolicyDecision?.severity}
+      />
+
+      <TreasuryResponseTimeline
+        severity={treasuryPolicyDecision?.severity}
+      />
+
+      <TreasuryInterventionPanel
+        severity={treasuryPolicyDecision?.severity}
+      />
+
+      <TreasuryResolutionProtocol
+        severity={treasuryPolicyDecision?.severity}
+      />
+
+      <TreasuryResolutionIntelligence
+        severity={treasuryPolicyDecision?.severity}
+      />
+
+      <TreasuryOverrideControl
+        severity={treasuryPolicyDecision?.severity}
+      />
+
+      <TreasuryAuthorityChain />
+
+      <TreasuryAuthorityTransmission />
 
       <section
   className="treasury-operations-workspace executive-float"

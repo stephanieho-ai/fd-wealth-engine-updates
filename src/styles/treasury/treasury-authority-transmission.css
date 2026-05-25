@@ -1,0 +1,179 @@
+/* ========================================
+   TREASURY AUTHORITY CHAIN
+======================================== */
+
+.authority-chain-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.authority-chain-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 26px;
+}
+
+.authority-chain-node {
+  position: relative;
+  background: rgba(255,255,255,0.62);
+  border: 1px solid rgba(148,163,184,0.12);
+  border-radius: 24px;
+  padding: 22px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  min-height: 220px;
+
+  box-shadow:
+    0 10px 30px rgba(15,23,42,0.05),
+    inset 0 1px 0 rgba(255,255,255,0.7);
+}
+
+.authority-chain-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.authority-chain-level {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(
+    135deg,
+    rgba(59,130,246,0.20),
+    rgba(37,99,235,0.10)
+  );
+
+  color: #2563eb;
+  font-weight: 800;
+  font-size: 14px;
+
+  border: 1px solid rgba(59,130,246,0.18);
+}
+
+
+.authority-chain-status {
+  padding: 7px 12px;
+  border-radius: 999px;
+
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+
+  background:
+    rgba(59,130,246,0.10);
+
+  color: #2563eb;
+}
+
+.authority-chain-node h3 {
+  margin: 0 0 14px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: #0f172a;
+}
+
+.authority-chain-node p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.8;
+  color: #64748b;
+}
+
+.authority-chain-line {
+  position: absolute;
+  top: 50%;
+  right: -24px;
+
+  width: 48px;
+  height: 2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(59,130,246,0.45),
+      rgba(59,130,246,0)
+    );
+}
+
+.authority-chain-node:last-child .authority-chain-line {
+  display: none;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 1400px) {
+  .authority-chain-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .authority-chain-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .authority-chain-line {
+    display: none;
+  }
+}
+
+.treasury-escalation-card {
+  margin-top: 28px;
+  padding: 26px 30px 30px;
+  border-radius: 32px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(239,246,255,0.94), rgba(238,242,255,0.92));
+  border: 1px solid rgba(148,163,184,0.16);
+  box-shadow: 0 20px 60px rgba(15,23,42,0.08);
+  backdrop-filter: blur(20px);
+}
+
+.treasury-escalation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.treasury-eyebrow {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(59,130,246,0.75);
+}
+
+.treasury-section-title {
+  margin: 0;
+  margin-top: -2px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #0f172a;
+}
+
+.treasury-status-pill {
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.treasury-status-pill-red {
+  background: rgba(239,68,68,0.12);
+  color: #dc2626;
+}
