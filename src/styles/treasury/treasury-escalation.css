@@ -34,7 +34,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 22px;
+  margin-bottom: 34px;
 }
 
 .escalation-eyebrow,
@@ -270,8 +270,203 @@
   background: linear-gradient(90deg, #3b82f6, #2563eb, #1d4ed8);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 700px) {
   .response-steps {
     grid-template-columns: 1fr;
   }
+}
+
+/* ========================================
+   TREASURY RESPONSE BUTTON
+======================================== */
+
+.treasury-action-routing {
+  margin-top: 28px;
+  padding-top: 24px;
+
+  border-top:
+    1px solid rgba(148,163,184,0.14);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.treasury-action-routing p {
+  margin: 0 0 10px;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+
+  color: rgba(100,116,139,0.88);
+}
+
+.treasury-action-routing h3 {
+  margin: 0;
+
+  font-size: 24px;
+  font-weight: 700;
+
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+
+  color: #0f172a;
+}
+
+.treasury-response-button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  padding: 18px 34px;
+  border-radius: 18px;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #3b82f6
+    );
+
+  box-shadow:
+    0 12px 30px rgba(37,99,235,0.32);
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    opacity 180ms ease;
+}
+
+.treasury-response-button:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 18px 40px rgba(37,99,235,0.42);
+}
+
+.treasury-response-button:active {
+  transform: scale(0.98);
+}
+
+.treasury-response-button-active {
+  background:
+    linear-gradient(
+      135deg,
+      #059669,
+      #10b981
+    );
+
+  box-shadow:
+    0 12px 30px rgba(5,150,105,0.28);
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 900px) {
+  .treasury-action-routing {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .treasury-response-button {
+    width: 100%;
+  }
+}
+
+/* ESCALATION COMMAND CENTER FINAL FONT FIX */
+
+.escalation-title {
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.escalation-status-pill {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+}
+
+.treasury-escalation-metric p {
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.14em !important;
+}
+
+.treasury-escalation-metric h3 {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  line-height: 1.25 !important;
+}
+
+.treasury-escalation-metric span {
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+}
+
+/* ========================================
+   FINAL HEADER TYPOGRAPHY FIX
+======================================== */
+
+.escalation-command-card h2 {
+  margin: 0 !important;
+
+  font-size: 26px !important;
+  font-weight: 700 !important;
+
+  line-height: 1.15 !important;
+  letter-spacing: -0.03em !important;
+
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif !important;
+
+  color: #0f172a !important;
+
+  -webkit-font-smoothing: antialiased !important;
+  text-rendering: optimizeLegibility !important;
+}
+
+/* ========================================
+   ESCALATION HEADER FIX
+======================================== */
+
+.treasury-escalation-card .treasury-section-title {
+  margin: 0 !important;
+
+  font-size: 24px !important;
+  font-weight: 700 !important;
+
+  line-height: 1.2 !important;
+  letter-spacing: -0.02em !important;
+
+  color: #0f172a !important;
+}
+
+.treasury-escalation-card .treasury-eyebrow {
+  margin: 0 0 8px !important;
+
+  font-size: 11px !important;
+  font-weight: 700 !important;
+
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+
+  color: rgba(59,130,246,0.72) !important;
 }

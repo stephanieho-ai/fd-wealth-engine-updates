@@ -9,6 +9,8 @@ import AppShell from "./app/AppShell";
 export const MAIN_TABS = {
   HOME: "HOME",
   RECORDS: "RECORDS",
+  TREASURY: "TREASURY",
+  GOVERNANCE: "GOVERNANCE",
   MORE: "MORE",
   SETTINGS: "SETTINGS",
 };

@@ -4108,204 +4108,208 @@ export default function DashboardPage({
     </div>
   </section>
 
+<section
+  className="dashboard-section treasury-heatmap-engine liquidity-flow-surface"
+  style={{
+    marginTop: 40,
+    width: "100%",
+    maxWidth: 1600,
+    marginLeft: "auto",
+    marginRight: "auto",
+  }}
+>
+  <div
+    style={{
+      position: "relative",
+      overflow: "hidden",
+      borderRadius: 36,
+      padding: "34px 32px",
+      background:
+        "linear-gradient(135deg, rgba(255,255,255,0.96), rgba(248,250,252,0.93), rgba(239,246,255,0.88))",
+      border: "1px solid rgba(255,255,255,0.72)",
+      boxShadow:
+        "0 30px 80px rgba(15,23,42,0.08), inset 0 1px 0 rgba(255,255,255,0.76)",
+      backdropFilter: "blur(22px)",
+    }}
+  >
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        background:
+          heatmapSystemHeat.label === "HIGH"
+            ? "radial-gradient(circle at top right, rgba(239,68,68,0.12), transparent 32%)"
+            : heatmapSystemHeat.label === "WATCH"
+            ? "radial-gradient(circle at top right, rgba(245,158,11,0.12), transparent 32%)"
+            : "radial-gradient(circle at top right, rgba(37,99,235,0.10), transparent 32%)",
+        pointerEvents: "none",
+      }}
+    />
 
-      <section
-        className="dashboard-section treasury-heatmap-engine liquidity-flow-surface"
+    <div
+      style={{
+        position: "relative",
+        zIndex: 1,
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        gap: 22,
+        marginBottom: 28,
+        flexWrap: "wrap",
+      }}
+    >
+      <div>
+        <div
+          style={{
+            fontSize: 12,
+            fontWeight: 900,
+            letterSpacing: "0.14em",
+            color: "#6792ef",
+            marginBottom: 10,
+          }}
+        >
+          V33.2-G17 · TREASURY HEATMAP ENGINE
+        </div>
+
+        <h2
+          style={{
+            margin: 0,
+            fontSize: 36,
+            fontWeight: 800,
+            color: "#0f172a",
+            letterSpacing: "-0.025em",
+            lineHeight: 1.05,
+          }}
+        >
+          Treasury Maturity Heatmap
+        </h2>
+
+        <p
+          style={{
+            marginTop: 14,
+            maxWidth: 820,
+            color: "#64748b",
+            fontSize: 15,
+            lineHeight: 1.7,
+          }}
+        >
+          Monitor maturity pressure, liquidity imbalance and deployment
+          concentration across upcoming treasury cycles.
+        </p>
+      </div>
+
+      <div
         style={{
-          marginTop: 40,
-          width: "100%",
-          maxWidth: 1600,
-          marginLeft: "auto",
-          marginRight: "auto",
+          minWidth: 180,
+          borderRadius: 28,
+          padding: "22px 26px",
+          background: heatmapSystemHeat.bg,
+          border: `1px solid ${heatmapSystemHeat.border}`,
+          boxShadow:
+            "0 10px 30px rgba(239,68,68,0.08), inset 0 1px 0 rgba(255,255,255,0.62)",
         }}
       >
         <div
           style={{
-            position: "relative",
-            overflow: "hidden",
-            borderRadius: 36,
-            padding: "34px 32px",
-            background:
-              "linear-gradient(135deg, rgba(255,255,255,0.96), rgba(248,250,252,0.93), rgba(239,246,255,0.88))",
-            border: "1px solid rgba(255,255,255,0.72)",
+            fontSize: 11,
+            fontWeight: 800,
+            letterSpacing: "0.12em",
+            color: "#64748b",
+            marginBottom: 10,
+          }}
+        >
+          SYSTEM HEAT
+        </div>
+
+        <div
+          style={{
+            fontSize: 30,
+            fontWeight: 800,
+            letterSpacing: "-0.02em",
+            color: heatmapSystemHeat.color,
+            lineHeight: 1,
+          }}
+        >
+          {heatmapSystemHeat.label}
+        </div>
+      </div>
+    </div>
+
+    <div
+      style={{
+        position: "relative",
+        zIndex: 1,
+        display: "grid",
+        gridTemplateColumns: "repeat(6, minmax(140px, 1fr))",
+        gap: 18,
+      }}
+    >
+      {treasuryHeatmapItems.map((heat) => (
+        <div
+          key={heat.month}
+          style={{
+            borderRadius: 28,
+            padding: "24px 20px",
+            background: heat.bg,
+            border: `1px solid ${heat.border}`,
+            minHeight: 200,
             boxShadow:
-              "0 30px 80px rgba(15,23,42,0.08), inset 0 1px 0 rgba(255,255,255,0.76)",
-            backdropFilter: "blur(22px)",
+              "0 18px 42px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.62)",
+            backdropFilter: "blur(14px)",
           }}
         >
           <div
             style={{
-              position: "absolute",
-              inset: 0,
-              background:
-                heatmapSystemHeat.label === "HIGH"
-                  ? "radial-gradient(circle at top right, rgba(239,68,68,0.12), transparent 32%)"
-                  : heatmapSystemHeat.label === "WATCH"
-                  ? "radial-gradient(circle at top right, rgba(245,158,11,0.12), transparent 32%)"
-                  : "radial-gradient(circle at top right, rgba(37,99,235,0.10), transparent 32%)",
-              pointerEvents: "none",
-            }}
-          />
-
-          <div
-            style={{
-              position: "relative",
-              zIndex: 1,
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              gap: 22,
-              marginBottom: 28,
-              flexWrap: "wrap",
+              fontSize: 12,
+              fontWeight: 900,
+              letterSpacing: "0.10em",
+              color: "#64748b",
+              marginBottom: 18,
             }}
           >
-            <div>
-              <div
-                style={{
-                  fontSize: 12,
-                  fontWeight: 900,
-                  letterSpacing: "0.12em",
-                  color: "#4f46e5",
-                  marginBottom: 8,
-                }}
-              >
-                V33.2-G17 · TREASURY HEATMAP ENGINE
-              </div>
-
-              <h2
-                style={{
-                  margin: 0,
-                  fontSize: 36,
-                  fontWeight: 900,
-                  color: "#0f172a",
-                  letterSpacing: "-0.035em",
-                }}
-              >
-                Treasury Maturity Heatmap
-              </h2>
-
-              <p
-                style={{
-                  marginTop: 10,
-                  maxWidth: 820,
-                  color: "#64748b",
-                  fontSize: 15,
-                  lineHeight: 1.7,
-                }}
-              >
-                Monitor maturity pressure, liquidity imbalance and deployment
-                concentration across upcoming treasury cycles.
-              </p>
-            </div>
-
-            <div
-              style={{
-                minWidth: 160,
-                borderRadius: 24,
-                padding: "18px 22px",
-                background: heatmapSystemHeat.bg,
-                border: `1px solid ${heatmapSystemHeat.border}`,
-                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.62)",
-              }}
-            >
-              <div
-                style={{
-                  fontSize: 11,
-                  fontWeight: 800,
-                  letterSpacing: "0.08em",
-                  color: "#64748b",
-                  marginBottom: 8,
-                }}
-              >
-                SYSTEM HEAT
-              </div>
-
-              <div
-                style={{
-                  fontSize: 34,
-                  fontWeight: 900,
-                  color: heatmapSystemHeat.color,
-                  lineHeight: 1,
-                }}
-              >
-                {heatmapSystemHeat.label}
-              </div>
-            </div>
+            {heat.month}
           </div>
 
           <div
             style={{
-              position: "relative",
-              zIndex: 1,
-              display: "grid",
-              gridTemplateColumns: "repeat(6, minmax(140px, 1fr))",
-              gap: 18,
+              fontSize: 24,
+              fontWeight: 800,
+              letterSpacing: "-0.02em",
+              color: heat.color,
+              marginBottom: 16,
+              lineHeight: 1,
             }}
           >
-            {treasuryHeatmapItems.map((heat) => (
-              <div
-                key={heat.month}
-                style={{
-                  borderRadius: 26,
-                  padding: "22px 18px",
-                  background: heat.bg,
-                  border: `1px solid ${heat.border}`,
-                  minHeight: 180,
-                  boxShadow:
-                    "0 18px 42px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.62)",
-                  backdropFilter: "blur(14px)",
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: 12,
-                    fontWeight: 900,
-                    letterSpacing: "0.08em",
-                    color: "#64748b",
-                    marginBottom: 18,
-                  }}
-                >
-                  {heat.month}
-                </div>
+            {heat.status}
+          </div>
 
-                <div
-                  style={{
-                    fontSize: 28,
-                    fontWeight: 900,
-                    color: heat.color,
-                    marginBottom: 14,
-                    lineHeight: 1,
-                  }}
-                >
-                  {heat.status}
-                </div>
+          <div
+            style={{
+              fontSize: 18,
+              fontWeight: 800,
+              letterSpacing: "-0.015em",
+              color: "#0f172a",
+              marginBottom: 14,
+            }}
+          >
+            {formatMoney(heat.amount, currency)}
+          </div>
 
-                <div
-                  style={{
-                    fontSize: 18,
-                    fontWeight: 800,
-                    color: "#0f172a",
-                    marginBottom: 12,
-                  }}
-                >
-                  {formatMoney(heat.amount, currency)}
-                </div>
-
-                <div
-                  style={{
-                    fontSize: 13,
-                    lineHeight: 1.6,
-                    color: "#64748b",
-                  }}
-                >
-                  {heat.note}
-                </div>
-              </div>
-            ))}
+          <div
+            style={{
+              fontSize: 13,
+              lineHeight: 1.75,
+              color: "#64748b",
+            }}
+          >
+            {heat.note}
           </div>
         </div>
-      </section>
-
+      ))}
+    </div>
+  </div>
+</section>
+    
       <div
         className="dashboard-bottom-grid"
         style={{

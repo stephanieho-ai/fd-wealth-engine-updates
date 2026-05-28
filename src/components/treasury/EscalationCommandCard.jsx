@@ -1,124 +1,160 @@
-import "../../styles/treasury/treasury-escalation.css";
+import { useEffect, useState } from "react";
 
-function getEscalationModel(severity = "HIGH") {
-  const level = String(severity || "HIGH").toUpperCase();
+export default function EscalationCommandCard({ severity = "BLOCKED" }) {
+  const normalizedSeverity = String(severity || "BLOCKED").toUpperCase();
 
-  const map = {
+  const [responseActive, setResponseActive] = useState(false);
+
+  useEffect(() => {
+    const saved =
+      localStorage.getItem("treasury_response_active") === "true";
+
+    setResponseActive(saved);
+  }, []);
+
+  const activateTreasuryResponse = () => {
+    setResponseActive(true);
+
+    localStorage.setItem("treasury_response_active", "true");
+
+    window.dispatchEvent(
+      new CustomEvent("treasuryResponseActivated", {
+        detail: {
+          status: "ACTIVE",
+          severity: normalizedSeverity,
+          activatedAt: new Date().toISOString(),
+          source: "Escalation Command Center",
+        },
+      })
+    );
+  };
+
+  const responseMap = {
     SAFE: {
-      status: "Stable Monitoring",
-      threatLevel: "SAFE",
-      action: "Maintain Treasury Structure",
+      badge: "SAFE RESPONSE",
+      threat: "SAFE",
+      action: "Monitor Treasury Position",
       priority: "NORMAL",
-      trigger: "No Escalation",
+      trigger: "No Executive Trigger",
       route: "Standard Treasury Monitoring Protocol",
-      message:
-        "Treasury position remains stable. Continue normal monitoring and liquidity observation.",
+      description:
+        "Treasury condition is stable. No immediate escalation action is required.",
     },
     WATCH: {
-      status: "Watch Response",
-      threatLevel: "WATCH",
-      action: "Monitor Liquidity Pressure",
-      priority: "IMPORTANT",
-      trigger: "Manager Review Optional",
-      route: "Treasury Watchlist Monitoring Protocol",
-      message:
-        "Early pressure detected. Treasury should monitor liquidity movement and reserve coverage.",
+      badge: "WATCH RESPONSE",
+      threat: "WATCH",
+      action: "Increase Monitoring",
+      priority: "MODERATE",
+      trigger: "Treasury Review Suggested",
+      route: "Treasury Watch Review Protocol",
+      description:
+        "Treasury signal requires monitoring. Review liquidity and deployment exposure.",
     },
     HIGH: {
-      status: "High Response",
-      threatLevel: "HIGH",
+      badge: "HIGH RESPONSE",
+      threat: "HIGH",
       action: "Increase Liquidity Buffer",
       priority: "URGENT",
       trigger: "Escalation Required",
       route: "Defensive Liquidity Stabilization Protocol",
-      message:
+      description:
         "Liquidity stress escalation detected across treasury allocation clusters.",
     },
     CRITICAL: {
-      status: "Critical Response",
-      threatLevel: "CRITICAL",
-      action: "Freeze Aggressive Deployment",
+      badge: "CRITICAL RESPONSE",
+      threat: "CRITICAL",
+      action: "Activate Risk Containment",
       priority: "IMMEDIATE",
       trigger: "Executive Review Required",
-      route: "Treasury Emergency Intervention Protocol",
-      message:
-        "Critical treasury pressure detected. Deployment should be restricted until liquidity improves.",
+      route: "Critical Treasury Containment Protocol",
+      description:
+        "Treasury risk pressure is critical. Immediate institutional response is required.",
     },
     BLOCKED: {
-      status: "Blocked Response",
-      threatLevel: "BLOCKED",
+      badge: "BLOCKED RESPONSE",
+      threat: "BLOCKED",
       action: "Stop Treasury Execution",
       priority: "IMMEDIATE",
       trigger: "Executive Approval Required",
       route: "Governance Block Resolution Protocol",
-      message:
+      description:
         "Policy engine has blocked execution. Treasury action requires governance review before continuation.",
     },
   };
 
-  return map[level] || map.HIGH;
-}
-
-export default function EscalationCommandCard({ severity = "HIGH" }) {
-  const model = getEscalationModel(severity);
+  const response = responseMap[normalizedSeverity] || responseMap.BLOCKED;
 
   return (
-    <section className={`escalation-command-card severity-${model.threatLevel.toLowerCase()}`}>
-      <div className="escalation-header">
+    <section className="treasury-escalation-card">
+      <div className="treasury-escalation-header">
         <div>
-          <p className="escalation-eyebrow">Treasury Escalation Engine</p>
+          <p className="treasury-eyebrow">
+            TREASURY ESCALATION ENGINE
+          </p>
 
-          <h2 className="escalation-title">Escalation Command Center</h2>
+          <h2 className="treasury-section-title">
+            Escalation Command Center
+          </h2>
         </div>
 
-        <div className={`escalation-status ${model.threatLevel.toLowerCase()}`}>
-          {model.status}
+        <div className="treasury-status-pill treasury-status-pill-red">
+          {responseActive ? "TREASURY RESPONSE ACTIVE" : response.badge}
         </div>
       </div>
 
-      <div className="escalation-grid">
-        <div className="escalation-panel">
-          <span className="panel-label">Threat Level</span>
-          <h3>{model.threatLevel}</h3>
-          <p>{model.message}</p>
+      <div className="treasury-escalation-grid">
+        <div className="treasury-escalation-metric">
+          <p>Threat Level</p>
+          <h3>{response.threat}</h3>
+          <span>{response.description}</span>
         </div>
 
-        <div className="escalation-panel">
-          <span className="panel-label">Recommended Action</span>
-          <h3>{model.action}</h3>
-          <p>
-            System recommendation based on treasury pressure, policy status,
-            liquidity condition and operational exposure.
-          </p>
+        <div className="treasury-escalation-metric">
+          <p>Recommended Action</p>
+          <h3>{response.action}</h3>
+          <span>
+            System recommendation based on treasury pressure,
+            policy status, liquidity condition and operational exposure.
+          </span>
         </div>
 
-        <div className="escalation-panel">
-          <span className="panel-label">Intervention Priority</span>
-          <h3>{model.priority}</h3>
-          <p>
-            Treasury intervention priority is calculated from current severity
-            and execution governance status.
-          </p>
+        <div className="treasury-escalation-metric">
+          <p>Intervention Priority</p>
+          <h3>{response.priority}</h3>
+          <span>
+            Treasury intervention priority is calculated from current
+            severity and execution governance status.
+          </span>
         </div>
 
-        <div className="escalation-panel">
-          <span className="panel-label">Executive Trigger</span>
-          <h3>{model.trigger}</h3>
-          <p>
-            Determines whether senior treasury or executive-level approval is
-            required before further action.
-          </p>
+        <div className="treasury-escalation-metric">
+          <p>Executive Trigger</p>
+          <h3>{response.trigger}</h3>
+          <span>
+            Determines whether senior treasury or executive-level approval
+            is required before further action.
+          </span>
         </div>
       </div>
 
-      <div className="escalation-footer">
-        <div className="footer-left">
-          <span className="footer-label">Treasury Action Routing</span>
-          <strong>{model.route}</strong>
+      <div className="treasury-action-routing">
+        <div>
+          <p>TREASURY ACTION ROUTING</p>
+          <h3>{response.route}</h3>
         </div>
 
-        <button className="escalation-action-button">
-          Activate Treasury Response
+        <button
+          type="button"
+          className={
+            responseActive
+              ? "treasury-response-button treasury-response-button-active"
+              : "treasury-response-button"
+          }
+          onClick={activateTreasuryResponse}
+        >
+          {responseActive
+            ? "Treasury Response Active"
+            : "Activate Treasury Response"}
         </button>
       </div>
     </section>

@@ -1,0 +1,449 @@
+/* ========================================
+   GOVERNANCE RUNTIME HERO
+   V33.2-G19-N CLEAN FINAL
+======================================== */
+
+.treasury-hero {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 28px !important;
+  width: calc(100% - 64px) !important;
+  max-width: 1480px !important;
+  margin: 34px auto 42px !important;
+  padding: 34px !important;
+  min-height: auto !important;
+  overflow: visible !important;
+}
+
+.governance-hero-top {
+  display: grid !important;
+  grid-template-columns: 1fr 220px 330px 330px !important;
+  gap: 22px !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+.governance-hero-top > * {
+  position: static !important;
+  inset: auto !important;
+  transform: none !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+/* LEFT COPY */
+
+.governance-console-copy {
+  max-width: 420px !important;
+}
+
+.governance-console-copy h1 {
+  font-size: 44px !important;
+  line-height: 1.02 !important;
+  margin: 14px 0 18px !important;
+  color: #ffffff !important;
+}
+
+.governance-console-copy .muted {
+  max-width: 380px !important;
+  font-size: 14px !important;
+  line-height: 1.65 !important;
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+/* WORKSPACE */
+
+.governance-hero-top .hero-alert {
+  width: 100% !important;
+  min-height: 140px !important;
+  padding: 22px !important;
+  margin: 0 !important;
+  border-radius: 24px !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+.governance-hero-top .hero-alert span {
+  font-size: 11px !important;
+  letter-spacing: 0.12em !important;
+  color: #6ea0ff !important;
+  text-transform: uppercase !important;
+}
+
+.governance-hero-top .hero-alert strong {
+  font-size: 22px !important;
+  line-height: 1.15 !important;
+  color: #ffffff !important;
+}
+
+/* RUNTIME CARD */
+
+.governance-runtime-card {
+  position: relative !important;
+  overflow: visible !important;
+  z-index: 2 !important;
+
+  width: 100% !important;
+  min-height: 360px !important;
+  padding: 22px !important;
+  border-radius: 28px !important;
+
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22) !important;
+}
+
+.governance-runtime-card h3 {
+  font-size: 28px !important;
+  margin: 8px 0 !important;
+  color: #ffffff !important;
+}
+
+.governance-runtime-card .muted {
+  font-size: 13px !important;
+  color: rgba(255, 255, 255, 0.68) !important;
+}
+
+/* RUNTIME GRID */
+
+.governance-runtime-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 12px !important;
+  margin: 18px 0 !important;
+}
+
+.governance-runtime-grid div {
+  min-height: 78px !important;
+  padding: 14px !important;
+  border-radius: 18px !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.governance-runtime-grid span {
+  display: block !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: rgba(255, 255, 255, 0.72) !important;
+  margin-bottom: 8px !important;
+}
+
+.governance-runtime-grid strong {
+  font-size: 26px !important;
+  color: #ffffff !important;
+}
+
+/* SIGNAL */
+
+.governance-runtime-signal {
+  padding: 15px !important;
+  border-radius: 18px !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.governance-runtime-signal span {
+  display: block !important;
+  font-size: 10px !important;
+  letter-spacing: 0.1em !important;
+  color: #6ea0ff !important;
+  text-transform: uppercase !important;
+  font-weight: 800 !important;
+  margin-bottom: 6px !important;
+}
+
+.governance-runtime-signal strong {
+  color: #ffffff !important;
+  font-size: 16px !important;
+}
+
+/* STATUS COLORS */
+
+.governance-runtime-card.stable {
+  border-color: rgba(34, 197, 94, 0.55) !important;
+}
+
+.governance-runtime-card.warning {
+  border-color: rgba(245, 158, 11, 0.75) !important;
+}
+
+.governance-runtime-card.critical {
+  border-color: rgba(239, 68, 68, 0.85) !important;
+}
+
+.governance-runtime-card.stable h3 {
+  color: #22c55e !important;
+}
+
+.governance-runtime-card.warning h3 {
+  color: #f59e0b !important;
+}
+
+.governance-runtime-card.critical h3 {
+  color: #ef4444 !important;
+}
+
+.governance-runtime-card.stable .governance-runtime-signal {
+  background: linear-gradient(
+    135deg,
+    rgba(34, 197, 94, 0.22),
+    rgba(59, 130, 246, 0.14)
+  ) !important;
+}
+
+.governance-runtime-card.warning .governance-runtime-signal {
+  background: linear-gradient(
+    135deg,
+    rgba(245, 158, 11, 0.26),
+    rgba(59, 130, 246, 0.14)
+  ) !important;
+}
+
+.governance-runtime-card.critical .governance-runtime-signal {
+  background: linear-gradient(
+    135deg,
+    rgba(239, 68, 68, 0.3),
+    rgba(59, 130, 246, 0.14)
+  ) !important;
+}
+
+/* TRUE HEARTBEAT GLOW ENGINE */
+
+.governance-runtime-card::after {
+  content: "";
+  position: absolute;
+  inset: -12px;
+  border-radius: 36px;
+  z-index: -1;
+  pointer-events: none;
+}
+
+@keyframes stableHeartbeat {
+  0% {
+    opacity: 0.22;
+    transform: scale(1);
+  }
+
+  42% {
+    opacity: 0.85;
+    transform: scale(1.08);
+  }
+
+  62% {
+    opacity: 0.45;
+    transform: scale(1.03);
+  }
+
+  100% {
+    opacity: 0.22;
+    transform: scale(1);
+  }
+}
+
+@keyframes warningHeartbeat {
+  0% {
+    opacity: 0.28;
+    transform: scale(1);
+  }
+
+  42% {
+    opacity: 0.95;
+    transform: scale(1.12);
+  }
+
+  62% {
+    opacity: 0.5;
+    transform: scale(1.04);
+  }
+
+  100% {
+    opacity: 0.28;
+    transform: scale(1);
+  }
+}
+
+@keyframes criticalHeartbeat {
+  0% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+
+  42% {
+    opacity: 1;
+    transform: scale(1.16);
+  }
+
+  62% {
+    opacity: 0.58;
+    transform: scale(1.05);
+  }
+
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+}
+
+.governance-runtime-card.stable::after {
+  background: radial-gradient(
+    circle,
+    rgba(34, 197, 94, 0.48),
+    rgba(34, 197, 94, 0)
+  );
+  animation: stableHeartbeat 1.8s ease-in-out infinite !important;
+}
+
+.governance-runtime-card.warning::after {
+  background: radial-gradient(
+    circle,
+    rgba(245, 158, 11, 0.58),
+    rgba(245, 158, 11, 0)
+  );
+  animation: warningHeartbeat 1.15s ease-in-out infinite !important;
+}
+
+.governance-runtime-card.critical::after {
+  background: radial-gradient(
+    circle,
+    rgba(239, 68, 68, 0.72),
+    rgba(239, 68, 68, 0)
+  );
+  animation: criticalHeartbeat 0.72s ease-in-out infinite !important;
+}
+
+/* EVENT FEED */
+
+.governance-runtime-feed {
+  width: 100% !important;
+  min-height: 360px !important;
+  padding: 22px !important;
+  border-radius: 28px !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18) !important;
+}
+
+.governance-runtime-feed-header h3 {
+  color: #ffffff !important;
+  font-size: 21px !important;
+  margin-top: 8px !important;
+}
+
+.governance-runtime-feed-list {
+  display: grid !important;
+  gap: 12px !important;
+  margin-top: 18px !important;
+}
+
+.governance-runtime-event {
+  padding: 12px !important;
+  border-radius: 16px !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.governance-runtime-event span {
+  display: block !important;
+  color: #6ea0ff !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.08em !important;
+  margin-bottom: 6px !important;
+}
+
+.governance-runtime-event strong {
+  display: block !important;
+  color: #ffffff !important;
+  font-size: 13px !important;
+  line-height: 1.35 !important;
+}
+
+.governance-runtime-event p {
+  color: rgba(255, 255, 255, 0.58) !important;
+  font-size: 11px !important;
+  margin-top: 6px !important;
+}
+
+/* FLOW ROW */
+
+.governance-flow-row {
+  display: grid !important;
+  grid-template-columns: 1fr 32px 1fr 32px 1fr !important;
+  gap: 14px !important;
+  align-items: center !important;
+  width: 100% !important;
+  padding: 18px !important;
+  border-radius: 30px !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.governance-flow-card {
+  min-height: 205px !important;
+  padding: 20px !important;
+  border-radius: 24px !important;
+  background: rgba(255, 255, 255, 0.055) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+}
+
+.governance-flow-badge-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-bottom: 16px !important;
+}
+
+.flow-number {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  display: grid !important;
+  place-items: center !important;
+  background: #3b6cff !important;
+  color: #ffffff !important;
+  font-weight: 900 !important;
+}
+
+.flow-status {
+  padding: 7px 12px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(99, 150, 255, 0.35) !important;
+  color: #6ea0ff !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.08em !important;
+}
+
+.governance-flow-card h3 {
+  font-size: 20px !important;
+  color: #ffffff !important;
+  margin-bottom: 10px !important;
+}
+
+.governance-flow-card p {
+  color: rgba(255, 255, 255, 0.72) !important;
+  line-height: 1.55 !important;
+  font-size: 13px !important;
+}
+
+.governance-flow-card button {
+  height: 48px !important;
+  border: none !important;
+  border-radius: 999px !important;
+  background: linear-gradient(90deg, #ffffff, #dfe8ff) !important;
+  color: #001b5e !important;
+  font-weight: 900 !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+}
+
+.flow-arrow {
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-size: 26px !important;
+  text-align: center !important;
+}

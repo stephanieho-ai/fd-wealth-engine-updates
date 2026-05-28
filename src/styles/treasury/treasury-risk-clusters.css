@@ -698,3 +698,253 @@
 .treasury-escalation-wave-panel .treasury-risk-cluster-header {
   margin-bottom: 32px;
 }
+
+/* ========================================
+   ESCALATION GRID
+======================================== */
+
+.treasury-escalation-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px;
+
+  margin-top: 28px;
+}
+
+.treasury-escalation-metric {
+  background: rgba(255,255,255,0.72);
+
+  border:
+    1px solid rgba(148,163,184,0.12);
+
+  border-radius: 28px;
+
+  padding: 30px 28px;
+
+  backdrop-filter: blur(18px);
+
+  box-shadow:
+    0 10px 30px rgba(15,23,42,0.05),
+    inset 0 1px 0 rgba(255,255,255,0.7);
+
+  min-height: 230px;
+}
+
+/* ========================================
+   ESCALATION TYPOGRAPHY
+======================================== */
+
+.treasury-escalation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+
+  margin-bottom: 34px;
+}
+
+.treasury-eyebrow {
+  margin: 0 0 10px;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+
+  color: rgba(59,130,246,0.78);
+}
+
+.treasury-section-title,
+.treasury-routing-title {
+  margin: 0;
+
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+
+  color: #0f172a;
+}
+
+.treasury-status-pill {
+  padding: 12px 22px;
+
+  border-radius: 999px;
+
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  white-space: nowrap;
+
+  backdrop-filter: blur(12px);
+}
+
+.treasury-status-pill-red {
+  background: rgba(239,68,68,0.12);
+  color: #dc2626;
+
+  border: 1px solid rgba(239,68,68,0.08);
+}
+
+/* ========================================
+   METRIC GRID
+======================================== */
+
+.treasury-escalation-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 28px;
+  margin-top: 30px;
+}
+
+.treasury-escalation-metric {
+  padding: 34px 40px;
+
+  border-radius: 32px;
+
+  background: rgba(255,255,255,0.72);
+
+  border: 1px solid rgba(148,163,184,0.10);
+
+  backdrop-filter: blur(18px);
+
+  box-shadow:
+    0 12px 40px rgba(15,23,42,0.05),
+    inset 0 1px 0 rgba(255,255,255,0.72);
+}
+
+.treasury-escalation-metric p {
+  margin: 0 0 18px;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+
+  color: rgba(100,116,139,0.92);
+}
+
+.treasury-escalation-metric h3 {
+  margin: 0 0 18px;
+
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+
+  color: #0f172a;
+}
+
+.treasury-escalation-metric span {
+  display: block;
+
+  font-size: 13px;
+  line-height: 1.9;
+
+  color: #64748b;
+}
+
+/* ========================================
+   FOOTER ACTION
+======================================== */
+
+.treasury-escalation-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 24px;
+
+  margin-top: 38px;
+  padding-top: 30px;
+
+  border-top: 1px solid rgba(148,163,184,0.10);
+}
+
+.treasury-routing-label {
+  margin: 0 0 12px;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+
+  color: rgba(100,116,139,0.92);
+}
+
+.treasury-routing-title {
+  margin-top: 4px;
+}
+
+.treasury-activate-button {
+  border: none;
+  cursor: pointer;
+
+  padding: 22px 42px;
+
+  border-radius: 24px;
+
+  font-size: 16px;
+  font-weight: 800;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #10b981,
+      #06b6d4
+    );
+
+  box-shadow:
+    0 18px 40px rgba(16,185,129,0.22);
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.treasury-activate-button:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 24px 50px rgba(16,185,129,0.30);
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 1400px) {
+  .treasury-escalation-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .treasury-escalation-header,
+  .treasury-escalation-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .treasury-escalation-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .treasury-section-title {
+    font-size: 38px;
+  }
+
+  .treasury-routing-title {
+    font-size: 24px;
+  }
+
+  .treasury-activate-button {
+    width: 100%;
+    justify-content: center;
+  }
+}

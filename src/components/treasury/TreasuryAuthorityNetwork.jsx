@@ -1,53 +1,7 @@
-import React from "react";
-import "../../styles/treasury/treasury-authority-network.css";
+import { useEffect, useState } from "react";
 
 export default function TreasuryAuthorityNetwork() {
-  const authorityNodes = [
-    {
-      id: "BOARD",
-      title: "Governance Board",
-      role: "Final Authority",
-      status: "LOCKED",
-      tone: "red",
-    },
-    {
-      id: "EXEC",
-      title: "Executive Layer",
-      role: "Strategic Approval",
-      status: "REVIEW",
-      tone: "purple",
-    },
-    {
-      id: "TREASURY",
-      title: "Treasury Desk",
-      role: "Capital Routing",
-      status: "ACTIVE",
-      tone: "blue",
-    },
-    {
-      id: "RISK",
-      title: "Risk Control",
-      role: "Policy Validation",
-      status: "MONITORING",
-      tone: "orange",
-    },
-    {
-      id: "OPS",
-      title: "Execution Engine",
-      role: "Deployment Action",
-      status: "PENDING",
-      tone: "green",
-    },
-    {
-      id: "AUDIT",
-      title: "Audit Ledger",
-      role: "Immutable Record",
-      status: "SYNCED",
-      tone: "cyan",
-    },
-  ];
-
-  const transmissionRoutes = [
+  const routes = [
     "Board → Executive Layer",
     "Executive Layer → Treasury Desk",
     "Treasury Desk → Risk Control",
@@ -55,64 +9,153 @@ export default function TreasuryAuthorityNetwork() {
     "Execution Engine → Audit Ledger",
   ];
 
+  const nodes = [
+    {
+      label: "BOARD",
+      title: "Governance Board",
+      subtitle: "Final Authority",
+      status: "LOCKED",
+      className: "authority-node-red",
+    },
+    {
+      label: "EXEC",
+      title: "Executive Layer",
+      subtitle: "Strategic Approval",
+      status: "REVIEW",
+      className: "authority-node-purple",
+    },
+    {
+      label: "TREASURY",
+      title: "Treasury Desk",
+      subtitle: "Capital Routing",
+      status: "ACTIVE",
+      className: "authority-node-blue",
+    },
+    {
+      label: "RISK",
+      title: "Risk Control",
+      subtitle: "Policy Validation",
+      status: "MONITORING",
+      className: "authority-node-orange",
+    },
+    {
+      label: "OPS",
+      title: "Execution Engine",
+      subtitle: "Deployment Action",
+      status: "PENDING",
+      className: "authority-node-green",
+    },
+    {
+      label: "AUDIT",
+      title: "Audit Ledger",
+      subtitle: "Immutable Record",
+      status: "SYNCED",
+      className: "authority-node-cyan",
+    },
+  ];
+
+  const [selectedRoute, setSelectedRoute] = useState(routes[0]);
+
+  useEffect(() => {
+    const savedRoute = localStorage.getItem("treasury_selected_authority_route");
+
+    if (savedRoute && routes.includes(savedRoute)) {
+      setSelectedRoute(savedRoute);
+    }
+  }, []);
+
+  const handleRouteClick = (route) => {
+    setSelectedRoute(route);
+
+    localStorage.setItem("treasury_selected_authority_route", route);
+
+    window.dispatchEvent(
+      new CustomEvent("treasuryAuthorityRouteSelected", {
+        detail: {
+          route,
+          selectedAt: new Date().toISOString(),
+          source: "Treasury Authority Network",
+        },
+      })
+    );
+  };
+
   return (
     <section className="treasury-authority-network-card">
-      <div className="authority-network-bg" />
-
-      <div className="authority-network-header">
+      <div className="treasury-authority-network-header">
         <div>
-          <p className="eyebrow">V33.2-G18-H Authority Transmission Network</p>
-          <h2>Treasury Authority Network</h2>
-          <p className="muted">
+          <p className="treasury-eyebrow">
+            V33.2-G18-H AUTHORITY TRANSMISSION NETWORK
+          </p>
+
+          <h2 className="treasury-section-title">
+            Treasury Authority Network
+          </h2>
+
+          <p className="treasury-authority-network-subtitle">
             Institutional authority mesh for governance routing, escalation
             transmission, executive approval flow and audit synchronization.
           </p>
         </div>
 
-        <div className="authority-network-status">
-          <span>NETWORK STATUS</span>
-          <strong>ACTIVE</strong>
-          <small>6 authority nodes online</small>
+        <div className="treasury-network-status">
+          <p>NETWORK STATUS</p>
+          <h3>ACTIVE</h3>
+          <span>6 authority nodes online</span>
         </div>
       </div>
 
-      <div className="authority-network-map">
-        <div className="authority-network-line line-a" />
-        <div className="authority-network-line line-b" />
-        <div className="authority-network-line line-c" />
-
-        {authorityNodes.map((node) => (
-          <div
-            key={node.id}
-            className={`authority-network-node node-${node.tone}`}
-          >
-            <div className="node-orbit" />
-            <div className="node-core">{node.id}</div>
-            <div className="node-content">
-              <h3>{node.title}</h3>
-              <p>{node.role}</p>
-              <span>{node.status}</span>
+      <div className="treasury-authority-node-grid">
+        {nodes.map((node) => (
+          <div key={node.title} className="treasury-authority-node">
+            <div className={`treasury-authority-icon ${node.className}`}>
+              {node.label}
             </div>
+
+            <h3>{node.title}</h3>
+            <p>{node.subtitle}</p>
+
+            <span className="treasury-authority-status">
+              {node.status}
+            </span>
           </div>
         ))}
       </div>
 
-      <div className="authority-network-footer">
-        <div className="authority-route-panel">
-          <strong>Transmission Routes</strong>
-          <div className="authority-route-list">
-            {transmissionRoutes.map((route) => (
-              <span key={route}>{route}</span>
+      <div className="treasury-authority-bottom-grid">
+        <div className="treasury-authority-route-panel">
+          <h3>Transmission Routes</h3>
+
+          <div className="treasury-authority-route-list">
+            {routes.map((route) => (
+              <button
+                key={route}
+                type="button"
+                className={
+                  selectedRoute === route
+                    ? "treasury-route-chip treasury-route-chip-active"
+                    : "treasury-route-chip"
+                }
+                onClick={() => handleRouteClick(route)}
+              >
+                {route}
+              </button>
             ))}
           </div>
         </div>
 
-        <div className="authority-signal-panel">
-          <strong>Live Authority Signal</strong>
+        <div className="treasury-authority-signal-panel">
+          <h3>Live Authority Signal</h3>
+
           <p>
             Treasury governance signal is currently transmitting through the
             institutional authority network with escalation review enabled.
           </p>
+
+          <div className="treasury-selected-route-box">
+            <span>SELECTED ROUTE</span>
+            <strong>{selectedRoute}</strong>
+          </div>
         </div>
       </div>
     </section>
