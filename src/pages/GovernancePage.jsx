@@ -34,7 +34,7 @@ export default function GovernancePage() {
   const runtimeEvents = getGovernanceRuntimeEvents().slice(0, 4);
 
   return (
-    <main className="dashboard-page treasury-console-page">
+    <main className="dashboard-page treasury-console-page governance-page">
       <section className="dashboard-hero treasury-hero">
         <div className="governance-hero-top">
           <div className="governance-console-copy">
