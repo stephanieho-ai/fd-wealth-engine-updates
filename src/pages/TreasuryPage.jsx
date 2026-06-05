@@ -1,6 +1,7 @@
 import { useState } from "react";
 import LedgerViewer from "../components/dashboard/LedgerViewer";
 import { getTreasuryDecisionBrain } from "../utils/treasuryDecisionBrain";
+import TreasuryOperatorGuidanceEngine from "../components/treasury/TreasuryOperatorGuidanceEngine";
 
 export default function TreasuryPage() {
   const STORAGE_KEY = "fd_treasury_workflow_state";
@@ -642,6 +643,16 @@ const institutionalEscalationPath =
           </div>
         </div>
       </section>
+
+        <TreasuryOperatorGuidanceEngine
+          recoveryScore={recoveryScore}
+          liquidityStressLevel={liquidityStressLevel}
+          treasuryDecisionBrain={treasuryDecisionBrain}
+          openQueueCount={openQueueCount}
+          reviewQueueCount={reviewQueueCount}
+          readyQueueCount={readyQueueCount}
+          escalatedCount={escalatedCount}
+        />
 
         <section className="treasury-monitoring-wall risk-cluster-panel risk-escalation risk-escalation-wave">
 
