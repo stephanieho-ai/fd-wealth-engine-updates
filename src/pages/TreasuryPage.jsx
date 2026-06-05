@@ -2,6 +2,8 @@ import { useState } from "react";
 import LedgerViewer from "../components/dashboard/LedgerViewer";
 import { getTreasuryDecisionBrain } from "../utils/treasuryDecisionBrain";
 import TreasuryOperatorGuidanceEngine from "../components/treasury/TreasuryOperatorGuidanceEngine";
+import TreasuryOperatorActionCenter from "../components/treasury/TreasuryOperatorActionCenter";
+
 
 export default function TreasuryPage() {
   const STORAGE_KEY = "fd_treasury_workflow_state";
@@ -13,11 +15,12 @@ export default function TreasuryPage() {
     recovery: { status: "READY", queueState: "READY" },
   };
 
-  const workflowLabels = {
-    escalation: "Escalation Review",
-    routing: "Liquidity Routing",
-    recovery: "Recovery Approval",
-  };
+ const workflowLabels = {
+  escalation: "Escalation Review",
+  routing: "Liquidity Routing",
+  recovery: "Recovery Approval",
+  operator: "Operator Action Center",
+};
 
   const getRoutingDecision = (queueState) => {
     if (queueState === "OPEN") {
@@ -106,6 +109,17 @@ export default function TreasuryPage() {
       return [];
     }
   });
+
+  const [operatorRecommendationResult, setOperatorRecommendationResult] =
+    useState({
+      status: "WAITING",
+      title: "Awaiting Operator Action",
+      message:
+        "No operator decision has been executed yet. Select an action from the Operator Action Center to activate governance recommendation tracking.",
+      nextStep:
+        "Review the recommended treasury action, then approve, delay, review or escalate.",
+      severity: "INFO",
+    });
 
   const saveWorkflowState = (next) => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
@@ -558,8 +572,246 @@ const institutionalEscalationPath =
           ],
         };
 
+  const treasuryGovernanceRecommendationEngine = {
+    recommendedAction: treasuryDecisionBrain.shouldLockdown
+      ? "LOCKDOWN TREASURY EXECUTION"
+      : treasuryDecisionBrain.shouldBlockDeployment
+      ? "PAUSE NEW DEPLOYMENT"
+      : treasuryDecisionBrain.shouldProtectReserve
+      ? "PROTECT RESERVE BEFORE DEPLOYMENT"
+      : openQueueCount >= 2
+      ? "PRIORITIZE RECOVERY QUEUE"
+      : reviewQueueCount >= 2
+      ? "CLEAR GOVERNANCE REVIEW QUEUE"
+      : readyQueueCount >= 2
+      ? "APPROVE READY RECOVERY ACTIONS"
+      : "CONTINUE STANDARD MONITORING",
+
+    governanceReason: treasuryDecisionBrain.shouldLockdown
+      ? "Treasury Decision Brain is in lockdown mode. Execution should stop until governance review is completed."
+      : treasuryDecisionBrain.shouldBlockDeployment
+      ? "Deployment is restricted because treasury pressure or policy exposure has increased."
+      : treasuryDecisionBrain.shouldProtectReserve
+      ? "Reserve protection is active. Treasury should maintain liquidity discipline before new execution."
+      : openQueueCount >= 2
+      ? "Multiple unresolved recovery items are still open, which may create queue pressure."
+      : reviewQueueCount >= 2
+      ? "Several cases are under review. Governance approval bottleneck may form if they are not cleared."
+      : readyQueueCount >= 2
+      ? "Recovery actions are ready. Operator can proceed with controlled approval or resolution."
+      : "Treasury workflow is stable. No emergency governance intervention is required.",
+
+    executionReadiness: treasuryDecisionBrain.shouldLockdown
+      ? "BLOCKED"
+      : treasuryDecisionBrain.shouldBlockDeployment
+      ? "RESTRICTED"
+      : treasuryDecisionBrain.shouldProtectReserve
+      ? "CONTROLLED"
+      : readyQueueCount >= 1
+      ? "READY"
+      : reviewQueueCount >= 1
+      ? "REVIEW REQUIRED"
+      : "MONITORING",
+
+    nextOperatorStep: treasuryDecisionBrain.shouldLockdown
+      ? "Do not execute new deployment. Escalate to governance review and preserve the incident timeline."
+      : treasuryDecisionBrain.shouldBlockDeployment
+      ? "Pause new deployment and review the recovery queue before approving any treasury movement."
+      : treasuryDecisionBrain.shouldProtectReserve
+      ? "Confirm reserve protection, then continue only with controlled treasury execution."
+      : openQueueCount >= 1
+      ? "Move open queue items into review or route the most urgent case first."
+      : readyQueueCount >= 1
+      ? "Approve the ready recovery action or close the resolved treasury case."
+      : "Continue monitoring and keep the treasury workflow ready for the next operator action.",
+
+    confidenceNote:
+      liquidityStressLevel === "CRITICAL"
+        ? "Critical liquidity condition detected."
+        : liquidityStressLevel === "HIGH"
+        ? "High treasury pressure detected."
+        : liquidityStressLevel === "ELEVATED"
+        ? "Treasury monitoring is elevated."
+        : "Treasury condition remains stable.",
+  };
+
+  const handleOperatorAction = (operatorAction) => {
+    addTimelineEvent({
+      workflowKey: "operator",
+      actionType: operatorAction.actionType,
+      fromState: "OPERATOR_PANEL",
+      toState: operatorAction.label,
+      status: operatorAction.result,
+      severity: operatorAction.severity,
+    });
+
+    setOperatorRecommendationResult({
+      status: operatorAction.severity || "INFO",
+      title:
+        operatorAction.actionType === "OPERATOR_APPROVAL"
+          ? "Recommended Treasury Action Approved"
+          : operatorAction.actionType === "OPERATOR_REVIEW"
+          ? "Treasury Recommendation Sent For Review"
+          : operatorAction.actionType === "OPERATOR_DELAY"
+          ? "Treasury Recommendation Delayed"
+          : operatorAction.actionType === "OPERATOR_GOVERNANCE_ESCALATION"
+          ? "Treasury Recommendation Escalated"
+          : "Operator Action Recorded",
+      message:
+        operatorAction.actionType === "OPERATOR_APPROVAL"
+          ? "Recommended treasury action approved. Execution preparation may continue under current governance controls."
+          : operatorAction.actionType === "OPERATOR_REVIEW"
+          ? "Recommendation moved into governance review. Confirm approval readiness before execution."
+          : operatorAction.actionType === "OPERATOR_DELAY"
+          ? "Recommendation delayed. Keep the recovery queue open and continue treasury monitoring."
+          : operatorAction.actionType === "OPERATOR_GOVERNANCE_ESCALATION"
+          ? "Recommendation escalated. Institutional governance review is now required before execution."
+          : operatorAction.result || "Operator action has been recorded.",
+      nextStep: treasuryGovernanceRecommendationEngine.nextOperatorStep,
+      severity: operatorAction.severity || "INFO",
+    });
+
+    switch (operatorAction.actionType) {
+      case "OPERATOR_REVIEW":
+        updateQueueState("routing", "REVIEW");
+        break;
+
+      case "OPERATOR_APPROVAL":
+        updateQueueState("routing", "READY");
+        break;
+
+      case "OPERATOR_DELAY":
+        updateQueueState("routing", "OPEN");
+        break;
+
+      case "OPERATOR_GOVERNANCE_ESCALATION":
+        updateTreasuryStatus("escalation", "ESCALATED");
+        break;
+
+      default:
+        break;
+    }
+  };
+
   return (
     <main className="dashboard-page treasury-console-page">
+
+      <style>{`
+        .treasury-governance-engine-card,
+        .treasury-operator-result-card {
+          display: grid;
+          grid-template-columns: minmax(0, 1.25fr) minmax(360px, 0.75fr);
+          gap: 28px;
+          align-items: stretch;
+          padding: 34px;
+          margin: 28px 0;
+          border-radius: 30px;
+          border: 1px solid rgba(59, 130, 246, 0.18);
+          background:
+            radial-gradient(circle at top left, rgba(59, 130, 246, 0.08), transparent 34%),
+            linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(239, 246, 255, 0.9));
+          box-shadow: 0 24px 70px rgba(15, 23, 42, 0.10);
+        }
+
+        .treasury-governance-engine-main,
+        .treasury-operator-result-main {
+          min-width: 0;
+        }
+
+        .treasury-governance-engine-main h2,
+        .treasury-operator-result-card h2 {
+          margin: 8px 0 14px;
+          font-size: 28px;
+          line-height: 1.1;
+        }
+
+        .treasury-governance-engine-main p,
+        .treasury-operator-result-card p {
+          margin: 0;
+          max-width: 820px;
+          color: rgba(15, 23, 42, 0.78);
+          line-height: 1.55;
+        }
+
+        .treasury-engine-action-pill {
+          display: inline-flex;
+          margin: 4px 0 14px;
+          padding: 9px 14px;
+          border-radius: 999px;
+          background: rgba(37, 99, 235, 0.08);
+          border: 1px solid rgba(37, 99, 235, 0.22);
+          color: #1d4ed8;
+          font-size: 12px;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+
+        .treasury-governance-engine-panel,
+        .treasury-operator-result-panel {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .treasury-engine-status,
+        .treasury-operator-result-panel > span {
+          align-self: flex-end;
+          padding: 8px 16px;
+          border-radius: 999px;
+          background: rgba(37, 99, 235, 0.09);
+          border: 1px solid rgba(37, 99, 235, 0.22);
+          color: #1d4ed8;
+          font-size: 12px;
+          font-weight: 900;
+          letter-spacing: 0.08em;
+        }
+
+        .treasury-engine-info-grid {
+          display: grid;
+          gap: 12px;
+        }
+
+        .treasury-engine-info-grid div,
+        .treasury-operator-result-panel div {
+          padding: 14px 16px;
+          border-radius: 18px;
+          background: rgba(255, 255, 255, 0.68);
+          border: 1px solid rgba(148, 163, 184, 0.22);
+        }
+
+        .treasury-engine-info-grid small,
+        .treasury-operator-result-panel small {
+          display: block;
+          margin-bottom: 6px;
+          font-size: 10px;
+          font-weight: 800;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: rgba(37, 99, 235, 0.75);
+        }
+
+        .treasury-engine-info-grid strong,
+        .treasury-operator-result-panel strong {
+          font-size: 13px;
+          line-height: 1.45;
+          color: #0f172a;
+        }
+
+        @media (max-width: 900px) {
+          .treasury-governance-engine-card,
+          .treasury-operator-result-card {
+            grid-template-columns: 1fr;
+          }
+
+          .treasury-engine-status,
+          .treasury-operator-result-panel > span {
+            align-self: flex-start;
+          }
+        }
+      `}</style>
+
+
       <section className="dashboard-hero treasury-hero">
         <div>
           <p className="eyebrow">Treasury Operating System</p>
@@ -653,6 +905,85 @@ const institutionalEscalationPath =
           readyQueueCount={readyQueueCount}
           escalatedCount={escalatedCount}
         />
+
+        <TreasuryOperatorActionCenter
+          onOperatorAction={handleOperatorAction}
+        />
+
+        <section className="treasury-governance-engine-card">
+          <div className="treasury-governance-engine-main">
+            <p className="eyebrow">
+              🏛 Treasury Governance Recommendation Engine
+            </p>
+
+            <h2>Governance Recommendation</h2>
+
+            <div className="treasury-engine-action-pill">
+              {treasuryGovernanceRecommendationEngine.recommendedAction}
+            </div>
+
+            <p>{treasuryGovernanceRecommendationEngine.governanceReason}</p>
+          </div>
+
+          <div className="treasury-governance-engine-panel">
+            <span className="treasury-engine-status">
+              {treasuryGovernanceRecommendationEngine.executionReadiness}
+            </span>
+
+            <div className="treasury-engine-info-grid">
+              <div>
+                <small>Next Operator Step</small>
+                <strong>
+                  {treasuryGovernanceRecommendationEngine.nextOperatorStep}
+                </strong>
+              </div>
+
+              <div>
+                <small>Confidence Note</small>
+                <strong>
+                  {treasuryGovernanceRecommendationEngine.confidenceNote}
+                </strong>
+              </div>
+
+              <div>
+                <small>Liquidity Stress</small>
+                <strong>{liquidityStressLevel}</strong>
+              </div>
+
+              <div>
+                <small>Recovery Score</small>
+                <strong>{recoveryScore}</strong>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="treasury-operator-result-card">
+          <div className="treasury-operator-result-main">
+            <p className="eyebrow">🧾 Last Operator Result</p>
+            <h2>{operatorRecommendationResult.title}</h2>
+            <p>{operatorRecommendationResult.message}</p>
+          </div>
+
+          <div className="treasury-operator-result-panel">
+            <span>{operatorRecommendationResult.status}</span>
+
+            <div>
+              <small>Next Step</small>
+              <strong>{operatorRecommendationResult.nextStep}</strong>
+            </div>
+
+            <div>
+              <small>Result Severity</small>
+              <strong>{operatorRecommendationResult.severity}</strong>
+            </div>
+
+            <div>
+              <small>Timeline</small>
+              <strong>Recorded into Treasury Incident Timeline</strong>
+            </div>
+          </div>
+        </section>
 
         <section className="treasury-monitoring-wall risk-cluster-panel risk-escalation risk-escalation-wave">
 

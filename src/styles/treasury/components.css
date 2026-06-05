@@ -155,3 +155,163 @@
   line-height: 1.1 !important;
   letter-spacing: -0.03em !important;
 }
+
+/* ========================================
+   G20-B.3
+   TREASURY GOVERNANCE RECOMMENDATION ENGINE
+======================================== */
+
+.treasury-governance-recommendation {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 420px;
+  gap: 26px;
+  align-items: start;
+
+  min-height: auto;
+  padding: 30px 34px;
+  margin-bottom: 28px;
+
+  border-radius: 32px;
+  border: 1px solid rgba(59, 130, 246, 0.14);
+
+  background:
+    radial-gradient(circle at top left, rgba(59, 130, 246, 0.07), transparent 36%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(245, 248, 255, 0.96));
+
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.06);
+  overflow: hidden;
+}
+
+.treasury-governance-recommendation::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(circle at top right, rgba(59, 130, 246, 0.06), transparent 45%);
+
+  pointer-events: none;
+}
+
+.treasury-governance-recommendation > div {
+  position: relative;
+  z-index: 1;
+}
+
+.treasury-governance-recommendation .eyebrow {
+  margin: 0 0 12px;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+
+  color: #3b82f6;
+}
+
+.treasury-governance-recommendation h2 {
+  margin: 0 0 14px;
+
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.12;
+
+  color: #0f172a;
+}
+
+.treasury-governance-recommendation strong {
+  display: inline-flex;
+
+  margin: 2px 0 14px;
+  padding: 8px 14px;
+
+  border-radius: 999px;
+  border: 1px solid rgba(37, 99, 235, 0.22);
+
+  background: rgba(37, 99, 235, 0.08);
+
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  color: #1d4ed8;
+}
+
+.treasury-governance-recommendation p {
+  max-width: 760px;
+  margin: 0;
+
+  font-size: 15px;
+  line-height: 1.75;
+
+  color: #475569;
+}
+
+.treasury-recommendation-side {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  max-width: 420px;
+  margin-left: auto;
+}
+
+.treasury-recommendation-side > span {
+  align-self: flex-end;
+
+  padding: 10px 18px;
+
+  border-radius: 999px;
+  border: 1px solid rgba(37, 99, 235, 0.24);
+
+  background: rgba(37, 99, 235, 0.08);
+
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  color: #1d4ed8;
+}
+
+.treasury-recommendation-side div {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.treasury-recommendation-side small {
+  display: block;
+
+  padding: 14px 16px;
+
+  border-radius: 18px;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+
+  background: rgba(255, 255, 255, 0.72);
+
+  text-align: left;
+
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1.45;
+
+  color: #0f172a;
+}
+
+@media (max-width: 900px) {
+  .treasury-governance-recommendation {
+    grid-template-columns: 1fr;
+  }
+
+  .treasury-recommendation-side {
+    max-width: none;
+    margin-left: 0;
+  }
+
+  .treasury-recommendation-side > span {
+    align-self: flex-start;
+  }
+}

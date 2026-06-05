@@ -1,0 +1,110 @@
+/* ========================================
+   G20-B TREASURY OPERATOR ACTION CENTER
+======================================== */
+
+.treasury-operator-action-card {
+  padding: 24px;
+  border-radius: 26px;
+  border: 1px solid rgba(59, 130, 246, 0.16);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(239, 246, 255, 0.72)),
+    rgba(255, 255, 255, 0.86);
+  box-shadow:
+    0 20px 50px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  margin-bottom: 22px;
+}
+
+.treasury-operator-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.operator-status-badge {
+  padding: 6px 11px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #1d4ed8;
+  background: rgba(219, 234, 254, 0.9);
+  border: 1px solid rgba(59, 130, 246, 0.22);
+}
+
+.operator-guidance-box,
+.operator-result-panel {
+  padding: 18px;
+  border-radius: 20px;
+  background: rgba(248, 250, 252, 0.78);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+.operator-guidance-box h3 {
+  margin: 4px 0 8px;
+  font-size: 17px;
+  color: #0f172a;
+}
+
+.operator-guidance-box p,
+.operator-result-panel p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.65;
+  color: #475569;
+}
+
+.operator-label {
+  margin-bottom: 6px !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: rgba(37, 99, 235, 0.75) !important;
+}
+
+.operator-action-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.operator-action-button {
+  padding: 13px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  background: rgba(255, 255, 255, 0.84);
+  color: #1e3a8a;
+  font-size: 12px;
+  font-weight: 750;
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
+}
+
+.operator-action-button:hover {
+  transform: translateY(-1px);
+  background: rgba(239, 246, 255, 0.96);
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.12);
+}
+
+@media (max-width: 900px) {
+  .operator-action-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .treasury-operator-header {
+    flex-direction: column;
+  }
+
+  .operator-action-grid {
+    grid-template-columns: 1fr;
+  }
+}
