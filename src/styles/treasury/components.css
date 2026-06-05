@@ -481,3 +481,520 @@
     align-self: flex-start;
   }
 }
+
+/* ========================================
+   V33.2-G20-X
+   TREASURY CONTROL TOWER UI REFACTORING
+   SECTION ARCHITECTURE
+======================================== */
+
+.treasury-control-tower-page {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+}
+
+.treasury-control-section {
+  position: relative;
+  padding: 26px;
+  border-radius: 34px;
+  border: 1px solid rgba(59, 130, 246, 0.14);
+  background:
+    radial-gradient(circle at top left, rgba(59, 130, 246, 0.08), transparent 32%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.92));
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.08);
+}
+
+.treasury-control-section::before {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border-radius: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  pointer-events: none;
+}
+
+.treasury-control-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 22px;
+  margin-bottom: 22px;
+  padding: 4px 4px 18px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.treasury-control-section-header p {
+  margin: 0;
+  max-width: 720px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(71, 85, 105, 0.82);
+}
+
+.treasury-control-section-header .eyebrow {
+  margin-bottom: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(37, 99, 235, 0.72);
+}
+
+.treasury-control-section-header h2 {
+  margin: 0 0 8px;
+  font-size: 24px;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: #0f172a;
+}
+
+.treasury-control-section-badge {
+  flex-shrink: 0;
+  padding: 9px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(37, 99, 235, 0.18);
+  background: rgba(37, 99, 235, 0.07);
+  color: #1d4ed8;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* reduce oversized module spacing inside new sections */
+
+.treasury-control-section > section {
+  margin-top: 18px;
+  margin-bottom: 0;
+}
+
+.treasury-control-section .treasury-governance-engine-card,
+.treasury-control-section .treasury-operator-result-card {
+  margin: 18px 0 0;
+  padding: 26px;
+  border-radius: 26px;
+}
+
+.treasury-control-section .treasury-governance-engine-main h2,
+.treasury-control-section .treasury-operator-result-card h2 {
+  font-size: 23px;
+}
+
+/* make Treasury page feel less long */
+
+.treasury-control-section .treasury-command-center,
+.treasury-control-section .treasury-monitoring-wall,
+.treasury-control-section .treasury-executive-action-bar,
+.treasury-control-section .treasury-heatmap-panel,
+.treasury-control-section .treasury-alert-center,
+.treasury-control-section .treasury-risk-cluster-panel,
+.treasury-control-section .treasury-escalation-wave-panel,
+.treasury-control-section .treasury-action-center,
+.treasury-control-section .treasury-capital-command,
+.treasury-control-section .treasury-live-policy-monitor {
+  margin-top: 18px;
+}
+
+/* compact headers inside sections */
+
+.treasury-control-section h2 {
+  letter-spacing: -0.025em;
+}
+
+.treasury-control-section .treasury-command-description,
+.treasury-control-section .muted {
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* responsive */
+
+@media (max-width: 900px) {
+  .treasury-control-section {
+    padding: 20px;
+    border-radius: 26px;
+  }
+
+  .treasury-control-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .treasury-control-section-header h2 {
+    font-size: 21px;
+  }
+
+  .treasury-control-section .treasury-governance-engine-card,
+  .treasury-control-section .treasury-operator-result-card {
+    padding: 22px;
+  }
+}
+
+/* ========================================
+   V33.2-G20-X.1
+   COMPACT TREASURY MODULE STYLING
+======================================== */
+
+.treasury-control-section {
+  padding: 22px !important;
+  gap: 18px !important;
+}
+
+.treasury-control-section-header {
+  margin-bottom: 16px !important;
+  padding-bottom: 14px !important;
+}
+
+.treasury-control-section-header h2 {
+  font-size: 22px !important;
+}
+
+.treasury-control-section > section {
+  margin-top: 14px !important;
+}
+
+.treasury-command-center,
+.treasury-monitoring-wall,
+.treasury-executive-action-bar,
+.treasury-heatmap-panel,
+.treasury-alert-center,
+.treasury-risk-cluster-panel,
+.treasury-escalation-wave-panel,
+.treasury-action-center,
+.treasury-capital-command,
+.treasury-live-policy-monitor,
+.treasury-governance-engine-card,
+.treasury-operator-result-card {
+  padding: 22px !important;
+  border-radius: 26px !important;
+}
+
+.treasury-command-header,
+.treasury-monitoring-header,
+.treasury-executive-header,
+.treasury-heatmap-header,
+.treasury-alert-header,
+.treasury-risk-cluster-header,
+.treasury-action-header,
+.treasury-capital-command-header,
+.treasury-policy-header {
+  margin-bottom: 16px !important;
+}
+
+.treasury-command-header h2,
+.treasury-monitoring-header h2,
+.treasury-executive-header h2,
+.treasury-heatmap-header h2,
+.treasury-alert-header h2,
+.treasury-risk-cluster-header h2,
+.treasury-action-header h2,
+.treasury-capital-command-header h2,
+.treasury-policy-header h2,
+.treasury-governance-engine-main h2,
+.treasury-operator-result-main h2 {
+  font-size: 22px !important;
+  line-height: 1.18 !important;
+}
+
+.treasury-command-description,
+.treasury-control-section .muted,
+.treasury-governance-engine-main p,
+.treasury-operator-result-main p {
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+}
+
+.treasury-command-grid,
+.treasury-monitoring-grid,
+.treasury-executive-grid,
+.treasury-heatmap-grid,
+.treasury-risk-cluster-grid,
+.treasury-action-grid,
+.treasury-capital-grid,
+.treasury-policy-grid {
+  gap: 14px !important;
+}
+
+.treasury-command-card,
+.treasury-monitor-card,
+.treasury-executive-card,
+.treasury-heat-cell,
+.treasury-risk-cluster-card,
+.treasury-action-card,
+.treasury-capital-card,
+.treasury-policy-card,
+.treasury-signal-card,
+.treasury-exec-card {
+  padding: 16px !important;
+  border-radius: 20px !important;
+}
+
+.treasury-command-card span,
+.treasury-monitor-card span,
+.treasury-executive-card span,
+.treasury-heat-cell span,
+.treasury-risk-cluster-card span,
+.treasury-action-card span,
+.treasury-capital-card span,
+.treasury-policy-card span,
+.treasury-signal-card span,
+.treasury-exec-card span {
+  font-size: 10px !important;
+  letter-spacing: 0.1em !important;
+}
+
+.treasury-command-card strong,
+.treasury-monitor-card strong,
+.treasury-executive-card strong,
+.treasury-heat-cell strong,
+.treasury-risk-cluster-card strong,
+.treasury-action-card strong,
+.treasury-capital-card strong,
+.treasury-policy-card strong,
+.treasury-signal-card strong,
+.treasury-exec-card strong {
+  font-size: 18px !important;
+  line-height: 1.2 !important;
+}
+
+.treasury-command-card p,
+.treasury-monitor-card p,
+.treasury-executive-card p,
+.treasury-risk-cluster-card p,
+.treasury-action-card p,
+.treasury-capital-card p,
+.treasury-policy-card p,
+.treasury-signal-card small,
+.treasury-exec-card small {
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+}
+
+.treasury-live-risk-strip,
+.treasury-signal-ribbon,
+.treasury-executive-ribbon {
+  gap: 12px !important;
+  margin: 14px 0 !important;
+}
+
+.treasury-risk-pill {
+  padding: 12px 14px !important;
+  border-radius: 18px !important;
+}
+
+.treasury-risk-pill strong {
+  font-size: 13px !important;
+}
+
+.treasury-risk-pill small {
+  font-size: 11px !important;
+}
+
+.treasury-engine-info-grid div,
+.treasury-operator-result-panel div {
+  padding: 12px 14px !important;
+  border-radius: 16px !important;
+}
+
+.treasury-engine-action-pill,
+.treasury-action-mode,
+.treasury-monitoring-mode,
+.treasury-executive-mode,
+.treasury-heatmap-mode,
+.treasury-alert-mode,
+.treasury-risk-cluster-mode,
+.treasury-capital-mode,
+.treasury-policy-mode {
+  padding: 8px 12px !important;
+  font-size: 10px !important;
+  border-radius: 999px !important;
+}
+
+.treasury-action-buttons {
+  gap: 8px !important;
+}
+
+.treasury-action-buttons button {
+  padding: 8px 10px !important;
+  font-size: 11px !important;
+  border-radius: 12px !important;
+}
+
+/* ========================================
+   V33.2-G20-X.2
+   TREASURY VISUAL HARMONIZATION
+======================================== */
+
+/* ========================================
+   GLOBAL RHYTHM
+======================================== */
+
+.treasury-control-section {
+  margin-top: 42px !important;
+  padding: 24px !important;
+}
+
+.treasury-control-section:first-of-type {
+  margin-top: 0 !important;
+}
+
+/* ========================================
+   HEADER HARMONIZATION
+======================================== */
+
+.treasury-control-section-header {
+  padding-bottom: 18px !important;
+  margin-bottom: 22px !important;
+}
+
+.treasury-control-section-header .eyebrow {
+  font-size: 10px !important;
+  letter-spacing: 0.18em !important;
+  font-weight: 800 !important;
+  opacity: 0.8;
+}
+
+.treasury-control-section-header h2 {
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1.1 !important;
+  margin-bottom: 8px !important;
+}
+
+.treasury-control-section-header p {
+  max-width: 720px;
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+}
+
+/* ========================================
+   SECTION BADGE
+======================================== */
+
+.treasury-control-section-badge {
+  min-width: 130px;
+  text-align: center;
+  font-size: 10px !important;
+  letter-spacing: 0.14em !important;
+}
+
+/* ========================================
+   HERO REFINEMENT
+======================================== */
+
+.treasury-hero {
+  border-radius: 34px !important;
+  overflow: hidden;
+}
+
+.treasury-hero h1 {
+  font-size: 52px !important;
+  letter-spacing: -0.04em !important;
+}
+
+.treasury-hero .muted {
+  max-width: 760px;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+}
+
+/* ========================================
+   CARD HEIGHT NORMALIZATION
+======================================== */
+
+.treasury-command-center,
+.treasury-monitoring-wall,
+.treasury-heatmap-panel,
+.treasury-alert-center,
+.treasury-risk-cluster-panel,
+.treasury-escalation-wave-panel,
+.treasury-governance-engine-card,
+.treasury-operator-result-card {
+  min-height: auto !important;
+}
+
+/* ========================================
+   OPERATIONS COMPRESSION
+======================================== */
+
+.treasury-intervention-card,
+.treasury-recovery-pressure-card,
+.treasury-stable-monitor-card {
+  min-height: 220px !important;
+  padding: 24px !important;
+}
+
+.treasury-intervention-card h2,
+.treasury-recovery-pressure-card h2,
+.treasury-stable-monitor-card h2 {
+  font-size: 20px !important;
+}
+
+/* ========================================
+   LARGE PANELS
+======================================== */
+
+.treasury-routing-engine,
+.treasury-lifecycle-engine,
+.treasury-incident-timeline-card,
+.ledger-viewer-card {
+  padding: 24px !important;
+}
+
+/* ========================================
+   SMALL KPI CARDS
+======================================== */
+
+.treasury-command-card,
+.treasury-monitor-card,
+.treasury-risk-card,
+.treasury-wave-card,
+.treasury-policy-card,
+.treasury-capital-card {
+  min-height: 110px !important;
+}
+
+.treasury-command-card strong,
+.treasury-monitor-card strong,
+.treasury-risk-card strong,
+.treasury-wave-card strong,
+.treasury-policy-card strong,
+.treasury-capital-card strong {
+  font-size: 18px !important;
+}
+
+/* ========================================
+   GOVERNANCE CENTER
+======================================== */
+
+.treasury-operator-guidance-card,
+.treasury-action-center,
+.treasury-governance-engine-card,
+.treasury-execution-readiness-card,
+.treasury-operator-result-card {
+  border-radius: 28px !important;
+}
+
+.treasury-action-buttons button {
+  height: 42px !important;
+}
+
+/* ========================================
+   SECTION DEPTH
+======================================== */
+
+.treasury-control-section {
+  box-shadow:
+    0 16px 40px rgba(15,23,42,0.05),
+    0 2px 10px rgba(15,23,42,0.03);
+}
+
+/* ========================================
+   PREMIUM GLASS
+======================================== */
+
+.treasury-control-section::before {
+  opacity: 0.7;
+}

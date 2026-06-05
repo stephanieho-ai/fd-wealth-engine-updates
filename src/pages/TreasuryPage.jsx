@@ -695,7 +695,7 @@ const institutionalEscalationPath =
   };
 
   return (
-    <main className="dashboard-page treasury-console-page">
+    <main className="dashboard-page treasury-console-page treasury-control-tower-page">
 
       <style>{`
         .treasury-governance-engine-card,
@@ -799,6 +799,67 @@ const institutionalEscalationPath =
           color: #0f172a;
         }
 
+
+        .treasury-control-section {
+          margin: 32px 0 42px;
+          padding: 26px;
+          border-radius: 34px;
+          border: 1px solid rgba(148, 163, 184, 0.22);
+          background:
+            radial-gradient(circle at top left, rgba(59, 130, 246, 0.08), transparent 30%),
+            linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(248, 250, 252, 0.92));
+          box-shadow: 0 22px 60px rgba(15, 23, 42, 0.07);
+        }
+
+        .treasury-control-section-header {
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          gap: 22px;
+          margin-bottom: 22px;
+          padding-bottom: 18px;
+          border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+        }
+
+        .treasury-control-section-header > div {
+          max-width: 780px;
+        }
+
+        .treasury-control-section-header h2 {
+          margin: 6px 0 8px;
+          font-size: 24px;
+          line-height: 1.15;
+          letter-spacing: -0.03em;
+          color: #0f172a;
+        }
+
+        .treasury-control-section-header p:not(.eyebrow) {
+          margin: 0;
+          color: rgba(51, 65, 85, 0.72);
+          line-height: 1.55;
+          font-size: 14px;
+        }
+
+        .treasury-section-badge {
+          flex: 0 0 auto;
+          padding: 9px 14px;
+          border-radius: 999px;
+          background: rgba(37, 99, 235, 0.08);
+          border: 1px solid rgba(37, 99, 235, 0.18);
+          color: #1d4ed8;
+          font-size: 11px;
+          font-weight: 900;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+        }
+
+        .treasury-control-section > section,
+        .treasury-control-section > .treasury-governance-engine-card,
+        .treasury-control-section > .treasury-operator-result-card {
+          margin-top: 18px;
+          margin-bottom: 18px;
+        }
+
         @media (max-width: 900px) {
           .treasury-governance-engine-card,
           .treasury-operator-result-card {
@@ -812,14 +873,13 @@ const institutionalEscalationPath =
         }
       `}</style>
 
-
       <section className="dashboard-hero treasury-hero">
         <div>
           <p className="eyebrow">Treasury Operating System</p>
-          <h1>Treasury Console</h1>
+          <h1>Treasury Control Tower</h1>
           <p className="muted">
-            Institutional recovery queue, escalation monitoring, liquidity
-            routing and treasury action control.
+            Institutional command center for liquidity, governance, recovery,
+            execution readiness and treasury incident traceability.
           </p>
         </div>
 
@@ -829,7 +889,16 @@ const institutionalEscalationPath =
         </div>
       </section>
 
-    
+      <section className="treasury-control-section">
+        <div className="treasury-control-section-header">
+          <div>
+            <p className="eyebrow">Section A</p>
+            <h2>Control Tower Overview</h2>
+            <p>Live treasury operating condition, monitoring wall and executive action command.</p>
+          </div>
+
+          <span className="treasury-section-badge">CONTROL TOWER</span>
+        </div>
       <section className="treasury-command-center risk-cluster-panel risk-watch treasury-density-radar">
         <div className="treasury-command-header">
           <div>
@@ -896,100 +965,6 @@ const institutionalEscalationPath =
           </div>
         </div>
       </section>
-
-        <TreasuryOperatorGuidanceEngine
-          recoveryScore={recoveryScore}
-          liquidityStressLevel={liquidityStressLevel}
-          treasuryDecisionBrain={treasuryDecisionBrain}
-          openQueueCount={openQueueCount}
-          reviewQueueCount={reviewQueueCount}
-          readyQueueCount={readyQueueCount}
-          escalatedCount={escalatedCount}
-        />
-
-        <TreasuryOperatorActionCenter
-          onOperatorAction={handleOperatorAction}
-        />
-
-        <section className="treasury-governance-engine-card">
-          <div className="treasury-governance-engine-main">
-            <p className="eyebrow">
-              🏛 Treasury Governance Recommendation Engine
-            </p>
-
-            <h2>Governance Recommendation</h2>
-
-            <div className="treasury-engine-action-pill">
-              {treasuryGovernanceRecommendationEngine.recommendedAction}
-            </div>
-
-            <p>{treasuryGovernanceRecommendationEngine.governanceReason}</p>
-          </div>
-
-          <div className="treasury-governance-engine-panel">
-            <span className="treasury-engine-status">
-              {treasuryGovernanceRecommendationEngine.executionReadiness}
-            </span>
-
-            <div className="treasury-engine-info-grid">
-              <div>
-                <small>Next Operator Step</small>
-                <strong>
-                  {treasuryGovernanceRecommendationEngine.nextOperatorStep}
-                </strong>
-              </div>
-
-              <div>
-                <small>Confidence Note</small>
-                <strong>
-                  {treasuryGovernanceRecommendationEngine.confidenceNote}
-                </strong>
-              </div>
-
-              <div>
-                <small>Liquidity Stress</small>
-                <strong>{liquidityStressLevel}</strong>
-              </div>
-
-              <div>
-                <small>Recovery Score</small>
-                <strong>{recoveryScore}</strong>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <TreasuryGovernanceExecutionReadiness
-          recommendation={treasuryGovernanceRecommendationEngine}
-          operatorAction={operatorRecommendationResult}
-        />
-
-        <section className="treasury-operator-result-card">
-          <div className="treasury-operator-result-main">
-            <p className="eyebrow">🧾 Last Operator Result</p>
-            <h2>{operatorRecommendationResult.title}</h2>
-            <p>{operatorRecommendationResult.message}</p>
-          </div>
-
-          <div className="treasury-operator-result-panel">
-            <span>{operatorRecommendationResult.status}</span>
-
-            <div>
-              <small>Next Step</small>
-              <strong>{operatorRecommendationResult.nextStep}</strong>
-            </div>
-
-            <div>
-              <small>Result Severity</small>
-              <strong>{operatorRecommendationResult.severity}</strong>
-            </div>
-
-            <div>
-              <small>Timeline</small>
-              <strong>Recorded into Treasury Incident Timeline</strong>
-            </div>
-          </div>
-        </section>
 
         <section className="treasury-monitoring-wall risk-cluster-panel risk-escalation risk-escalation-wave">
 
@@ -1174,7 +1149,18 @@ const institutionalEscalationPath =
                 </div>
 
                 </section>
+      </section>
 
+      <section className="treasury-control-section">
+        <div className="treasury-control-section-header">
+          <div>
+            <p className="eyebrow">Section B</p>
+            <h2>Risk Intelligence Center</h2>
+            <p>Treasury heatmap, alert feed, risk cluster intelligence and escalation wave monitoring.</p>
+          </div>
+
+          <span className="treasury-section-badge">CONTROL TOWER</span>
+        </div>
      <section className="treasury-heatmap-panel risk-cluster-panel risk-critical liquidity-shock">
   <div className="treasury-heatmap-header">
     <div>
@@ -1665,7 +1651,123 @@ const institutionalEscalationPath =
     <small>{liveActionSignal}</small>
   </div>
 </section>
+      </section>
 
+      <section className="treasury-control-section">
+        <div className="treasury-control-section-header">
+          <div>
+            <p className="eyebrow">Section C</p>
+            <h2>Governance & Operator Center</h2>
+            <p>Operator guidance, operator action, recommendation engine and execution readiness control.</p>
+          </div>
+
+          <span className="treasury-section-badge">CONTROL TOWER</span>
+        </div>
+        <TreasuryOperatorGuidanceEngine
+          recoveryScore={recoveryScore}
+          liquidityStressLevel={liquidityStressLevel}
+          treasuryDecisionBrain={treasuryDecisionBrain}
+          openQueueCount={openQueueCount}
+          reviewQueueCount={reviewQueueCount}
+          readyQueueCount={readyQueueCount}
+          escalatedCount={escalatedCount}
+        />
+
+        <TreasuryOperatorActionCenter
+          onOperatorAction={handleOperatorAction}
+        />
+
+        <section className="treasury-governance-engine-card">
+          <div className="treasury-governance-engine-main">
+            <p className="eyebrow">
+              🏛 Treasury Governance Recommendation Engine
+            </p>
+
+            <h2>Governance Recommendation</h2>
+
+            <div className="treasury-engine-action-pill">
+              {treasuryGovernanceRecommendationEngine.recommendedAction}
+            </div>
+
+            <p>{treasuryGovernanceRecommendationEngine.governanceReason}</p>
+          </div>
+
+          <div className="treasury-governance-engine-panel">
+            <span className="treasury-engine-status">
+              {treasuryGovernanceRecommendationEngine.executionReadiness}
+            </span>
+
+            <div className="treasury-engine-info-grid">
+              <div>
+                <small>Next Operator Step</small>
+                <strong>
+                  {treasuryGovernanceRecommendationEngine.nextOperatorStep}
+                </strong>
+              </div>
+
+              <div>
+                <small>Confidence Note</small>
+                <strong>
+                  {treasuryGovernanceRecommendationEngine.confidenceNote}
+                </strong>
+              </div>
+
+              <div>
+                <small>Liquidity Stress</small>
+                <strong>{liquidityStressLevel}</strong>
+              </div>
+
+              <div>
+                <small>Recovery Score</small>
+                <strong>{recoveryScore}</strong>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <TreasuryGovernanceExecutionReadiness
+          recommendation={treasuryGovernanceRecommendationEngine}
+          operatorAction={operatorRecommendationResult}
+        />
+
+        <section className="treasury-operator-result-card">
+          <div className="treasury-operator-result-main">
+            <p className="eyebrow">🧾 Last Operator Result</p>
+            <h2>{operatorRecommendationResult.title}</h2>
+            <p>{operatorRecommendationResult.message}</p>
+          </div>
+
+          <div className="treasury-operator-result-panel">
+            <span>{operatorRecommendationResult.status}</span>
+
+            <div>
+              <small>Next Step</small>
+              <strong>{operatorRecommendationResult.nextStep}</strong>
+            </div>
+
+            <div>
+              <small>Result Severity</small>
+              <strong>{operatorRecommendationResult.severity}</strong>
+            </div>
+
+            <div>
+              <small>Timeline</small>
+              <strong>Recorded into Treasury Incident Timeline</strong>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section className="treasury-control-section">
+        <div className="treasury-control-section-header">
+          <div>
+            <p className="eyebrow">Section D</p>
+            <h2>Treasury Operations Center</h2>
+            <p>Recovery routing, lifecycle control, restrictions, policy monitor and capital command.</p>
+          </div>
+
+          <span className="treasury-section-badge">CONTROL TOWER</span>
+        </div>
       <section className="treasury-signal-ribbon">
         <div className="treasury-signal-card critical">
           <span>Open Queue</span>
@@ -2233,7 +2335,18 @@ const institutionalEscalationPath =
           ))}
         </div>
       </section>
+      </section>
 
+      <section className="treasury-control-section">
+        <div className="treasury-control-section-header">
+          <div>
+            <p className="eyebrow">Section E</p>
+            <h2>Timeline, Audit & Ledger</h2>
+            <p>Treasury incident history, latest operational events and immutable ledger traceability.</p>
+          </div>
+
+          <span className="treasury-section-badge">CONTROL TOWER</span>
+        </div>
       <section className="treasury-action-center">
         <div className="treasury-action-header">
           <div>
@@ -2356,6 +2469,7 @@ const institutionalEscalationPath =
       </section>
 
       <LedgerViewer />
+      </section>
     </main>
   );
 }
