@@ -315,3 +315,169 @@
     align-self: flex-start;
   }
 }
+
+/* ========================================
+   G20-B.4
+   TREASURY EXECUTION READINESS ENGINE
+   Compact Dashboard Version
+======================================== */
+
+.treasury-execution-readiness-card {
+  margin: 24px 0;
+  padding: 24px;
+  border-radius: 26px;
+  border: 1px solid rgba(59, 130, 246, 0.16);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.96),
+      rgba(239, 246, 255, 0.9)
+    );
+  box-shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+}
+
+.treasury-execution-readiness-card .treasury-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.treasury-readiness-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 84px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.treasury-readiness-badge.ready {
+  background: rgba(34, 197, 94, 0.12);
+  color: #16a34a;
+}
+
+.treasury-readiness-badge.caution {
+  background: rgba(245, 158, 11, 0.13);
+  color: #d97706;
+}
+
+.treasury-readiness-badge.not-ready {
+  background: rgba(239, 68, 68, 0.13);
+  color: #dc2626;
+}
+
+.treasury-readiness-main {
+  display: grid;
+  grid-template-columns: 0.82fr 1.18fr;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.treasury-readiness-score-box,
+.treasury-readiness-next-step {
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+.treasury-readiness-label,
+.treasury-readiness-next-step span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(15, 23, 42, 0.68);
+}
+
+.treasury-readiness-score-box strong {
+  display: block;
+  margin: 0 0 8px;
+  font-size: 30px;
+  line-height: 1;
+  font-weight: 900;
+  color: #2563eb;
+}
+
+.treasury-readiness-score-box p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgba(15, 23, 42, 0.76);
+}
+
+.treasury-readiness-next-step strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #0f172a;
+}
+
+.treasury-readiness-checklist {
+  margin-top: 16px;
+  display: grid;
+  gap: 10px;
+}
+
+.treasury-readiness-check-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.14);
+}
+
+.treasury-readiness-check-row span {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 10px;
+  color: rgba(15, 23, 42, 0.55);
+}
+
+.treasury-readiness-check-row strong {
+  display: block;
+  font-size: 13px;
+  line-height: 1.25;
+  color: #0f172a;
+}
+
+.treasury-readiness-check-row em {
+  flex-shrink: 0;
+  font-style: normal;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.treasury-readiness-check-row em.passed {
+  color: #16a34a;
+}
+
+.treasury-readiness-check-row em.review {
+  color: #d97706;
+}
+
+@media (max-width: 900px) {
+  .treasury-execution-readiness-card .treasury-card-header {
+    flex-direction: column;
+  }
+
+  .treasury-readiness-main {
+    grid-template-columns: 1fr;
+  }
+
+  .treasury-readiness-badge {
+    align-self: flex-start;
+  }
+}

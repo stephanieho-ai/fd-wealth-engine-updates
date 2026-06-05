@@ -3,6 +3,7 @@ import LedgerViewer from "../components/dashboard/LedgerViewer";
 import { getTreasuryDecisionBrain } from "../utils/treasuryDecisionBrain";
 import TreasuryOperatorGuidanceEngine from "../components/treasury/TreasuryOperatorGuidanceEngine";
 import TreasuryOperatorActionCenter from "../components/treasury/TreasuryOperatorActionCenter";
+import TreasuryGovernanceExecutionReadiness from "../components/treasury/TreasuryGovernanceExecutionReadiness";
 
 
 export default function TreasuryPage() {
@@ -957,6 +958,11 @@ const institutionalEscalationPath =
             </div>
           </div>
         </section>
+
+        <TreasuryGovernanceExecutionReadiness
+          recommendation={treasuryGovernanceRecommendationEngine}
+          operatorAction={operatorRecommendationResult}
+        />
 
         <section className="treasury-operator-result-card">
           <div className="treasury-operator-result-main">
