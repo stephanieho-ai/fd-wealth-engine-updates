@@ -5,6 +5,7 @@ import TreasuryOperatorGuidanceEngine from "../components/treasury/TreasuryOpera
 import TreasuryOperatorActionCenter from "../components/treasury/TreasuryOperatorActionCenter";
 import TreasuryGovernanceExecutionReadiness from "../components/treasury/TreasuryGovernanceExecutionReadiness";
 import TreasuryIntelligenceSummary from "../components/treasury/TreasuryIntelligenceSummary";
+import TreasuryIntelligenceSignalEngine from "../components/treasury/TreasuryIntelligenceSignalEngine";
 
 
 export default function TreasuryPage() {
@@ -896,6 +897,8 @@ const institutionalEscalationPath =
         livePolicyStatus={livePolicyStatus}
         liveActionSignal={liveActionSignal}
       />
+
+      <TreasuryIntelligenceSignalEngine />
 
       <section className="treasury-control-section">
         <div className="treasury-control-section-header">
