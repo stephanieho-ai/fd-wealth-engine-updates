@@ -6,6 +6,7 @@ import TreasuryOperatorActionCenter from "../components/treasury/TreasuryOperato
 import TreasuryGovernanceExecutionReadiness from "../components/treasury/TreasuryGovernanceExecutionReadiness";
 import TreasuryIntelligenceSummary from "../components/treasury/TreasuryIntelligenceSummary";
 import TreasuryIntelligenceSignalEngine from "../components/treasury/TreasuryIntelligenceSignalEngine";
+import TreasuryIntelligenceAssessmentEngine from "../components/treasury/TreasuryIntelligenceAssessmentEngine";
 
 
 export default function TreasuryPage() {
@@ -891,6 +892,26 @@ const institutionalEscalationPath =
         </div>
       </section>
 
+     <section className="treasury-control-section treasury-intelligence-center-section">
+
+      <div className="treasury-control-section-header">
+        <div>
+         <p className="eyebrow">Section I</p>
+
+        <h2>Treasury Intelligence Center</h2>
+
+          <p>
+            Treasury intelligence layer for liquidity signal,
+            governance pressure, risk movement,
+            confidence state and AI assessment.
+          </p>
+        </div>
+
+        <span className="treasury-section-badge">
+          INTELLIGENCE CENTER
+        </span>
+      </div>
+
       <TreasuryIntelligenceSummary
         liquidityStressLevel={liquidityStressLevel}
         treasurySignal={treasurySignal}
@@ -900,7 +921,11 @@ const institutionalEscalationPath =
 
       <TreasuryIntelligenceSignalEngine />
 
-      <section className="treasury-control-section">
+      <TreasuryIntelligenceAssessmentEngine />
+
+    </section>
+
+    <section className="treasury-control-section">
         <div className="treasury-control-section-header">
           <div>
             <p className="eyebrow">Section A</p>
