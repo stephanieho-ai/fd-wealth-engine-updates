@@ -4,6 +4,7 @@ import { getTreasuryDecisionBrain } from "../utils/treasuryDecisionBrain";
 import TreasuryOperatorGuidanceEngine from "../components/treasury/TreasuryOperatorGuidanceEngine";
 import TreasuryOperatorActionCenter from "../components/treasury/TreasuryOperatorActionCenter";
 import TreasuryGovernanceExecutionReadiness from "../components/treasury/TreasuryGovernanceExecutionReadiness";
+import TreasuryIntelligenceSummary from "../components/treasury/TreasuryIntelligenceSummary";
 
 
 export default function TreasuryPage() {
@@ -888,6 +889,13 @@ const institutionalEscalationPath =
           <strong>TREASURY OS</strong>
         </div>
       </section>
+
+      <TreasuryIntelligenceSummary
+        liquidityStressLevel={liquidityStressLevel}
+        treasurySignal={treasurySignal}
+        livePolicyStatus={livePolicyStatus}
+        liveActionSignal={liveActionSignal}
+      />
 
       <section className="treasury-control-section">
         <div className="treasury-control-section-header">
