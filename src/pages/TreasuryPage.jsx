@@ -7,6 +7,7 @@ import TreasuryGovernanceExecutionReadiness from "../components/treasury/Treasur
 import TreasuryIntelligenceSummary from "../components/treasury/TreasuryIntelligenceSummary";
 import TreasuryIntelligenceSignalEngine from "../components/treasury/TreasuryIntelligenceSignalEngine";
 import TreasuryIntelligenceAssessmentEngine from "../components/treasury/TreasuryIntelligenceAssessmentEngine";
+import TreasuryIntelligenceRecommendationEngine from "../components/treasury/TreasuryIntelligenceRecommendationEngine";
 
 
 export default function TreasuryPage() {
@@ -863,6 +864,29 @@ const institutionalEscalationPath =
           margin-bottom: 18px;
         }
 
+        /* ========================================
+            G21-C.1
+            TREASURY INTELLIGENCE DUAL GRID
+          ======================================== */
+
+          .treasury-intelligence-dual-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 20px;
+          }
+
+          .treasury-intelligence-dual-grid > section {
+            margin: 0;
+            height: 100%;
+          }
+
+          @media (max-width: 1000px) {
+          .treasury-intelligence-dual-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+
         @media (max-width: 900px) {
           .treasury-governance-engine-card,
           .treasury-operator-result-card {
@@ -921,7 +945,11 @@ const institutionalEscalationPath =
 
       <TreasuryIntelligenceSignalEngine />
 
+    <div className="treasury-intelligence-dual-grid">
       <TreasuryIntelligenceAssessmentEngine />
+
+      <TreasuryIntelligenceRecommendationEngine />
+    </div>
 
     </section>
 
