@@ -1,0 +1,207 @@
+/* ========================================
+   G21-G
+   TREASURY INTELLIGENCE FEEDBACK LOOP ENGINE
+======================================== */
+
+.treasury-feedback-loop-engine {
+  margin-top: 24px;
+}
+
+.treasury-feedback-card {
+  position: relative;
+
+  padding: 28px;
+
+  border-radius: 24px;
+
+  background: rgba(255, 255, 255, 0.78);
+
+  backdrop-filter: blur(20px);
+
+  border: 1px solid rgba(255, 255, 255, 0.6);
+
+  box-shadow:
+    0 10px 30px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* ========================================
+   FEEDBACK METRICS
+======================================== */
+
+.treasury-feedback-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(180px, 1fr));
+
+  gap: 16px;
+
+  margin-top: 24px;
+}
+
+.treasury-feedback-grid .treasury-metric-card {
+  padding: 18px;
+
+  border-radius: 18px;
+
+  background: rgba(248, 250, 252, 0.9);
+
+  border: 1px solid rgba(226, 232, 240, 0.9);
+
+  transition: all 0.25s ease;
+}
+
+.treasury-feedback-grid .treasury-metric-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 20px rgba(59, 130, 246, 0.12);
+}
+
+.treasury-feedback-grid .treasury-metric-card span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  color: #64748b;
+}
+
+.treasury-feedback-grid .treasury-metric-card strong {
+  display: block;
+
+  font-size: 22px;
+
+  font-weight: 700;
+
+  color: #0f172a;
+}
+
+/* ========================================
+   FEEDBACK SUMMARY
+======================================== */
+
+.treasury-feedback-summary {
+  margin-top: 24px;
+
+  padding: 22px;
+
+  border-radius: 18px;
+
+  background: rgba(239, 246, 255, 0.75);
+
+  border: 1px solid rgba(147, 197, 253, 0.35);
+}
+
+.treasury-feedback-summary h3 {
+  margin: 0 0 14px;
+
+  font-size: 16px;
+
+  font-weight: 700;
+
+  color: #0f172a;
+}
+
+.treasury-feedback-summary ul {
+  margin: 0;
+
+  padding-left: 18px;
+}
+
+.treasury-feedback-summary li {
+  margin-bottom: 10px;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+
+  color: #334155;
+}
+
+.treasury-feedback-summary li:last-child {
+  margin-bottom: 0;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 768px) {
+  .treasury-feedback-card {
+    padding: 20px;
+  }
+
+  .treasury-feedback-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .treasury-feedback-grid .treasury-metric-card strong {
+    font-size: 20px;
+  }
+}
+
+/* ========================================
+   FEEDBACK IMPACT
+======================================== */
+
+.treasury-feedback-impact {
+  margin-top: 24px;
+}
+
+.treasury-feedback-impact h3 {
+  margin: 0 0 14px;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  color: #0f172a;
+}
+
+.treasury-feedback-impact-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(220px, 1fr));
+
+  gap: 16px;
+}
+
+.treasury-impact-card {
+  padding: 18px;
+
+  border-radius: 18px;
+
+  background: rgba(248, 250, 252, 0.9);
+
+  border: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.treasury-impact-card span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  color: #64748b;
+}
+
+.treasury-impact-card strong {
+  font-size: 22px;
+  font-weight: 700;
+
+  color: #0f172a;
+}
