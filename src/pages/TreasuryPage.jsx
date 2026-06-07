@@ -20,7 +20,7 @@ import TreasuryIntelligenceWhatIfEngine
 from "../components/treasury/TreasuryIntelligenceWhatIfEngine";
 import TreasuryFutureStateModelingEngine
 from "../components/treasury/TreasuryFutureStateModelingEngine";
-
+import TreasuryStrategyIntelligenceOverview from "../components/treasury/TreasuryStrategyIntelligenceOverview";
 
 export default function TreasuryPage() {
   const STORAGE_KEY = "fd_treasury_workflow_state";
@@ -969,8 +969,9 @@ const institutionalEscalationPath =
        <TreasuryIntelligencePredictionEngine />
        <TreasuryIntelligenceScenarioEngine />
        <TreasuryIntelligenceWhatIfEngine />
-
        <TreasuryFutureStateModelingEngine />
+       
+       <TreasuryStrategyIntelligenceOverview />
 
     </section>
 
