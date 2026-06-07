@@ -10,6 +10,7 @@ import TreasuryIntelligenceAssessmentEngine from "../components/treasury/Treasur
 import TreasuryIntelligenceRecommendationEngine from "../components/treasury/TreasuryIntelligenceRecommendationEngine";
 import TreasuryIntelligenceDecisionEngine
 from "../components/treasury/TreasuryIntelligenceDecisionEngine";
+import TreasuryIntelligenceExecutionEngine from "../components/treasury/TreasuryIntelligenceExecutionEngine";
 
 
 export default function TreasuryPage() {
@@ -949,13 +950,11 @@ const institutionalEscalationPath =
 
     <div className="treasury-intelligence-dual-grid">
       <TreasuryIntelligenceAssessmentEngine />
-
       <TreasuryIntelligenceRecommendationEngine />
-
-      
     </div>
-    
+
        <TreasuryIntelligenceDecisionEngine />
+       <TreasuryIntelligenceExecutionEngine />
 
     </section>
 
