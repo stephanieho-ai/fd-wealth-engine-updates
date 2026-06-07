@@ -1,0 +1,183 @@
+/* ========================================
+   G21-H.1
+   PREMIUM TREASURY INTELLIGENCE LEARNING ENGINE
+======================================== */
+
+.treasury-learning-engine {
+  width: 100%;
+  margin-top: 22px;
+}
+
+.treasury-learning-card {
+  width: 100%;
+  padding: 26px;
+  border-radius: 26px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.92),
+      rgba(239, 246, 255, 0.78)
+    );
+
+  border: 1px solid rgba(147, 197, 253, 0.35);
+
+  box-shadow:
+    0 18px 45px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+
+  backdrop-filter: blur(18px);
+}
+
+.treasury-learning-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.treasury-learning-metric {
+  padding: 16px 18px;
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(191, 219, 254, 0.65);
+
+  box-shadow:
+    0 10px 24px rgba(15, 23, 42, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.treasury-learning-metric span {
+  display: block;
+  margin-bottom: 8px;
+
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(71, 85, 105, 0.82);
+}
+
+.treasury-learning-metric strong {
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.03em;
+}
+
+.treasury-learning-body {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.treasury-learning-panel {
+  padding: 20px;
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(191, 219, 254, 0.58);
+}
+
+.treasury-learning-panel h3 {
+  margin: 0 0 14px;
+
+  font-size: 15px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.treasury-learning-item {
+  padding: 14px 0;
+  border-top: 1px solid rgba(203, 213, 225, 0.55);
+}
+
+.treasury-learning-item:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+.treasury-learning-item span {
+  display: block;
+
+  font-size: 13px;
+  font-weight: 800;
+  color: #1e3a8a;
+}
+
+.treasury-learning-item p {
+  margin: 6px 0 0;
+
+  font-size: 13px;
+  line-height: 1.65;
+  color: rgba(51, 65, 85, 0.82);
+}
+
+.treasury-learning-recommendation {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(239, 246, 255, 0.95),
+      rgba(255, 255, 255, 0.76)
+    );
+}
+
+.treasury-learning-recommendation-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.treasury-learning-mini-card {
+  padding: 14px;
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(191, 219, 254, 0.55);
+}
+
+.treasury-learning-mini-card span {
+  display: block;
+  margin-bottom: 6px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+
+  color: rgba(71, 85, 105, 0.75);
+}
+
+.treasury-learning-mini-card strong {
+  display: block;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  color: #0f172a;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 1000px) {
+  .treasury-learning-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .treasury-learning-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .treasury-learning-card {
+    padding: 20px;
+    border-radius: 22px;
+  }
+
+  .treasury-learning-grid {
+    grid-template-columns: 1fr;
+  }
+}
