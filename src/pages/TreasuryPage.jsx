@@ -18,6 +18,8 @@ import TreasuryIntelligenceScenarioEngine
 from "../components/treasury/TreasuryIntelligenceScenarioEngine";
 import TreasuryIntelligenceWhatIfEngine
 from "../components/treasury/TreasuryIntelligenceWhatIfEngine";
+import TreasuryFutureStateModelingEngine
+from "../components/treasury/TreasuryFutureStateModelingEngine";
 
 
 export default function TreasuryPage() {
@@ -967,6 +969,8 @@ const institutionalEscalationPath =
        <TreasuryIntelligencePredictionEngine />
        <TreasuryIntelligenceScenarioEngine />
        <TreasuryIntelligenceWhatIfEngine />
+
+       <TreasuryFutureStateModelingEngine />
 
     </section>
 

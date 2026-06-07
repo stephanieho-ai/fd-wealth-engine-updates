@@ -1,0 +1,291 @@
+/* =========================================================
+   V33.2-G21-L
+   TREASURY FUTURE STATE MODELING ENGINE
+   Premium Institutional CSS
+========================================================= */
+
+.treasury-future-state-engine {
+  width: 100%;
+  margin-top: 22px;
+}
+
+.treasury-future-state-card {
+  position: relative;
+  overflow: hidden;
+  padding: 24px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(239,246,255,0.9));
+  border: 1px solid rgba(148,163,184,0.22);
+  box-shadow: 0 24px 60px rgba(15,23,42,0.08), inset 0 1px 0 rgba(255,255,255,0.75);
+}
+
+.treasury-future-state-card::before,
+.treasury-future-state-card::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.treasury-future-state-card::before {
+  inset: -120px auto auto -120px;
+  width: 260px;
+  height: 260px;
+  background: radial-gradient(circle, rgba(59,130,246,0.16), transparent 70%);
+}
+
+.treasury-future-state-card::after {
+  right: -110px;
+  bottom: -120px;
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(14,165,233,0.14), transparent 72%);
+}
+
+.future-state-summary-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.future-state-metric {
+  min-height: 92px;
+  padding: 17px 18px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(248,250,252,0.82));
+  border: 1px solid rgba(148,163,184,0.2);
+  box-shadow: 0 12px 28px rgba(15,23,42,0.055), inset 0 1px 0 rgba(255,255,255,0.75);
+}
+
+.future-state-metric span {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.future-state-metric strong {
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.future-confidence-section {
+  position: relative;
+  z-index: 1;
+  margin-top: 18px;
+  padding: 18px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(15,23,42,0.96), rgba(30,41,59,0.94));
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 18px 42px rgba(15,23,42,0.16), inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.future-confidence-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.future-confidence-header span {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(226,232,240,0.78);
+}
+
+.future-confidence-header strong {
+  font-size: 22px;
+  font-weight: 850;
+  color: #f8fafc;
+}
+
+.future-confidence-bar {
+  width: 100%;
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(148,163,184,0.22);
+}
+
+.future-confidence-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #60a5fa, #38bdf8, #22c55e);
+  box-shadow: 0 0 22px rgba(56,189,248,0.55);
+}
+
+/* Treasury Evolution Path - previous horizontal version */
+
+.future-trajectory-section {
+  position: relative;
+  z-index: 1;
+  margin-top: 20px;
+}
+
+.future-trajectory-header {
+  margin-bottom: 14px;
+}
+
+.future-trajectory-header span {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.future-trajectory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.trajectory-fragment {
+  display: contents;
+}
+
+.trajectory-arrow {
+  display: none;
+}
+
+.trajectory-stage {
+  min-height: 86px;
+  padding: 16px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(241,245,249,0.88));
+  border: 1px solid rgba(148,163,184,0.18);
+  box-shadow: 0 10px 24px rgba(15,23,42,0.05), inset 0 1px 0 rgba(255,255,255,0.7);
+}
+
+.trajectory-stage span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.trajectory-stage strong {
+  font-size: 13px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* Future State Cards */
+
+.future-state-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 18px;
+}
+
+.future-state-item {
+  min-height: 250px;
+  padding: 20px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(241,245,249,0.86));
+  border: 1px solid rgba(148,163,184,0.22);
+  box-shadow: 0 14px 34px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.8);
+}
+
+.future-state-item h3 {
+  margin: 0 0 16px;
+  font-size: 15px;
+  font-weight: 850;
+  color: #0f172a;
+}
+
+.future-state-data {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid rgba(148,163,184,0.16);
+}
+
+.future-state-data span {
+  font-size: 12px;
+  font-weight: 650;
+  color: #64748b;
+}
+
+.future-state-data strong {
+  font-size: 13px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.future-state-outcome {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(148,163,184,0.18);
+}
+
+.future-state-outcome span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.future-state-outcome strong {
+  font-size: 13px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* Responsive */
+
+@media (max-width: 1100px) {
+  .future-state-summary-grid,
+  .future-trajectory-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .future-state-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .treasury-future-state-card {
+    padding: 18px;
+    border-radius: 22px;
+  }
+
+  .future-state-summary-grid,
+  .future-trajectory-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .future-confidence-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .future-state-item {
+    min-height: auto;
+  }
+
+  .future-state-data {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+}
