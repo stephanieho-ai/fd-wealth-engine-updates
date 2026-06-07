@@ -14,6 +14,8 @@ import TreasuryIntelligenceExecutionEngine from "../components/treasury/Treasury
 import TreasuryIntelligenceFeedbackLoopEngine from "../components/treasury/TreasuryIntelligenceFeedbackLoopEngine";
 import TreasuryIntelligenceLearningEngine from "../components/treasury/TreasuryIntelligenceLearningEngine";
 import TreasuryIntelligencePredictionEngine from "../components/treasury/TreasuryIntelligencePredictionEngine";
+import TreasuryIntelligenceScenarioEngine
+from "../components/treasury/TreasuryIntelligenceScenarioEngine";
 
 
 export default function TreasuryPage() {
@@ -961,6 +963,7 @@ const institutionalEscalationPath =
        <TreasuryIntelligenceFeedbackLoopEngine />
        <TreasuryIntelligenceLearningEngine />
        <TreasuryIntelligencePredictionEngine />
+       <TreasuryIntelligenceScenarioEngine />
 
     </section>
 

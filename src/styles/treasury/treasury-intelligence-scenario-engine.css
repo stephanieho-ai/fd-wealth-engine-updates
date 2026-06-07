@@ -1,0 +1,170 @@
+/* ========================================
+   V33.2-G21-J
+   TREASURY INTELLIGENCE SCENARIO ENGINE
+   Premium Institutional Version
+======================================== */
+
+.treasury-scenario-engine {
+  margin-top: 24px;
+}
+
+.treasury-scenario-card {
+  padding: 26px;
+
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.92),
+      rgba(248, 251, 255, 0.86)
+    );
+
+  border: 1px solid rgba(148, 163, 184, 0.22);
+
+  box-shadow:
+    0 24px 60px rgba(15, 23, 42, 0.08);
+
+  backdrop-filter: blur(18px);
+}
+
+.treasury-scenario-grid {
+  margin-top: 24px;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.treasury-scenario-item {
+  min-height: 220px;
+
+  padding: 20px;
+
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.92),
+      rgba(241, 247, 255, 0.82)
+    );
+
+  border: 1px solid rgba(59, 130, 246, 0.14);
+
+  box-shadow:
+    0 14px 34px rgba(15, 23, 42, 0.06);
+
+  display: flex;
+  flex-direction: column;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.treasury-scenario-item:hover {
+  transform: translateY(-4px);
+
+  border-color: rgba(59, 130, 246, 0.32);
+
+  box-shadow:
+    0 20px 42px rgba(59, 130, 246, 0.13);
+}
+
+.scenario-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 14px;
+
+  margin-bottom: 20px;
+}
+
+.scenario-header h3 {
+  margin: 0;
+
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.25;
+
+  color: #0f172a;
+}
+
+.scenario-header span {
+  padding: 5px 10px;
+
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  color: #2563eb;
+
+  background: rgba(59, 130, 246, 0.09);
+
+  border: 1px solid rgba(59, 130, 246, 0.16);
+}
+
+.scenario-content {
+  display: flex;
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.scenario-row {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.scenario-row label {
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+
+  color: rgba(71, 85, 105, 0.68);
+}
+
+.scenario-row strong {
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.35;
+
+  color: #0f172a;
+}
+
+/* ========================================
+   MOBILE RESPONSIVE
+======================================== */
+
+@media (max-width: 1100px) {
+  .treasury-scenario-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .treasury-scenario-item {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .treasury-scenario-card {
+    padding: 20px;
+    border-radius: 24px;
+  }
+
+  .treasury-scenario-grid {
+    gap: 16px;
+  }
+
+  .scenario-header {
+    align-items: flex-start;
+  }
+}
