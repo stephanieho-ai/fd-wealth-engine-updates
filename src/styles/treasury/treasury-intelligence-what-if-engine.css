@@ -1,0 +1,248 @@
+/* ========================================
+   G21-K
+   TREASURY INTELLIGENCE WHAT-IF ENGINE
+   PREMIUM INSTITUTIONAL VERSION
+======================================== */
+
+.treasury-what-if-engine {
+  margin-top: 24px;
+}
+
+.treasury-what-if-card {
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 24px;
+
+  padding: 28px;
+
+  box-shadow:
+    0 10px 30px rgba(15, 23, 42, 0.04);
+
+  transition: all 0.25s ease;
+}
+
+.treasury-what-if-card:hover {
+  box-shadow:
+    0 14px 40px rgba(15, 23, 42, 0.08);
+}
+
+/* ========================================
+   TOP METRICS
+======================================== */
+
+.treasury-what-if-summary {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 18px;
+
+  margin-top: 24px;
+
+  margin-bottom: 24px;
+}
+
+.treasury-what-if-metric {
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 18px;
+
+  padding: 18px;
+
+  text-align: center;
+
+  transition: all 0.25s ease;
+}
+
+.treasury-what-if-metric:hover {
+  transform: translateY(-2px);
+
+  border-color: #cbd5e1;
+}
+
+.treasury-what-if-metric span {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  color: #64748b;
+}
+
+.treasury-what-if-metric strong {
+  font-size: 24px;
+
+  font-weight: 700;
+
+  color: #0f172a;
+}
+
+/* ========================================
+   WHAT IF GRID
+======================================== */
+
+.treasury-what-if-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 18px;
+
+  margin-top: 12px;
+}
+
+.treasury-what-if-scenario-card {
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 20px;
+
+  padding: 20px;
+
+  transition: all 0.25s ease;
+}
+
+.treasury-what-if-scenario-card:hover {
+  transform: translateY(-3px);
+
+  border-color: #bfdbfe;
+
+  box-shadow:
+    0 8px 20px rgba(59, 130, 246, 0.08);
+}
+
+.treasury-what-if-scenario-card h3 {
+  margin: 0 0 18px;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  line-height: 1.4;
+
+  color: #0f172a;
+}
+
+/* ========================================
+   RESULT ROWS
+======================================== */
+
+.treasury-what-if-results {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.treasury-what-if-results div {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding-bottom: 10px;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.treasury-what-if-results div:last-child {
+  border-bottom: none;
+
+  padding-bottom: 0;
+}
+
+.treasury-what-if-results span {
+  font-size: 12px;
+
+  font-weight: 600;
+
+  color: #64748b;
+}
+
+.treasury-what-if-results strong {
+  font-size: 14px;
+
+  font-weight: 700;
+
+  color: #2563eb;
+}
+
+/* ========================================
+   RECOMMENDATION
+======================================== */
+
+.treasury-what-if-recommendation {
+  margin-top: 24px;
+
+  background: #eff6ff;
+
+  border: 1px solid #bfdbfe;
+
+  border-radius: 20px;
+
+  padding: 20px;
+}
+
+.treasury-what-if-recommendation span {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  color: #2563eb;
+}
+
+.treasury-what-if-recommendation strong {
+  display: block;
+
+  font-size: 15px;
+
+  line-height: 1.7;
+
+  color: #0f172a;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 1100px) {
+
+  .treasury-what-if-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .treasury-what-if-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .treasury-what-if-card {
+    padding: 20px;
+  }
+
+}
