@@ -22,8 +22,13 @@ import TreasuryFutureStateModelingEngine
 from "../components/treasury/TreasuryFutureStateModelingEngine";
 import TreasuryStrategyIntelligenceOverview from "../components/treasury/TreasuryStrategyIntelligenceOverview";
 import TreasuryCapitalAllocationStrategyEngine from "../components/treasury/TreasuryCapitalAllocationStrategyEngine";
+import TreasuryLiveCapitalAllocationEngine from "../components/treasury/TreasuryLiveCapitalAllocationEngine";
 
-export default function TreasuryPage() {
+  export default function TreasuryPage({
+    currency = "MYR",
+    records = [],
+    activeRecords = [],
+  }) {
   const STORAGE_KEY = "fd_treasury_workflow_state";
   const TIMELINE_KEY = "fd_treasury_incident_timeline";
 
@@ -970,10 +975,16 @@ const institutionalEscalationPath =
        <TreasuryIntelligencePredictionEngine />
        <TreasuryIntelligenceScenarioEngine />
        <TreasuryIntelligenceWhatIfEngine />
-       <TreasuryFutureStateModelingEngine />
+       <TreasuryFutureStateModelingEngine currency={currency} />
 
        <TreasuryStrategyIntelligenceOverview />
        <TreasuryCapitalAllocationStrategyEngine />
+       <TreasuryLiveCapitalAllocationEngine
+          currency={currency}
+          records={records}
+          activeRecords={activeRecords}
+        />
+
 
     </section>
 

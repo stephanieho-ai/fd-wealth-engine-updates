@@ -125,7 +125,13 @@ export default function AppShell({
 
     case "TREASURY":
       pageTitle = "Treasury Console";
-      page = <TreasuryPage />;
+      page = (
+        <TreasuryPage
+          currency={currency}
+          records={records}
+          activeRecords={activeRecords}
+        />
+      );
       break;
 
     case "GOVERNANCE":

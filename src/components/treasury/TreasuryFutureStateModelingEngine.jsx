@@ -1,22 +1,25 @@
-export default function TreasuryFutureStateModelingEngine() {
+  export default function TreasuryFutureStateModelingEngine({
+    currency = "MYR",
+  }) {
+
   const futureStates = [
     {
       title: "Growth Scenario",
-      liquidity: "RM 1.20M",
+      liquidity: `${currency} 1.20M`,
       yield: "4.2%",
       risk: "LOW",
       outcome: "Capital Expansion",
     },
     {
       title: "Stable Scenario",
-      liquidity: "RM 980K",
+      liquidity: `${currency} 980K`,
       yield: "3.8%",
       risk: "LOW",
       outcome: "Treasury Stability",
     },
     {
       title: "Stress Scenario",
-      liquidity: "RM 820K",
+      liquidity: `${currency} 820K`,
       yield: "3.1%",
       risk: "HIGH",
       outcome: "Liquidity Protection",

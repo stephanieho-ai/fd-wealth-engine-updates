@@ -1,0 +1,208 @@
+/* =========================================================
+   V33.2-G22-B.3
+   TREASURY LIVE CAPITAL ALLOCATION ENGINE
+========================================================= */
+
+.treasury-live-allocation-engine {
+  width: 100%;
+  margin-top: 22px;
+}
+
+.treasury-live-allocation-card {
+  padding: 24px;
+  border-radius: 28px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.97),
+      rgba(239, 246, 255, 0.9)
+    );
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow:
+    0 22px 55px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88);
+}
+
+.treasury-live-allocation-grid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.treasury-live-metric {
+  padding: 16px 18px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.treasury-live-metric span {
+  display: block;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.treasury-live-metric strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 24px;
+  font-weight: 750;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.treasury-allocation-columns {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.treasury-allocation-panel {
+  min-height: 185px;
+  padding: 22px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.treasury-allocation-panel h3 {
+  margin: 0 0 14px;
+  font-size: 16px;
+  font-weight: 750;
+  color: #0f172a;
+}
+
+.treasury-allocation-panel ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.treasury-allocation-panel li {
+  margin-bottom: 8px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #0f172a;
+}
+
+.treasury-allocation-action {
+  margin-top: 22px;
+  padding: 22px;
+  border-radius: 24px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(219, 234, 254, 0.72),
+      rgba(239, 246, 255, 0.88)
+    );
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 18px;
+  align-items: center;
+}
+
+.allocation-status {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 6px 13px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 750;
+  background: rgba(37, 99, 235, 0.13);
+  color: #2563eb;
+}
+
+.treasury-allocation-action h3 {
+  margin: 14px 0 8px;
+  font-size: 16px;
+  font-weight: 750;
+  color: #0f172a;
+}
+
+.treasury-allocation-action p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: #334155;
+}
+
+.treasury-allocation-status-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.treasury-allocation-status-grid div {
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.treasury-allocation-status-grid span {
+  display: block;
+  font-size: 11px;
+  color: #64748b;
+}
+
+.treasury-allocation-status-grid strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 18px;
+  font-weight: 750;
+  color: #0f172a;
+}
+
+@media (max-width: 1000px) {
+  .treasury-live-allocation-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .treasury-allocation-columns,
+  .treasury-allocation-action {
+    grid-template-columns: 1fr;
+  }
+
+  .treasury-allocation-status-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================
+   Institution Concentration Summary
+========================================== */
+
+.treasury-concentration-summary {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.treasury-summary-item {
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.treasury-summary-item span {
+  display: block;
+  font-size: 11px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.treasury-summary-item strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.4;
+}
+
+@media (max-width: 1000px) {
+  .treasury-concentration-summary {
+    grid-template-columns: 1fr;
+  }
+}
