@@ -22,7 +22,9 @@ import TreasuryFutureStateModelingEngine
 from "../components/treasury/TreasuryFutureStateModelingEngine";
 import TreasuryStrategyIntelligenceOverview from "../components/treasury/TreasuryStrategyIntelligenceOverview";
 import TreasuryCapitalAllocationStrategyEngine from "../components/treasury/TreasuryCapitalAllocationStrategyEngine";
+import TreasuryStrategyOptimizationEngine from "../components/treasury/TreasuryStrategyOptimizationEngine";
 import TreasuryLiveCapitalAllocationEngine from "../components/treasury/TreasuryLiveCapitalAllocationEngine";
+
 
   export default function TreasuryPage({
     currency = "MYR",
@@ -979,6 +981,8 @@ const institutionalEscalationPath =
 
        <TreasuryStrategyIntelligenceOverview />
        <TreasuryCapitalAllocationStrategyEngine />
+       <TreasuryStrategyOptimizationEngine />
+
        <TreasuryLiveCapitalAllocationEngine
           currency={currency}
           records={records}
