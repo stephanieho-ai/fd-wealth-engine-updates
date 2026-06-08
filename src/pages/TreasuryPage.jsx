@@ -23,7 +23,10 @@ from "../components/treasury/TreasuryFutureStateModelingEngine";
 import TreasuryStrategyIntelligenceOverview from "../components/treasury/TreasuryStrategyIntelligenceOverview";
 import TreasuryCapitalAllocationStrategyEngine from "../components/treasury/TreasuryCapitalAllocationStrategyEngine";
 import TreasuryStrategyOptimizationEngine from "../components/treasury/TreasuryStrategyOptimizationEngine";
+import TreasuryStrategicAlternativesEngine
+from "../components/treasury/TreasuryStrategicAlternativesEngine";
 import TreasuryLiveCapitalAllocationEngine from "../components/treasury/TreasuryLiveCapitalAllocationEngine";
+
 
 
   export default function TreasuryPage({
@@ -982,6 +985,7 @@ const institutionalEscalationPath =
        <TreasuryStrategyIntelligenceOverview />
        <TreasuryCapitalAllocationStrategyEngine />
        <TreasuryStrategyOptimizationEngine />
+       <TreasuryStrategicAlternativesEngine />
 
        <TreasuryLiveCapitalAllocationEngine
           currency={currency}

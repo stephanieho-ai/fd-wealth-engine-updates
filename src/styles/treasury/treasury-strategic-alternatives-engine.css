@@ -1,0 +1,228 @@
+/* =========================================================
+   V33.2-G22-D.1
+   TREASURY STRATEGIC ALTERNATIVES ENGINE
+   Premium Institutional Layout
+========================================================= */
+
+.treasury-strategic-alternatives-engine {
+  width: 100%;
+  margin-top: 22px;
+}
+
+.treasury-strategic-alternatives-card {
+  position: relative;
+  overflow: hidden;
+
+  padding: 24px;
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.98),
+      rgba(239,246,255,0.94)
+    );
+
+  border: 1px solid rgba(148,163,184,0.22);
+
+  box-shadow:
+    0 24px 60px rgba(15,23,42,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.90);
+}
+
+.treasury-strategy-alt-metrics {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.treasury-alt-metric {
+  padding: 18px;
+  border-radius: 18px;
+
+  background: rgba(255,255,255,0.78);
+
+  border: 1px solid rgba(148,163,184,0.16);
+}
+
+.treasury-alt-metric span {
+  display: block;
+
+  font-size: 12px;
+  color: #64748b;
+}
+
+.treasury-alt-metric strong {
+  display: block;
+
+  margin-top: 8px;
+
+  font-size: 34px;
+  font-weight: 700;
+
+  color: #0f172a;
+}
+
+.treasury-alt-grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.treasury-alt-item {
+  padding: 20px;
+
+  border-radius: 20px;
+
+  background: rgba(255,255,255,0.78);
+
+  border: 1px solid rgba(148,163,184,0.16);
+
+  transition: all 0.25s ease;
+}
+
+.treasury-alt-item:hover {
+  transform: translateY(-3px);
+
+  border-color:
+    rgba(96,165,250,0.35);
+
+  box-shadow:
+    0 10px 24px rgba(37,99,235,0.10);
+}
+
+.treasury-alt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 18px;
+}
+
+.treasury-alt-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+
+  color: #0f172a;
+}
+
+.treasury-alt-badge {
+  padding: 4px 10px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  color: #2563eb;
+
+  background:
+    rgba(219,234,254,0.80);
+}
+
+.treasury-alt-values {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.treasury-alt-values span {
+  display: flex;
+  flex-direction: column;
+
+  font-size: 12px;
+  color: #64748b;
+}
+
+.treasury-alt-values strong {
+  margin-top: 6px;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  color: #0f172a;
+}
+
+.treasury-alt-recommendation {
+  position: relative;
+
+  margin-top: 24px;
+
+  padding: 24px 24px 24px 32px;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(219,234,254,0.80),
+      rgba(239,246,255,0.95)
+    );
+
+  border: 1px solid rgba(96,165,250,0.22);
+}
+
+.treasury-alt-recommendation::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  bottom: 0;
+
+  width: 6px;
+
+  border-radius: 20px 0 0 20px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #2563eb,
+      #60a5fa
+    );
+}
+
+.treasury-alt-recommendation h3 {
+  margin-bottom: 10px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  color: #2563eb;
+}
+
+.treasury-alt-recommendation strong {
+  display: block;
+
+  margin-bottom: 12px;
+
+  font-size: 32px;
+  font-weight: 800;
+
+  color: #0f172a;
+}
+
+.treasury-alt-recommendation p {
+  max-width: 760px;
+
+  font-size: 14px;
+  line-height: 1.7;
+
+  color: #475569;
+}
+
+@media (max-width: 1000px) {
+
+  .treasury-strategy-alt-metrics {
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  .treasury-alt-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
