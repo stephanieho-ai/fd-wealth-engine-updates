@@ -28,6 +28,10 @@ from "../components/treasury/TreasuryStrategicAlternativesEngine";
 import TreasuryStrategicDecisionMatrixEngine
 from "../components/treasury/TreasuryStrategicDecisionMatrixEngine";
 import TreasuryLiveCapitalAllocationEngine from "../components/treasury/TreasuryLiveCapitalAllocationEngine";
+import TreasuryOperatingSystemCore
+from "../components/treasury/TreasuryOperatingSystemCore";
+import TreasuryRuntimeCoordinationEngine from "../components/treasury/TreasuryRuntimeCoordinationEngine";
+import TreasuryCrossLayerSynchronizationEngine from "../components/treasury/TreasuryCrossLayerSynchronizationEngine";
 
 
 
@@ -989,12 +993,16 @@ const institutionalEscalationPath =
        <TreasuryStrategyOptimizationEngine />
        <TreasuryStrategicAlternativesEngine />
        <TreasuryStrategicDecisionMatrixEngine />
-
+        
        <TreasuryLiveCapitalAllocationEngine
           currency={currency}
           records={records}
           activeRecords={activeRecords}
         />
+
+        <TreasuryOperatingSystemCore />
+        <TreasuryRuntimeCoordinationEngine />
+        <TreasuryCrossLayerSynchronizationEngine />
 
 
     </section>
