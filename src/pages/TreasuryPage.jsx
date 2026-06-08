@@ -25,6 +25,8 @@ import TreasuryCapitalAllocationStrategyEngine from "../components/treasury/Trea
 import TreasuryStrategyOptimizationEngine from "../components/treasury/TreasuryStrategyOptimizationEngine";
 import TreasuryStrategicAlternativesEngine
 from "../components/treasury/TreasuryStrategicAlternativesEngine";
+import TreasuryStrategicDecisionMatrixEngine
+from "../components/treasury/TreasuryStrategicDecisionMatrixEngine";
 import TreasuryLiveCapitalAllocationEngine from "../components/treasury/TreasuryLiveCapitalAllocationEngine";
 
 
@@ -986,6 +988,7 @@ const institutionalEscalationPath =
        <TreasuryCapitalAllocationStrategyEngine />
        <TreasuryStrategyOptimizationEngine />
        <TreasuryStrategicAlternativesEngine />
+       <TreasuryStrategicDecisionMatrixEngine />
 
        <TreasuryLiveCapitalAllocationEngine
           currency={currency}
