@@ -1,112 +1,367 @@
 /* ========================================
-   G21-C
+   V33.2-G21-C.1
    TREASURY INTELLIGENCE ASSESSMENT ENGINE
+   Premium Institutional Assessment Card
 ======================================== */
 
 .treasury-intelligence-assessment {
   width: 100%;
+  margin-top: -12px;
 }
+
+.treasury-intelligence-assessment .treasury-intelligence-card {
+  height: 100%;
+  min-height: 430px;
+
+  display: flex;
+  flex-direction: column;
+
+  position: relative;
+  overflow: hidden;
+
+  padding: 24px;
+  border-radius: 26px;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(96, 165, 250, 0.08),
+      transparent 32%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.90),
+      rgba(248,250,252,0.76)
+    );
+
+  border: 1px solid rgba(148,163,184,0.22);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.9),
+    0 18px 46px rgba(15,23,42,0.055);
+}
+
+.treasury-intelligence-assessment .treasury-intelligence-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(59,130,246,0.08),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.42),
+      transparent 46%
+    );
+}
+
+.treasury-intelligence-assessment
+.treasury-intelligence-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ========================================
+   HEADER
+======================================== */
+
+.assessment-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  gap: 18px;
+}
+
+/* ========================================
+   STATUS BADGE
+======================================== */
+
+.assessment-status-badge {
+  min-width: 128px;
+
+  padding: 14px 16px;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1e40af,
+      #3b82f6
+    );
+
+  border: none;
+
+  box-shadow:
+    0 18px 36px rgba(37,99,235,0.28);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.assessment-status-badge span {
+  display: block;
+
+  margin-bottom: 6px;
+
+  font-size: 8.5px;
+  font-weight: 900;
+  line-height: 1.2;
+
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+
+  color: rgba(255,255,255,0.82);
+}
+
+.assessment-status-badge strong {
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1;
+
+  color: white;
+}
+
+/* ========================================
+   METRIC GRID
+======================================== */
 
 .assessment-metrics-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-  margin-top: 24px;
+
+  gap: 10px;
+
+  margin-top: 18px;
 }
 
 .assessment-metric-card {
   position: relative;
 
-  min-height: 86px;
-  padding: 18px 20px;
+  min-height: 76px;
+  padding: 14px;
 
-  border-radius: 18px;
-  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 16px;
+
+  border: 1px solid rgba(148,163,184,0.22);
 
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(248, 250, 252, 0.72));
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.94),
+      rgba(248,250,252,0.72)
+    );
 
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    0 12px 28px rgba(15, 23, 42, 0.045);
+    inset 0 1px 0 rgba(255,255,255,0.9),
+    0 10px 24px rgba(15,23,42,0.04);
 
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 9px;
+
+  gap: 7px;
 }
 
 .assessment-metric-card::after {
   content: "";
+
   position: absolute;
-  top: 17px;
-  right: 18px;
+  top: 13px;
+  right: 13px;
 
   width: 8px;
   height: 8px;
+
   border-radius: 999px;
 
   background: #60a5fa;
-  box-shadow: 0 0 0 5px rgba(96, 165, 250, 0.14);
+
+  box-shadow:
+    0 0 0 5px rgba(96,165,250,0.14);
 }
 
 .assessment-metric-card span {
-  font-size: 10px;
-  font-weight: 800;
-  line-height: 1;
+  max-width: 78px;
+
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1.1;
 
   text-transform: uppercase;
-  letter-spacing: 0.13em;
+  letter-spacing: 0.12em;
 
-  color: rgba(71, 85, 105, 0.74);
+  color: rgba(71,85,105,0.74);
 }
 
 .assessment-metric-card strong {
-  font-size: 15px;
-  font-weight: 800;
+  font-size: 13px;
+  font-weight: 900;
   line-height: 1.15;
 
   color: #0f172a;
 }
 
-.assessment-insight-panel {
-  margin-top: 18px;
-  padding: 20px 22px;
+/* ========================================
+   AI ASSESSMENT PANEL
+======================================== */
 
-  border-radius: 18px;
-  border: 1px solid rgba(148, 163, 184, 0.2);
+.assessment-insight-panel {
+  margin-top: 10px;
+
+  padding: 14px 16px;
+
+  min-height: 108px;
+
+  border-radius: 16px;
+
+  border: 1px solid rgba(148,163,184,0.2);
 
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(248, 250, 252, 0.76));
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.94),
+      rgba(248,250,252,0.78)
+    );
 
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.88),
-    0 12px 26px rgba(15, 23, 42, 0.04);
+    inset 0 1px 0 rgba(255,255,255,0.88),
+    0 10px 22px rgba(15,23,42,0.035);
+
+  flex: 0;
 }
 
 .assessment-insight-label {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
 
   font-size: 10px;
-  font-weight: 800;
+  font-weight: 900;
 
   text-transform: uppercase;
   letter-spacing: 0.13em;
 
-  color: #3b82f6;
+  color: #0f172a;
 }
 
 .assessment-insight-panel p {
   margin: 0;
 
-  font-size: 13px;
-  line-height: 1.75;
+  font-size: 12px;
+  line-height: 1.65;
 
-  color: #475569;
+  color: #334155;
 }
 
-/* Responsive */
+/* ========================================
+   INTERPRETATION BAR
+======================================== */
+
+.assessment-footer-bar {
+  margin-top: 10px;
+
+  padding: 12px 16px;
+
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1e3a8a,
+      #2563eb
+    );
+
+  color: white;
+
+  box-shadow:
+    0 14px 30px rgba(37,99,235,0.22);
+}
+
+.assessment-footer-bar span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  font-size: 8.5px;
+  font-weight: 900;
+
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+
+  opacity: 0.9;
+}
+
+.assessment-footer-bar p {
+  margin: 0;
+
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.4;
+
+  color: white;
+}
+
+/* ========================================
+   SECTION I HARMONIZATION
+======================================== */
+
+.treasury-intelligence-center-section
+.treasury-intelligence-assessment {
+  margin: 16px 0 !important;
+}
+
+.treasury-intelligence-center-section
+.treasury-intelligence-assessment
+.treasury-intelligence-card {
+  width: 100%;
+  max-width: none;
+}
+
+/* ========================================
+   MATCH RECOMMENDATION HEIGHT
+======================================== */
+
+.treasury-intelligence-dual-grid {
+  align-items: stretch;
+}
+
+.treasury-intelligence-dual-grid
+.treasury-intelligence-assessment,
+.treasury-intelligence-dual-grid
+.treasury-intelligence-recommendation {
+  height: 100%;
+}
+
+.treasury-intelligence-dual-grid
+.treasury-intelligence-assessment
+.treasury-intelligence-card,
+.treasury-intelligence-dual-grid
+.treasury-intelligence-recommendation
+.treasury-intelligence-card {
+  height: 100%;
+  min-height: 440px;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
 @media (max-width: 1100px) {
+  .assessment-header-row {
+    flex-direction: column;
+  }
+
+  .assessment-status-badge {
+    width: 100%;
+  }
+
   .assessment-metrics-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -116,226 +371,4 @@
   .assessment-metrics-grid {
     grid-template-columns: 1fr;
   }
-}
-
-/* ========================================
-   G21 INTELLIGENCE CENTER SECTION WRAPPER
-======================================== */
-
-.treasury-intelligence-center-section {
-  margin-top: 34px;
-  padding: 28px;
-
-  border-radius: 30px;
-  border: 1px solid rgba(148, 163, 184, 0.22);
-
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(239, 246, 255, 0.74));
-
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    0 24px 60px rgba(15, 23, 42, 0.08);
-}
-
-.treasury-intelligence-center-section
-.treasury-intelligence-summary,
-.treasury-intelligence-center-section
-.treasury-intelligence-signal-engine,
-.treasury-intelligence-center-section
-.treasury-intelligence-assessment {
-  margin-top: 24px;
-}
-
-.treasury-intelligence-center-section
-.treasury-intelligence-card {
-  width: 100%;
-  max-width: none;
-}
-
-/* ========================================
-   G21-C.1
-   PREMIUM INTELLIGENCE CENTER HARMONIZATION
-======================================== */
-
-.treasury-intelligence-center-section {
-  padding: 24px !important;
-  border-radius: 30px !important;
-}
-
-.treasury-intelligence-center-section .treasury-control-section-header {
-  margin-bottom: 18px !important;
-  padding-bottom: 16px !important;
-}
-
-.treasury-intelligence-center-section .treasury-intelligence-summary,
-.treasury-intelligence-center-section .treasury-intelligence-signal-engine,
-.treasury-intelligence-center-section .treasury-intelligence-assessment {
-  margin: 16px 0 !important;
-}
-
-.treasury-intelligence-center-section .treasury-intelligence-card {
-  padding: 24px !important;
-  border-radius: 26px !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.9),
-    0 18px 46px rgba(15,23,42,0.055) !important;
-}
-
-.treasury-intelligence-center-section .treasury-section-title {
-  font-size: 22px !important;
-  line-height: 1.15 !important;
-  margin-bottom: 10px !important;
-}
-
-.treasury-intelligence-center-section .treasury-section-description {
-  font-size: 13px !important;
-  line-height: 1.55 !important;
-  max-width: 980px !important;
-}
-
-.treasury-intelligence-center-section .treasury-eyebrow {
-  font-size: 10px !important;
-  letter-spacing: 0.14em !important;
-  margin-bottom: 8px !important;
-}
-
-.treasury-intelligence-center-section .signal-metrics-grid,
-.treasury-intelligence-center-section .assessment-metrics-grid {
-  gap: 12px !important;
-  margin-top: 20px !important;
-}
-
-.treasury-intelligence-center-section .signal-metric-card,
-.treasury-intelligence-center-section .assessment-metric-card {
-  min-height: 72px !important;
-  padding: 16px 18px !important;
-  border-radius: 16px !important;
-}
-
-.treasury-intelligence-center-section .signal-metric-card span,
-.treasury-intelligence-center-section .assessment-metric-card span {
-  font-size: 9.5px !important;
-}
-
-.treasury-intelligence-center-section .signal-metric-card strong,
-.treasury-intelligence-center-section .assessment-metric-card strong {
-  font-size: 14px !important;
-}
-
-.treasury-intelligence-center-section .signal-action-panel,
-.treasury-intelligence-center-section .assessment-insight-panel {
-  margin-top: 14px !important;
-  padding: 17px 18px !important;
-  border-radius: 16px !important;
-}
-
-.treasury-intelligence-center-section .signal-action-panel p,
-.treasury-intelligence-center-section .assessment-insight-panel p {
-  font-size: 12.5px !important;
-  line-height: 1.65 !important;
-}
-
-.treasury-intelligence-center-section .treasury-intelligence-signal-engine .treasury-intelligence-card {
-  border-left: 1px solid rgba(148,163,184,0.22) !important;
-}
-
-/* ========================================
-   G21-C.1
-   PREMIUM INTELLIGENCE CENTER FINAL POLISH
-======================================== */
-
-.treasury-intelligence-center-section {
-  overflow: hidden;
-}
-
-.treasury-intelligence-center-section .treasury-intelligence-card {
-  position: relative;
-  overflow: hidden;
-}
-
-.treasury-intelligence-center-section .treasury-intelligence-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-
-  background:
-    radial-gradient(circle at top right, rgba(59, 130, 246, 0.08), transparent 28%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.42), transparent 46%);
-}
-
-.treasury-intelligence-center-section .treasury-intelligence-card > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* remove strong side-line from signal card */
-.treasury-intelligence-center-section
-.treasury-intelligence-signal-engine
-.treasury-intelligence-card {
-  border-left: 1px solid rgba(148, 163, 184, 0.18) !important;
-}
-
-/* unify summary inner cards */
-.treasury-intelligence-center-section .summary-metrics-grid,
-.treasury-intelligence-center-section .intelligence-summary-grid {
-  gap: 12px !important;
-  margin-top: 20px !important;
-}
-
-.treasury-intelligence-center-section .summary-metric-card,
-.treasury-intelligence-center-section .intelligence-summary-card {
-  min-height: 72px !important;
-  padding: 16px 18px !important;
-  border-radius: 16px !important;
-}
-
-/* make all 3 blocks closer */
-.treasury-intelligence-center-section
-.treasury-intelligence-summary + .treasury-intelligence-signal-engine,
-.treasury-intelligence-center-section
-.treasury-intelligence-signal-engine + .treasury-intelligence-assessment {
-  margin-top: 14px !important;
-}
-
-/* unified section rhythm */
-.treasury-intelligence-center-section .treasury-section-title {
-  letter-spacing: -0.035em !important;
-}
-
-.treasury-intelligence-center-section .treasury-section-description {
-  color: rgba(51, 65, 85, 0.72) !important;
-}
-
-/* unified badge */
-.treasury-intelligence-center-section .treasury-live-badge,
-.treasury-intelligence-center-section .intelligence-live-badge {
-  border-radius: 22px !important;
-  background: rgba(219, 234, 254, 0.78) !important;
-  border: 1px solid rgba(96, 165, 250, 0.28) !important;
-}
-
-/* reduce excessive white space in summary */
-.treasury-intelligence-center-section .treasury-intelligence-summary .treasury-intelligence-card {
-  min-height: unset !important;
-}
-
-/* more institutional card rhythm */
-.treasury-intelligence-center-section .treasury-intelligence-card {
-  background:
-    radial-gradient(circle at top right, rgba(96, 165, 250, 0.08), transparent 32%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.76)) !important;
-}
-
-/* final compact spacing */
-.treasury-intelligence-center-section {
-  gap: 0 !important;
-}
-
-.treasury-intelligence-center-section .treasury-control-section-header h2 {
-  font-size: 26px !important;
-}
-
-.treasury-intelligence-center-section .treasury-control-section-header p:not(.eyebrow) {
-  font-size: 13px !important;
 }

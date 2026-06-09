@@ -1,26 +1,26 @@
 export default function TreasuryRuntimeCoordinationEngine() {
-  const runtimeNodes = [
-    {
-      layer: "Operations",
-      status: "SYNCED",
-    },
-    {
-      layer: "Governance",
-      status: "SYNCED",
-    },
-    {
-      layer: "Operator",
-      status: "SYNCED",
-    },
-    {
-      layer: "Intelligence",
-      status: "SYNCED",
-    },
-    {
-      layer: "Strategy",
-      status: "SYNCED",
-    },
-  ];
+    const runtimeNodes = [
+        {
+            layer: "Operations",
+            status: "ONLINE",
+        },
+        {
+            layer: "Governance",
+            status: "ONLINE",
+        },
+        {
+            layer: "Operator",
+            status: "ONLINE",
+        },
+        {
+            layer: "Intelligence",
+            status: "ONLINE",
+        },
+        {
+            layer: "Strategy",
+            status: "ONLINE",
+        },
+        ];
 
   return (
     <section className="treasury-runtime-engine">

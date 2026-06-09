@@ -289,3 +289,115 @@
     gap: 4px;
   }
 }
+
+/* ==========================================
+   PREMIUM UPGRADE
+========================================== */
+
+.future-state-status {
+  position: absolute;
+  top: 28px;
+  right: 28px;
+
+  min-width: 118px;
+
+  padding: 14px 18px;
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1e3a8a,
+      #2563eb
+    );
+
+  color: white;
+
+  box-shadow:
+    0 16px 40px rgba(37,99,235,0.25);
+}
+
+.future-state-status span {
+  display: block;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  opacity: 0.85;
+}
+
+.future-state-status strong {
+  display: block;
+  margin-top: 4px;
+
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.future-state-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 4px 10px;
+  margin-bottom: 12px;
+
+  border-radius: 999px;
+
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.future-state-badge.primary {
+  background: rgba(16,185,129,0.12);
+  color: #059669;
+}
+
+.future-state-badge.baseline {
+  background: rgba(59,130,246,0.12);
+  color: #2563eb;
+}
+
+.future-state-badge.watch {
+  background: rgba(245,158,11,0.12);
+  color: #d97706;
+}
+
+.future-state-interpretation {
+  margin-top: 18px;
+
+  padding: 18px 22px;
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1e40af,
+      #3b82f6
+    );
+
+  color: white;
+
+  box-shadow:
+    0 16px 40px rgba(37,99,235,0.22);
+}
+
+.future-state-interpretation span {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.future-state-interpretation p {
+  margin: 0;
+
+  font-size: 13px;
+  line-height: 1.7;
+}

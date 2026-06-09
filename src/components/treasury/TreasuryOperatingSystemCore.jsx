@@ -1,26 +1,26 @@
 export default function TreasuryOperatingSystemCore() {
   const layers = [
     {
-      name: "Operations",
-      status: "ACTIVE",
+        name: "Operations",
+        status: "ONLINE",
     },
     {
-      name: "Governance",
-      status: "ACTIVE",
+        name: "Governance",
+        status: "ONLINE",
     },
     {
-      name: "Operator",
-      status: "ACTIVE",
+        name: "Operator",
+        status: "ONLINE",
     },
     {
-      name: "Intelligence",
-      status: "ACTIVE",
+        name: "Intelligence",
+        status: "ONLINE",
     },
     {
-      name: "Strategy",
-      status: "ACTIVE",
+        name: "Strategy",
+        status: "ONLINE",
     },
-  ];
+    ];
 
   return (
     <section className="treasury-os-core">
@@ -65,16 +65,20 @@ export default function TreasuryOperatingSystemCore() {
         </div>
 
         <div className="treasury-os-layer-grid">
-          {layers.map((layer) => (
-            <div
-              key={layer.name}
-              className="treasury-os-layer-card"
-            >
-              <span>{layer.name}</span>
-              <strong>{layer.status}</strong>
+             {layers.map((layer) => (
+                <div
+                key={layer.name}
+                className="treasury-os-layer-card"
+                >
+                <span>{layer.name}</span>
+
+                <strong>
+                    ● {layer.status}
+                </strong>
+
+                </div>
+            ))}
             </div>
-          ))}
-        </div>
 
         <div className="treasury-os-health">
           <span>System Health</span>

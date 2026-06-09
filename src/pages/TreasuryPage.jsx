@@ -34,6 +34,7 @@ import TreasuryRuntimeCoordinationEngine from "../components/treasury/TreasuryRu
 import TreasuryCrossLayerSynchronizationEngine from "../components/treasury/TreasuryCrossLayerSynchronizationEngine";
 import TreasuryOSHealthIntelligenceEngine from "../components/treasury/TreasuryOSHealthIntelligenceEngine";
 import TreasuryOSCommandCenter from "../components/treasury/TreasuryOSCommandCenter";
+import TreasuryRuntimeIntelligenceCore from "../components/treasury/TreasuryRuntimeIntelligenceCore";
 
 
 
@@ -1004,6 +1005,7 @@ const institutionalEscalationPath =
 
         <TreasuryOperatingSystemCore />
         <TreasuryRuntimeCoordinationEngine />
+        <TreasuryRuntimeIntelligenceCore />
         <TreasuryCrossLayerSynchronizationEngine />
         <TreasuryOSHealthIntelligenceEngine />
         <TreasuryOSCommandCenter />

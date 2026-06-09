@@ -1,133 +1,119 @@
-export default function TreasuryStrategicAlternativesEngine({
-  currency = "MYR",
-}) {
+export default function TreasuryStrategicAlternativesEngine() {
   const alternatives = [
     {
+      code: "ALT-01",
       title: "Growth Focus",
       yieldRate: "4.2%",
-      liquidity: "MEDIUM",
+      liquidity: "MED",
       risk: "LOW",
+      signal: "ACTIVE",
     },
     {
+      code: "ALT-02",
       title: "Balanced Allocation",
       yieldRate: "3.9%",
       liquidity: "HIGH",
       risk: "LOW",
+      signal: "RECOMMENDED",
     },
     {
+      code: "ALT-03",
       title: "Defensive Treasury",
       yieldRate: "3.4%",
-      liquidity: "VERY HIGH",
-      risk: "VERY LOW",
+      liquidity: "V-HIGH",
+      risk: "V-LOW",
+      signal: "SAFE",
     },
     {
+      code: "ALT-04",
       title: "Aggressive Yield",
       yieldRate: "4.5%",
       liquidity: "LOW",
-      risk: "MEDIUM",
+      risk: "MED",
+      signal: "WATCH",
     },
   ];
 
   return (
     <section className="treasury-strategic-alternatives-engine">
-      <div className="treasury-strategic-alternatives-card">
+      <div className="treasury-alt-command-wall">
+        <div className="treasury-alt-command-header">
+          <div>
+            <p className="treasury-alt-terminal-label">
+              TREASURY STRATEGY COMMAND WALL
+            </p>
 
-        <p className="treasury-eyebrow">
-          Treasury Strategy Intelligence
-        </p>
+            <h2>Treasury Strategic Alternatives</h2>
 
-        <h2 className="treasury-section-title">
-          Treasury Strategic Alternatives
-        </h2>
-
-        <p className="treasury-section-description">
-          Evaluates multiple treasury strategy paths and
-          compares expected yield, liquidity profile and
-          institutional risk exposure.
-        </p>
-
-        <div className="treasury-strategy-alt-metrics">
-
-          <div className="treasury-alt-metric">
-            <span>Alternatives Generated</span>
-            <strong>5</strong>
+            <p>
+              Live comparison of alternative treasury strategy paths across
+              yield, liquidity, risk and execution readiness.
+            </p>
           </div>
 
-          <div className="treasury-alt-metric">
-            <span>Best Alternative</span>
-            <strong>Balanced</strong>
+          <div className="treasury-alt-command-status">
+            <span className="treasury-alt-pulse" />
+            STRATEGY OS ONLINE
           </div>
-
-          <div className="treasury-alt-metric">
-            <span>Confidence</span>
-            <strong>91%</strong>
-          </div>
-
-          <div className="treasury-alt-metric">
-            <span>Expected Benefit</span>
-            <strong>+12%</strong>
-          </div>
-
         </div>
 
-        <div className="treasury-alt-grid">
+        <div className="treasury-alt-ticker">
+          <span>ALT GENERATED: 04</span>
+          <span>BEST PATH: BALANCED</span>
+          <span>CONFIDENCE: 91%</span>
+          <span>EXPECTED BENEFIT: +12%</span>
+        </div>
 
+        <div className="treasury-alt-terminal-grid">
           {alternatives.map((item) => (
             <div
-              key={item.title}
-              className="treasury-alt-item"
+              key={item.code}
+              className={
+                item.signal === "RECOMMENDED"
+                  ? "treasury-alt-terminal-card recommended"
+                  : "treasury-alt-terminal-card"
+              }
             >
-
-              <div className="treasury-alt-header">
-                <h3>{item.title}</h3>
-
-                <span className="treasury-alt-badge">
-                  Strategy
-                </span>
+              <div className="treasury-alt-terminal-top">
+                <span>{item.code}</span>
+                <strong>{item.signal}</strong>
               </div>
 
-              <div className="treasury-alt-values">
+              <h3>{item.title}</h3>
 
-                <span>
-                  Yield
+              <div className="treasury-alt-terminal-matrix">
+                <div>
+                  <span>YIELD</span>
                   <strong>{item.yieldRate}</strong>
-                </span>
+                </div>
 
-                <span>
-                  Liquidity
+                <div>
+                  <span>LIQUIDITY</span>
                   <strong>{item.liquidity}</strong>
-                </span>
+                </div>
 
-                <span>
-                  Risk
+                <div>
+                  <span>RISK</span>
                   <strong>{item.risk}</strong>
-                </span>
-
+                </div>
               </div>
-
             </div>
           ))}
-
         </div>
 
-        <div className="treasury-alt-recommendation">
-
-          <h3>
-            AI Recommended Strategy
-          </h3>
-
-          <strong>
-            Balanced Allocation
-          </strong>
+        <div className="treasury-alt-command-decision">
+          <div>
+            <span>FINAL STRATEGY COMMAND</span>
+            <strong>Balanced Allocation</strong>
+          </div>
 
           <p>
-            Provides the best balance between
-            yield generation, liquidity preservation
-            and treasury risk management.
+            Preserve liquidity reserve while deploying income capital
+            selectively through validated ladder opportunities.
           </p>
 
+          <button type="button">COMMAND READY</button>
         </div>
-
       </div>
     </section>
   );

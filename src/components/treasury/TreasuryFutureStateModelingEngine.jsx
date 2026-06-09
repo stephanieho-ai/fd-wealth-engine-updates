@@ -1,25 +1,28 @@
-  export default function TreasuryFutureStateModelingEngine({
-    currency = "MYR",
-  }) {
-
+export default function TreasuryFutureStateModelingEngine() {
   const futureStates = [
     {
       title: "Growth Scenario",
-      liquidity: `${currency} 1.20M`,
+      badge: "PRIMARY",
+      badgeType: "primary",
+      liquidity: "MYR 1.20M",
       yield: "4.2%",
       risk: "LOW",
       outcome: "Capital Expansion",
     },
     {
       title: "Stable Scenario",
-      liquidity: `${currency} 980K`,
+      badge: "BASELINE",
+      badgeType: "baseline",
+      liquidity: "MYR 980K",
       yield: "3.8%",
       risk: "LOW",
       outcome: "Treasury Stability",
     },
     {
       title: "Stress Scenario",
-      liquidity: `${currency} 820K`,
+      badge: "WATCH",
+      badgeType: "watch",
+      liquidity: "MYR 820K",
       yield: "3.1%",
       risk: "HIGH",
       outcome: "Liquidity Protection",
@@ -48,6 +51,11 @@
   return (
     <section className="treasury-future-state-engine">
       <div className="treasury-future-state-card">
+        <div className="future-state-status">
+          <span>Future State Status</span>
+          <strong>MODELING</strong>
+        </div>
+
         <p className="treasury-eyebrow">
           Treasury Future Intelligence
         </p>
@@ -104,16 +112,12 @@
           </div>
 
           <div className="future-trajectory-grid">
-            {trajectoryStages.map((item, index) => (
+            {trajectoryStages.map((item) => (
               <div className="trajectory-fragment" key={item.stage}>
                 <div className="trajectory-stage">
                   <span>{item.stage}</span>
                   <strong>{item.title}</strong>
                 </div>
-
-                {index < trajectoryStages.length - 1 && (
-                  <div className="trajectory-arrow">→</div>
-                )}
               </div>
             ))}
           </div>
@@ -122,6 +126,10 @@
         <div className="future-state-grid">
           {futureStates.map((state) => (
             <div key={state.title} className="future-state-item">
+              <span className={`future-state-badge ${state.badgeType}`}>
+                {state.badge}
+              </span>
+
               <h3>{state.title}</h3>
 
               <div className="future-state-data">
@@ -145,6 +153,15 @@
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="future-state-interpretation">
+          <span>Future State Interpretation</span>
+          <p>
+            Treasury intelligence projects a growth-oriented treasury state
+            supported by strong liquidity, controlled risk exposure and high
+            forecast confidence.
+          </p>
         </div>
       </div>
     </section>

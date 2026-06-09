@@ -1,174 +1,218 @@
-/* ========================================
-   G21-A.1
-   PREMIUM TREASURY INTELLIGENCE SUMMARY
-======================================== */
+/* =========================================================
+   V33.2-G21-A.1
+   TREASURY INTELLIGENCE SUMMARY
+   Premium Engine Card Style
+========================================================= */
 
 .treasury-intelligence-summary {
-  margin: 34px 0 46px;
+  width: 100%;
+  margin: 18px 0 20px;
 }
 
 .treasury-intelligence-card {
-  padding: 30px;
-  border-radius: 32px;
+  position: relative;
+  overflow: hidden;
+
+  padding: 24px;
+  border-radius: 28px;
 
   background:
-    radial-gradient(circle at top left, rgba(59, 130, 246, 0.10), transparent 32%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(239, 246, 255, 0.86));
+    radial-gradient(circle at top left, rgba(59, 130, 246, 0.14), transparent 34%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(239, 246, 255, 0.9));
 
-  border: 1px solid rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(147, 197, 253, 0.44);
 
   box-shadow:
-    0 26px 70px rgba(15, 23, 42, 0.10),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    0 22px 60px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
 
-  backdrop-filter: blur(22px);
+.treasury-intelligence-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      120deg,
+      transparent 0%,
+      rgba(37, 99, 235, 0.05) 44%,
+      transparent 72%
+    );
+
+  pointer-events: none;
 }
 
 .treasury-intelligence-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 28px;
-  margin-bottom: 26px;
+  position: relative;
+  z-index: 1;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: start;
+
+  margin-bottom: 22px;
 }
 
-.treasury-intelligence-header > div:first-child {
+.treasury-intelligence-card .treasury-eyebrow {
+  margin: 0 0 8px;
+
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+
+  color: #2563eb;
+}
+
+.treasury-intelligence-card .treasury-section-title {
+  margin: 0 0 10px;
+
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+
+  color: #020617;
+}
+
+.treasury-intelligence-card .treasury-section-description {
+  margin: 0;
   max-width: 760px;
+
+  font-size: 12px;
+  line-height: 1.65;
+
+  color: rgba(51, 65, 85, 0.74);
 }
 
 .treasury-intelligence-status {
-  min-width: 230px;
-  padding: 18px 20px;
-  border-radius: 24px;
+  min-width: 170px;
+  padding: 17px 18px;
 
-  background:
-    linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(59, 130, 246, 0.06));
+  border-radius: 22px;
 
-  border: 1px solid rgba(37, 99, 235, 0.18);
-  box-shadow: 0 14px 36px rgba(37, 99, 235, 0.10);
+  background: linear-gradient(135deg, #1d4ed8, #3158d4);
+  color: white;
+
+  box-shadow:
+    0 18px 42px rgba(37, 99, 235, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
 .treasury-intelligence-status span {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 7px;
 
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 900;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 
-  color: rgba(37, 99, 235, 0.78);
+  color: rgba(255, 255, 255, 0.76);
 }
 
 .treasury-intelligence-status strong {
   display: block;
 
-  font-size: 18px;
-  font-weight: 900;
-  line-height: 1.2;
+  font-size: 19px;
+  font-weight: 950;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
 
-  color: #0f172a;
+  color: #ffffff;
 }
 
 .treasury-intelligence-grid {
+  position: relative;
+  z-index: 1;
+
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
+  gap: 14px;
 }
 
 .treasury-intelligence-item {
   position: relative;
 
-  padding: 18px 18px 20px;
-  min-height: 92px;
+  min-height: 76px;
+  padding: 17px 18px 16px;
 
-  border-radius: 22px;
+  border-radius: 18px;
 
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(248, 250, 252, 0.84));
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(248, 250, 252, 0.9));
 
-  border: 1px solid rgba(203, 213, 225, 0.52);
+  border: 1px solid rgba(191, 219, 254, 0.62);
 
   box-shadow:
-    0 14px 34px rgba(15, 23, 42, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.78);
+    0 14px 34px rgba(15, 23, 42, 0.055),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
 }
 
-.treasury-intelligence-item::before {
+.treasury-intelligence-item::after {
   content: "";
   position: absolute;
-  left: 18px;
-  top: 16px;
+  top: 15px;
+  right: 15px;
 
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
   border-radius: 999px;
 
-  background: rgba(37, 99, 235, 0.68);
-  box-shadow: 0 0 18px rgba(37, 99, 235, 0.35);
+  background: #60a5fa;
+  box-shadow:
+    0 0 0 4px rgba(96, 165, 250, 0.18),
+    0 0 18px rgba(59, 130, 246, 0.38);
 }
 
 .treasury-intelligence-item span {
   display: block;
-  margin: 0 0 12px 18px;
+  margin-bottom: 10px;
 
-  font-size: 10px;
+  font-size: 9.5px;
   font-weight: 900;
-  letter-spacing: 0.13em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 
-  color: rgba(100, 116, 139, 0.9);
+  color: rgba(71, 85, 105, 0.72);
 }
 
 .treasury-intelligence-item strong {
   display: block;
 
   font-size: 16px;
-  font-weight: 900;
-  line-height: 1.25;
+  font-weight: 950;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
 
-  color: #0f172a;
+  color: #020617;
 }
 
-/* Match Treasury / Home typography */
-.treasury-intelligence-card .treasury-eyebrow {
-  margin: 0 0 10px;
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(59, 130, 246, 0.82);
-}
-
-.treasury-intelligence-card .treasury-section-title {
-  margin: 0 0 12px;
-
-  font-size: 25px;
-  font-weight: 900;
-  line-height: 1.12;
-  letter-spacing: -0.03em;
-
-  color: #0f172a;
-}
-
-.treasury-intelligence-card .treasury-section-description {
-  margin: 0;
-
-  max-width: 760px;
-
-  font-size: 14px;
-  line-height: 1.6;
-
-  color: rgba(51, 65, 85, 0.74);
-}
-
+/* Responsive */
 @media (max-width: 1100px) {
+  .treasury-intelligence-header {
+    grid-template-columns: 1fr;
+  }
+
+  .treasury-intelligence-status {
+    width: fit-content;
+  }
+
   .treasury-intelligence-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
 
-  .treasury-intelligence-header {
-    flex-direction: column;
+@media (max-width: 640px) {
+  .treasury-intelligence-card {
+    padding: 20px;
+    border-radius: 24px;
+  }
+
+  .treasury-intelligence-grid {
+    grid-template-columns: 1fr;
   }
 
   .treasury-intelligence-status {
@@ -176,13 +220,113 @@
   }
 }
 
-@media (max-width: 640px) {
-  .treasury-intelligence-card {
-    padding: 22px;
-    border-radius: 26px;
-  }
+/* =========================================================
+   SIGNAL COLORS
+========================================================= */
 
-  .treasury-intelligence-grid {
-    grid-template-columns: 1fr;
-  }
+.signal-orange {
+  border-color: rgba(251, 146, 60, 0.55);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 247, 237, 0.95),
+      rgba(255, 237, 213, 0.85)
+    );
+}
+
+.signal-orange::after {
+  background: #fb923c;
+  box-shadow:
+    0 0 0 4px rgba(251, 146, 60, 0.18),
+    0 0 18px rgba(251, 146, 60, 0.42);
+}
+
+.signal-red {
+  border-color: rgba(239, 68, 68, 0.55);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(254, 242, 242, 0.95),
+      rgba(254, 226, 226, 0.88)
+    );
+}
+
+.signal-red::after {
+  background: #ef4444;
+  box-shadow:
+    0 0 0 4px rgba(239, 68, 68, 0.18),
+    0 0 18px rgba(239, 68, 68, 0.42);
+}
+
+.signal-amber {
+  border-color: rgba(245, 158, 11, 0.55);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 251, 235, 0.95),
+      rgba(254, 243, 199, 0.88)
+    );
+}
+
+.signal-amber::after {
+  background: #f59e0b;
+  box-shadow:
+    0 0 0 4px rgba(245, 158, 11, 0.18),
+    0 0 18px rgba(245, 158, 11, 0.42);
+}
+
+.signal-purple {
+  border-color: rgba(168, 85, 247, 0.55);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(250, 245, 255, 0.95),
+      rgba(243, 232, 255, 0.88)
+    );
+}
+
+.signal-purple::after {
+  background: #a855f7;
+  box-shadow:
+    0 0 0 4px rgba(168, 85, 247, 0.18),
+    0 0 18px rgba(168, 85, 247, 0.42);
+}
+
+/* =========================================================
+   LIVE INTELLIGENCE STATUS PILL COLORS
+========================================================= */
+
+.treasury-intelligence-status.signal-blue {
+  background: linear-gradient(135deg, #1d4ed8, #3158d4);
+  box-shadow:
+    0 18px 42px rgba(37, 99, 235, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.treasury-intelligence-status.signal-amber {
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+  box-shadow:
+    0 18px 42px rgba(245, 158, 11, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.treasury-intelligence-status.signal-red {
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+  box-shadow:
+    0 18px 42px rgba(239, 68, 68, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.treasury-intelligence-status.signal-green {
+  background: linear-gradient(135deg, #047857, #10b981);
+  box-shadow:
+    0 18px 42px rgba(16, 185, 129, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.treasury-intelligence-status.signal-purple {
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  box-shadow:
+    0 18px 42px rgba(168, 85, 247, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }

@@ -34,18 +34,27 @@ export default function TreasuryStrategyOptimizationEngine() {
   return (
     <section className="treasury-strategy-optimization-engine">
       <div className="treasury-strategy-optimization-card">
-        <p className="treasury-eyebrow">
-          Treasury Strategy Intelligence Layer
-        </p>
+        <div className="treasury-strategy-optimization-title-row">
+          <div>
+            <p className="treasury-eyebrow">
+              Treasury Strategy Intelligence Layer
+            </p>
 
-        <h2 className="treasury-section-title">
-          Treasury Strategy Optimization Engine
-        </h2>
+            <h2 className="treasury-section-title">
+              Treasury Strategy Optimization Engine
+            </h2>
 
-        <p className="treasury-section-description">
-          Optimizes treasury allocation strategy by balancing yield,
-          liquidity safety, maturity distribution and execution readiness.
-        </p>
+            <p className="treasury-section-description">
+              Optimizes treasury allocation strategy by balancing yield,
+              liquidity safety, maturity distribution and execution readiness.
+            </p>
+          </div>
+
+          <div className="treasury-strategy-status">
+            <span>Optimization Status</span>
+            <strong>OPTIMIZING</strong>
+          </div>
+        </div>
 
         <div className="treasury-strategy-optimization-grid">
           {optimizationMetrics.map((item) => (
@@ -93,9 +102,11 @@ export default function TreasuryStrategyOptimizationEngine() {
         </div>
 
         <div className="treasury-strategy-optimization-action">
-          <span>Next Treasury Action</span>
+          <span>Strategy Interpretation</span>
           <strong>
-            Hold allocation structure and monitor next maturity window.
+            Current treasury allocation remains balanced and aligned with
+            liquidity preservation, yield optimization and maturity
+            diversification objectives.
           </strong>
         </div>
       </div>

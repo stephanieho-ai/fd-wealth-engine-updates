@@ -1,162 +1,380 @@
-/* ========================================
-   G21-I
+/* =========================================================
+   V33.2-G21-I.1
    TREASURY INTELLIGENCE PREDICTION ENGINE
-======================================== */
+   Premium Institutional Stable
+========================================================= */
 
 .treasury-prediction-engine {
   width: 100%;
+  margin-top: 22px;
 }
 
 .treasury-prediction-card {
   position: relative;
+  overflow: hidden;
+  padding: 26px;
+  border-radius: 28px;
 
-  padding: 28px;
-  border-radius: 24px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.98),
+      rgba(239, 246, 255, 0.94)
+    );
 
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(20px);
-
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(147, 197, 253, 0.55);
 
   box-shadow:
-    0 10px 30px rgba(15, 23, 42, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.65);
-
-  overflow: hidden;
+    0 24px 60px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .treasury-prediction-card::before {
   content: "";
-
   position: absolute;
   inset: 0;
 
   background:
-    radial-gradient(
-      circle at top right,
-      rgba(59, 130, 246, 0.10),
-      transparent 45%
-    );
+    radial-gradient(circle at top right, rgba(37, 99, 235, 0.16), transparent 34%),
+    radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.08), transparent 38%);
 
   pointer-events: none;
 }
 
-/* ========================================
-   PREDICTION GRID
-======================================== */
+.treasury-prediction-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* STATUS PILL */
+
+.prediction-status-pill {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 2;
+
+  min-width: 120px;
+  padding: 18px;
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1e3a8a,
+      #3154d4
+    );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 18px 35px rgba(30, 58, 138, 0.28);
+}
+
+.prediction-status-pill span {
+  display: block;
+  margin-bottom: 5px;
+
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.prediction-status-pill strong {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
+/* HEADER */
+
+.treasury-prediction-eyebrow {
+  margin: 0 150px 8px 0;
+
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+
+  color: #3b82f6;
+}
+
+.treasury-prediction-title {
+  margin: 0 150px 10px 0;
+
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+
+  color: #0f172a;
+}
+
+.treasury-prediction-description {
+  max-width: 760px;
+  margin: 0;
+
+  font-size: 13px;
+  line-height: 1.65;
+
+  color: #64748b;
+}
+
+/* METRICS */
 
 .treasury-prediction-grid {
   display: grid;
-
-  grid-template-columns:
-    repeat(auto-fit, minmax(220px, 1fr));
-
-  gap: 18px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
 
   margin-top: 24px;
 }
 
 .treasury-prediction-metric {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-  padding: 18px;
-
+  position: relative;
+  min-height: 96px;
+  padding: 16px;
   border-radius: 18px;
 
-  background: rgba(248, 250, 252, 0.78);
-
-  border: 1px solid rgba(226, 232, 240, 0.85);
-
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-.treasury-prediction-metric:hover {
-  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(191, 219, 254, 0.78);
 
   box-shadow:
-    0 12px 24px rgba(15, 23, 42, 0.08);
+    0 12px 24px rgba(15, 23, 42, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.86);
+
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.treasury-prediction-metric::after {
+  content: "";
+  position: absolute;
+  top: 15px;
+  right: 15px;
+
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+
+  background: #3b82f6;
+  box-shadow:
+    0 0 0 6px rgba(59, 130, 246, 0.13),
+    0 0 18px rgba(59, 130, 246, 0.45);
 }
 
 .treasury-prediction-metric span {
-  font-size: 11px;
-  font-weight: 700;
+  max-width: 78%;
 
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
 
-  color: rgba(59, 130, 246, 0.85);
+  color: #3b82f6;
 }
 
 .treasury-prediction-metric strong {
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 21px;
+  font-weight: 900;
+  letter-spacing: -0.035em;
 
   color: #0f172a;
 }
 
 .treasury-prediction-metric small {
-  font-size: 13px;
-  line-height: 1.55;
+  max-width: 92%;
+
+  font-size: 12px;
+  line-height: 1.5;
 
   color: #64748b;
 }
 
-/* ========================================
-   AI SUMMARY
-======================================== */
+/* BODY */
 
-.treasury-prediction-insight {
-  margin-top: 24px;
+.treasury-prediction-body {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 16px;
 
-  padding: 22px;
+  margin-top: 16px;
+}
 
+.prediction-panel {
+  padding: 14px;
   border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(191, 219, 254, 0.72);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.86);
+}
+
+.prediction-panel h3 {
+  margin: 0 0 14px 0;
+
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+
+  color: #0f172a;
+}
+
+.prediction-signal-list {
+  display: grid;
+  gap: 10px;
+}
+
+.prediction-signal-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 12px;
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.prediction-signal-item span {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #3b82f6;
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.prediction-signal-item p {
+  margin: 0;
+
+  font-size: 12.5px;
+  font-weight: 800;
+
+  color: #1e293b;
+}
+
+/* MATRIX */
+
+.prediction-matrix {
+  display: grid;
+  gap: 10px;
+}
+
+.prediction-matrix-item {
+  min-height: 72px;
+  padding: 13px 14px;
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(226, 232, 240, 0.92);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.prediction-matrix-item span {
+  display: block;
+  margin-bottom: 6px;
+
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+
+  color: #64748b;
+}
+
+.prediction-matrix-item strong {
+  font-size: 13px;
+  font-weight: 900;
+
+  color: #0f172a;
+}
+
+/* INTERPRETATION */
+
+.treasury-prediction-interpretation {
+  margin-top: 16px;
+  padding: 16px 18px;
+  border-radius: 18px;
 
   background:
     linear-gradient(
       135deg,
-      rgba(239, 246, 255, 0.95),
-      rgba(248, 250, 252, 0.95)
+      #1e3a8a,
+      #3154d4
     );
 
-  border: 1px solid rgba(191, 219, 254, 0.85);
+  color: #ffffff;
+
+  box-shadow:
+    0 16px 32px rgba(37, 99, 235, 0.22);
 }
 
-.treasury-prediction-insight span {
+.treasury-prediction-interpretation span {
   display: block;
+  margin-bottom: 8px;
 
-  margin-bottom: 10px;
-
-  font-size: 11px;
-  font-weight: 700;
-
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
 
-  color: #2563eb;
+  color: rgba(255, 255, 255, 0.82);
 }
 
-.treasury-prediction-insight p {
+.treasury-prediction-interpretation p {
   margin: 0;
 
-  font-size: 14px;
-  line-height: 1.7;
+  font-size: 12.5px;
+  line-height: 1.65;
+  font-weight: 700;
 
-  color: #334155;
+  color: #ffffff;
 }
 
-/* ========================================
-   RESPONSIVE
-======================================== */
+/* RESPONSIVE */
 
-@media (max-width: 768px) {
+@media (max-width: 1100px) {
+  .treasury-prediction-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
+  .treasury-prediction-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
   .treasury-prediction-card {
     padding: 22px;
+  }
+
+  .prediction-status-pill {
+    position: static;
+    width: fit-content;
+    margin-left: auto;
+    margin-bottom: 16px;
+  }
+
+  .treasury-prediction-eyebrow,
+  .treasury-prediction-title {
+    margin-right: 0;
   }
 
   .treasury-prediction-grid {
@@ -166,5 +384,4 @@
   .treasury-prediction-metric strong {
     font-size: 20px;
   }
-
 }

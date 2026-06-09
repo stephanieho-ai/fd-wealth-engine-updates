@@ -1,10 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-const STORAGE_KEYS = [
-  "fd_v315_records",
-  "fd_v30_records",
-  "fd_records",
-];
+const STORAGE_KEYS = ["fd_v315_records", "fd_v30_records", "fd_records"];
 
 function getRecordsFromStorage() {
   for (const key of STORAGE_KEYS) {
@@ -13,7 +9,6 @@ function getRecordsFromStorage() {
 
     try {
       const parsed = JSON.parse(raw);
-
       if (Array.isArray(parsed)) return parsed;
       if (Array.isArray(parsed.records)) return parsed.records;
     } catch {
@@ -139,7 +134,6 @@ export default function TreasuryLiveCapitalAllocationEngine({
 
     fdRecords.forEach((record) => {
       const institution = getInstitution(record);
-
       institutionMap[institution] =
         (institutionMap[institution] || 0) + getAmount(record);
     });
@@ -150,20 +144,16 @@ export default function TreasuryLiveCapitalAllocationEngine({
 
     const institutionList = institutionEntries
       .slice(0, 4)
-      .map(([name, amount]) => {
-        return `${name} — ${percent(amount, allocatedCapital)}%`;
-      });
+      .map(([name, amount]) => ({
+        label: name,
+        value: `${percent(amount, allocatedCapital)}%`,
+      }));
 
     const largestInstitutionAmount =
       institutionEntries.length > 0 ? institutionEntries[0][1] : 0;
 
-    const largestInstitutionLabel =
-      institutionEntries.length > 0
-        ? `${institutionEntries[0][0]} — ${percent(
-            institutionEntries[0][1],
-            allocatedCapital
-          )}%`
-        : "N/A";
+    const largestInstitutionName =
+      institutionEntries.length > 0 ? institutionEntries[0][0] : "N/A";
 
     const largestInstitutionPercent = percent(
       largestInstitutionAmount,
@@ -194,7 +184,8 @@ export default function TreasuryLiveCapitalAllocationEngine({
       concentrationRisk,
       diversificationScore,
       institutionList,
-      largestInstitutionLabel,
+      largestInstitutionName,
+      largestInstitutionPercent,
       rebalanceRequired:
         concentrationRisk === "HIGH" ? "YES" : "NO",
     };
@@ -210,138 +201,155 @@ export default function TreasuryLiveCapitalAllocationEngine({
       value: formatCurrency(allocation.deployableCapital, currency),
     },
     {
-      label: "Allocation Utilization",
+      label: "Utilization",
       value: `${allocation.utilization}%`,
     },
     {
       label: "Treasury Status",
-      value:
-        allocation.concentrationRisk === "HIGH"
-          ? "REVIEW"
-          : "ACTIVE",
+      value: allocation.concentrationRisk === "HIGH" ? "REVIEW" : "ACTIVE",
     },
   ];
 
   const capitalMix = [
-    `Fixed Income Allocation — ${percent(
-      allocation.allocatedCapital,
-      allocation.totalCapital
-    )}%`,
-    `Liquidity Reserve — ${percent(
-      allocation.savingsCapital,
-      allocation.totalCapital
-    )}%`,
-    `Operating Cash — ${percent(
-      allocation.parkingCapital,
-      allocation.totalCapital
-    )}%`,
+    {
+      label: "Fixed Income",
+      value: `${percent(allocation.allocatedCapital, allocation.totalCapital)}%`,
+    },
+    {
+      label: "Liquidity Reserve",
+      value: `${percent(allocation.savingsCapital, allocation.totalCapital)}%`,
+    },
+    {
+      label: "Operating Cash",
+      value: `${percent(allocation.parkingCapital, allocation.totalCapital)}%`,
+    },
   ];
 
   const institutionConcentration =
     allocation.institutionList.length > 0
       ? allocation.institutionList
-      : ["No Institution Data"];
+      : [{ label: "No Institution Data", value: "0%" }];
+
+  const statusMetrics = [
+    {
+      label: "Largest Institution",
+      value:
+        allocation.largestInstitutionName === "N/A"
+          ? "N/A"
+          : `${allocation.largestInstitutionName} ${allocation.largestInstitutionPercent}%`,
+    },
+    {
+      label: "Diversification",
+      value: `${allocation.diversificationScore}%`,
+    },
+    {
+      label: "Risk",
+      value: allocation.concentrationRisk,
+    },
+    {
+      label: "Rebalance",
+      value: allocation.rebalanceRequired,
+    },
+  ];
+
+  const reviewRequired = allocation.concentrationRisk === "HIGH";
 
   return (
     <section className="treasury-live-allocation-engine">
       <div className="treasury-live-allocation-card">
-        <p className="treasury-eyebrow">
-          Treasury Capital Monitoring
-        </p>
+        <div className="treasury-live-allocation-header">
+          <div>
+            <p className="treasury-eyebrow">
+              Treasury Strategy Command Wall
+            </p>
 
-        <h2 className="treasury-section-title">
-          Treasury Live Capital Allocation
-        </h2>
+            <h2 className="treasury-section-title">
+              Treasury Live Capital Allocation
+            </h2>
 
-        <p className="treasury-section-description">
-          Dashboard-linked treasury capital visibility across fixed income,
-          liquidity reserve, operating cash and institution concentration.
-        </p>
+            <p className="treasury-section-description">
+              Dashboard-linked allocation command layer monitoring capital mix,
+              deployable liquidity, utilization and institution exposure.
+            </p>
+          </div>
+
+          <div className="treasury-live-status-block">
+            <span>Allocation Status</span>
+            <strong>{reviewRequired ? "REVIEW" : "BALANCED"}</strong>
+          </div>
+        </div>
 
         <div className="treasury-live-allocation-grid">
           {metrics.map((item) => (
-            <div
-              className="treasury-live-metric"
-              key={item.label}
-            >
+            <div className="treasury-live-metric" key={item.label}>
               <span>{item.label}</span>
               <strong>{item.value}</strong>
             </div>
           ))}
         </div>
 
-        <div className="treasury-allocation-columns">
+        <div className="treasury-allocation-command-grid">
           <div className="treasury-allocation-panel">
-            <h3>Capital Mix</h3>
+            <div className="allocation-panel-header">
+              <span>Capital Mix</span>
+              <strong>Live Structure</strong>
+            </div>
 
-            <ul>
+            <div className="treasury-compact-list">
               {capitalMix.map((item) => (
-                <li key={item}>{item}</li>
+                <div className="treasury-compact-row" key={item.label}>
+                  <span>{item.label}</span>
+                  <strong>{item.value}</strong>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
 
           <div className="treasury-allocation-panel">
-            <h3>Institution Concentration</h3>
+            <div className="allocation-panel-header">
+              <span>Institution Concentration</span>
+              <strong>Exposure Map</strong>
+            </div>
 
-            <ul>
+            <div className="treasury-compact-list">
               {institutionConcentration.map((item) => (
-                <li key={item}>{item}</li>
+                <div className="treasury-compact-row" key={item.label}>
+                  <span>{item.label}</span>
+                  <strong>{item.value}</strong>
+                </div>
               ))}
-            </ul>
-
-            <div className="treasury-concentration-summary">
-              <div className="treasury-summary-item">
-                <span>Largest Institution</span>
-                <strong>{allocation.largestInstitutionLabel}</strong>
-              </div>
-
-              <div className="treasury-summary-item">
-                <span>Diversification Score</span>
-                <strong>{allocation.diversificationScore}%</strong>
-              </div>
-
-              <div className="treasury-summary-item">
-                <span>Concentration Risk</span>
-                <strong>{allocation.concentrationRisk}</strong>
-              </div>
             </div>
           </div>
         </div>
 
-        <div className="treasury-allocation-action">
+        <div className="treasury-live-status-strip">
+          {statusMetrics.map((item) => (
+            <div className="treasury-live-status-item" key={item.label}>
+              <span>{item.label}</span>
+              <strong>{item.value}</strong>
+            </div>
+          ))}
+        </div>
+
+        <div className="treasury-live-command-bar">
           <div>
-            <span className="allocation-status">
-              {allocation.concentrationRisk === "HIGH"
-                ? "Allocation Review Required"
-                : "Allocation Balanced"}
-            </span>
-
-            <h3>Live Allocation Status</h3>
-
-            <p>
-              Treasury allocation is linked to dashboard records.
-              Capital distribution is calculated from current portfolio
-              data and displayed using the active workspace currency.
-            </p>
+            <span>Final Allocation Command</span>
+            <strong>
+              {reviewRequired
+                ? "Review Institution Concentration"
+                : "Maintain Balanced Allocation"}
+            </strong>
           </div>
 
-          <div className="treasury-allocation-status-grid">
-            <div>
-              <span>Diversification Score</span>
-              <strong>{allocation.diversificationScore}%</strong>
-            </div>
+          <p>
+            {reviewRequired
+              ? "Institution exposure requires treasury review before further capital deployment."
+              : "Capital allocation remains balanced and aligned with treasury liquidity discipline."}
+          </p>
 
-            <div>
-              <span>Concentration Risk</span>
-              <strong>{allocation.concentrationRisk}</strong>
-            </div>
-
-            <div>
-              <span>Rebalance Required</span>
-              <strong>{allocation.rebalanceRequired}</strong>
-            </div>
-          </div>
+          <button type="button">
+            {reviewRequired ? "Review Ready" : "Command Ready"}
+          </button>
         </div>
       </div>
     </section>

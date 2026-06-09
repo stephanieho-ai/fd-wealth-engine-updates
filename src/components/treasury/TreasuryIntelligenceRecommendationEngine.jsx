@@ -12,47 +12,52 @@ export default function TreasuryIntelligenceRecommendationEngine() {
   };
 
   return (
-    <section className="treasury-intelligence-card treasury-recommendation-engine-card">
-      <div className="treasury-intelligence-card-inner">
-        <p className="treasury-eyebrow">
-          Treasury Intelligence Layer
-        </p>
+    <section className="treasury-recommendation-card">
+      <div className="treasury-recommendation-header">
+        <div>
+         <p className="treasury-eyebrow">
+            Treasury Intelligence Layer
+            </p>
 
-        <h2 className="treasury-section-title">
-          Treasury Intelligence Recommendation
-        </h2>
+          <h2>Treasury Intelligence Recommendation</h2>
 
-        <p className="treasury-section-description">
-          AI-generated treasury recommendation based on liquidity pressure,
-          governance exposure, operational readiness and recovery intelligence.
-        </p>
-
-        <div className="treasury-recommendation-metrics">
-          <div className="treasury-intelligence-item">
-            <span>Recommended Action</span>
-            <strong>{recommendation.action}</strong>
-          </div>
-
-          <div className="treasury-intelligence-item">
-            <span>Confidence</span>
-            <strong>{recommendation.confidence}</strong>
-          </div>
-
-          <div className="treasury-intelligence-item">
-            <span>Execution Readiness</span>
-            <strong>{recommendation.readiness}</strong>
-          </div>
+          <p>
+            AI-generated treasury recommendation based on liquidity pressure,
+            governance exposure, operational readiness and recovery intelligence.
+          </p>
         </div>
 
-        <div className="treasury-recommendation-full-card">
-          <span>Next Operator Step</span>
-          <strong>{recommendation.nextStep}</strong>
+        <div className="treasury-recommendation-badge">
+          <span>Recommendation Status</span>
+          <strong>READY</strong>
+        </div>
+      </div>
+
+      <div className="treasury-recommendation-metrics">
+        <div className="treasury-recommendation-metric">
+          <span>Recommended Action</span>
+          <strong>{recommendation.action}</strong>
         </div>
 
-        <div className="treasury-recommendation-full-card">
-          <span>Recommendation Reason</span>
-          <p>{recommendation.reason}</p>
+        <div className="treasury-recommendation-metric">
+          <span>Confidence</span>
+          <strong>{recommendation.confidence}</strong>
         </div>
+
+        <div className="treasury-recommendation-metric">
+          <span>Execution Readiness</span>
+          <strong>{recommendation.readiness}</strong>
+        </div>
+      </div>
+
+      <div className="treasury-recommendation-panel">
+        <span>Next Operator Step</span>
+        <p>{recommendation.nextStep}</p>
+      </div>
+
+      <div className="treasury-recommendation-footer">
+        <span>Recommendation Reason</span>
+        <p>{recommendation.reason}</p>
       </div>
     </section>
   );

@@ -1,7 +1,7 @@
 /* =========================================================
-   V33.2-G22-C.1
+   V33.2-G22-C.2
    TREASURY STRATEGY OPTIMIZATION ENGINE
-   Premium Institutional Polish
+   Premium Status Layout
 ========================================================= */
 
 .treasury-strategy-optimization-engine {
@@ -29,11 +29,57 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
+.treasury-strategy-optimization-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 22px;
+}
+
+.treasury-strategy-status {
+  min-width: 138px;
+  padding: 16px 18px;
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1e3a8a,
+      #2563eb
+    );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 18px 35px rgba(37, 99, 235, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.treasury-strategy-status span {
+  display: block;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.treasury-strategy-status strong {
+  display: block;
+  margin-top: 5px;
+  font-size: 18px;
+  line-height: 1.1;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
 .treasury-strategy-optimization-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
-  margin-top: 22px;
+  margin-top: 24px;
+  margin-bottom: 8px;
 }
 
 .treasury-strategy-optimization-metric {
@@ -51,6 +97,16 @@
   box-shadow:
     0 14px 35px rgba(15, 23, 42, 0.045),
     inset 0 1px 0 rgba(255, 255, 255, 0.85);
+
+  transition: all 0.25s ease;
+}
+
+.treasury-strategy-optimization-metric:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 20px 40px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .treasury-strategy-optimization-metric span,
@@ -197,6 +253,14 @@
 }
 
 @media (max-width: 900px) {
+  .treasury-strategy-optimization-title-row {
+    flex-direction: column;
+  }
+
+  .treasury-strategy-status {
+    width: 100%;
+  }
+
   .treasury-strategy-optimization-body {
     grid-template-columns: 1fr;
   }

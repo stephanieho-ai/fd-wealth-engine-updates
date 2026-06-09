@@ -1,115 +1,92 @@
 /* ========================================
+   V33.2-G21-D.1
    TREASURY INTELLIGENCE RECOMMENDATION ENGINE
+   Match Decision Engine Premium Style
 ======================================== */
 
-.treasury-recommendation-engine-card {
+.treasury-recommendation-card {
   height: 100%;
+  min-height: 520px;
+  padding: 30px;
+  border-radius: 30px;
+
+  background:
+    radial-gradient(circle at top right, rgba(37, 99, 235, 0.14), transparent 34%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.97), rgba(244, 248, 255, 0.94));
+
+  border: 1px solid rgba(191, 219, 254, 0.75);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+}
+
+.treasury-recommendation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.treasury-recommendation-header h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: #0f172a;
+}
+
+.treasury-recommendation-header p {
+  margin: 10px 0 0;
+  max-width: 780px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: #64748b;
+}
+
+.treasury-recommendation-badge {
+  min-width: 150px;
+  padding: 18px 20px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #1e3a8a, #3157d4);
+  color: white;
+  box-shadow: 0 18px 36px rgba(37, 99, 235, 0.28);
+}
+
+.treasury-recommendation-badge span {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.treasury-recommendation-badge strong {
+  display: block;
+  font-size: 20px;
+  font-weight: 900;
 }
 
 .treasury-recommendation-metrics {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  margin-top: 18px;
-}
-
-.treasury-recommendation-full-card {
-  margin-top: 14px;
-
-  padding: 18px 20px;
-
-  border-radius: 22px;
-
-  background: rgba(255, 255, 255, 0.72);
-
-  border: 1px solid rgba(148, 163, 184, 0.24);
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.78);
-}
-
-.treasury-recommendation-full-card span {
-  display: block;
-
-  margin-bottom: 8px;
-
-  font-size: 10px;
-  font-weight: 900;
-
-  letter-spacing: 0.14em;
-
-  text-transform: uppercase;
-
-  color: rgba(59,130,246,0.85);
-}
-
-.treasury-recommendation-full-card strong,
-.treasury-recommendation-full-card p {
-  margin: 0;
-
-  font-size: 13px;
-
-  font-weight: 700;
-
-  line-height: 1.55;
-
-  color: #0f172a;
-}
-
-@media (max-width: 1200px) {
-  .treasury-recommendation-metrics {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ========================================
-   G21-E
-   PREMIUM TREASURY INTELLIGENCE DECISION ENGINE
-======================================== */
-
-.treasury-intelligence-decision {
-  width: 100%;
-  margin-top: 28px;
-}
-
-.treasury-intelligence-decision .treasury-intelligence-card {
-  width: 100%;
-  padding: 34px 34px 36px;
-  border-radius: 30px;
-  background:
-    radial-gradient(circle at top right, rgba(59, 130, 246, 0.14), transparent 34%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(245, 249, 255, 0.92));
-  border: 1px solid rgba(191, 219, 254, 0.72);
-  box-shadow:
-    0 24px 60px rgba(15, 23, 42, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.92);
-}
-
-.treasury-decision-metrics {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
   gap: 18px;
-  margin-top: 26px;
-  margin-bottom: 22px;
+  margin-bottom: 18px;
 }
 
-.treasury-decision-metric-card {
+.treasury-recommendation-metric {
   position: relative;
-  min-height: 92px;
-  padding: 20px 22px;
+  min-height: 88px;
+  padding: 18px 20px;
   border-radius: 20px;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(248, 251, 255, 0.88));
-  border: 1px solid rgba(148, 163, 184, 0.28);
-  box-shadow:
-    0 14px 34px rgba(15, 23, 42, 0.055),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82);
 }
 
-.treasury-decision-metric-card::before {
+.treasury-recommendation-metric::after {
   content: "";
   position: absolute;
-  top: 18px;
+  top: 17px;
   right: 18px;
   width: 9px;
   height: 9px;
@@ -118,60 +95,335 @@
   box-shadow: 0 0 0 5px rgba(96, 165, 250, 0.14);
 }
 
-.treasury-decision-metric-card span {
+.treasury-recommendation-metric span,
+.treasury-recommendation-panel span,
+.treasury-recommendation-footer span {
   display: block;
-  margin-bottom: 12px;
-  padding-right: 24px;
+  margin-bottom: 10px;
   font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.16em;
+  font-weight: 900;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: rgba(100, 116, 139, 0.82);
+  color: #2563eb;
 }
 
-.treasury-decision-metric-card strong {
+.treasury-recommendation-metric strong {
   display: block;
   font-size: 18px;
   font-weight: 900;
-  line-height: 1.18;
-  letter-spacing: -0.02em;
   color: #0f172a;
 }
 
-.treasury-intelligence-decision .treasury-intelligence-note {
-  margin-top: 16px;
+.treasury-recommendation-panel {
+  margin-top: 18px;
   padding: 20px 22px;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.66);
+  background: rgba(255, 255, 255, 0.72);
   border: 1px solid rgba(148, 163, 184, 0.24);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.78);
 }
 
-.treasury-intelligence-decision .treasury-intelligence-note h4 {
-  margin: 0 0 10px;
-  font-size: 11px;
+.treasury-recommendation-panel p {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 800;
+  line-height: 1.7;
+  color: #334155;
+}
+
+.treasury-recommendation-footer {
+  margin-top: 18px;
+  padding: 18px 20px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #1e3a8a, #3157d4);
+  color: white;
+  font-size: 12.5px;
+  font-weight: 800;
+  line-height: 1.55;
+}
+
+.treasury-recommendation-footer span,
+.treasury-recommendation-footer p {
+  color: white;
+}
+
+.treasury-recommendation-footer p {
+  margin: 0;
+}
+
+@media (max-width: 1000px) {
+  .treasury-recommendation-header {
+    flex-direction: column;
+  }
+
+  .treasury-recommendation-badge {
+    width: 100%;
+  }
+
+  .treasury-recommendation-metrics {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================
+   G21-E
+   TREASURY INTELLIGENCE DECISION ENGINE
+   Premium Layout
+======================================== */
+
+.treasury-intelligence-decision {
+  width: 100%;
+  margin-top: 28px;
+}
+
+.treasury-decision-card {
+  width: 100%;
+  padding: 30px;
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at top right, rgba(37, 99, 235, 0.14), transparent 34%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.97), rgba(244, 248, 255, 0.94));
+  border: 1px solid rgba(191, 219, 254, 0.75);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+}
+
+.treasury-decision-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.treasury-decision-eyebrow {
+  margin: 0 0 8px;
+  font-size: 10px;
   font-weight: 900;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: #3b82f6;
 }
 
-.treasury-intelligence-decision .treasury-intelligence-note p {
+.treasury-decision-title {
   margin: 0;
-  max-width: 980px;
-  font-size: 14px;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: #0f172a;
+}
+
+.treasury-decision-description {
+  margin: 10px 0 0;
+  max-width: 780px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: #64748b;
+}
+
+.treasury-decision-status {
+  min-width: 150px;
+  padding: 18px 20px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #1e3a8a, #3157d4);
+  color: white;
+  box-shadow: 0 18px 36px rgba(37, 99, 235, 0.28);
+}
+
+.treasury-decision-status span {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.treasury-decision-status strong {
+  display: block;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.treasury-decision-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.treasury-decision-metric-card {
+  position: relative;
+  min-height: 88px;
+  padding: 18px 20px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82);
+}
+
+.treasury-decision-metric-card::before {
+  content: "";
+  position: absolute;
+  top: 17px;
+  right: 18px;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: #60a5fa;
+  box-shadow: 0 0 0 5px rgba(96, 165, 250, 0.14);
+}
+
+.treasury-decision-metric-card span,
+.treasury-decision-step span,
+.treasury-decision-panel span {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #2563eb;
+}
+
+.treasury-decision-metric-card strong {
+  display: block;
+  font-size: 18px;
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.treasury-decision-step,
+.treasury-decision-validation {
+  margin-top: 18px;
+  padding: 20px 22px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+}
+
+.treasury-decision-step strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 15px;
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.treasury-decision-step p {
+  margin: 0;
+  font-size: 12.5px;
   line-height: 1.7;
   color: #334155;
 }
 
-@media (max-width: 900px) {
-  .treasury-decision-metrics {
+.treasury-decision-validation h4 {
+  margin: 0 0 14px;
+  font-size: 12px;
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.treasury-decision-validation-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.treasury-decision-validation-pill {
+  min-height: 42px;
+  padding: 11px 14px;
+  border-radius: 16px;
+  background: rgba(239, 246, 255, 0.9);
+  border: 1px solid rgba(96, 165, 250, 0.32);
+  font-size: 12px;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.treasury-decision-panels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.treasury-decision-panel {
+  min-height: 118px;
+  padding: 20px 22px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+}
+
+.treasury-decision-panel strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 17px;
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.treasury-decision-panel p {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: #334155;
+}
+
+.treasury-decision-interpretation {
+  margin-top: 18px;
+  padding: 18px 20px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #1e3a8a, #3157d4);
+  color: white;
+  box-shadow: 0 16px 34px rgba(37, 99, 235, 0.22);
+}
+
+.treasury-decision-interpretation span {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.treasury-decision-interpretation p {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 800;
+  line-height: 1.55;
+}
+
+@media (max-width: 1000px) {
+  .treasury-decision-header {
+    flex-direction: column;
+  }
+
+  .treasury-decision-status {
+    width: 100%;
+  }
+
+  .treasury-decision-metrics,
+  .treasury-decision-validation-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .treasury-decision-panels {
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 600px) {
-  .treasury-decision-metrics {
+  .treasury-decision-card {
+    padding: 22px;
+  }
+
+  .treasury-decision-metrics,
+  .treasury-decision-validation-grid {
     grid-template-columns: 1fr;
   }
+}
+
+.treasury-recommendation-header .treasury-recommendation-eyebrow {
+  color: #2563eb !important;
 }

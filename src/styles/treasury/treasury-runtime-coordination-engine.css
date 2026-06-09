@@ -1,7 +1,7 @@
 /* =========================================================
    V33.2-G23-B
    TREASURY RUNTIME COORDINATION ENGINE
-   Premium Institutional Layout
+   Premium Treasury OS Command Wall Style
 ========================================================= */
 
 .treasury-runtime-engine {
@@ -12,173 +12,208 @@
 .treasury-runtime-card {
   position: relative;
   overflow: hidden;
-
-  padding: 24px;
-  border-radius: 28px;
+  padding: 28px;
+  border-radius: 30px;
 
   background:
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.98),
-      rgba(239, 246, 255, 0.94)
-    );
+    radial-gradient(circle at top right, rgba(37, 99, 235, 0.18), transparent 30%),
+    radial-gradient(circle at top left, rgba(59, 130, 246, 0.08), transparent 34%),
+    linear-gradient(135deg, rgba(255,255,255,0.98), rgba(239,246,255,0.94));
 
-  border: 1px solid rgba(148, 163, 184, 0.22);
+  border: 1px solid rgba(147, 197, 253, 0.45);
 
   box-shadow:
-    0 24px 60px rgba(15, 23, 42, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    0 26px 70px rgba(15,23,42,0.09),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+.treasury-runtime-card::before {
+  content: "RUNTIME\A ONLINE";
+  white-space: pre-line;
+
+  position: absolute;
+  top: 26px;
+  right: 26px;
+
+  width: 130px;
+  height: 86px;
+  border-radius: 24px;
+
+  background: linear-gradient(135deg, #1e293b, #2563eb);
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  line-height: 1.9;
+
+  box-shadow: 0 18px 42px rgba(37,99,235,0.28);
+}
+
+.treasury-runtime-eyebrow,
+.treasury-runtime-title,
+.treasury-runtime-description,
+.treasury-runtime-metrics,
+.treasury-runtime-grid,
+.treasury-runtime-footer {
+  position: relative;
+  z-index: 1;
 }
 
 .treasury-runtime-eyebrow {
+  margin: 0 0 12px;
+
   font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 2px;
+  font-weight: 900;
+  letter-spacing: 2.4px;
   text-transform: uppercase;
   color: #2563eb;
-
-  margin-bottom: 8px;
 }
 
 .treasury-runtime-title {
-  font-size: 24px;
-  font-weight: 700;
-  color: #0f172a;
+  margin: 0 0 12px;
 
-  margin-bottom: 12px;
+  font-size: 26px;
+  line-height: 1.15;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: #0f172a;
 }
 
 .treasury-runtime-description {
+  max-width: 760px;
+  margin: 0 0 26px;
+
   font-size: 14px;
   line-height: 1.7;
   color: #475569;
-
-  margin-bottom: 24px;
-
-  max-width: 720px;
 }
 
 .treasury-runtime-metrics {
   display: grid;
-
-  grid-template-columns:
-    repeat(auto-fit, minmax(180px, 1fr));
-
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
-
-  margin-bottom: 22px;
+  margin-bottom: 18px;
 }
 
 .treasury-runtime-metric {
   padding: 18px;
+  border-radius: 20px;
 
-  border-radius: 18px;
-
-  background: rgba(255, 255, 255, 0.78);
-
-  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(255,255,255,0.82);
+  border: 1px solid rgba(147,197,253,0.42);
 
   box-shadow:
-    0 8px 20px rgba(15, 23, 42, 0.04);
+    0 14px 32px rgba(15,23,42,0.05),
+    inset 0 1px 0 rgba(255,255,255,0.9);
 }
 
 .treasury-runtime-metric span {
   display: block;
+  margin-bottom: 8px;
 
-  font-size: 12px;
+  font-size: 11px;
   color: #64748b;
-
-  margin-bottom: 6px;
 }
 
 .treasury-runtime-metric strong {
   font-size: 20px;
-  font-weight: 700;
-
-  color: #0f172a;
+  font-weight: 900;
+  color: #020617;
 }
 
 .treasury-runtime-grid {
   display: grid;
-
-  grid-template-columns:
-    repeat(auto-fit, minmax(180px, 1fr));
-
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 16px;
-
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 
 .treasury-runtime-node {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  min-height: 84px;
+  padding: 16px;
+  border-radius: 20px;
 
-  padding: 18px;
-
-  border-radius: 18px;
-
-  background: rgba(255, 255, 255, 0.78);
-
-  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(255,255,255,0.86);
+  border: 1px solid rgba(148,163,184,0.18);
 
   box-shadow:
-    0 8px 20px rgba(15, 23, 42, 0.04);
+    0 14px 30px rgba(15,23,42,0.05),
+    inset 0 1px 0 rgba(255,255,255,0.88);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .treasury-runtime-node span {
   font-size: 14px;
-  font-weight: 600;
-
-  color: #334155;
+  font-weight: 900;
+  color: #020617;
 }
 
 .treasury-runtime-node strong {
-  font-size: 13px;
-  font-weight: 700;
+  align-self: flex-start;
 
-  color: #16a34a;
-}
+  padding: 7px 12px;
+  border-radius: 999px;
 
-.treasury-runtime-footer {
-  padding: 18px;
+  background: rgba(220,252,231,0.95);
+  border: 1px solid rgba(34,197,94,0.25);
 
-  border-radius: 18px;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(220, 252, 231, 0.85),
-      rgba(240, 253, 244, 0.85)
-    );
-
-  border:
-    1px solid rgba(34, 197, 94, 0.18);
-
-  text-align: center;
-
-  font-size: 14px;
-  font-weight: 700;
-
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
   color: #15803d;
 }
 
-/* =========================================================
-   Responsive
-========================================================= */
+.treasury-runtime-footer {
+  padding: 18px 20px;
+  border-radius: 22px;
 
-@media (max-width: 768px) {
+  background: linear-gradient(135deg, #1e293b, #2563eb);
+  border: 1px solid rgba(37,99,235,0.35);
+
+  text-align: center;
+
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+
+  box-shadow: 0 18px 42px rgba(37,99,235,0.22);
+}
+
+@media (max-width: 1100px) {
+  .treasury-runtime-card::before {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin-bottom: 20px;
+  }
+
+  .treasury-runtime-metrics,
+  .treasury-runtime-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .treasury-runtime-card {
+    padding: 22px;
+  }
 
   .treasury-runtime-title {
-    font-size: 20px;
+    font-size: 22px;
   }
 
-  .treasury-runtime-metrics {
-    grid-template-columns: 1fr;
-  }
-
+  .treasury-runtime-metrics,
   .treasury-runtime-grid {
     grid-template-columns: 1fr;
   }
-
 }

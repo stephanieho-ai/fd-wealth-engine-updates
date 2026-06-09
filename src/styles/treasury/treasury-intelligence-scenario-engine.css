@@ -1,156 +1,321 @@
-/* ========================================
-   V33.2-G21-J
+/* =========================================================
+   V33.2-G21-J.1
    TREASURY INTELLIGENCE SCENARIO ENGINE
-   Premium Institutional Version
-======================================== */
+   Premium Treasury OS Upgrade
+========================================================= */
 
 .treasury-scenario-engine {
-  margin-top: 24px;
+  width: 100%;
+  margin-top: 22px;
 }
 
 .treasury-scenario-card {
-  padding: 26px;
+  position: relative;
+  overflow: hidden;
 
+  padding: 24px;
   border-radius: 28px;
 
   background:
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.92),
-      rgba(248, 251, 255, 0.86)
-    );
+    radial-gradient(circle at top right, rgba(37, 99, 235, 0.12), transparent 32%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(239, 246, 255, 0.92));
 
-  border: 1px solid rgba(148, 163, 184, 0.22);
+  border: 1px solid rgba(147, 197, 253, 0.38);
 
   box-shadow:
-    0 24px 60px rgba(15, 23, 42, 0.08);
-
-  backdrop-filter: blur(18px);
+    0 24px 60px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
-.treasury-scenario-grid {
-  margin-top: 24px;
-
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-.treasury-scenario-item {
-  min-height: 220px;
-
-  padding: 20px;
-
-  border-radius: 22px;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.92),
-      rgba(241, 247, 255, 0.82)
-    );
-
-  border: 1px solid rgba(59, 130, 246, 0.14);
-
-  box-shadow:
-    0 14px 34px rgba(15, 23, 42, 0.06);
-
+.treasury-scenario-header {
   display: flex;
-  flex-direction: column;
-
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    border-color 0.25s ease;
-}
-
-.treasury-scenario-item:hover {
-  transform: translateY(-4px);
-
-  border-color: rgba(59, 130, 246, 0.32);
-
-  box-shadow:
-    0 20px 42px rgba(59, 130, 246, 0.13);
-}
-
-.scenario-header {
-  display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-
-  gap: 14px;
-
-  margin-bottom: 20px;
+  gap: 24px;
 }
 
-.scenario-header h3 {
+.treasury-scenario-eyebrow {
+  margin: 0 0 8px;
+
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+
+  color: #3b82f6;
+}
+
+.treasury-scenario-title {
   margin: 0;
 
-  font-size: 15px;
-  font-weight: 800;
-  line-height: 1.25;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
 
   color: #0f172a;
 }
 
-.scenario-header span {
-  padding: 5px 10px;
+.treasury-scenario-description {
+  max-width: 820px;
+  margin: 12px 0 0;
+
+  font-size: 13px;
+  line-height: 1.7;
+
+  color: #64748b;
+}
+
+.treasury-scenario-status {
+  min-width: 118px;
+  padding: 16px 18px;
+
+  border-radius: 20px;
+
+  background: linear-gradient(135deg, #1e3a8a, #3154d4);
+  color: white;
+
+  box-shadow: 0 18px 34px rgba(30, 64, 175, 0.25);
+}
+
+.treasury-scenario-status span {
+  display: block;
+
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  opacity: 0.9;
+}
+
+.treasury-scenario-status strong {
+  display: block;
+  margin-top: 8px;
+
+  font-size: 17px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.treasury-scenario-metrics {
+  margin-top: 24px;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.treasury-scenario-metric {
+  padding: 16px;
+
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(147, 197, 253, 0.32);
+
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.04);
+}
+
+.treasury-scenario-metric span {
+  display: block;
+
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  color: #64748b;
+}
+
+.treasury-scenario-metric strong {
+  display: block;
+  margin-top: 8px;
+
+  font-size: 22px;
+  font-weight: 950;
+
+  color: #0f172a;
+}
+
+.treasury-scenario-metric p {
+  margin: 6px 0 0;
+
+  font-size: 11px;
+  line-height: 1.45;
+
+  color: #64748b;
+}
+
+.treasury-scenario-grid {
+  margin-top: 14px;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.treasury-scenario-item {
+  padding: 18px;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(248, 251, 255, 0.76));
+
+  border: 1px solid rgba(147, 197, 253, 0.36);
+
+  box-shadow:
+    0 14px 32px rgba(15, 23, 42, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.treasury-scenario-item:hover {
+  transform: translateY(-3px);
+
+  border-color: rgba(59, 130, 246, 0.5);
+
+  box-shadow:
+    0 22px 44px rgba(37, 99, 235, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.scenario-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.scenario-header h3 {
+  margin: 8px 0 0;
+
+  font-size: 15px;
+  font-weight: 900;
+
+  color: #0f172a;
+}
+
+.scenario-header > strong {
+  height: fit-content;
+  padding: 6px 10px;
 
   border-radius: 999px;
 
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 900;
 
   color: #2563eb;
-
-  background: rgba(59, 130, 246, 0.09);
-
-  border: 1px solid rgba(59, 130, 246, 0.16);
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.18);
 }
 
-.scenario-content {
-  display: flex;
-  flex-direction: column;
+.scenario-pill {
+  display: inline-flex;
+  padding: 5px 10px;
 
-  gap: 14px;
+  border-radius: 999px;
+
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.treasury-scenario-item.stable .scenario-pill {
+  color: #047857;
+  background: rgba(16, 185, 129, 0.12);
+}
+
+.treasury-scenario-item.watch .scenario-pill {
+  color: #1d4ed8;
+  background: rgba(59, 130, 246, 0.12);
+}
+
+.treasury-scenario-item.stress .scenario-pill {
+  color: #b45309;
+  background: rgba(245, 158, 11, 0.14);
 }
 
 .scenario-row {
-  display: flex;
-  flex-direction: column;
+  padding: 12px 0;
 
-  gap: 5px;
+  border-top: 1px solid rgba(148, 163, 184, 0.16);
 }
 
-.scenario-row label {
-  font-size: 10px;
-  font-weight: 800;
+.scenario-row span {
+  display: block;
 
-  letter-spacing: 0.11em;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 
-  color: rgba(71, 85, 105, 0.68);
+  color: #64748b;
 }
 
 .scenario-row strong {
-  font-size: 14px;
-  font-weight: 800;
+  display: block;
+  margin-top: 5px;
+
+  font-size: 13px;
+  font-weight: 900;
   line-height: 1.35;
 
   color: #0f172a;
 }
 
-/* ========================================
-   MOBILE RESPONSIVE
-======================================== */
+.treasury-scenario-interpretation {
+  margin-top: 14px;
+  padding: 16px 18px;
+
+  border-radius: 18px;
+
+  background: linear-gradient(135deg, #1d4ed8, #3154d4);
+  color: white;
+
+  box-shadow: 0 16px 34px rgba(37, 99, 235, 0.22);
+}
+
+.treasury-scenario-interpretation span {
+  display: block;
+
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+
+  opacity: 0.9;
+}
+
+.treasury-scenario-interpretation p {
+  margin: 8px 0 0;
+
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
 @media (max-width: 1100px) {
-  .treasury-scenario-grid {
-    grid-template-columns: 1fr;
+  .treasury-scenario-header {
+    flex-direction: column;
   }
 
-  .treasury-scenario-item {
-    min-height: auto;
+  .treasury-scenario-status {
+    width: 100%;
+  }
+
+  .treasury-scenario-metrics,
+  .treasury-scenario-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -160,11 +325,7 @@
     border-radius: 24px;
   }
 
-  .treasury-scenario-grid {
-    gap: 16px;
-  }
-
-  .scenario-header {
-    align-items: flex-start;
+  .treasury-scenario-title {
+    font-size: 19px;
   }
 }

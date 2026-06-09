@@ -1,7 +1,8 @@
-/* ========================================
-   G21-H.1
-   PREMIUM TREASURY INTELLIGENCE LEARNING ENGINE
-======================================== */
+/* =========================================================
+   V33.2-G21-H.2
+   TREASURY INTELLIGENCE LEARNING ENGINE
+   Premium Institutional Learning Intelligence
+========================================================= */
 
 .treasury-learning-engine {
   width: 100%;
@@ -9,160 +10,309 @@
 }
 
 .treasury-learning-card {
-  width: 100%;
-  padding: 26px;
-  border-radius: 26px;
+  position: relative;
+  overflow: hidden;
+  padding: 24px;
+  border-radius: 28px;
 
   background:
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.92),
-      rgba(239, 246, 255, 0.78)
-    );
+    radial-gradient(circle at top right, rgba(59, 130, 246, 0.18), transparent 34%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(239, 246, 255, 0.9));
 
-  border: 1px solid rgba(147, 197, 253, 0.35);
+  border: 1px solid rgba(147, 197, 253, 0.42);
 
   box-shadow:
-    0 18px 45px rgba(15, 23, 42, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7);
-
-  backdrop-filter: blur(18px);
+    0 24px 60px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
-.treasury-learning-grid {
+.treasury-learning-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.treasury-learning-eyebrow {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #3b82f6;
+}
+
+.treasury-learning-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: #0f172a;
+}
+
+.treasury-learning-description {
+  max-width: 760px;
+  margin: 12px 0 0;
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgba(71, 85, 105, 0.82);
+}
+
+.treasury-learning-status {
+  min-width: 118px;
+  padding: 16px 18px;
+  border-radius: 20px;
+  text-align: left;
+
+  background: linear-gradient(135deg, #1e3a8a, #3157d4);
+  color: white;
+
+  box-shadow:
+    0 18px 36px rgba(37, 99, 235, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.treasury-learning-status span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.treasury-learning-status strong {
+  display: block;
+  font-size: 18px;
+  font-weight: 950;
+  letter-spacing: -0.03em;
+}
+
+.treasury-learning-metrics {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
-  margin-top: 22px;
+  margin-top: 24px;
 }
 
 .treasury-learning-metric {
+  position: relative;
   padding: 16px 18px;
   border-radius: 18px;
 
-  background: rgba(255, 255, 255, 0.74);
-  border: 1px solid rgba(191, 219, 254, 0.65);
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(191, 219, 254, 0.68);
 
   box-shadow:
-    0 10px 24px rgba(15, 23, 42, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    0 12px 26px rgba(15, 23, 42, 0.055),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.treasury-learning-metric::after {
+  content: "";
+  position: absolute;
+  top: 14px;
+  right: 14px;
+
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+
+  background: #60a5fa;
+  box-shadow: 0 0 0 5px rgba(96, 165, 250, 0.15);
 }
 
 .treasury-learning-metric span {
   display: block;
   margin-bottom: 8px;
 
-  font-size: 12px;
-  font-weight: 600;
-  color: rgba(71, 85, 105, 0.82);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+
+  color: rgba(71, 85, 105, 0.78);
 }
 
 .treasury-learning-metric strong {
+  display: block;
   font-size: 20px;
-  font-weight: 800;
+  font-weight: 950;
+  letter-spacing: -0.04em;
   color: #0f172a;
-  letter-spacing: -0.03em;
+}
+
+.treasury-learning-metric p {
+  margin: 5px 0 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(71, 85, 105, 0.65);
 }
 
 .treasury-learning-body {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
+  grid-template-columns: 1.25fr 0.75fr;
   gap: 16px;
   margin-top: 18px;
 }
 
 .treasury-learning-panel {
-  padding: 20px;
-  border-radius: 20px;
+  padding: 18px;
+  border-radius: 22px;
 
   background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(191, 219, 254, 0.58);
+  border: 1px solid rgba(191, 219, 254, 0.62);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    0 10px 26px rgba(15, 23, 42, 0.045);
 }
 
 .treasury-learning-panel h3 {
-  margin: 0 0 14px;
-
+  margin: 0 0 16px;
   font-size: 15px;
-  font-weight: 800;
+  font-weight: 900;
+  letter-spacing: -0.03em;
   color: #0f172a;
 }
 
-.treasury-learning-item {
-  padding: 14px 0;
-  border-top: 1px solid rgba(203, 213, 225, 0.55);
+.treasury-learning-feed {
+  display: grid;
+  gap: 10px;
 }
 
-.treasury-learning-item:first-of-type {
-  border-top: none;
-  padding-top: 0;
+.treasury-learning-feed-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+
+  padding: 12px;
+  border-radius: 15px;
+
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(226, 232, 240, 0.85);
 }
 
-.treasury-learning-item span {
-  display: block;
+.treasury-learning-check {
+  display: grid;
+  place-items: center;
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
 
   font-size: 13px;
-  font-weight: 800;
+  font-weight: 950;
+  color: white;
+
+  background: linear-gradient(135deg, #2563eb, #60a5fa);
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.22);
+}
+
+.treasury-learning-feed-item strong {
+  display: block;
+  margin-bottom: 4px;
+
+  font-size: 13px;
+  font-weight: 900;
   color: #1e3a8a;
 }
 
-.treasury-learning-item p {
-  margin: 6px 0 0;
+.treasury-learning-feed-item p {
+  margin: 0;
 
-  font-size: 13px;
-  line-height: 1.65;
-  color: rgba(51, 65, 85, 0.82);
+  font-size: 12px;
+  line-height: 1.55;
+  color: rgba(51, 65, 85, 0.78);
 }
 
 .treasury-learning-recommendation {
   background:
-    linear-gradient(
-      135deg,
-      rgba(239, 246, 255, 0.95),
-      rgba(255, 255, 255, 0.76)
-    );
+    radial-gradient(circle at top right, rgba(96, 165, 250, 0.2), transparent 42%),
+    rgba(255, 255, 255, 0.68);
 }
 
-.treasury-learning-recommendation-grid {
+.treasury-learning-matrix {
   display: grid;
-  gap: 12px;
+  gap: 10px;
 }
 
-.treasury-learning-mini-card {
-  padding: 14px;
-  border-radius: 14px;
+.treasury-learning-matrix-item {
+  padding: 13px 14px;
+  border-radius: 15px;
 
-  background: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(191, 219, 254, 0.55);
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(191, 219, 254, 0.65);
+
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
 }
 
-.treasury-learning-mini-card span {
+.treasury-learning-matrix-item span {
   display: block;
   margin-bottom: 6px;
 
-  font-size: 11px;
-  font-weight: 700;
-
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
 
-  color: rgba(71, 85, 105, 0.75);
+  color: rgba(71, 85, 105, 0.72);
 }
 
-.treasury-learning-mini-card strong {
+.treasury-learning-matrix-item strong {
   display: block;
-
-  font-size: 14px;
-  font-weight: 800;
-
+  font-size: 13px;
+  font-weight: 950;
+  line-height: 1.35;
   color: #0f172a;
 }
 
-/* ========================================
+.treasury-learning-interpretation {
+  margin-top: 16px;
+  padding: 16px 18px;
+  border-radius: 18px;
+
+  background: linear-gradient(135deg, #1e3a8a, #3157d4);
+  color: white;
+
+  box-shadow:
+    0 18px 36px rgba(37, 99, 235, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.treasury-learning-interpretation span {
+  display: block;
+  margin-bottom: 8px;
+
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.treasury-learning-interpretation p {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.65;
+}
+
+/* =========================================================
    RESPONSIVE
-======================================== */
+========================================================= */
 
 @media (max-width: 1000px) {
-  .treasury-learning-grid {
+  .treasury-learning-header {
+    flex-direction: column;
+  }
+
+  .treasury-learning-status {
+    width: 100%;
+  }
+
+  .treasury-learning-metrics {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -174,10 +324,18 @@
 @media (max-width: 640px) {
   .treasury-learning-card {
     padding: 20px;
-    border-radius: 22px;
+    border-radius: 24px;
   }
 
-  .treasury-learning-grid {
+  .treasury-learning-title {
+    font-size: 19px;
+  }
+
+  .treasury-learning-metrics {
     grid-template-columns: 1fr;
+  }
+
+  .treasury-learning-feed-item {
+    padding: 11px;
   }
 }

@@ -1,54 +1,45 @@
-/* ========================================
-   G21-B
+/* =========================================================
+   V33.2-G21-B.2
    TREASURY INTELLIGENCE SIGNAL ENGINE
-======================================== */
+   Premium Institutional Upgrade
+========================================================= */
 
 .treasury-signal-engine {
-  margin-top: 18px;
+  width: 100%;
+  margin-top: 22px;
 }
-
-/* ========================================
-   MAIN CARD
-======================================== */
 
 .signal-engine-card {
   position: relative;
   overflow: hidden;
-
   padding: 28px;
-
   border-radius: 28px;
 
   background:
     linear-gradient(
       135deg,
-      rgba(255,255,255,0.92),
-      rgba(248,250,252,0.88)
+      rgba(255, 255, 255, 0.96),
+      rgba(239, 246, 255, 0.92)
     );
 
-  border: 1px solid rgba(226,232,240,0.9);
+  border: 1px solid rgba(147, 197, 253, 0.38);
 
   box-shadow:
-    0 16px 40px rgba(15,23,42,0.06);
+    0 24px 60px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.86);
 }
 
 .signal-engine-card::before {
   content: "";
-
   position: absolute;
-
-  top: 0;
-  left: 0;
-
-  width: 4px;
-  height: 100%;
-
+  inset: 0;
   background:
-    linear-gradient(
-      180deg,
-      #3b82f6,
-      rgba(59,130,246,0.12)
+    radial-gradient(
+      circle at top right,
+      rgba(37, 99, 235, 0.16),
+      transparent 32%
     );
+  pointer-events: none;
 }
 
 .signal-engine-card > * {
@@ -56,180 +47,365 @@
   z-index: 2;
 }
 
-/* ========================================
-   HEADER
-======================================== */
-
-.signal-engine-card .treasury-eyebrow {
-  margin: 0 0 10px;
-
-  font-size: 11px;
-  font-weight: 700;
-
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-
-  color: rgba(59,130,246,0.82);
+.signal-engine-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-start;
 }
 
-.signal-engine-card .treasury-section-title {
-  margin: 0;
-
-  font-size: 24px;
-  font-weight: 800;
-
-  line-height: 1.2;
-  letter-spacing: -0.03em;
-
-  color: #0f172a;
-}
-
-.signal-engine-card .treasury-section-description {
-  margin-top: 14px;
-
-  max-width: 980px;
-
-  font-size: 14px;
-  line-height: 1.7;
-
-  color: rgba(51,65,85,0.82);
-}
-
-/* ========================================
-   SIGNAL GRID
-======================================== */
-
-.signal-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(4, minmax(0, 1fr));
-
-  gap: 16px;
-
-  margin-top: 22px;
-}
-
-.signal-item {
-  position: relative;
-
-  min-height: 80px;
-
-  padding: 16px 18px;
-
+.signal-status-badge {
+  min-width: 142px;
+  padding: 18px 20px;
   border-radius: 18px;
 
   background:
     linear-gradient(
       135deg,
-      rgba(255,255,255,0.95),
-      rgba(248,250,252,0.92)
+      #1d4ed8,
+      #3b5bdb
     );
 
-  border: 1px solid rgba(226,232,240,0.9);
+  color: #ffffff;
+  box-shadow: 0 18px 34px rgba(37, 99, 235, 0.28);
 }
 
-.signal-item::before {
+.signal-status-badge span {
+  display: block;
+  margin-bottom: 6px;
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.signal-status-badge strong {
+  font-size: 20px;
+  font-weight: 900;
+}
+
+/* =========================
+   SIGNAL GRID
+========================= */
+
+.signal-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.signal-item {
+  position: relative;
+  min-height: 74px;
+  padding: 16px 18px;
+  border-radius: 17px;
+
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(191, 219, 254, 0.62);
+
+  box-shadow:
+    0 12px 28px rgba(15, 23, 42, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.signal-item::after {
   content: "";
-
   position: absolute;
-
-  top: 16px;
-  right: 16px;
+  top: 14px;
+  right: 14px;
 
   width: 8px;
   height: 8px;
-
   border-radius: 999px;
 
   background: #60a5fa;
-
-  box-shadow:
-    0 0 0 5px rgba(96,165,250,0.12);
+  box-shadow: 0 0 0 5px rgba(96, 165, 250, 0.16);
 }
 
 .signal-label {
   display: block;
-
   margin-bottom: 10px;
 
-  font-size: 10px;
-  font-weight: 700;
-
+  font-size: 9.5px;
+  font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 
-  color: rgba(100,116,139,0.82);
+  color: rgba(71, 85, 105, 0.76);
 }
 
 .signal-value {
   display: block;
 
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 17px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
 
-  line-height: 1.2;
-
-  color: #0f172a;
+  color: #020617;
 }
 
-/* ========================================
-   RECOMMENDATION
-======================================== */
+/* =========================
+   INTERPRETATION
+========================= */
 
 .signal-recommendation {
   margin-top: 16px;
-
-  padding: 16px 18px;
-
+  padding: 18px 20px;
   border-radius: 18px;
 
-  background:
-    linear-gradient(
-      135deg,
-      rgba(248,250,252,0.9),
-      rgba(255,255,255,0.95)
-    );
-
-  border: 1px solid rgba(226,232,240,0.9);
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid rgba(191, 219, 254, 0.62);
 }
 
 .signal-recommendation-label {
   display: block;
+  margin-bottom: 9px;
 
-  margin-bottom: 8px;
-
-  font-size: 10px;
-  font-weight: 700;
-
+  font-size: 9.5px;
+  font-weight: 900;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 
-  color: rgba(59,130,246,0.82);
+  color: #2563eb;
+}
+
+.signal-recommendation strong {
+  display: block;
+  margin-bottom: 8px;
+
+  font-size: 13px;
+  font-weight: 900;
+  color: #020617;
 }
 
 .signal-recommendation-text {
   margin: 0;
 
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.65;
-
-  color: rgba(51,65,85,0.88);
+  color: rgba(51, 65, 85, 0.9);
 }
 
-/* ========================================
+/* =========================
+   VALIDATION
+========================= */
+
+.signal-validation-panel {
+  margin-top: 16px;
+  padding: 18px;
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(191, 219, 254, 0.62);
+}
+
+.signal-validation-panel h4 {
+  margin: 0 0 14px;
+
+  font-size: 12px;
+  font-weight: 900;
+  color: #020617;
+}
+
+.signal-validation-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.signal-validation-item {
+  padding: 11px 14px;
+  border-radius: 13px;
+
+  background: rgba(239, 246, 255, 0.82);
+  border: 1px solid rgba(147, 197, 253, 0.78);
+
+  font-size: 11px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* =========================
+   SUMMARY
+========================= */
+
+.signal-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.signal-summary-card {
+  min-height: 104px;
+  padding: 18px;
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(191, 219, 254, 0.62);
+}
+
+.signal-summary-card span {
+  display: block;
+  margin-bottom: 10px;
+
+  font-size: 9.5px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+
+  color: #2563eb;
+}
+
+.signal-summary-card p {
+  margin: 0;
+
+  font-size: 12px;
+  line-height: 1.65;
+  color: rgba(30, 41, 59, 0.9);
+}
+
+/* =========================
+   FINAL BAR
+========================= */
+
+.signal-final-bar {
+  margin-top: 16px;
+  padding: 16px 18px;
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1e40af,
+      #3156d4
+    );
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.55;
+
+  box-shadow: 0 16px 34px rgba(37, 99, 235, 0.24);
+}
+
+/* =========================
    RESPONSIVE
-======================================== */
+========================= */
 
 @media (max-width: 1100px) {
-  .signal-grid {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
+  .signal-grid,
+  .signal-validation-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .signal-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .signal-engine-header {
+    flex-direction: column;
   }
 }
 
 @media (max-width: 680px) {
-  .signal-grid {
+  .signal-engine-card {
+    padding: 22px;
+  }
+
+  .signal-grid,
+  .signal-validation-grid {
     grid-template-columns: 1fr;
   }
+
+  .signal-status-badge {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   LIVE INTELLIGENCE PULSE SYSTEM
+========================================================= */
+
+@keyframes treasuryPulseSoft {
+  0% {
+    transform: scale(1);
+    box-shadow:
+      0 18px 42px rgba(245, 158, 11, 0.28),
+      0 0 0 0 rgba(245, 158, 11, 0.28);
+  }
+
+  50% {
+    transform: scale(1.025);
+    box-shadow:
+      0 22px 52px rgba(245, 158, 11, 0.36),
+      0 0 0 8px rgba(245, 158, 11, 0.10);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow:
+      0 18px 42px rgba(245, 158, 11, 0.28),
+      0 0 0 0 rgba(245, 158, 11, 0.0);
+  }
+}
+
+@keyframes treasuryPulseCritical {
+  0% {
+    transform: scale(1);
+    box-shadow:
+      0 18px 42px rgba(239, 68, 68, 0.34),
+      0 0 0 0 rgba(239, 68, 68, 0.30);
+  }
+
+  50% {
+    transform: scale(1.035);
+    box-shadow:
+      0 24px 60px rgba(239, 68, 68, 0.42),
+      0 0 0 10px rgba(239, 68, 68, 0.14);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow:
+      0 18px 42px rgba(239, 68, 68, 0.34),
+      0 0 0 0 rgba(239, 68, 68, 0);
+  }
+}
+
+@keyframes treasuryGlowRecovery {
+  0%, 100% {
+    box-shadow:
+      0 18px 42px rgba(16, 185, 129, 0.28),
+      0 0 0 rgba(16, 185, 129, 0);
+  }
+
+  50% {
+    box-shadow:
+      0 22px 56px rgba(16, 185, 129, 0.36),
+      0 0 18px rgba(16, 185, 129, 0.28);
+  }
+}
+
+/* Stable = Blue, no animation */
+.treasury-intelligence-status.signal-blue {
+  animation: none;
+}
+
+/* Escalation = Amber, soft pulse */
+.treasury-intelligence-status.signal-amber {
+  animation: treasuryPulseSoft 2.8s infinite ease-in-out;
+}
+
+/* Critical = Red, stronger pulse */
+.treasury-intelligence-status.signal-red {
+  animation: treasuryPulseCritical 2.2s infinite ease-in-out;
+}
+
+/* Recovery = Green, soft glow */
+.treasury-intelligence-status.signal-green {
+  animation: treasuryGlowRecovery 3s infinite ease-in-out;
 }

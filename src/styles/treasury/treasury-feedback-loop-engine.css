@@ -1,207 +1,213 @@
-/* ========================================
-   G21-G
+/* =========================================================
+   V33.2-G21-G
    TREASURY INTELLIGENCE FEEDBACK LOOP ENGINE
-======================================== */
+   Compact Premium Treasury OS Layout
+========================================================= */
 
 .treasury-feedback-loop-engine {
-  margin-top: 24px;
+  width: 100%;
+  margin-top: 22px;
 }
 
 .treasury-feedback-card {
   position: relative;
-
-  padding: 28px;
-
-  border-radius: 24px;
-
-  background: rgba(255, 255, 255, 0.78);
-
-  backdrop-filter: blur(20px);
-
-  border: 1px solid rgba(255, 255, 255, 0.6);
-
+  overflow: hidden;
+  padding: 22px;
+  border-radius: 26px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.97),
+    rgba(239, 246, 255, 0.9)
+  );
+  border: 1px solid rgba(147, 197, 253, 0.35);
   box-shadow:
-    0 10px 30px rgba(15, 23, 42, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    0 18px 46px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
-/* ========================================
-   FEEDBACK METRICS
-======================================== */
+.treasury-feedback-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.treasury-feedback-status {
+  min-width: 128px;
+  padding: 16px 18px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #1e3a8a, #1e40af);
+  color: white;
+  box-shadow: 0 14px 30px rgba(30, 64, 175, 0.28);
+}
+
+.treasury-feedback-status span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.82;
+}
+
+.treasury-feedback-status strong {
+  font-size: 20px;
+  font-weight: 900;
+}
 
 .treasury-feedback-grid {
   display: grid;
-
-  grid-template-columns:
-    repeat(auto-fit, minmax(180px, 1fr));
-
-  gap: 16px;
-
-  margin-top: 24px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-top: 18px;
 }
 
-.treasury-feedback-grid .treasury-metric-card {
-  padding: 18px;
-
+.treasury-feedback-metric {
+  min-height: 82px;
+  padding: 16px;
   border-radius: 18px;
-
-  background: rgba(248, 250, 252, 0.9);
-
-  border: 1px solid rgba(226, 232, 240, 0.9);
-
-  transition: all 0.25s ease;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(191, 219, 254, 0.7);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
 }
 
-.treasury-feedback-grid .treasury-metric-card:hover {
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 8px 20px rgba(59, 130, 246, 0.12);
-}
-
-.treasury-feedback-grid .treasury-metric-card span {
+.treasury-feedback-metric span,
+.treasury-impact-row span {
   display: block;
-
   margin-bottom: 8px;
-
-  font-size: 12px;
-
-  font-weight: 600;
-
-  letter-spacing: 0.08em;
-
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-
   color: #64748b;
 }
 
-.treasury-feedback-grid .treasury-metric-card strong {
-  display: block;
-
-  font-size: 22px;
-
-  font-weight: 700;
-
+.treasury-feedback-metric strong {
+  font-size: 21px;
+  font-weight: 900;
   color: #0f172a;
 }
 
-/* ========================================
-   FEEDBACK SUMMARY
-======================================== */
+.treasury-feedback-body {
+  display: grid;
+  grid-template-columns: 1.35fr 0.9fr;
+  gap: 14px;
+  margin-top: 14px;
+}
 
-.treasury-feedback-summary {
-  margin-top: 24px;
-
-  padding: 22px;
-
+.treasury-feedback-summary,
+.treasury-feedback-impact {
+  padding: 16px;
   border-radius: 18px;
-
-  background: rgba(239, 246, 255, 0.75);
-
-  border: 1px solid rgba(147, 197, 253, 0.35);
+  background: rgba(248, 250, 252, 0.78);
+  border: 1px solid rgba(191, 219, 254, 0.72);
 }
 
-.treasury-feedback-summary h3 {
-  margin: 0 0 14px;
-
-  font-size: 16px;
-
-  font-weight: 700;
-
+.treasury-feedback-summary h3,
+.treasury-feedback-impact h3 {
+  margin: 0 0 12px;
+  font-size: 14px;
+  font-weight: 900;
   color: #0f172a;
 }
 
-.treasury-feedback-summary ul {
-  margin: 0;
-
-  padding-left: 18px;
+.treasury-feedback-list {
+  display: grid;
+  gap: 8px;
 }
 
-.treasury-feedback-summary li {
-  margin-bottom: 10px;
+.treasury-feedback-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 12px;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+}
 
-  font-size: 14px;
+.treasury-feedback-item span {
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.12);
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 900;
+}
 
-  line-height: 1.6;
-
+.treasury-feedback-item p {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 650;
   color: #334155;
 }
 
-.treasury-feedback-summary li:last-child {
+.treasury-feedback-impact-list {
+  display: grid;
+  gap: 10px;
+}
+
+.treasury-impact-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+}
+
+.treasury-impact-row span {
   margin-bottom: 0;
 }
 
-/* ========================================
-   RESPONSIVE
-======================================== */
+.treasury-impact-row strong {
+  font-size: 16px;
+  font-weight: 900;
+  color: #0f172a;
+}
 
-@media (max-width: 768px) {
+.treasury-feedback-runtime {
+  margin-top: 14px;
+  padding: 15px 16px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #1e40af, #3156c9);
+  color: white;
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1.6;
+  box-shadow: 0 14px 28px rgba(37, 99, 235, 0.2);
+}
+
+@media (max-width: 1100px) {
+  .treasury-feedback-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .treasury-feedback-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
   .treasury-feedback-card {
-    padding: 20px;
+    padding: 18px;
+  }
+
+  .treasury-feedback-header {
+    flex-direction: column;
+  }
+
+  .treasury-feedback-status {
+    width: 100%;
   }
 
   .treasury-feedback-grid {
     grid-template-columns: 1fr;
   }
-
-  .treasury-feedback-grid .treasury-metric-card strong {
-    font-size: 20px;
-  }
-}
-
-/* ========================================
-   FEEDBACK IMPACT
-======================================== */
-
-.treasury-feedback-impact {
-  margin-top: 24px;
-}
-
-.treasury-feedback-impact h3 {
-  margin: 0 0 14px;
-
-  font-size: 16px;
-  font-weight: 700;
-
-  color: #0f172a;
-}
-
-.treasury-feedback-impact-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(auto-fit, minmax(220px, 1fr));
-
-  gap: 16px;
-}
-
-.treasury-impact-card {
-  padding: 18px;
-
-  border-radius: 18px;
-
-  background: rgba(248, 250, 252, 0.9);
-
-  border: 1px solid rgba(226, 232, 240, 0.9);
-}
-
-.treasury-impact-card span {
-  display: block;
-
-  margin-bottom: 8px;
-
-  font-size: 12px;
-  font-weight: 600;
-
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-
-  color: #64748b;
-}
-
-.treasury-impact-card strong {
-  font-size: 22px;
-  font-weight: 700;
-
-  color: #0f172a;
 }

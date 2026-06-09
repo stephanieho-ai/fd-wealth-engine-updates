@@ -1,27 +1,18 @@
 import "../../styles/treasury/treasury-capital-allocation-strategy-engine.css";
 
 export default function TreasuryCapitalAllocationStrategyEngine() {
+  const metrics = [
+    { label: "Allocation Mode", value: "BALANCED" },
+    { label: "Reserve Coverage", value: "42%" },
+    { label: "Deployment Bias", value: "SELECTIVE" },
+    { label: "Risk Outlook", value: "LOW" },
+  ];
+
   const allocationMatrix = [
-    {
-      label: "Liquidity Reserve",
-      value: "42%",
-      note: "Protected liquidity for maturities and emergency redeployment.",
-    },
-    {
-      label: "Income Deployment",
-      value: "33%",
-      note: "Selective FD deployment into validated ladder opportunities.",
-    },
-    {
-      label: "Strategic Buffer",
-      value: "15%",
-      note: "Flexible capital reserved for future rate and timing windows.",
-    },
-    {
-      label: "Risk-Controlled Growth",
-      value: "10%",
-      note: "Measured exposure only when confidence remains aligned.",
-    },
+    { label: "Liquidity Reserve", value: "42%", note: "Protected liquidity for maturities and emergency redeployment." },
+    { label: "Income Deployment", value: "33%", note: "Selective FD deployment into validated ladder opportunities." },
+    { label: "Strategic Buffer", value: "15%", note: "Flexible capital reserved for future rate and timing windows." },
+    { label: "Risk-Controlled Growth", value: "10%", note: "Measured exposure only when confidence remains aligned." },
   ];
 
   const confidenceDrivers = [
@@ -44,22 +35,41 @@ export default function TreasuryCapitalAllocationStrategyEngine() {
       <div className="treasury-capital-allocation-card">
         <div className="treasury-capital-header">
           <div>
-            <p className="treasury-eyebrow">Treasury Strategy Layer</p>
+            <p className="treasury-capital-kicker">
+              V33.2-G22-B · TREASURY STRATEGY LAYER
+            </p>
 
-            <h2 className="treasury-section-title">
-              Treasury Capital Allocation Strategy Engine
-            </h2>
+            <h2>Treasury Capital Allocation Strategy Engine</h2>
 
-            <p className="treasury-section-description">
+            <p>
               Converts treasury intelligence into structured capital allocation
-              guidance by balancing liquidity reserve, income deployment,
+              guidance by balancing reserve protection, income deployment,
               strategic buffer and controlled growth exposure.
             </p>
           </div>
 
           <div className="treasury-capital-status">
-            <span>Allocation Mode</span>
-            <strong>Balanced</strong>
+            <span>Allocation Status</span>
+            <strong>ACTIVE</strong>
+          </div>
+        </div>
+
+        <div className="treasury-capital-metrics">
+          {metrics.map((item) => (
+            <div className="treasury-capital-metric" key={item.label}>
+              <span>{item.label}</span>
+              <strong>{item.value}</strong>
+            </div>
+          ))}
+        </div>
+
+        <div className="treasury-capital-confidence-bar">
+          <div className="bar-header">
+            <span>Capital Allocation Confidence</span>
+            <strong>92%</strong>
+          </div>
+          <div className="bar-track">
+            <div className="bar-fill" />
           </div>
         </div>
 
@@ -76,7 +86,6 @@ export default function TreasuryCapitalAllocationStrategyEngine() {
                   <span>{item.label}</span>
                   <p>{item.note}</p>
                 </div>
-
                 <strong>{item.value}</strong>
               </div>
             ))}
@@ -88,21 +97,11 @@ export default function TreasuryCapitalAllocationStrategyEngine() {
             </span>
 
             <div className="confidence-engine-score">
-              <span className="confidence-score-label">
-                Overall Confidence
-              </span>
+              <span>Overall Confidence</span>
               <strong>92%</strong>
             </div>
 
-            <div className="confidence-engine-badge">
-              HIGH CONFIDENCE
-            </div>
-
-            <p className="confidence-engine-description">
-              Treasury allocation posture remains supported by liquidity
-              protection, stable ladder structure and disciplined deployment
-              readiness.
-            </p>
+            <div className="confidence-engine-badge">HIGH CONFIDENCE</div>
 
             <div className="confidence-driver-grid">
               {confidenceDrivers.map((driver) => (
@@ -143,9 +142,8 @@ export default function TreasuryCapitalAllocationStrategyEngine() {
           <div>
             <span>Allocation Justification</span>
             <p>
-              Current treasury condition supports balanced allocation. The
-              engine avoids over-deployment by protecting reserve capital while
-              allowing measured income expansion through FD ladder opportunities.
+              Current treasury condition supports balanced allocation while
+              avoiding over-deployment and preserving future ladder flexibility.
             </p>
           </div>
         </div>
