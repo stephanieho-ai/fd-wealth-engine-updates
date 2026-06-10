@@ -38,6 +38,7 @@ import TreasuryRuntimeIntelligenceCore from "../components/treasury/TreasuryRunt
 import TreasuryRuntimeSignalIntelligence from "../components/treasury/TreasuryRuntimeSignalIntelligence";
 import TreasuryRuntimeAlertIntelligence
 from "../components/treasury/TreasuryRuntimeAlertIntelligence";
+import TreasuryRuntimeEscalationIntelligence from "../components/treasury/TreasuryRuntimeEscalationIntelligence";
 
 
 
@@ -1011,6 +1012,7 @@ const institutionalEscalationPath =
         <TreasuryRuntimeIntelligenceCore />
         <TreasuryRuntimeSignalIntelligence />
         <TreasuryRuntimeAlertIntelligence />
+        <TreasuryRuntimeEscalationIntelligence />
         <TreasuryCrossLayerSynchronizationEngine />
         <TreasuryOSHealthIntelligenceEngine />
         <TreasuryOSCommandCenter />

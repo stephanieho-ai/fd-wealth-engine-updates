@@ -1,0 +1,326 @@
+/* =========================================================
+   V33.2-G24-D
+   TREASURY RUNTIME ESCALATION INTELLIGENCE
+   Premium Institutional Edition - Upgraded
+========================================================= */
+
+.treasury-runtime-escalation-intelligence {
+  width: 100%;
+  margin-top: 22px;
+}
+
+.runtime-escalation-card {
+  position: relative;
+  overflow: hidden;
+  padding: 24px;
+  border-radius: 30px;
+
+  background:
+    radial-gradient(circle at top right, rgba(251, 191, 36, 0.14), transparent 32%),
+    radial-gradient(circle at bottom left, rgba(245, 158, 11, 0.08), transparent 38%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 251, 235, 0.96));
+
+  border: 1px solid rgba(245, 158, 11, 0.18);
+
+  box-shadow:
+    0 20px 60px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* Header */
+
+.runtime-escalation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.runtime-escalation-eyebrow {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #d97706;
+}
+
+.runtime-escalation-title {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: #0f172a;
+}
+
+.runtime-escalation-description {
+  margin-top: 12px;
+  max-width: 760px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #64748b;
+}
+
+/* Status */
+
+.runtime-escalation-status {
+  min-width: 220px;
+  padding: 14px 18px;
+  border-radius: 18px;
+  text-align: center;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.22);
+  animation: treasuryEscalationPulse 3s ease-in-out infinite;
+}
+
+.runtime-escalation-status span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #92400e;
+}
+
+.runtime-escalation-status strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 800;
+  color: #d97706;
+}
+
+/* Hero */
+
+.runtime-escalation-hero {
+  margin-top: 26px;
+  padding: 24px;
+  border-radius: 24px;
+
+  background:
+    radial-gradient(circle at top right, rgba(251, 191, 36, 0.12), transparent 36%),
+    linear-gradient(135deg, rgba(251, 191, 36, 0.10), rgba(245, 158, 11, 0.05));
+
+  border: 1px solid rgba(245, 158, 11, 0.16);
+}
+
+.runtime-escalation-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(245, 158, 11, 0.12);
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #b45309;
+}
+
+.runtime-escalation-hero h3 {
+  margin: 16px 0 10px;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #0f172a;
+}
+
+.runtime-escalation-hero p {
+  margin: 0;
+  max-width: 840px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #64748b;
+}
+
+/* Metrics */
+
+.runtime-escalation-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.runtime-escalation-metric {
+  padding: 16px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  transition: all 0.25s ease;
+}
+
+.runtime-escalation-metric:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.runtime-escalation-metric span {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.runtime-escalation-metric strong {
+  font-size: 24px;
+  font-weight: 850;
+  letter-spacing: -0.02em;
+  color: #0f172a;
+}
+
+/* Sections */
+
+.runtime-escalation-pipeline,
+.runtime-escalation-recommendation {
+  margin-top: 20px;
+  padding: 22px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(148, 163, 184, 0.14);
+}
+
+.runtime-escalation-section-header {
+  margin-bottom: 18px;
+}
+
+.runtime-escalation-section-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #0f172a;
+}
+
+/* Pipeline */
+
+.runtime-escalation-flow {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+
+.runtime-escalation-step {
+  position: relative;
+
+  min-height: 58px;
+  padding: 13px 14px;
+  border-radius: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 251, 235, 0.86));
+
+  border: 1px solid rgba(245, 158, 11, 0.18);
+
+  transition: all 0.25s ease;
+}
+
+.runtime-escalation-step:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(245, 158, 11, 0.12);
+}
+
+.runtime-escalation-step span {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #334155;
+}
+
+.runtime-escalation-arrow {
+  position: absolute;
+  right: 10px;
+  font-size: 15px;
+  font-weight: 800;
+  color: #d97706;
+}
+
+/* AI Recommendation */
+
+.runtime-escalation-recommendation {
+  position: relative;
+  padding-left: 30px;
+}
+
+.runtime-escalation-recommendation::before {
+  content: "";
+  position: absolute;
+  left: 16px;
+  top: 22px;
+  bottom: 22px;
+  width: 4px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #f59e0b, #fbbf24);
+}
+
+.runtime-escalation-recommendation p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #64748b;
+}
+
+/* Animation */
+
+@keyframes treasuryEscalationPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(245, 158, 11, 0.12);
+  }
+
+  50% {
+    transform: scale(1.015);
+    box-shadow: 0 0 22px rgba(245, 158, 11, 0.18);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(245, 158, 11, 0.12);
+  }
+}
+
+/* Responsive */
+
+@media (max-width: 1200px) {
+  .runtime-escalation-metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .runtime-escalation-flow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .runtime-escalation-arrow {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .runtime-escalation-header {
+    flex-direction: column;
+  }
+
+  .runtime-escalation-status {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .runtime-escalation-title {
+    font-size: 26px;
+  }
+
+  .runtime-escalation-metrics,
+  .runtime-escalation-flow {
+    grid-template-columns: 1fr;
+  }
+}
