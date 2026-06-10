@@ -1,0 +1,413 @@
+/* =========================================================
+   V33.2-G24-F
+   TREASURY RUNTIME RECOVERY INTELLIGENCE
+   Compact Premium Institutional Edition
+========================================================= */
+
+.treasury-runtime-recovery-intelligence {
+  width: 100%;
+  margin-top: 18px;
+}
+
+.runtime-recovery-card {
+  position: relative;
+  overflow: hidden;
+  padding: 18px 20px;
+  border-radius: 22px;
+
+  background:
+    radial-gradient(circle at top right, rgba(59, 130, 246, 0.08), transparent 34%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.94));
+
+  border: 1px solid rgba(147, 197, 253, 0.35);
+
+  box-shadow:
+    0 18px 44px rgba(15, 23, 42, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.86);
+}
+
+.runtime-recovery-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.runtime-recovery-eyebrow {
+  margin: 0 0 5px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #2563eb;
+}
+
+.runtime-recovery-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -0.035em;
+  color: #0f172a;
+}
+
+.runtime-recovery-description {
+  max-width: 680px;
+  margin: 6px 0 0;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: #64748b;
+}
+
+.runtime-recovery-status {
+  min-width: 170px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  text-align: right;
+
+  background:
+    linear-gradient(
+      135deg,
+      #10b981,
+      #14b8a6
+    );
+
+  border: none;
+
+  box-shadow:
+    0 14px 30px rgba(16, 185, 129, 0.28);
+}
+
+.runtime-recovery-status span {
+  display: block;
+  margin-bottom: 3px;
+
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+
+  color: rgba(255,255,255,0.85);
+}
+
+.runtime-recovery-status strong {
+  font-size: 15px;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+
+  color: #ffffff;
+}
+
+.runtime-recovery-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.runtime-recovery-metric-card {
+  padding: 10px 13px;
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+
+  box-shadow:
+    0 8px 20px rgba(15, 23, 42, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.86);
+}
+
+.runtime-recovery-metric-card span {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.runtime-recovery-metric-card strong {
+  display: block;
+  font-size: 17px;
+  font-weight: 950;
+  letter-spacing: -0.03em;
+  color: #0f172a;
+}
+
+.runtime-recovery-hero-panel {
+  margin-bottom: 12px;
+  padding: 13px 16px;
+  border-radius: 17px;
+
+  background:
+    radial-gradient(circle at top right, rgba(20, 184, 166, 0.14), transparent 34%),
+    linear-gradient(135deg, rgba(236, 253, 245, 0.64), rgba(239, 246, 255, 0.5));
+
+  border: 1px solid rgba(16, 185, 129, 0.2);
+
+  box-shadow:
+    0 10px 24px rgba(15, 23, 42, 0.035),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88);
+}
+
+.runtime-recovery-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 8px;
+  padding: 5px 10px;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(16, 185, 129, 0.18);
+
+  font-size: 9px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #047857;
+}
+
+.runtime-recovery-hero-panel h3 {
+  margin: 0 0 5px;
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: #0f172a;
+}
+
+.runtime-recovery-hero-panel p {
+  max-width: 900px;
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.4;
+  color: #64748b;
+}
+
+.runtime-recovery-engine {
+  padding: 13px 14px;
+  border-radius: 17px;
+  margin-bottom: 12px;
+
+  background:
+    linear-gradient(135deg, rgba(239, 246, 255, 0.82), rgba(240, 253, 250, 0.5)),
+    rgba(255, 255, 255, 0.72);
+
+  border: 1px solid rgba(147, 197, 253, 0.28);
+}
+
+.runtime-engine-header {
+  margin-bottom: 10px;
+}
+
+.runtime-engine-header span {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #047857;
+}
+
+.runtime-engine-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.runtime-engine-item {
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.runtime-engine-item span {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.runtime-engine-item strong {
+  font-size: 14px;
+  font-weight: 950;
+  letter-spacing: 0.03em;
+  color: #0f766e;
+}
+
+.runtime-engine-note {
+  margin: 9px 0 0;
+  font-size: 11px;
+  line-height: 1.35;
+  color: #64748b;
+}
+
+.runtime-recovery-queue {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.runtime-recovery-queue-card {
+  padding: 10px 12px;
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+
+  box-shadow:
+    0 8px 18px rgba(15, 23, 42, 0.035),
+    inset 0 1px 0 rgba(255, 255, 255, 0.86);
+}
+
+.runtime-recovery-queue-card span {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 11px;
+  font-weight: 850;
+  color: #334155;
+}
+
+.runtime-recovery-queue-card strong {
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.1em;
+  color: #059669;
+}
+
+.runtime-recovery-matrix {
+  overflow: hidden;
+  border-radius: 16px;
+  margin-bottom: 12px;
+
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+.runtime-matrix-header,
+.runtime-matrix-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 0.8fr 0.9fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.runtime-matrix-header {
+  padding: 9px 14px;
+  background: rgba(239, 246, 255, 0.78);
+}
+
+.runtime-matrix-header span {
+  font-size: 9px;
+  font-weight: 950;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #0f766e;
+}
+
+.runtime-matrix-row {
+  padding: 9px 14px;
+  border-top: 1px solid rgba(148, 163, 184, 0.13);
+}
+
+.runtime-matrix-row span {
+  font-size: 11px;
+  font-weight: 750;
+  color: #334155;
+}
+
+.runtime-matrix-row span:nth-child(3),
+.runtime-matrix-row span:nth-child(4) {
+  font-weight: 950;
+  color: #0f172a;
+}
+
+.runtime-recovery-footer-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 10px 16px;
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #059669,
+      #14b8a6
+    );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 12px 28px rgba(16, 185, 129, 0.28);
+}
+
+.runtime-recovery-footer-banner span {
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.runtime-recovery-footer-banner strong {
+  font-size: 13px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Responsive */
+@media (max-width: 1050px) {
+  .runtime-recovery-metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .runtime-engine-grid,
+  .runtime-recovery-queue {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .runtime-recovery-card {
+    padding: 16px;
+  }
+
+  .runtime-recovery-header {
+    flex-direction: column;
+  }
+
+  .runtime-recovery-status {
+    width: 100%;
+    text-align: left;
+  }
+
+  .runtime-recovery-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .runtime-matrix-header,
+  .runtime-matrix-row {
+    grid-template-columns: 1.2fr 1fr;
+  }
+
+  .runtime-matrix-header span:nth-child(3),
+  .runtime-matrix-header span:nth-child(4),
+  .runtime-matrix-row span:nth-child(3),
+  .runtime-matrix-row span:nth-child(4) {
+    display: none;
+  }
+
+  .runtime-recovery-footer-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}
