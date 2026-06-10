@@ -116,6 +116,16 @@ export default function TreasuryRuntimeEscalationIntelligence() {
           </p>
         </div>
 
+        <div className="runtime-escalation-footer-banner">
+            <span>
+                Runtime Escalation Intelligence Layer
+            </span>
+
+            <strong>
+                Governance Escalation Monitoring Active
+            </strong>
+            </div>
+
       </div>
     </section>
   );

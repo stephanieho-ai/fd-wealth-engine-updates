@@ -1,0 +1,558 @@
+/* =========================================================
+V33.2-G24-E.2
+TREASURY RUNTIME RESPONSE INTELLIGENCE
+Final Premium Institutional Upgrade
+========================================================= */
+
+.treasury-runtime-response-intelligence {
+width: 100%;
+margin-top: 22px;
+}
+
+.runtime-response-card {
+position: relative;
+overflow: hidden;
+
+padding: 22px;
+border-radius: 28px;
+
+background:
+radial-gradient(circle at top right, rgba(37, 99, 235, 0.18), transparent 32%),
+radial-gradient(circle at bottom left, rgba(14, 165, 233, 0.08), transparent 38%),
+linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.94));
+
+border: 1px solid rgba(147, 197, 253, 0.42);
+
+box-shadow:
+0 24px 60px rgba(15, 23, 42, 0.08),
+inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.runtime-response-card::before {
+content: "";
+position: absolute;
+inset: 0;
+pointer-events: none;
+
+background:
+linear-gradient(
+120deg,
+transparent 0%,
+rgba(255, 255, 255, 0.42) 42%,
+transparent 74%
+);
+}
+
+/* =========================
+HEADER
+========================= */
+
+.runtime-response-header {
+position: relative;
+z-index: 1;
+
+display: flex;
+justify-content: space-between;
+align-items: flex-start;
+gap: 22px;
+
+margin-bottom: 22px;
+}
+
+.runtime-response-eyebrow {
+margin: 0 0 9px;
+
+font-size: 11px;
+font-weight: 850;
+letter-spacing: 0.18em;
+text-transform: uppercase;
+
+color: #2563eb;
+}
+
+.runtime-response-title {
+margin: 0;
+
+font-size: 26px;
+font-weight: 900;
+line-height: 1.12;
+letter-spacing: -0.045em;
+
+color: #0f172a;
+}
+
+.runtime-response-description {
+margin-top: 10px;
+max-width: 760px;
+
+font-size: 13px;
+line-height: 1.65;
+
+color: #64748b;
+}
+
+/* =========================
+COMMAND BADGE
+========================= */
+
+.runtime-response-command-badge {
+flex-shrink: 0;
+
+width: 110px;
+height: 110px;
+
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+
+border-radius: 24px;
+
+color: #ffffff;
+
+background:
+linear-gradient(
+135deg,
+#1e3a8a,
+#1d4ed8,
+#2563eb
+);
+
+box-shadow:
+0 22px 44px rgba(37, 99, 235, 0.28),
+inset 0 1px 0 rgba(255, 255, 255, 0.26);
+}
+
+.runtime-response-command-badge span {
+font-size: 10px;
+font-weight: 850;
+letter-spacing: 0.14em;
+text-transform: uppercase;
+
+opacity: 0.92;
+}
+
+.runtime-response-command-badge strong {
+margin-top: 7px;
+
+font-size: 20px;
+font-weight: 950;
+line-height: 1;
+letter-spacing: -0.04em;
+text-transform: uppercase;
+}
+
+/* =========================
+SUMMARY METRICS
+========================= */
+
+.runtime-response-metrics {
+position: relative;
+z-index: 1;
+
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 14px;
+
+margin-bottom: 20px;
+}
+
+.runtime-response-metric {
+position: relative;
+overflow: hidden;
+
+padding: 15px;
+border-radius: 20px;
+
+background:
+linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.8));
+
+border: 1px solid rgba(148, 163, 184, 0.18);
+
+box-shadow:
+0 12px 28px rgba(15, 23, 42, 0.04),
+inset 0 1px 0 rgba(255, 255, 255, 0.88);
+}
+
+.runtime-response-metric::after {
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+
+width: 44%;
+height: 3px;
+
+background:
+linear-gradient(90deg, #2563eb, rgba(96, 165, 250, 0));
+}
+
+.runtime-response-metric span {
+display: block;
+
+font-size: 11px;
+font-weight: 750;
+letter-spacing: 0.04em;
+
+color: #64748b;
+}
+
+.runtime-response-metric strong {
+display: block;
+margin-top: 8px;
+
+font-size: 27px;
+font-weight: 900;
+letter-spacing: -0.04em;
+
+color: #0f172a;
+}
+
+/* =========================
+RESPONSE ENGINE
+========================= */
+
+.runtime-response-engine {
+position: relative;
+z-index: 1;
+
+margin-bottom: 20px;
+
+padding: 18px;
+border-radius: 24px;
+
+background:
+radial-gradient(circle at top left, rgba(96, 165, 250, 0.14), transparent 36%),
+linear-gradient(135deg, rgba(239, 246, 255, 0.94), rgba(255, 255, 255, 0.9));
+
+border: 1px solid rgba(147, 197, 253, 0.36);
+
+box-shadow:
+0 16px 36px rgba(37, 99, 235, 0.06),
+inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.response-engine-header h3,
+.runtime-response-section-header h3 {
+margin: 0 0 14px;
+
+font-size: 15px;
+font-weight: 900;
+letter-spacing: -0.02em;
+
+color: #0f172a;
+}
+
+.response-engine-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 14px;
+}
+
+.response-engine-item {
+position: relative;
+overflow: hidden;
+
+padding: 14px;
+border-radius: 18px;
+
+background:
+linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(248, 250, 252, 0.82));
+
+border: 1px solid rgba(148, 163, 184, 0.16);
+
+box-shadow:
+0 10px 24px rgba(15, 23, 42, 0.035),
+inset 0 1px 0 rgba(255, 255, 255, 0.86);
+}
+
+.response-engine-item span {
+display: block;
+
+font-size: 10.5px;
+font-weight: 750;
+letter-spacing: 0.03em;
+
+color: #64748b;
+}
+
+.response-engine-item strong {
+display: block;
+margin-top: 7px;
+
+font-size: 15px;
+font-weight: 900;
+letter-spacing: -0.03em;
+
+color: #0f172a;
+}
+
+/* =========================
+RESPONSE QUEUE
+========================= */
+
+.runtime-response-queue {
+position: relative;
+z-index: 1;
+
+margin-bottom: 20px;
+}
+
+.response-row {
+display: grid;
+grid-template-columns: 1fr auto;
+align-items: center;
+gap: 14px;
+
+padding: 14px 16px;
+margin-bottom: 10px;
+
+border-radius: 18px;
+
+background:
+linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(248, 250, 252, 0.78));
+
+border: 1px solid rgba(148, 163, 184, 0.16);
+
+box-shadow:
+0 10px 24px rgba(15, 23, 42, 0.035),
+inset 0 1px 0 rgba(255, 255, 255, 0.86);
+}
+
+.response-label {
+display: block;
+
+margin-bottom: 5px;
+
+font-size: 10.5px;
+font-weight: 750;
+letter-spacing: 0.03em;
+
+color: #64748b;
+}
+
+.response-row strong {
+font-size: 13px;
+font-weight: 900;
+letter-spacing: -0.02em;
+
+color: #0f172a;
+}
+
+.response-status {
+padding: 7px 12px;
+border-radius: 999px;
+
+font-size: 10px;
+font-weight: 900;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+
+color: #1d4ed8;
+
+background:
+linear-gradient(135deg, rgba(219, 234, 254, 0.96), rgba(239, 246, 255, 0.84));
+
+border: 1px solid rgba(96, 165, 250, 0.24);
+
+box-shadow:
+0 8px 18px rgba(37, 99, 235, 0.08);
+}
+
+/* =========================
+RESPONSE MATRIX
+========================= */
+
+.runtime-response-matrix {
+position: relative;
+z-index: 1;
+
+overflow-x: auto;
+padding: 2px;
+}
+
+.runtime-response-matrix table {
+width: 100%;
+border-collapse: separate;
+border-spacing: 0;
+}
+
+.runtime-response-matrix thead th {
+text-align: left;
+
+padding: 12px 14px;
+
+font-size: 10.5px;
+font-weight: 900;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+
+color: #475569;
+
+border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.runtime-response-matrix tbody td {
+padding: 14px;
+
+font-size: 12.5px;
+font-weight: 650;
+
+color: #0f172a;
+
+border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.runtime-response-matrix tbody tr:last-child td {
+border-bottom: none;
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media (max-width: 1000px) {
+.runtime-response-metrics {
+grid-template-columns: repeat(2, 1fr);
+}
+
+.response-engine-grid {
+grid-template-columns: 1fr;
+}
+}
+
+@media (max-width: 768px) {
+.runtime-response-card {
+padding: 18px;
+border-radius: 24px;
+}
+
+.runtime-response-header {
+flex-direction: column;
+}
+
+.runtime-response-command-badge {
+width: 100%;
+height: 76px;
+border-radius: 20px;
+}
+
+.runtime-response-metrics {
+grid-template-columns: 1fr;
+}
+
+.runtime-response-title {
+font-size: 22px;
+}
+
+.runtime-response-metric strong {
+font-size: 24px;
+}
+
+.response-row {
+grid-template-columns: 1fr;
+}
+
+.response-status {
+width: fit-content;
+}
+}
+
+/* =========================================================
+   G24-E FINAL UI ALIGNMENT FORCE PATCH
+   Match G24-A / G24-B / G24-C Runtime Badge Style
+========================================================= */
+
+.runtime-response-badge {
+  display: none !important;
+}
+
+.runtime-response-command-badge {
+  flex-shrink: 0 !important;
+
+  width: 96px !important;
+  height: 96px !important;
+
+  border-radius: 22px !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+
+  color: #ffffff !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1e3a8a,
+      #1d4ed8,
+      #2563eb
+    ) !important;
+
+  box-shadow:
+    0 22px 44px rgba(37, 99, 235, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.26) !important;
+}
+
+.runtime-response-command-badge span {
+  font-size: 10px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  opacity: 0.92 !important;
+}
+
+.runtime-response-command-badge strong {
+  margin-top: 7px !important;
+
+  font-size: 18px !important;
+  font-weight: 950 !important;
+  line-height: 1 !important;
+  letter-spacing: -0.04em !important;
+  text-transform: uppercase !important;
+}
+
+.runtime-response-card {
+  border: 1px solid rgba(147, 197, 253, 0.45) !important;
+}
+
+.runtime-response-title {
+  font-size: 26px !important;
+  font-weight: 900 !important;
+}
+
+.runtime-response-footer-banner {
+position: relative;
+z-index: 1;
+
+margin-top: 18px;
+padding: 16px 20px;
+border-radius: 18px;
+
+display: flex;
+justify-content: space-between;
+align-items: center;
+gap: 14px;
+
+background:
+linear-gradient(135deg, #1e3a8a, #1d4ed8, #2563eb);
+
+color: #ffffff;
+
+box-shadow:
+0 18px 36px rgba(37, 99, 235, 0.24),
+inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.runtime-response-footer-banner span,
+.runtime-response-footer-banner strong {
+font-size: 11px;
+font-weight: 900;
+letter-spacing: 0.14em;
+text-transform: uppercase;
+}
+
+.runtime-response-footer-banner strong {
+font-size: 18px;
+}

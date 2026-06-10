@@ -324,3 +324,51 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ========================================
+   Escalation Footer Banner
+======================================== */
+
+.runtime-escalation-footer-banner {
+  margin-top: 18px;
+  padding: 16px 20px;
+  border-radius: 18px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #92400e,
+      #d97706,
+      #f59e0b
+    );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 18px 36px rgba(217, 119, 6, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.runtime-escalation-footer-banner span,
+.runtime-escalation-footer-banner strong {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.runtime-escalation-footer-banner strong {
+  font-size: 15px;
+}
+
+@media (max-width: 768px) {
+  .runtime-escalation-footer-banner {
+    flex-direction: column;
+    text-align: center;
+  }
+}
