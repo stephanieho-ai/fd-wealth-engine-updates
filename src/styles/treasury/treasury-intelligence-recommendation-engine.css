@@ -1,156 +1,322 @@
 /* ========================================
    V33.2-G21-D.1
    TREASURY INTELLIGENCE RECOMMENDATION ENGINE
-   Match Decision Engine Premium Style
+   Premium Institutional Edition
 ======================================== */
+
+.treasury-intelligence-recommendation {
+  width: 100%;
+  margin-top: -12px;
+}
 
 .treasury-recommendation-card {
   height: 100%;
-  min-height: 520px;
-  padding: 30px;
-  border-radius: 30px;
+  min-height: 430px;
+
+  display: flex;
+  flex-direction: column;
+
+  position: relative;
+  overflow: hidden;
+
+  padding: 24px;
+  border-radius: 26px;
 
   background:
-    radial-gradient(circle at top right, rgba(37, 99, 235, 0.14), transparent 34%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.97), rgba(244, 248, 255, 0.94));
+    radial-gradient(
+      circle at top right,
+      rgba(96,165,250,0.08),
+      transparent 32%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.90),
+      rgba(248,250,252,0.76)
+    );
 
-  border: 1px solid rgba(191, 219, 254, 0.75);
-  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(148,163,184,0.22);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.9),
+    0 18px 46px rgba(15,23,42,0.055);
 }
+
+.treasury-recommendation-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(59,130,246,0.08),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.42),
+      transparent 46%
+    );
+}
+
+.treasury-recommendation-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ========================================
+   HEADER
+======================================== */
 
 .treasury-recommendation-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 24px;
-  margin-bottom: 24px;
+  align-items: center;
+  gap: 18px;
+}
+
+.treasury-eyebrow {
+  color: #2563eb;
 }
 
 .treasury-recommendation-header h2 {
-  margin: 0;
-  font-size: 24px;
-  font-weight: 900;
-  letter-spacing: -0.04em;
+  margin: 0 0 8px;
+  font-size: 22px;
+  line-height: 1.12;
   color: #0f172a;
 }
 
 .treasury-recommendation-header p {
-  margin: 10px 0 0;
-  max-width: 780px;
-  font-size: 13px;
-  line-height: 1.65;
-  color: #64748b;
+  margin: 0;
+  max-width: 560px;
+  font-size: 12px;
+  line-height: 1.55;
+  color: rgba(51,65,85,0.72);
 }
 
+/* ========================================
+   STATUS BADGE
+======================================== */
+
 .treasury-recommendation-badge {
-  min-width: 150px;
-  padding: 18px 20px;
-  border-radius: 22px;
-  background: linear-gradient(135deg, #1e3a8a, #3157d4);
-  color: white;
-  box-shadow: 0 18px 36px rgba(37, 99, 235, 0.28);
+  min-width: 128px;
+
+  padding: 14px 16px;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1e40af,
+      #3b82f6
+    );
+
+  box-shadow:
+    0 18px 36px rgba(37,99,235,0.28);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .treasury-recommendation-badge span {
   display: block;
-  margin-bottom: 8px;
-  font-size: 9px;
+
+  margin-bottom: 6px;
+
+  font-size: 8.5px;
   font-weight: 900;
-  letter-spacing: 0.14em;
+
   text-transform: uppercase;
+  letter-spacing: 0.12em;
+
+  color: rgba(255,255,255,0.82);
 }
 
 .treasury-recommendation-badge strong {
-  display: block;
   font-size: 20px;
   font-weight: 900;
+
+  color: white;
 }
+
+/* ========================================
+   METRIC GRID
+======================================== */
 
 .treasury-recommendation-metrics {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-  margin-bottom: 18px;
+
+  gap: 10px;
+
+  margin-top: 18px;
 }
 
 .treasury-recommendation-metric {
   position: relative;
-  min-height: 88px;
-  padding: 18px 20px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.78);
-  border: 1px solid rgba(148, 163, 184, 0.25);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82);
+
+  min-height: 76px;
+  padding: 14px;
+
+  border-radius: 16px;
+
+  border: 1px solid rgba(148,163,184,0.22);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.94),
+      rgba(248,250,252,0.72)
+    );
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.9),
+    0 10px 24px rgba(15,23,42,0.04);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  gap: 7px;
 }
 
 .treasury-recommendation-metric::after {
   content: "";
+
   position: absolute;
-  top: 17px;
-  right: 18px;
-  width: 9px;
-  height: 9px;
+  top: 13px;
+  right: 13px;
+
+  width: 8px;
+  height: 8px;
+
   border-radius: 999px;
+
   background: #60a5fa;
-  box-shadow: 0 0 0 5px rgba(96, 165, 250, 0.14);
+
+  box-shadow:
+    0 0 0 5px rgba(96,165,250,0.14);
 }
 
-.treasury-recommendation-metric span,
-.treasury-recommendation-panel span,
-.treasury-recommendation-footer span {
-  display: block;
-  margin-bottom: 10px;
-  font-size: 10px;
+.treasury-recommendation-metric span {
+  font-size: 9px;
   font-weight: 900;
-  letter-spacing: 0.15em;
+
   text-transform: uppercase;
-  color: #2563eb;
+  letter-spacing: 0.12em;
+
+  color: rgba(71,85,105,0.74);
 }
 
 .treasury-recommendation-metric strong {
-  display: block;
-  font-size: 18px;
+  font-size: 13px;
   font-weight: 900;
+  line-height: 1.15;
+
   color: #0f172a;
 }
 
+/* ========================================
+   NEXT STEP PANEL
+======================================== */
+
 .treasury-recommendation-panel {
-  margin-top: 18px;
-  padding: 20px 22px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(148, 163, 184, 0.24);
+  margin-top: 10px;
+
+  padding: 14px 16px;
+
+  min-height: 88px;
+
+  border-radius: 16px;
+
+  border: 1px solid rgba(148,163,184,0.2);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.94),
+      rgba(248,250,252,0.78)
+    );
+}
+
+.treasury-recommendation-panel span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 10px;
+  font-weight: 900;
+
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+
+  color: #2563eb;
 }
 
 .treasury-recommendation-panel p {
   margin: 0;
-  font-size: 12.5px;
-  font-weight: 800;
-  line-height: 1.7;
+
+  font-size: 12px;
+  line-height: 1.65;
+
   color: #334155;
 }
 
+/* ========================================
+   RECOMMENDATION BAR
+======================================== */
+
 .treasury-recommendation-footer {
-  margin-top: 18px;
-  padding: 18px 20px;
-  border-radius: 20px;
-  background: linear-gradient(135deg, #1e3a8a, #3157d4);
-  color: white;
-  font-size: 12.5px;
-  font-weight: 800;
-  line-height: 1.55;
+  margin-top: 10px;
+
+  padding: 12px 16px;
+
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1e3a8a,
+      #2563eb
+    );
+
+  box-shadow:
+    0 14px 30px rgba(37,99,235,0.22);
 }
 
-.treasury-recommendation-footer span,
-.treasury-recommendation-footer p {
-  color: white;
+.treasury-recommendation-footer span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  font-size: 8.5px;
+  font-weight: 900;
+
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+
+  color: rgba(255,255,255,0.9);
 }
 
 .treasury-recommendation-footer p {
   margin: 0;
+
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.4;
+
+  color: white;
 }
 
-@media (max-width: 1000px) {
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 1100px) {
   .treasury-recommendation-header {
     flex-direction: column;
   }
@@ -425,5 +591,36 @@
 }
 
 .treasury-recommendation-header .treasury-recommendation-eyebrow {
+  color: #2563eb !important;
+}
+
+/* ========================================
+   MATCH ASSESSMENT HEADER TYPOGRAPHY
+======================================== */
+
+.treasury-intelligence-recommendation
+.treasury-recommendation-card
+.treasury-section-title {
+  margin: 0 0 8px !important;
+  font-size: 26px !important;
+  font-weight: 900 !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.045em !important;
+  color: #0f172a !important;
+}
+
+.treasury-intelligence-recommendation
+.treasury-recommendation-card
+.treasury-section-description {
+  margin: 0 !important;
+  max-width: 560px !important;
+  font-size: 12px !important;
+  line-height: 1.55 !important;
+  color: rgba(51,65,85,0.72) !important;
+}
+
+.treasury-intelligence-recommendation
+.treasury-recommendation-card
+.treasury-eyebrow {
   color: #2563eb !important;
 }
