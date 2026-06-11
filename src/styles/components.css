@@ -118,3 +118,61 @@
 .risk-kicker {
   color: #f59e0b !important;
 }
+
+/* ========================================
+   Workspace Mode Toggle
+   Live / Demo Mode
+======================================== */
+
+.settings-mode-toggle {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.workspace-mode-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  background: rgba(255, 255, 255, 0.88);
+  color: #475569;
+
+  border-radius: 999px;
+  padding: 9px 14px;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  cursor: pointer;
+  user-select: none;
+
+  transition: all 0.2s ease;
+}
+
+.workspace-mode-btn:hover {
+  transform: translateY(-1px);
+}
+
+.workspace-mode-btn.active.live {
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #38bdf8
+  );
+
+  color: white;
+  border-color: transparent;
+}
+
+.workspace-mode-btn.active.demo {
+  background: linear-gradient(
+    135deg,
+    #059669,
+    #22c55e
+  );
+
+  color: white;
+  border-color: transparent;
+}

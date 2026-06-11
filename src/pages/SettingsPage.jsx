@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
+import useWorkspaceMode from "../hooks/useWorkspaceMode";
+
 
 const CURRENCY_OPTIONS = [
   "MYR",
@@ -49,6 +51,13 @@ export default function SettingsPage({
   onUpdateSettings,
   currency = "MYR",
 }) {
+
+  const {
+    workspaceMode,
+    changeWorkspaceMode,
+    WORKSPACE_MODES,
+  } = useWorkspaceMode();
+
   const mergedSettings = useMemo(
     () => buildMergedSettings(settings, currency),
     [settings, currency]
@@ -122,6 +131,39 @@ export default function SettingsPage({
             </div>
 
             <div className="field">
+              <label>Workspace Mode</label>
+
+              <div className="settings-mode-toggle">
+                <span
+                  role="button"
+                  tabIndex={0}
+                  className={`workspace-mode-btn ${
+                    workspaceMode === WORKSPACE_MODES.LIVE
+                      ? "active live"
+                      : ""
+                  }`}
+                  onClick={() => changeWorkspaceMode(WORKSPACE_MODES.LIVE)}
+                >
+                  Live Mode
+                </span>
+
+                <span
+                  role="button"
+                  tabIndex={0}
+                  className={`workspace-mode-btn ${
+                    workspaceMode === WORKSPACE_MODES.DEMO
+                      ? "active demo"
+                      : ""
+                  }`}
+                  onClick={() => changeWorkspaceMode(WORKSPACE_MODES.DEMO)}
+                >
+                  Demo Mode
+                </span>
+
+              </div> 
+          </div>
+
+            <div className="field">
               <label>Notification Alerts</label>
               <button
                 type="button"
@@ -188,6 +230,25 @@ export default function SettingsPage({
           <p>Quick view of your current workspace configuration.</p>
 
           <div className="module-stack" style={{ marginTop: 18 }}>
+
+            <div className="record-card">
+              <div className="record-card-head">
+                <div>
+                  <h4>Workspace Mode</h4>
+                  <p>
+                    {workspaceMode === WORKSPACE_MODES.DEMO
+                      ? "Clean demonstration environment"
+                      : "Live real treasury environment"}
+                  </p>
+                </div>
+
+             <span className="status-badge active">
+                {workspaceMode} MODE
+              </span>
+
+              </div>
+            </div>
+
             <div className="record-card">
               <div className="record-card-head">
                 <div>
