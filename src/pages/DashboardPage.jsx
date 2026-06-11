@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import useWorkspaceMode from "../hooks/useWorkspaceMode";
 
 import TreasuryTimeline from "../components/dashboard/TreasuryTimeline";
 import PolicyBreachPanel from "../components/dashboard/PolicyBreachPanel";
@@ -23,6 +24,7 @@ import TreasuryOverrideControl from "../components/treasury/TreasuryOverrideCont
 import TreasuryAuthorityChain from "../components/treasury/TreasuryAuthorityChain";
 import TreasuryAuthorityTransmission from "../components/treasury/TreasuryAuthorityTransmission";
 import TreasuryAuthorityNetwork from "../components/treasury/TreasuryAuthorityNetwork";
+
 
 
 const treasuryRuntimeStyle = `
@@ -2603,6 +2605,9 @@ export default function DashboardPage({
 
   const [toastMessage, setToastMessage] = useState("");
   const [treasuryToast, setTreasuryToast] = useState("");
+  const { workspaceMode } = useWorkspaceMode();
+  const isDemoMode = workspaceMode === "DEMO";
+
   const [activeAlert, setActiveAlert] = useState(null);
 
   const safeRecords = Array.isArray(records) ? records : [];
@@ -3320,30 +3325,70 @@ export default function DashboardPage({
     };
   }, [treasuryHeatmapItems, treasuryPolicyDecision.blocked]);
 
-  const summaryItems = [
-    {
-      label: "Active Portfolio",
-      value: formatMoney(totalActivePortfolio, currency),
-      note: "Total active capital",
-    },
-    {
-      label: "FD Alerts",
-      value: notificationCount,
-      note: "Due / upcoming alerts",
-    },
-    {
-      label: "Capital Health",
-      value: `${capitalHealth.score}/100`,
-      note: capitalHealth.label,
-    },
-    {
-      label: "Policy Engine",
-      value: treasuryPolicyDecision.severity,
-      note: treasuryPolicyDecision.allowed
-        ? "Treasury governance active"
-        : "Deployment restriction active",
-    },
-  ];
+  const liveSummaryItems = [
+  {
+    label: "Active Portfolio",
+    value: formatMoney(totalActivePortfolio, currency),
+    note: "Total active capital",
+  },
+  {
+    label: "FD Alerts",
+    value: notificationCount,
+    note: "Due / upcoming alerts",
+  },
+  {
+    label: "Capital Health",
+    value: `${capitalHealth.score}/100`,
+    note: capitalHealth.label,
+  },
+  {
+    label: "Policy Engine",
+    value: treasuryPolicyDecision.severity,
+    note: treasuryPolicyDecision.blocked
+      ? "Deployment restriction active"
+      : "Treasury governance active",
+  },
+];
+
+const demoSummaryItems = [
+  {
+    label: "Liquidity",
+    value: "Healthy",
+    note: "Treasury liquidity stable",
+  },
+  {
+    label: "Treasury Heat",
+    value: "Low",
+    note: "Risk pressure minimal",
+  },
+  {
+    label: "Reserve",
+    value: "Healthy",
+    note: "Reserve coverage protected",
+  },
+  {
+    label: "Deployment",
+    value: "Ready",
+    note: "Capital ready for deployment",
+  },
+  {
+    label: "Policy",
+    value: "Compliant",
+    note: "No policy breaches detected",
+  },
+  {
+    label: "Confidence",
+    value: "High",
+    note: "AI confidence level strong",
+  },
+  {
+    label: "Treasury Status",
+    value: "Operational",
+    note: "Treasury operating normally",
+  },
+];
+
+  const summaryItems = isDemoMode ? demoSummaryItems : liveSummaryItems;
 
   return (
     <main className="dashboard-page">
@@ -3846,7 +3891,7 @@ export default function DashboardPage({
       )}
 
       <div className="liquidity-flow-surface">
-        <SummaryGrid items={summaryItems} />
+      <SummaryGrid items={summaryItems} />
       </div>
 
       <div id="capital-engine-section" className="treasury-motion-panel">
