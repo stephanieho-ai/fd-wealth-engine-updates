@@ -1,3 +1,12 @@
+import useWorkspaceMode from "../hooks/useWorkspaceMode";
+import TreasuryDemoBanner from "../components/demo/TreasuryDemoBanner";
+import TreasuryDemoWatermark from "../components/demo/TreasuryDemoWatermark";
+
+import demoTreasuryData from "../demo/demoTreasuryData";
+import demoRuntimeData from "../demo/demoRuntimeData";
+import demoGovernanceData from "../demo/demoGovernanceData";
+import demoEvents from "../demo/demoEvents";
+
 import { useState } from "react";
 import LedgerViewer from "../components/dashboard/LedgerViewer";
 import { getTreasuryDecisionBrain } from "../utils/treasuryDecisionBrain";
@@ -50,6 +59,25 @@ import TreasuryRuntimeStabilityIntelligence from "../components/treasury/Treasur
     records = [],
     activeRecords = [],
   }) {
+
+  const { isDemoMode } = useWorkspaceMode();
+
+  const treasuryEnvironment = isDemoMode
+    ? demoTreasuryData
+    : null;
+
+  const runtimeEnvironment = isDemoMode
+    ? demoRuntimeData
+    : null;
+
+  const governanceEnvironment = isDemoMode
+    ? demoGovernanceData
+    : null;
+
+  const treasuryDemoEvents = isDemoMode
+    ? demoEvents
+    : [];
+
   const STORAGE_KEY = "fd_treasury_workflow_state";
   const TIMELINE_KEY = "fd_treasury_incident_timeline";
 
@@ -740,7 +768,33 @@ const institutionalEscalationPath =
   return (
     <main className="dashboard-page treasury-console-page treasury-control-tower-page">
 
+
       <style>{`
+
+      .treasury-demo-compact-banner {
+          margin: -10px 0 12px auto !important;
+        }
+
+        .dashboard-hero.treasury-hero {
+          margin-top: 0 !important;
+        }
+
+        .dashboard-hero.treasury-hero {
+          margin-top: 1px !important;
+        }
+
+        .dashboard-hero.treasury-hero h1 {
+          color: #ffffff !important;
+        }
+
+        .dashboard-hero.treasury-hero .eyebrow {
+          color: rgba(147, 197, 253, 0.95) !important;
+        }
+
+        .dashboard-hero.treasury-hero .muted {
+          color: rgba(255, 255, 255, 0.82) !important;
+        }
+
         .treasury-governance-engine-card,
         .treasury-operator-result-card {
           display: grid;
@@ -939,23 +993,25 @@ const institutionalEscalationPath =
         }
       `}</style>
 
-      <section className="dashboard-hero treasury-hero">
-        <div>
-          <p className="eyebrow">Treasury Operating System</p>
-          <h1>Treasury Control Tower</h1>
-          <p className="muted">
-            Institutional command center for liquidity, governance, recovery,
-            execution readiness and treasury incident traceability.
-          </p>
-        </div>
+   {isDemoMode && <TreasuryDemoBanner compact />}
 
-        <div className="hero-alert">
-          <span>Workspace</span>
-          <strong>TREASURY OS</strong>
-        </div>
-      </section>
+    <section className="dashboard-hero treasury-hero">
+      <div>
+        <p className="eyebrow">Treasury Operating System</p>
+        <h1>Treasury Control Tower</h1>
+        <p className="muted">
+          Institutional command center for liquidity, governance, recovery,
+          execution readiness and treasury incident traceability.
+        </p>
+      </div>
 
-     <section className="treasury-control-section treasury-intelligence-center-section">
+      <div className="hero-alert">
+        <span>Workspace</span>
+        <strong>TREASURY OS</strong>
+      </div>
+    </section>
+
+      <section className="treasury-control-section treasury-intelligence-center-section">  
 
       <div className="treasury-control-section-header">
         <div>
