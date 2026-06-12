@@ -1,31 +1,33 @@
 /* ========================================
    GOVERNANCE LATENCY INTELLIGENCE
    V33.2-G19
+   RP1-D Compact Institutional OS Style
 ======================================== */
 
 .governance-latency-intelligence {
   position: relative;
   overflow: hidden;
 
-  margin-top: 24px;
-  padding: 28px;
+  width: min(100%, 1280px);
+  margin: 24px auto 28px;
+  padding: 24px 28px;
 
-  border-radius: 30px;
+  border-radius: 24px;
 
   background:
     linear-gradient(
       145deg,
-      rgba(255,255,255,0.88),
-      rgba(240,248,255,0.72)
+      rgba(255,255,255,0.94),
+      rgba(248,250,252,0.84)
     );
 
-  border: 1px solid rgba(255,255,255,0.55);
+  border: 1px solid rgba(148,163,184,0.18);
 
   box-shadow:
-    0 10px 40px rgba(15,23,42,0.08),
-    inset 0 1px 0 rgba(255,255,255,0.55);
+    0 14px 34px rgba(15,23,42,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.75);
 
-  backdrop-filter: blur(22px);
+  backdrop-filter: blur(18px);
 }
 
 /* HEADER */
@@ -34,69 +36,68 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 20px;
+  gap: 18px;
 
-  margin-bottom: 32px;
+  margin-bottom: 22px;
 }
 
 .latency-eyebrow {
-  margin: 0 0 8px;
+  margin: 0 0 6px;
 
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 
-  color: #3b82f6;
+  color: #2563eb;
 }
 
 .latency-header h2 {
   margin: 0;
 
-  font-size: 30px;
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 800;
   line-height: 1.15;
 
   color: #0f172a;
 }
 
 .latency-subtitle {
-  margin-top: 10px;
+  margin-top: 8px;
   max-width: 720px;
 
-  line-height: 1.7;
-  font-size: 14px;
+  line-height: 1.55;
+  font-size: 12px;
 
-  color: rgba(15,23,42,0.72);
+  color: rgba(15,23,42,0.62);
 }
 
 .latency-mode-pill {
-  min-width: 160px;
+  min-width: 150px;
 
-  padding: 16px 18px;
+  padding: 12px 16px;
 
-  border-radius: 22px;
+  border-radius: 18px;
 
   background:
     linear-gradient(
       145deg,
-      rgba(59,130,246,0.16),
-      rgba(99,102,241,0.12)
+      rgba(59,130,246,0.14),
+      rgba(99,102,241,0.1)
     );
 
-  border: 1px solid rgba(59,130,246,0.18);
+  border: 1px solid rgba(59,130,246,0.16);
 
   text-align: center;
 
-  font-size: 12px;
-  font-weight: 800;
+  font-size: 11px;
+  font-weight: 900;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 
   color: #2563eb;
 
-  box-shadow:
-    0 6px 24px rgba(59,130,246,0.12);
+  box-shadow: 0 6px 20px rgba(59,130,246,0.1);
 }
 
 /* METRIC GRID */
@@ -104,39 +105,40 @@
 .latency-metric-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
+  gap: 14px;
 
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
 
 .latency-metric-card {
-  padding: 22px;
+  padding: 18px 20px;
 
-  border-radius: 24px;
+  border-radius: 20px;
 
   background:
     linear-gradient(
       145deg,
-      rgba(255,255,255,0.88),
-      rgba(248,250,252,0.72)
+      rgba(255,255,255,0.92),
+      rgba(248,250,252,0.78)
     );
 
-  border: 1px solid rgba(255,255,255,0.55);
+  border: 1px solid rgba(148,163,184,0.14);
 
   box-shadow:
-    0 6px 20px rgba(15,23,42,0.06);
+    0 6px 18px rgba(15,23,42,0.04),
+    inset 0 1px 0 rgba(255,255,255,0.5);
 
-  backdrop-filter: blur(18px);
+  backdrop-filter: blur(14px);
 }
 
 .latency-metric-card span {
   display: block;
 
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 
   color: #2563eb;
@@ -145,11 +147,11 @@
 .latency-metric-card strong {
   display: block;
 
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 
-  font-size: 30px;
-  line-height: 1.1;
-  font-weight: 800;
+  font-size: 26px;
+  line-height: 1.05;
+  font-weight: 900;
 
   color: #0f172a;
 }
@@ -157,40 +159,41 @@
 .latency-metric-card p {
   margin: 0;
 
-  font-size: 14px;
-  line-height: 1.7;
+  font-size: 12px;
+  line-height: 1.55;
 
-  color: rgba(15,23,42,0.72);
+  color: rgba(15,23,42,0.64);
 }
 
 /* ROUTING PANEL */
 
 .latency-routing-panel {
-  padding: 24px;
+  padding: 20px 22px;
 
-  border-radius: 28px;
+  border-radius: 22px;
 
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 
   background:
     linear-gradient(
       145deg,
-      rgba(255,255,255,0.84),
-      rgba(248,250,252,0.72)
+      rgba(255,255,255,0.92),
+      rgba(248,250,252,0.78)
     );
 
-  border: 1px solid rgba(255,255,255,0.52);
+  border: 1px solid rgba(148,163,184,0.14);
 
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.45);
+    inset 0 1px 0 rgba(255,255,255,0.55),
+    0 6px 18px rgba(15,23,42,0.035);
 }
 
 .latency-panel-label {
-  margin: 0 0 10px;
+  margin: 0 0 6px;
 
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 
   color: #2563eb;
@@ -198,52 +201,52 @@
 
 .latency-routing-panel h3 {
   margin-top: 0;
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 800;
 
   color: #0f172a;
 }
 
 .latency-node-list {
   display: grid;
-  gap: 16px;
+  gap: 10px;
 }
 
 .latency-node-row {
   display: grid;
-  grid-template-columns: 220px 1fr 110px;
+  grid-template-columns: 200px 1fr 90px;
   align-items: center;
-  gap: 18px;
+  gap: 16px;
 
-  padding: 16px 0;
+  padding: 12px 0;
 
-  border-bottom: 1px solid rgba(148,163,184,0.14);
+  border-bottom: 1px solid rgba(148,163,184,0.12);
 }
 
 .latency-node-row strong {
   display: block;
 
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 800;
 
   color: #0f172a;
 }
 
 .latency-node-row span {
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 10px;
+  font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 
-  color: rgba(15,23,42,0.58);
+  color: rgba(15,23,42,0.54);
 }
 
 .latency-bar-track {
-  height: 10px;
+  height: 8px;
 
   border-radius: 999px;
 
@@ -277,17 +280,17 @@
 .latency-risk strong {
   display: block;
 
-  margin-bottom: 4px;
+  margin-bottom: 3px;
 
-  font-size: 15px;
-  font-weight: 800;
+  font-size: 13px;
+  font-weight: 900;
 
   color: #0f172a;
 }
 
 .latency-risk span {
-  font-size: 12px;
-  font-weight: 800;
+  font-size: 10px;
+  font-weight: 900;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -310,30 +313,30 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 28px;
+  gap: 24px;
 
-  padding: 24px;
+  padding: 18px 22px;
 
-  border-radius: 24px;
+  border-radius: 18px;
 
   background:
     linear-gradient(
       145deg,
-      rgba(59,130,246,0.12),
-      rgba(99,102,241,0.08)
+      rgba(59,130,246,0.1),
+      rgba(99,102,241,0.07)
     );
 
-  border: 1px solid rgba(59,130,246,0.14);
+  border: 1px solid rgba(59,130,246,0.12);
 }
 
 .latency-ai-panel small {
   display: block;
 
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 
   color: #2563eb;
@@ -342,8 +345,8 @@
 .latency-ai-panel h3 {
   margin: 0;
 
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 800;
 
   color: #0f172a;
 }
@@ -353,10 +356,10 @@
 
   max-width: 620px;
 
-  font-size: 14px;
-  line-height: 1.7;
+  font-size: 12px;
+  line-height: 1.55;
 
-  color: rgba(15,23,42,0.76);
+  color: rgba(15,23,42,0.68);
 }
 
 /* RESPONSIVE */
@@ -376,6 +379,10 @@
 }
 
 @media (max-width: 768px) {
+  .governance-latency-intelligence {
+    padding: 22px;
+  }
+
   .latency-header,
   .latency-ai-panel {
     flex-direction: column;
@@ -386,6 +393,6 @@
   }
 
   .latency-header h2 {
-    font-size: 26px;
+    font-size: 22px;
   }
 }

@@ -1,31 +1,33 @@
 /* ========================================
    GOVERNANCE INTERVENTION ENGINE
    V33.2-G19
+   RP1-D Compact Institutional OS Style
 ======================================== */
 
 .governance-intervention-engine {
   position: relative;
   overflow: hidden;
 
-  margin-top: 24px;
-  padding: 28px;
+  width: min(100%, 1280px);
+  margin: 24px auto 28px;
+  padding: 24px 28px;
 
-  border-radius: 30px;
+  border-radius: 24px;
 
   background:
     linear-gradient(
       145deg,
-      rgba(255,255,255,0.88),
-      rgba(240,248,255,0.72)
+      rgba(255,255,255,0.94),
+      rgba(248,250,252,0.84)
     );
 
-  border: 1px solid rgba(255,255,255,0.55);
+  border: 1px solid rgba(148,163,184,0.18);
 
   box-shadow:
-    0 10px 40px rgba(15,23,42,0.08),
-    inset 0 1px 0 rgba(255,255,255,0.55);
+    0 14px 34px rgba(15,23,42,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.75);
 
-  backdrop-filter: blur(22px);
+  backdrop-filter: blur(18px);
 }
 
 /* HEADER */
@@ -34,69 +36,68 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 20px;
+  gap: 18px;
 
-  margin-bottom: 32px;
+  margin-bottom: 22px;
 }
 
 .governance-intervention-eyebrow {
-  margin: 0 0 8px;
+  margin: 0 0 6px;
 
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 
-  color: #3b82f6;
+  color: #2563eb;
 }
 
 .governance-intervention-header h2 {
   margin: 0;
 
-  font-size: 30px;
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 800;
   line-height: 1.15;
 
   color: #0f172a;
 }
 
 .governance-intervention-subtitle {
-  margin-top: 10px;
+  margin-top: 8px;
   max-width: 720px;
 
-  line-height: 1.7;
-  font-size: 14px;
+  line-height: 1.55;
+  font-size: 12px;
 
-  color: rgba(15,23,42,0.72);
+  color: rgba(15,23,42,0.62);
 }
 
 .governance-intervention-pill {
-  min-width: 180px;
+  min-width: 160px;
 
-  padding: 16px 18px;
+  padding: 12px 16px;
 
-  border-radius: 22px;
+  border-radius: 18px;
 
   background:
     linear-gradient(
       145deg,
-      rgba(248,113,113,0.14),
-      rgba(251,191,36,0.12)
+      rgba(248,113,113,0.12),
+      rgba(251,191,36,0.1)
     );
 
-  border: 1px solid rgba(248,113,113,0.18);
+  border: 1px solid rgba(248,113,113,0.16);
 
   text-align: center;
 
-  font-size: 12px;
-  font-weight: 800;
+  font-size: 11px;
+  font-weight: 900;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 
   color: #dc2626;
 
-  box-shadow:
-    0 6px 24px rgba(248,113,113,0.12);
+  box-shadow: 0 6px 20px rgba(248,113,113,0.1);
 }
 
 /* GRID */
@@ -104,36 +105,37 @@
 .governance-intervention-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
+  gap: 14px;
 
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
 
 .intervention-card {
-  padding: 22px;
+  padding: 18px 20px;
 
-  border-radius: 24px;
+  border-radius: 20px;
 
   background:
     linear-gradient(
       145deg,
-      rgba(255,255,255,0.88),
-      rgba(248,250,252,0.72)
+      rgba(255,255,255,0.92),
+      rgba(248,250,252,0.78)
     );
 
-  border: 1px solid rgba(255,255,255,0.55);
+  border: 1px solid rgba(148,163,184,0.14);
 
   box-shadow:
-    0 6px 20px rgba(15,23,42,0.06);
+    0 6px 18px rgba(15,23,42,0.04),
+    inset 0 1px 0 rgba(255,255,255,0.5);
 
-  backdrop-filter: blur(18px);
+  backdrop-filter: blur(14px);
 }
 
 .intervention-card.high {
   background:
     linear-gradient(
       145deg,
-      rgba(255,255,255,0.9),
+      rgba(255,255,255,0.94),
       rgba(254,242,242,0.72)
     );
 }
@@ -142,7 +144,7 @@
   background:
     linear-gradient(
       145deg,
-      rgba(255,255,255,0.9),
+      rgba(255,255,255,0.94),
       rgba(255,251,235,0.72)
     );
 }
@@ -151,7 +153,7 @@
   background:
     linear-gradient(
       145deg,
-      rgba(255,255,255,0.9),
+      rgba(255,255,255,0.94),
       rgba(240,253,244,0.72)
     );
 }
@@ -161,21 +163,21 @@
   justify-content: space-between;
   align-items: center;
 
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .intervention-card-top span {
-  font-size: 12px;
-  font-weight: 800;
+  font-size: 10px;
+  font-weight: 900;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 
-  color: rgba(15,23,42,0.58);
+  color: rgba(15,23,42,0.54);
 }
 
 .intervention-card-top strong {
-  font-size: 12px;
-  font-weight: 800;
+  font-size: 10px;
+  font-weight: 900;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 
@@ -195,35 +197,36 @@
 }
 
 .intervention-card h3 {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
 
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.25;
-  font-weight: 700;
+  font-weight: 800;
 
   color: #0f172a;
 }
 
 .intervention-card p {
-  margin: 0 0 18px;
+  margin: 0 0 12px;
 
-  line-height: 1.6;
-  font-size: 14px;
+  line-height: 1.5;
+  font-size: 12px;
 
-  color: rgba(15,23,42,0.72);
+  color: rgba(15,23,42,0.64);
 }
 
 .intervention-action-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
 }
 
 .intervention-action-row button {
   border: none;
   outline: none;
 
-  padding: 10px 14px;
+  height: 30px;
+  padding: 0 12px;
 
   border-radius: 999px;
 
@@ -236,7 +239,7 @@
 
   color: #1d4ed8;
 
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 800;
 
   cursor: pointer;
@@ -245,10 +248,9 @@
 }
 
 .intervention-action-row button:hover {
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 
-  box-shadow:
-    0 10px 20px rgba(37,99,235,0.14);
+  box-shadow: 0 8px 16px rgba(37,99,235,0.12);
 }
 
 /* AI PANEL */
@@ -257,30 +259,30 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 24px;
+  gap: 22px;
 
-  padding: 24px;
+  padding: 18px 22px;
 
-  border-radius: 24px;
+  border-radius: 18px;
 
   background:
     linear-gradient(
       145deg,
-      rgba(248,113,113,0.10),
-      rgba(59,130,246,0.08)
+      rgba(248,113,113,0.08),
+      rgba(59,130,246,0.07)
     );
 
-  border: 1px solid rgba(248,113,113,0.12);
+  border: 1px solid rgba(248,113,113,0.1);
 }
 
 .governance-intervention-ai-panel small {
   display: block;
 
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 
   color: #dc2626;
@@ -289,8 +291,8 @@
 .governance-intervention-ai-panel h3 {
   margin: 0;
 
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 800;
 
   color: #0f172a;
 }
@@ -300,10 +302,10 @@
 
   max-width: 620px;
 
-  line-height: 1.7;
-  font-size: 14px;
+  line-height: 1.55;
+  font-size: 12px;
 
-  color: rgba(15,23,42,0.76);
+  color: rgba(15,23,42,0.68);
 }
 
 /* RESPONSIVE */
@@ -315,6 +317,10 @@
 }
 
 @media (max-width: 768px) {
+  .governance-intervention-engine {
+    padding: 22px;
+  }
+
   .governance-intervention-grid {
     grid-template-columns: 1fr;
   }
@@ -326,6 +332,6 @@
   }
 
   .governance-intervention-header h2 {
-    font-size: 26px;
+    font-size: 22px;
   }
 }
