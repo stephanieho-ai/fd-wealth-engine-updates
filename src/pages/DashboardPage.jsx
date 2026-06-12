@@ -24,6 +24,7 @@ import TreasuryOverrideControl from "../components/treasury/TreasuryOverrideCont
 import TreasuryAuthorityChain from "../components/treasury/TreasuryAuthorityChain";
 import TreasuryAuthorityTransmission from "../components/treasury/TreasuryAuthorityTransmission";
 import TreasuryAuthorityNetwork from "../components/treasury/TreasuryAuthorityNetwork";
+import TreasuryDemoBanner from "../components/demo/TreasuryDemoBanner";
 
 
 
@@ -3392,6 +3393,7 @@ const demoSummaryItems = [
 
   return (
     <main className="dashboard-page">
+      {isDemoMode && <TreasuryDemoBanner compact />}
       <style>{treasuryRuntimeStyle}</style>
 
       {toastMessage && <div className="toast-message">{toastMessage}</div>}

@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import RatesPage from "./RatesPage";
 
+import TreasuryDemoBanner from "../components/demo/TreasuryDemoBanner";
+import useWorkspaceMode from "../hooks/useWorkspaceMode";
+
 const STORAGE_KEYS = {
   RATES: "fd_v322_rates",
   SAVED_PLANS: "fd_v322_saved_plans",
@@ -206,6 +209,9 @@ function thTdStyle() {
 }
 
 export default function MorePage({ currency = "MYR", onAddRecord }) {
+  const { workspaceMode } = useWorkspaceMode();
+  const isDemoMode = workspaceMode === "DEMO";
+
   const [activeTab, setActiveTab] = useState("GUIDE");
 
   const [executing, setExecuting] = useState(false);
@@ -456,6 +462,7 @@ export default function MorePage({ currency = "MYR", onAddRecord }) {
 
   return (
     <div className="page">
+      {isDemoMode && <TreasuryDemoBanner compact />}
       <section className="hero-card">
         <div className="hero-copy">
           <div className="eyebrow-pill">FD WEALTH ENGINE</div>

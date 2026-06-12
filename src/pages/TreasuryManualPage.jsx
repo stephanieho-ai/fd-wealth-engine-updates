@@ -1,4 +1,6 @@
 import { useState } from "react";
+import TreasuryDemoBanner from "../components/demo/TreasuryDemoBanner";
+import useWorkspaceMode from "../hooks/useWorkspaceMode";
 
 const MANUAL = {
   en: {
@@ -419,6 +421,9 @@ const MANUAL = {
 };
 
 export default function TreasuryManualPage() {
+  const { workspaceMode } = useWorkspaceMode();
+  const isDemoMode = workspaceMode === "DEMO";
+
   const [lang, setLang] = useState("en");
   const content = MANUAL[lang];
 
@@ -431,6 +436,7 @@ export default function TreasuryManualPage() {
 
   return (
     <div className="treasury-manual-page">
+      {isDemoMode && <TreasuryDemoBanner compact />}
       <section className="manual-hero">
         <div className="manual-logo-wrap">
           <div className="manual-logo">FD</div>

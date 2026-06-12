@@ -11,10 +11,18 @@ import GovernanceStabilityIndexEngine from "../components/treasury/GovernanceSta
 import GovernanceRiskHeatmapEngine from "../components/treasury/GovernanceRiskHeatmapEngine";
 import GovernanceInterventionEngine from "../components/treasury/GovernanceInterventionEngine";
 
+
 import { useGovernanceRuntime } from "../hooks/useGovernanceRuntime";
 import { getGovernanceRuntimeEvents } from "../runtime/governance/governanceEvents";
+import TreasuryDemoBanner from "../components/demo/TreasuryDemoBanner";
+import useWorkspaceMode from "../hooks/useWorkspaceMode";
+
 
 export default function GovernancePage() {
+
+  const { workspaceMode } = useWorkspaceMode();
+  const isDemoMode = workspaceMode === "DEMO";
+
   const {
     state,
     riskSignal,
@@ -35,6 +43,7 @@ export default function GovernancePage() {
 
   return (
     <main className="dashboard-page treasury-console-page governance-page">
+      {isDemoMode && <TreasuryDemoBanner compact />}
       <section className="dashboard-hero treasury-hero">
         <div className="governance-hero-top">
           <div className="governance-console-copy">
