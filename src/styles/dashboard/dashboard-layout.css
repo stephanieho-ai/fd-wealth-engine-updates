@@ -469,3 +469,687 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Fix Home Treasury Workspace header wrapping */
+.dashboard-section .section-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  width: 100%;
+}
+
+.dashboard-section .section-header > div:first-child {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 760px;
+}
+
+.dashboard-section .section-header .muted {
+  max-width: 620px;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: normal;
+  line-height: 1.45;
+}
+
+/* RP2-G Compact Treasury Operations Workspace */
+
+.treasury-operations-workspace {
+  padding: 22px !important;
+  margin-top: 24px !important;
+  border-radius: 28px !important;
+}
+
+.treasury-operations-workspace .dashboard-section {
+  height: auto !important;
+  min-height: 0 !important;
+  align-self: start !important;
+  padding: 20px 22px !important;
+  border-radius: 24px !important;
+}
+
+.treasury-operations-workspace .section-header {
+  margin-bottom: 18px !important;
+}
+
+.treasury-operations-workspace .section-header h2 {
+  font-size: 22px !important;
+  line-height: 1.1 !important;
+}
+
+.treasury-operations-workspace .section-header .muted {
+  font-size: 12px !important;
+  line-height: 1.4 !important;
+}
+
+.treasury-operations-workspace > div:last-child {
+  align-items: start !important;
+  gap: 16px !important;
+}
+
+.advisor-panel,
+.maturity-alerts,
+.execution-panel-compact,
+.audit-trail {
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+.advisor-box,
+.maturity-command-list,
+.execution-metric-grid,
+.audit-list {
+  margin-top: 0 !important;
+}
+
+/* Force Treasury Operations Workspace into 2x2 professional layout */
+
+#treasury-operations-workstation-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 18px !important;
+  align-items: start !important;
+  align-content: start !important;
+  overflow: visible !important;
+}
+
+#treasury-operations-workstation-grid > .executive-float,
+#treasury-operations-workstation-grid > .treasury-pressure-live {
+  width: 100% !important;
+  min-width: 0 !important;
+  align-self: start !important;
+}
+
+#treasury-operations-workstation-grid .maturity-alerts {
+  overflow: visible !important;
+}
+
+#treasury-operations-workstation-grid .maturity-row,
+#treasury-operations-workstation-grid .next-major-strip {
+  overflow: visible !important;
+}
+
+@media (max-width: 1100px) {
+  #treasury-operations-workstation-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* RP2-C.1 Treasury Operations Workspace Equalized Card Heights */
+
+#treasury-operations-workstation-grid {
+  align-items: stretch !important;
+}
+
+#treasury-operations-workstation-grid > div {
+  align-self: stretch !important;
+}
+
+#treasury-operations-workstation-grid .treasury-workstation-card {
+  height: 100% !important;
+  min-height: 300px !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+#treasury-operations-workstation-grid .advisor-action-strip,
+#treasury-operations-workstation-grid .audit-empty-workstation {
+  margin-top: auto !important;
+}
+
+/* RP2-C.3 Treasury Operations Desk Safe Compact Layout */
+
+#treasury-operations-workstation-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(420px, 1fr)) !important;
+  gap: 16px !important;   /* was 18 */
+  align-items: start !important;
+}
+
+#treasury-operations-workstation-grid > .executive-float,
+#treasury-operations-workstation-grid > .treasury-pressure-live {
+  margin: 0 !important;
+  padding: 12px !important;   /* was 14 */
+  border-radius: 22px !important;
+  min-height: 0 !important;
+  height: auto !important;
+  align-self: start !important;
+}
+
+#treasury-operations-workstation-grid .treasury-workstation-card {
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 18px 20px !important;
+  border-radius: 18px !important;
+}
+
+#treasury-operations-workstation-grid .section-header {
+  margin-bottom: 14px !important;
+}
+
+#treasury-operations-workstation-grid .section-header h2 {
+  font-size: 20px !important;
+  line-height: 1.1 !important;
+}
+
+#treasury-operations-workstation-grid .section-header .muted {
+  font-size: 11px !important;
+  line-height: 1.35 !important;
+}
+
+#execution-section,
+#treasury-operations-workstation-grid > .executive-float:last-child {
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+@media (max-width: 1100px) {
+  #treasury-operations-workstation-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* RP2-C.4 Treasury Maturity Heatmap Compact OS Style */
+
+.dashboard-section.treasury-heatmap-engine,
+.treasury-heatmap-engine {
+  padding: 22px !important;
+  border-radius: 24px !important;
+  margin: 18px 0 !important;
+}
+
+.treasury-heatmap-engine h2 {
+  font-size: 26px !important;
+  line-height: 1.05 !important;
+}
+
+.treasury-heatmap-engine .muted {
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+}
+
+.treasury-heatmap-engine [style*="fontSize: 34"],
+.treasury-heatmap-engine [style*="font-size: 34"],
+.treasury-heatmap-engine [style*="fontSize: 32"],
+.treasury-heatmap-engine [style*="font-size: 32"] {
+  font-size: 24px !important;
+}
+
+.treasury-heatmap-engine [style*="padding: 24px"],
+.treasury-heatmap-engine [style*="padding: 22px"],
+.treasury-heatmap-engine [style*="padding: 20px"] {
+  padding: 14px !important;
+}
+
+.treasury-heatmap-engine [style*="minHeight: 180"],
+.treasury-heatmap-engine [style*="min-height: 180"],
+.treasury-heatmap-engine [style*="minHeight: 160"],
+.treasury-heatmap-engine [style*="min-height: 160"] {
+  min-height: 118px !important;
+}
+
+.treasury-heatmap-engine strong {
+  font-size: 18px !important;
+  line-height: 1.05 !important;
+}
+
+.treasury-heatmap-engine p {
+  font-size: 11px !important;
+  line-height: 1.35 !important;
+}
+
+.treasury-heatmap-engine [style*="gap: 18px"],
+.treasury-heatmap-engine [style*="gap: 16px"] {
+  gap: 10px !important;
+}
+
+/* ========================================
+   RP2-C.8
+   TREASURY ALERT MODAL
+   PROFESSIONAL OS COMPACT UPGRADE
+======================================== */
+
+.treasury-modal-os-compact {
+  max-width: 720px !important;
+  padding: 22px 26px !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-header h2 {
+  font-size: 32px !important;
+  line-height: 1.05 !important;
+  margin-bottom: 4px !important;
+}
+
+.treasury-modal-os-compact .eyebrow {
+  font-size: 10px !important;
+  letter-spacing: 0.14em !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-message {
+  font-size: 13px !important;
+  line-height: 1.45 !important;
+  margin-top: 14px !important;
+  margin-bottom: 18px !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-metrics {
+  gap: 10px !important;
+  margin-bottom: 18px !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-metric {
+  min-height: 72px !important;
+  padding: 14px 16px !important;
+  border-radius: 16px !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-metric span {
+  font-size: 10px !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-metric strong {
+  font-size: 24px !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-records h3 {
+  font-size: 16px !important;
+  margin-bottom: 10px !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-record-row {
+  min-height: 68px !important;
+  padding: 14px 16px !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-record-code {
+  font-size: 15px !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-record-label,
+.treasury-modal-os-compact .treasury-modal-record-date,
+.treasury-modal-os-compact .treasury-modal-record-message {
+  font-size: 12px !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-actions {
+  gap: 8px !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-action-button {
+  min-height: 40px !important;
+  padding: 10px 14px !important;
+  border-radius: 12px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+}
+
+.treasury-modal-os-compact .primary-button {
+  min-height: 42px !important;
+}
+
+/* RP2-C.9 Treasury Modal Full Standardization */
+
+.treasury-modal-card.treasury-modal-os-compact {
+  width: 720px !important;
+  max-width: 720px !important;
+  min-height: 520px !important;
+  padding: 22px 26px !important;
+  border-radius: 26px !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-header {
+  margin-bottom: 18px !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-header h2 {
+  font-size: 32px !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.treasury-modal-os-compact .eyebrow {
+  font-size: 9px !important;
+  letter-spacing: 0.14em !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-status {
+  display: inline-flex !important;
+  width: fit-content !important;
+  margin: 4px 0 22px !important;
+  padding: 8px 14px !important;
+  border-radius: 999px !important;
+  font-size: 10px !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-message {
+  margin: 0 0 18px !important;
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-metrics {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  margin-bottom: 20px !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-metric {
+  min-height: 66px !important;
+  padding: 12px 14px !important;
+  border-radius: 15px !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-metric span {
+  font-size: 9px !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-metric strong {
+  font-size: 21px !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-records h3 {
+  font-size: 15px !important;
+  margin: 0 0 10px !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-record-row {
+  min-height: 58px !important;
+  padding: 12px 14px !important;
+  border-radius: 15px !important;
+  grid-template-columns: 1.2fr 0.8fr 0.9fr 1.4fr !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-record-code {
+  font-size: 13px !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-record-label,
+.treasury-modal-os-compact .treasury-modal-record-date,
+.treasury-modal-os-compact .treasury-modal-record-message {
+  font-size: 11px !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-actions {
+  margin-top: 14px !important;
+  display: grid !important;
+  gap: 8px !important;
+}
+
+.treasury-modal-os-compact .treasury-modal-action-button {
+  min-height: 34px !important;
+  padding: 8px 12px !important;
+  border-radius: 11px !important;
+  font-size: 11px !important;
+}
+
+.treasury-modal-os-compact > .primary-button {
+  margin-top: 18px !important;
+  min-height: 38px !important;
+  padding: 9px 14px !important;
+  border-radius: 12px !important;
+  font-size: 11px !important;
+}
+
+@media (max-width: 820px) {
+  .treasury-modal-card.treasury-modal-os-compact {
+    width: calc(100vw - 32px) !important;
+    max-width: calc(100vw - 32px) !important;
+  }
+
+  .treasury-modal-os-compact .treasury-modal-metrics {
+    grid-template-columns: 1fr !important;
+  }
+
+  .treasury-modal-os-compact .treasury-modal-record-row {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* RP2-C.10 Home Portfolio Status Cards Compact OS Style */
+
+.treasury-runtime-style,
+.treasury-runtime-style * {
+  box-sizing: border-box;
+}
+
+.treasury-runtime-style .treasury-health-card,
+.treasury-runtime-style .treasury-status-card,
+.treasury-runtime-style .portfolio-status-card,
+.treasury-runtime-style .summary-card {
+  min-height: 132px !important;
+  padding: 20px 22px !important;
+  border-radius: 22px !important;
+}
+
+.treasury-runtime-style .treasury-health-card-icon,
+.treasury-runtime-style .treasury-status-card-icon,
+.treasury-runtime-style .portfolio-status-icon,
+.treasury-runtime-style .summary-card-icon {
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 14px !important;
+  margin-bottom: 12px !important;
+}
+
+.treasury-runtime-style .treasury-health-card h3,
+.treasury-runtime-style .treasury-status-card h3,
+.treasury-runtime-style .portfolio-status-card h3,
+.treasury-runtime-style .summary-card h3 {
+  font-size: 18px !important;
+  line-height: 1.05 !important;
+}
+
+.treasury-runtime-style .treasury-health-card p,
+.treasury-runtime-style .treasury-status-card p,
+.treasury-runtime-style .portfolio-status-card p,
+.treasury-runtime-style .summary-card p {
+  font-size: 11px !important;
+  line-height: 1.35 !important;
+}
+
+.treasury-runtime-style .treasury-health-card span,
+.treasury-runtime-style .treasury-status-card span,
+.treasury-runtime-style .portfolio-status-card span,
+.treasury-runtime-style .summary-card span {
+  font-size: 10px !important;
+  letter-spacing: 0.12em !important;
+}
+
+.treasury-runtime-style .treasury-health-grid,
+.treasury-runtime-style .treasury-status-grid,
+.treasury-runtime-style .portfolio-status-grid,
+.treasury-runtime-style .summary-grid {
+  gap: 16px !important;
+}
+
+/* ========================================
+   RP2-C.11
+   HOME TREASURY OS GLOBAL GAP STANDARDIZATION
+   Compact Professional Bank OS Spacing
+======================================== */
+
+/* Main page rhythm */
+.dashboard-page,
+.dashboard-content {
+  gap: 18px !important;
+}
+
+/* Standardize all major Home sections */
+.dashboard-section,
+.executive-float,
+.treasury-runtime-shell,
+.liquidity-flow-surface,
+.treasury-operations-workspace,
+.treasury-heatmap-engine,
+.policy-breach-panel,
+.treasury-timeline {
+  margin-top: 18px !important;
+  margin-bottom: 18px !important;
+}
+
+/* Standardize section inner padding */
+.dashboard-section,
+.executive-float,
+.treasury-runtime-shell,
+.liquidity-flow-surface {
+  padding: 20px !important;
+  border-radius: 24px !important;
+}
+
+/* Reduce large top gaps after hero / alerts */
+.treasury-alert-chip-row,
+.summary-grid {
+  margin-top: 16px !important;
+  margin-bottom: 18px !important;
+}
+
+/* Summary cards spacing */
+.summary-grid {
+  gap: 14px !important;
+}
+
+.summary-card {
+  min-height: 88px !important;
+  padding: 16px 18px !important;
+  border-radius: 18px !important;
+}
+
+/* Dashboard grids */
+.dashboard-console-grid,
+.dashboard-bottom-grid,
+.treasury-intelligence-grid,
+#treasury-operations-workstation-grid {
+  gap: 16px !important;
+}
+
+/* Remove extra vertical breathing between major Treasury modules */
+.treasury-intelligence-panel,
+.treasury-liquidity-flow-matrix,
+.treasury-heatmap-engine,
+.treasury-timeline,
+.policy-breach-panel {
+  margin-top: 18px !important;
+  margin-bottom: 18px !important;
+}
+
+/* Make headers tighter */
+.dashboard-section .section-header,
+.executive-float .section-header,
+.treasury-runtime-shell .section-header {
+  margin-bottom: 14px !important;
+}
+
+/* Compact titles */
+.dashboard-section h2,
+.executive-float h2,
+.treasury-runtime-shell h2 {
+  font-size: 22px !important;
+  line-height: 1.08 !important;
+}
+
+/* Compact description */
+.dashboard-section .muted,
+.executive-float .muted,
+.treasury-runtime-shell .muted {
+  font-size: 11px !important;
+  line-height: 1.35 !important;
+}
+
+/* Reduce excessive white card gaps */
+.dashboard-section > div,
+.executive-float > div,
+.treasury-runtime-shell > div {
+  gap: 14px !important;
+}
+
+/* Safer mobile */
+@media (max-width: 1100px) {
+  .dashboard-console-grid,
+  .dashboard-bottom-grid,
+  #treasury-operations-workstation-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ========================================
+   RP2-C.20
+   Treasury OS Professional Density Layer
+======================================== */
+
+.dashboard-page {
+  --os-gap: 14px;
+}
+
+.dashboard-page section {
+  margin-top: 14px !important;
+  margin-bottom: 14px !important;
+}
+
+.executive-float {
+  margin: 14px 0 !important;
+}
+
+.treasury-runtime-shell {
+  margin: 14px 0 !important;
+}
+
+.summary-grid {
+  margin: 14px 0 !important;
+}
+
+.treasury-alert-ribbon {
+  margin: 12px 0 14px !important;
+}
+
+.capital-panel,
+.advisor-panel,
+.execution-panel,
+.audit-panel,
+.maturity-panel,
+.policy-breach-panel {
+  margin-top: 14px !important;
+}
+
+.dashboard-section {
+  margin-top: 14px !important;
+}
+
+.records-overview {
+  gap: 14px !important;
+}
+
+.dashboard-page > * {
+  margin-bottom: 14px !important;
+}
+
+/* RP2-C.21 Force Liquidity Flow Matrix Up */
+
+#liquidity-flow-matrix-section {
+  margin-top: -28px !important;
+}
+
+.treasury-intelligence-panel {
+  margin-bottom: 4px !important;
+}
+
+#liquidity-flow-matrix-section + * {
+  margin-top: 14px !important;
+}
+
+/* RP2-C.22 Treasury Section Density Standard */
+
+.dashboard-page section {
+  margin-bottom: 14px !important;
+}
+
+.dashboard-page .treasury-runtime-panel,
+.dashboard-page .treasury-intelligence-panel,
+.dashboard-page .liquidity-flow-surface,
+.dashboard-page .treasury-heatmap-engine,
+.dashboard-page .treasury-timeline-engine,
+.dashboard-page .policy-breach-engine {
+  margin-top: 10px !important;
+ 
+}

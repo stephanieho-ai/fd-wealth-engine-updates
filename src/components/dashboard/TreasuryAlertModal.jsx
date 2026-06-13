@@ -10,19 +10,20 @@ export default function TreasuryAlertModal({ alert, onClose, onAction }) {
   const formatRecordCode = (value) => {
     return String(value || "-")
       .replace(/_/g, " ")
-      .toLowerCase()
-      .replace(/\b\w/g, (char) => char.toUpperCase());
+      .replace(/\bfd\b/gi, "FD")
+      .replace(/\b\w/g, (char) => char.toUpperCase())
+      .replace(/\bFd\b/g, "FD");
   };
 
   return (
     <div className="treasury-modal-backdrop" onClick={onClose}>
       <div
-        className="treasury-modal-card treasury-modal-wide"
+        className="treasury-modal-card treasury-modal-wide treasury-modal-os-compact"
         onClick={(event) => event.stopPropagation()}
       >
         <div className="treasury-modal-header">
           <div>
-            <p className="eyebrow">Treasury Command Center</p>
+            <p className="eyebrow">TREASURY COMMAND CENTER</p>
             <h2>{alert.title || "Treasury Alert"}</h2>
           </div>
 

@@ -104,3 +104,95 @@
     font-size: 30px;
   }
 }
+
+/* ========================================
+   RP2-A HOME HERO COMPACT OS ADJUSTMENT
+======================================== */
+
+.treasury-institutional-hero {
+  max-width: 1320px;
+  margin: 34px auto 26px !important;
+  padding: 34px 42px !important;
+  border-radius: 30px !important;
+  min-height: 170px !important;
+}
+
+.treasury-institutional-hero h1,
+.treasury-institutional-hero h2 {
+  font-size: clamp(34px, 3vw, 54px) !important;
+  line-height: 1.02 !important;
+  margin-bottom: 14px !important;
+}
+
+.treasury-institutional-hero p {
+  font-size: 15px !important;
+  line-height: 1.55 !important;
+  max-width: 760px !important;
+}
+
+.treasury-institutional-hero .hero-badge,
+.treasury-institutional-hero .institutional-hero-badge {
+  min-width: 220px !important;
+  padding: 22px 26px !important;
+  border-radius: 24px !important;
+}
+
+.treasury-institutional-hero .hero-badge strong,
+.treasury-institutional-hero .institutional-hero-badge strong {
+  font-size: 34px !important;
+  line-height: 1 !important;
+}
+
+/* ========================================
+   HOME SUMMARY GRID COMPACT OS STYLE
+======================================== */
+
+.dashboard-page .summary-grid {
+  max-width: 1320px;
+  margin: 28px auto 0 !important;
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 18px !important;
+}
+
+.dashboard-page .summary-card,
+.dashboard-page .summary-grid > * {
+  min-height: 132px !important;
+  padding: 22px 24px !important;
+  border-radius: 24px !important;
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08) !important;
+}
+
+.dashboard-page .summary-card h3,
+.dashboard-page .summary-card strong {
+  font-size: 23px !important;
+  line-height: 1.1 !important;
+}
+
+.dashboard-page .summary-card p {
+  font-size: 12px !important;
+  line-height: 1.4 !important;
+}
+
+/* Remove excessive vertical air after hero */
+.dashboard-page .treasury-demo-banner {
+  margin: -6px auto 18px !important;
+  max-width: 1320px !important;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .dashboard-page .summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .treasury-institutional-hero {
+    padding: 28px 24px !important;
+  }
+
+  .dashboard-page .summary-grid {
+    grid-template-columns: 1fr !important;
+  }
+}

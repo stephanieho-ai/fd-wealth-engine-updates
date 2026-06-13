@@ -72,12 +72,53 @@
 
 /* =========================
    CARD TITLE SAFETY
+   Treasury OS Safe Version
 ========================= */
 
-.dashboard-page h1,
-.dashboard-page h2,
-.dashboard-page h3,
-.dashboard-page h4 {
+.dashboard-section h1,
+.dashboard-section h2,
+.dashboard-section h3,
+.dashboard-section h4,
+
+.records-overview h1,
+.records-overview h2,
+.records-overview h3,
+.records-overview h4,
+
+.capital-panel h1,
+.capital-panel h2,
+.capital-panel h3,
+.capital-panel h4,
+
+.execution-panel h1,
+.execution-panel h2,
+.execution-panel h3,
+.execution-panel h4,
+
+.advisor-panel h1,
+.advisor-panel h2,
+.advisor-panel h3,
+.advisor-panel h4,
+
+.audit-panel h1,
+.audit-panel h2,
+.audit-panel h3,
+.audit-panel h4,
+
+.maturity-panel h1,
+.maturity-panel h2,
+.maturity-panel h3,
+.maturity-panel h4,
+
+.settings-panel h1,
+.settings-panel h2,
+.settings-panel h3,
+.settings-panel h4,
+
+.more-panel h1,
+.more-panel h2,
+.more-panel h3,
+.more-panel h4 {
   color: #0f172a;
 }
 
@@ -85,10 +126,36 @@
    TEXT SAFETY
 ========================= */
 
-.dashboard-page p,
-.dashboard-page label {
-  color: #6b7a99;
+.dashboard-section p,
+.dashboard-section label,
+
+.records-overview p,
+.records-overview label,
+
+.capital-panel p,
+.capital-panel label,
+
+.execution-panel p,
+.execution-panel label,
+
+.advisor-panel p,
+.advisor-panel label,
+
+.audit-panel p,
+.audit-panel label,
+
+.maturity-panel p,
+.maturity-panel label,
+
+.settings-panel p,
+.settings-panel label,
+
+.more-panel p,
+.more-panel label {
+  color: #64748b;
 }
+
+
 
 /* =========================
    BUTTON BASE
@@ -175,4 +242,126 @@
 
   color: white;
   border-color: transparent;
+}
+
+/* ========================================
+   RP2-C.23
+   TREASURY OS FONT + COLOR STANDARDIZATION
+   Safe version - does not affect hero
+======================================== */
+
+.dashboard-page {
+  --os-title: #0f172a;
+  --os-subtitle: #64748b;
+  --os-muted: #718096;
+  --os-blue: #2563eb;
+  --os-red: #dc2626;
+  --os-green: #059669;
+  --os-orange: #ea580c;
+}
+
+/* Section eyebrow / kicker */
+.dashboard-page .eyebrow,
+.dashboard-page .section-kicker,
+.dashboard-page .dashboard-kicker,
+.dashboard-page .panel-kicker,
+.dashboard-page [class*="kicker"] {
+  font-size: 9px !important;
+  font-weight: 850 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: var(--os-blue) !important;
+}
+
+/* Card titles only */
+.dashboard-section h2,
+.dashboard-section h3,
+.executive-float h2,
+.executive-float h3,
+.treasury-runtime-shell h2,
+.treasury-runtime-shell h3,
+.liquidity-flow-surface h2,
+.liquidity-flow-surface h3,
+.treasury-intelligence-panel h2,
+.treasury-intelligence-panel h3,
+.treasury-liquidity-flow-matrix h2,
+.treasury-liquidity-flow-matrix h3,
+.treasury-heatmap-engine h2,
+.treasury-heatmap-engine h3,
+.policy-breach-panel h2,
+.policy-breach-panel h3 {
+  color: var(--os-title) !important;
+  font-weight: 850 !important;
+  letter-spacing: -0.025em !important;
+}
+
+/* Main card title size */
+.dashboard-section h2,
+.executive-float h2,
+.treasury-runtime-shell h2,
+.liquidity-flow-surface h2,
+.treasury-intelligence-panel h2,
+.treasury-liquidity-flow-matrix h2,
+.treasury-heatmap-engine h2,
+.policy-breach-panel h2 {
+  font-size: 20px !important;
+  line-height: 1.12 !important;
+}
+
+/* Subtitles / descriptions */
+.dashboard-section p,
+.executive-float p,
+.treasury-runtime-shell p,
+.liquidity-flow-surface p,
+.treasury-intelligence-panel p,
+.treasury-liquidity-flow-matrix p,
+.treasury-heatmap-engine p,
+.policy-breach-panel p,
+.dashboard-page .muted {
+  color: var(--os-subtitle) !important;
+  font-size: 11px !important;
+  line-height: 1.42 !important;
+}
+
+/* Metric values */
+.dashboard-section strong,
+.executive-float strong,
+.treasury-runtime-shell strong,
+.liquidity-flow-surface strong,
+.treasury-intelligence-panel strong,
+.treasury-liquidity-flow-matrix strong,
+.treasury-heatmap-engine strong,
+.policy-breach-panel strong {
+  color: var(--os-title) !important;
+  font-weight: 850 !important;
+}
+
+/* Preserve warning / risk colors */
+.dashboard-page [style*="#dc2626"],
+.dashboard-page [style*="#b91c1c"],
+.dashboard-page [style*="red"],
+.dashboard-page .critical,
+.dashboard-page .blocked {
+  color: var(--os-red) !important;
+}
+
+.dashboard-page [style*="#ea580c"],
+.dashboard-page [style*="#f59e0b"],
+.dashboard-page .warning,
+.dashboard-page .watch {
+  color: var(--os-orange) !important;
+}
+
+.dashboard-page [style*="#059669"],
+.dashboard-page [style*="#16a34a"],
+.dashboard-page .stable,
+.dashboard-page .healthy {
+  color: var(--os-green) !important;
+}
+
+/* Avoid touching hero text */
+.treasury-institutional-hero *,
+.treasury-hero *,
+[class*="hero"] * {
+  color: inherit;
 }

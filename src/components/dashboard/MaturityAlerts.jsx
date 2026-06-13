@@ -39,67 +39,33 @@ function getTimelineLabel(daysLeft) {
   if (daysLeft <= 5) return "5 Days";
   if (daysLeft <= 7) return "7 Days";
   if (daysLeft <= 14) return "14 Days";
-
   return null;
 }
 
 function getSeverity(daysLeft) {
-  if (daysLeft < 0 || daysLeft === 0) {
-    return "critical";
-  }
-
-  if (daysLeft <= 3) {
-    return "high";
-  }
-
-  if (daysLeft <= 7) {
-    return "medium";
-  }
-
+  if (daysLeft < 0 || daysLeft === 0) return "critical";
+  if (daysLeft <= 3) return "high";
+  if (daysLeft <= 7) return "medium";
   return "low";
 }
 
-export default function MaturityAlerts({
-  records = [],
-  currency = "MYR",
-}) {
-  const safeRecords = Array.isArray(records)
-    ? records
-    : [];
+export default function MaturityAlerts({ records = [], currency = "MYR" }) {
+  const safeRecords = Array.isArray(records) ? records : [];
 
   const maturityAlerts = safeRecords
     .filter((record) => {
-      const type = String(
-        record?.recordType ||
-          record?.type ||
-          "FD"
-      )
+      const type = String(record?.recordType || record?.type || "FD")
         .toUpperCase()
         .replace(/\s+/g, "_");
 
-      const status = String(
-        record?.status || "ACTIVE"
-      ).toUpperCase();
+      const status = String(record?.status || "ACTIVE").toUpperCase();
 
-      return (
-        type === "FD" &&
-        status !== "CLOSED"
-      );
+      return type === "FD" && status !== "CLOSED";
     })
     .map((record) => {
-      const daysLeft = getDaysLeft(
-        getMaturityDate(record)
-      );
-
-      const timeline =
-        daysLeft !== null
-          ? getTimelineLabel(daysLeft)
-          : null;
-
-      const severity =
-        daysLeft !== null
-          ? getSeverity(daysLeft)
-          : "low";
+      const daysLeft = getDaysLeft(getMaturityDate(record));
+      const timeline = daysLeft !== null ? getTimelineLabel(daysLeft) : null;
+      const severity = daysLeft !== null ? getSeverity(daysLeft) : "low";
 
       return {
         ...record,
@@ -109,138 +75,66 @@ export default function MaturityAlerts({
       };
     })
     .filter((record) => record.timeline)
-    .sort(
-      (a, b) => a.daysLeft - b.daysLeft
-    );
+    .sort((a, b) => a.daysLeft - b.daysLeft);
 
-  const nextMajorMaturity =
-    maturityAlerts.reduce(
-      (largest, current) => {
-        return getAmount(current) >
-          getAmount(largest)
-          ? current
-          : largest;
-      },
-      maturityAlerts[0]
-    );
+  const nextMajorMaturity = maturityAlerts.reduce((largest, current) => {
+    return getAmount(current) > getAmount(largest) ? current : largest;
+  }, maturityAlerts[0]);
 
   return (
-    <section className="dashboard-section maturity-alerts">
-      <div className="section-header">
+    <section className="dashboard-section maturity-alerts treasury-workstation-card">
+      <div className="section-header workstation-header">
         <div>
-          <p className="eyebrow">
-            Treasury Maturity Operations
-          </p>
-
-          <h2>
-            FD Maturity Command Center
-          </h2>
-
-          <p className="muted">
-            Monitor operational maturity
-            timeline, upcoming deployable
-            capital and liquidity readiness.
-          </p>
+          <p className="eyebrow">TREASURY MATURITY</p>
+          <h2>FD Maturity Command</h2>
+          <p className="muted">Upcoming maturity queue and recovery capital.</p>
         </div>
 
-        <div className="score-card">
-          <span>Active Alerts</span>
-          <strong>
-            {maturityAlerts.length}
-          </strong>
+        <div className="score-card score-card-mini">
+          <span>Alerts</span>
+          <strong>{maturityAlerts.length}</strong>
         </div>
       </div>
 
       {!maturityAlerts.length ? (
-        <div className="empty-state">
-          No upcoming maturity events.
-        </div>
+        <div className="empty-state empty-state-mini">No upcoming maturity events.</div>
       ) : (
         <>
-          <div className="maturity-command-list">
-            {maturityAlerts.map((record) => (
+          <div className="maturity-table">
+            {maturityAlerts.slice(0, 4).map((record) => (
               <div
-                key={
-                  record.id ||
-                  record.generationId ||
-                  record.maturityDate
-                }
-                className={`maturity-command-row maturity-${record.severity}`}
+                key={record.id || record.generationId || record.maturityDate}
+                className={`maturity-row maturity-${record.severity}`}
               >
-                <div className="maturity-timeline">
-                  {record.timeline}
+                <span className="maturity-badge">{record.timeline}</span>
+
+                <div className="maturity-main">
+                  <strong>{record.id || record.generationId || "FD"}</strong>
+                  <small>
+                    {record.bank || "Bank"} · {getMaturityDate(record)}
+                  </small>
                 </div>
 
-                <div className="maturity-record">
+                <div className="maturity-meta">
                   <strong>
-                    {record.id ||
-                      record.generationId ||
-                      "FD"}
+                    {record.daysLeft < 0
+                      ? `${Math.abs(record.daysLeft)}D overdue`
+                      : record.daysLeft === 0
+                      ? "Due today"
+                      : `${record.daysLeft}D left`}
                   </strong>
-
-                  <span>
-                    {record.bank || "Bank"} ·{" "}
-                    {getMaturityDate(record)}
-                  </span>
-                </div>
-
-                <div className="maturity-days">
-                  {record.daysLeft < 0
-                    ? `${Math.abs(
-                        record.daysLeft
-                      )}D overdue`
-                    : record.daysLeft === 0
-                    ? "Due today"
-                    : `${record.daysLeft}D left`}
-                </div>
-
-                <div className="maturity-amount">
-                  {formatMoney(
-                    getAmount(record),
-                    currency
-                  )}
+                  <small>{formatMoney(getAmount(record), currency)}</small>
                 </div>
               </div>
             ))}
           </div>
 
           {nextMajorMaturity && (
-            <div className="next-major-maturity">
-              <div>
-                <span>
-                  Next Major Maturity
-                </span>
-
-                <strong>
-                  {nextMajorMaturity.bank ||
-                    "Bank"}
-                </strong>
-              </div>
-
-              <div>
-                <span>
-                  Expected Capital
-                </span>
-
-                <strong>
-                  {formatMoney(
-                    getAmount(
-                      nextMajorMaturity
-                    ),
-                    currency
-                  )}
-                </strong>
-              </div>
-
-              <div>
-                <span>Maturity Date</span>
-
-                <strong>
-                  {getMaturityDate(
-                    nextMajorMaturity
-                  )}
-                </strong>
-              </div>
+            <div className="next-major-strip">
+              <span>NEXT MAJOR</span>
+              <strong>{nextMajorMaturity.bank || "Bank"}</strong>
+              <strong>{formatMoney(getAmount(nextMajorMaturity), currency)}</strong>
+              <strong>{getMaturityDate(nextMajorMaturity)}</strong>
             </div>
           )}
         </>

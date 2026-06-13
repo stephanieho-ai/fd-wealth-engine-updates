@@ -90,3 +90,72 @@
   background: #e2e8f0;
   color: #475569;
 }
+
+/* RP2-C.6 Treasury Timeline Compact Professional OS Style */
+
+.treasury-timeline {
+  margin-top: 18px !important;
+  padding: 22px 24px !important;
+  border-radius: 24px !important;
+}
+
+.dashboard-bottom-grid {
+  margin-top: 20px !important;
+  gap: 20px !important;
+}
+
+#treasury-timeline-section {
+  margin-top: 0 !important;
+}
+
+.treasury-timeline .section-header {
+  margin-bottom: 18px !important;
+}
+
+.treasury-timeline .section-header h2 {
+  font-size: 24px !important;
+  line-height: 1.05 !important;
+}
+
+.treasury-timeline .section-header .muted {
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+}
+
+.treasury-timeline .score-card {
+  padding: 12px 18px !important;
+  border-radius: 18px !important;
+}
+
+.treasury-timeline .score-card span {
+  font-size: 9px !important;
+}
+
+.treasury-timeline .score-card strong {
+  font-size: 22px !important;
+}
+
+.treasury-timeline .timeline-list {
+  gap: 10px !important;
+}
+
+.treasury-timeline .timeline-item,
+.treasury-timeline .timeline-row {
+  min-height: 58px !important;
+  padding: 12px 16px !important;
+  border-radius: 16px !important;
+}
+
+.treasury-timeline .timeline-date,
+.treasury-timeline .timeline-days {
+  width: 58px !important;
+  height: 42px !important;
+  border-radius: 12px !important;
+  font-size: 13px !important;
+}
+
+.treasury-timeline button {
+  height: 30px !important;
+  border-radius: 999px !important;
+  font-size: 10px !important;
+}

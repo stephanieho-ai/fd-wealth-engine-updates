@@ -1,65 +1,104 @@
 .execution-panel {
   display: grid;
-  gap: 22px;
+  gap: 10px;
 }
 
 .execution-panel .section-header h2 {
-  font-size: 24px;
+  font-size: 19px;
+  line-height: 1.1;
 }
 
-.execution-summary-grid {
+.execution-table {
   display: grid;
-  grid-template-columns: repeat(2, minmax(180px, 1fr));
-  gap: 16px;
+  gap: 7px;
 }
 
-.execution-summary-card {
-  padding: 20px;
-  border-radius: 22px;
-  background: linear-gradient(180deg, #ffffff, #f8fafc);
-  border: 1px solid rgba(148, 163, 184, 0.18);
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+.execution-table > div {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 8px 10px;
+
+  border-radius: 12px;
+
+  background: linear-gradient(
+    180deg,
+    #ffffff,
+    #f8fafc
+  );
+
+  border: 1px solid rgba(148, 163, 184, 0.14);
+
+  box-shadow:
+    0 6px 16px rgba(15, 23, 42, 0.03);
 }
 
-.execution-summary-card span {
-  display: block;
-  margin-bottom: 10px;
-  font-size: 11px;
+.execution-table span {
+  font-size: 9px;
+
   text-transform: uppercase;
+
   letter-spacing: 0.08em;
+
   color: #2563eb;
+
   font-weight: 900;
 }
 
-.execution-summary-card strong {
-  font-size: 30px;
-  line-height: 1;
+.execution-table strong {
+  text-align: right;
+
+  font-size: 13px;
+
   color: #0f172a;
+
   font-weight: 900;
 }
 
-.execution-action-row {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
+.execution-action-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 8px;
+
+  margin-top: 4px;
 }
 
 .primary-button,
 .secondary-button {
   border: none;
-  border-radius: 16px;
-  padding: 14px 22px;
-  font-size: 13px;
+
+  border-radius: 12px;
+
+  padding: 8px 10px;
+
+  font-size: 10px;
+
   font-weight: 900;
+
   letter-spacing: 0.02em;
+
   cursor: pointer;
-  transition: all 0.2s ease;
+
+  transition: all 0.18s ease;
 }
 
 .primary-button {
-  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #3b82f6
+  );
+
   color: white;
-  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.28);
+
+  box-shadow:
+    0 8px 18px rgba(37, 99, 235, 0.18);
 }
 
 .primary-button:hover {
@@ -76,11 +115,15 @@
 }
 
 @media (max-width: 900px) {
-  .execution-summary-grid {
+  .execution-action-grid {
     grid-template-columns: 1fr;
   }
 
-  .execution-action-row {
-    flex-direction: column;
+  .execution-table > div {
+    grid-template-columns: 1fr;
+  }
+
+  .execution-table strong {
+    text-align: left;
   }
 }

@@ -25,6 +25,7 @@ import TreasuryAuthorityChain from "../components/treasury/TreasuryAuthorityChai
 import TreasuryAuthorityTransmission from "../components/treasury/TreasuryAuthorityTransmission";
 import TreasuryAuthorityNetwork from "../components/treasury/TreasuryAuthorityNetwork";
 import TreasuryDemoBanner from "../components/demo/TreasuryDemoBanner";
+import TreasuryInstitutionalHero from "../components/common/TreasuryInstitutionalHero";
 
 
 
@@ -245,6 +246,346 @@ const treasuryRuntimeStyle = `
   animation: treasuryCongestionHeat 3.8s ease-in-out infinite;
 }
 
+/* ========================================
+   RP2-A COMPACT OS STYLE
+   Treasury Flow Dynamics Engine
+======================================== */
+
+#treasury-flow-dynamics-section {
+  margin: 22px 0 !important;
+  padding: 22px !important;
+  border-radius: 26px !important;
+  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.08) !important;
+}
+
+#treasury-flow-dynamics-section h2 {
+  font-size: 26px !important;
+  line-height: 1.05 !important;
+}
+
+#treasury-flow-dynamics-section .muted {
+  font-size: 11px !important;
+  line-height: 1.35 !important;
+}
+
+#treasury-flow-dynamics-section [style*="grid-template-columns: repeat(4"] {
+  gap: 12px !important;
+  margin-bottom: 14px !important;
+}
+
+#treasury-flow-dynamics-section [style*="padding: 20px"],
+#treasury-flow-dynamics-section [style*="padding: 18px"],
+#treasury-flow-dynamics-section [style*="padding: 16px"] {
+  padding: 12px !important;
+}
+
+#treasury-flow-dynamics-section [style*="border-radius: 36px"],
+#treasury-flow-dynamics-section [style*="border-radius: 26px"],
+#treasury-flow-dynamics-section [style*="border-radius: 24px"],
+#treasury-flow-dynamics-section [style*="border-radius: 22px"],
+#treasury-flow-dynamics-section [style*="border-radius: 20px"] {
+  border-radius: 18px !important;
+}
+
+#treasury-flow-dynamics-section strong {
+  font-size: 18px !important;
+  line-height: 1.05 !important;
+}
+
+#treasury-flow-dynamics-section [style*="font-size: 34px"],
+#treasury-flow-dynamics-section [style*="font-size: 32px"],
+#treasury-flow-dynamics-section [style*="font-size: 30px"],
+#treasury-flow-dynamics-section [style*="font-size: 25px"] {
+  font-size: 20px !important;
+}
+
+#treasury-flow-dynamics-section [style*="minHeight: 118"],
+#treasury-flow-dynamics-section [style*="min-height: 118"] {
+  min-height: 82px !important;
+}
+
+#treasury-flow-dynamics-section [style*="width: 460px"],
+#treasury-flow-dynamics-section [style*="height: 460px"] {
+  width: 260px !important;
+  height: 260px !important;
+}
+
+#treasury-flow-dynamics-section [style*="gap: 18px"],
+#treasury-flow-dynamics-section [style*="gap: 16px"] {
+  gap: 10px !important;
+}
+
+#treasury-flow-dynamics-section [style*="marginTop: 16"],
+#treasury-flow-dynamics-section [style*="margin-top: 16"] {
+  margin-top: 10px !important;
+}
+
+/* ========================================
+   RP2-B PROFESSIONAL COMPRESSION
+   Animated Capital Movement
+======================================== */
+
+#treasury-flow-dynamics-section .flow-node {
+  min-height: 82px !important;
+  padding: 12px !important;
+  border-radius: 16px !important;
+}
+
+#treasury-flow-dynamics-section .flow-node strong {
+  font-size: 18px !important;
+  line-height: 1.05 !important;
+}
+
+#treasury-flow-dynamics-section .flow-node p,
+#treasury-flow-dynamics-section .flow-node .muted {
+  font-size: 10px !important;
+  line-height: 1.3 !important;
+}
+
+#treasury-flow-dynamics-section .flow-node span {
+  font-size: 10px !important;
+}
+
+#treasury-flow-dynamics-section [style*="repeat(6"] {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+  gap: 10px !important;
+}
+
+/* ========================================
+   RP2-C COMPACT OS STYLE
+   Escalation / Router / Timeline / Intervention
+======================================== */
+
+.executive-float,
+.treasury-runtime-shell {
+  margin: 18px 0 !important;
+  padding: 22px !important;
+  border-radius: 24px !important;
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08) !important;
+}
+
+.executive-float h2,
+.treasury-runtime-shell h2 {
+  font-size: 22px !important;
+  line-height: 1.1 !important;
+  margin-bottom: 10px !important;
+}
+
+.executive-float .eyebrow,
+.treasury-runtime-shell .eyebrow {
+  font-size: 10px !important;
+  letter-spacing: 0.08em !important;
+}
+
+.executive-float [style*="padding: 28px"],
+.executive-float [style*="padding: 24px"],
+.executive-float [style*="padding: 22px"],
+.executive-float [style*="padding: 20px"],
+.treasury-runtime-shell [style*="padding: 28px"],
+.treasury-runtime-shell [style*="padding: 24px"],
+.treasury-runtime-shell [style*="padding: 22px"],
+.treasury-runtime-shell [style*="padding: 20px"] {
+  padding: 14px !important;
+}
+
+.executive-float [style*="minHeight: 180"],
+.executive-float [style*="min-height: 180"],
+.executive-float [style*="minHeight: 160"],
+.executive-float [style*="min-height: 160"],
+.treasury-runtime-shell [style*="minHeight: 180"],
+.treasury-runtime-shell [style*="min-height: 180"],
+.treasury-runtime-shell [style*="minHeight: 160"],
+.treasury-runtime-shell [style*="min-height: 160"] {
+  min-height: 105px !important;
+}
+
+.executive-float strong,
+.treasury-runtime-shell strong {
+  font-size: 16px !important;
+  line-height: 1.15 !important;
+}
+
+.executive-float p,
+.treasury-runtime-shell p,
+.executive-float .muted,
+.treasury-runtime-shell .muted {
+  font-size: 11px !important;
+  line-height: 1.35 !important;
+}
+
+.executive-float [style*="gap: 28px"],
+.executive-float [style*="gap: 24px"],
+.executive-float [style*="gap: 22px"],
+.executive-float [style*="gap: 20px"],
+.treasury-runtime-shell [style*="gap: 28px"],
+.treasury-runtime-shell [style*="gap: 24px"],
+.treasury-runtime-shell [style*="gap: 22px"],
+.treasury-runtime-shell [style*="gap: 20px"] {
+  gap: 12px !important;
+}
+
+.executive-float [style*="borderRadius: 30"],
+.executive-float [style*="borderRadius: 28"],
+.executive-float [style*="borderRadius: 26"],
+.executive-float [style*="borderRadius: 24"],
+.treasury-runtime-shell [style*="borderRadius: 30"],
+.treasury-runtime-shell [style*="borderRadius: 28"],
+.treasury-runtime-shell [style*="borderRadius: 26"],
+.treasury-runtime-shell [style*="borderRadius: 24"] {
+  border-radius: 18px !important;
+}
+
+/* ========================================
+   RP2-D COMPACT OS STYLE
+   Resolution / Override / Authority Chain
+======================================== */
+
+.executive-float [style*="grid-template-columns: repeat(5"],
+.executive-float [style*="grid-template-columns: repeat(4"],
+.executive-float [style*="grid-template-columns: repeat(3"] {
+  gap: 12px !important;
+}
+
+.executive-float [style*="minHeight: 220"],
+.executive-float [style*="min-height: 220"],
+.executive-float [style*="minHeight: 200"],
+.executive-float [style*="min-height: 200"],
+.executive-float [style*="minHeight: 180"],
+.executive-float [style*="min-height: 180"] {
+  min-height: 108px !important;
+}
+
+.executive-float [style*="padding: 32px"],
+.executive-float [style*="padding: 30px"],
+.executive-float [style*="padding: 28px"],
+.executive-float [style*="padding: 26px"],
+.executive-float [style*="padding: 24px"] {
+  padding: 16px !important;
+}
+
+.executive-float [style*="fontSize: 28"],
+.executive-float [style*="font-size: 28"],
+.executive-float [style*="fontSize: 26"],
+.executive-float [style*="font-size: 26"],
+.executive-float [style*="fontSize: 24"],
+.executive-float [style*="font-size: 24"] {
+  font-size: 18px !important;
+}
+
+.executive-float [style*="fontSize: 18"],
+.executive-float [style*="font-size: 18"] {
+  font-size: 15px !important;
+}
+
+.executive-float [style*="marginBottom: 32"],
+.executive-float [style*="margin-bottom: 32"],
+.executive-float [style*="marginBottom: 28"],
+.executive-float [style*="margin-bottom: 28"],
+.executive-float [style*="marginBottom: 24"],
+.executive-float [style*="margin-bottom: 24"] {
+  margin-bottom: 14px !important;
+}
+
+.executive-float [style*="marginTop: 32"],
+.executive-float [style*="margin-top: 32"],
+.executive-float [style*="marginTop: 28"],
+.executive-float [style*="margin-top: 28"],
+.executive-float [style*="marginTop: 24"],
+.executive-float [style*="margin-top: 24"] {
+  margin-top: 14px !important;
+}
+
+/* ========================================
+   RP2-E COMPACT OS STYLE
+   Authority Transmission Network
+======================================== */
+
+.executive-float [style*="grid-template-columns: repeat(2"] {
+  gap: 14px !important;
+}
+
+.executive-float [style*="minHeight: 260"],
+.executive-float [style*="min-height: 260"],
+.executive-float [style*="minHeight: 240"],
+.executive-float [style*="min-height: 240"],
+.executive-float [style*="minHeight: 220"],
+.executive-float [style*="min-height: 220"] {
+  min-height: 132px !important;
+}
+
+.executive-float [style*="padding: 36px"],
+.executive-float [style*="padding: 34px"],
+.executive-float [style*="padding: 32px"],
+.executive-float [style*="padding: 30px"] {
+  padding: 18px !important;
+}
+
+.executive-float [style*="fontSize: 32"],
+.executive-float [style*="font-size: 32"],
+.executive-float [style*="fontSize: 30"],
+.executive-float [style*="font-size: 30"] {
+  font-size: 20px !important;
+}
+
+.executive-float [style*="width: 56"],
+.executive-float [style*="height: 56"] {
+  width: 34px !important;
+  height: 34px !important;
+}
+
+.executive-float [style*="marginBottom: 40"],
+.executive-float [style*="margin-bottom: 40"],
+.executive-float [style*="marginBottom: 36"],
+.executive-float [style*="margin-bottom: 36"],
+.executive-float [style*="marginBottom: 32"],
+.executive-float [style*="margin-bottom: 32"] {
+  margin-bottom: 16px !important;
+}
+
+/* ========================================
+   RP2-F COMPACT OS STYLE
+   Treasury Authority Network
+======================================== */
+
+.executive-float [style*="grid-template-columns: repeat(3"] {
+  gap: 14px !important;
+}
+
+.executive-float [style*="minHeight: 260"],
+.executive-float [style*="min-height: 260"],
+.executive-float [style*="minHeight: 240"],
+.executive-float [style*="min-height: 240"],
+.executive-float [style*="minHeight: 220"],
+.executive-float [style*="min-height: 220"],
+.executive-float [style*="minHeight: 200"],
+.executive-float [style*="min-height: 200"] {
+  min-height: 126px !important;
+}
+
+.executive-float [style*="width: 72"],
+.executive-float [style*="height: 72"],
+.executive-float [style*="width: 68"],
+.executive-float [style*="height: 68"],
+.executive-float [style*="width: 64"],
+.executive-float [style*="height: 64"] {
+  width: 46px !important;
+  height: 46px !important;
+}
+
+.executive-float [style*="fontSize: 22"],
+.executive-float [style*="font-size: 22"],
+.executive-float [style*="fontSize: 20"],
+.executive-float [style*="font-size: 20"] {
+  font-size: 16px !important;
+}
+
+.executive-float [style*="marginTop: 20"],
+.executive-float [style*="margin-top: 20"],
+.executive-float [style*="marginBottom: 20"],
+.executive-float [style*="margin-bottom: 20"] {
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+}
 `;
 
 function toNumber(value) {
@@ -925,18 +1266,18 @@ function TreasuryIntelligencePanel({
     intelligence.level === "CRITICAL" || intelligence.level === "DEFENSIVE"
       ? {
           background: "linear-gradient(135deg, #fff1f2, #ffe4e6)",
-          borderColor: "rgba(244, 63, 94, 0.32)",
+          borderColor: "rgba(244, 63, 94, 0.30)",
           color: "#9f1239",
         }
       : intelligence.level === "WATCH"
       ? {
           background: "linear-gradient(135deg, #fffbeb, #fef3c7)",
-          borderColor: "rgba(245, 158, 11, 0.36)",
+          borderColor: "rgba(245, 158, 11, 0.32)",
           color: "#92400e",
         }
       : {
           background: "linear-gradient(135deg, #ecfdf5, #d1fae5)",
-          borderColor: "rgba(16, 185, 129, 0.32)",
+          borderColor: "rgba(16, 185, 129, 0.28)",
           color: "#065f46",
         };
 
@@ -946,8 +1287,8 @@ function TreasuryIntelligencePanel({
       value: intelligence.outlook,
       note: intelligence.stabilityLevel,
       style: {
-        background: "linear-gradient(135deg, #fff1f2, #ffe4e6)",
-        borderColor: "rgba(244, 63, 94, 0.25)",
+        background: "linear-gradient(135deg, #fff7f7, #ffe4e6)",
+        borderColor: "rgba(244, 63, 94, 0.22)",
       },
     },
     {
@@ -956,7 +1297,7 @@ function TreasuryIntelligencePanel({
       note: "Current liquidity base",
       style: {
         background: "linear-gradient(135deg, #eff6ff, #dbeafe)",
-        borderColor: "rgba(59, 130, 246, 0.22)",
+        borderColor: "rgba(59, 130, 246, 0.20)",
       },
     },
     {
@@ -965,7 +1306,7 @@ function TreasuryIntelligencePanel({
       note: "Projected liquidity support",
       style: {
         background: "linear-gradient(135deg, #f0fdf4, #dcfce7)",
-        borderColor: "rgba(34, 197, 94, 0.22)",
+        borderColor: "rgba(34, 197, 94, 0.20)",
       },
     },
     {
@@ -976,7 +1317,7 @@ function TreasuryIntelligencePanel({
         : "Execution governance active",
       style: {
         background: "linear-gradient(135deg, #fef2f2, #fee2e2)",
-        borderColor: "rgba(239, 68, 68, 0.24)",
+        borderColor: "rgba(239, 68, 68, 0.22)",
       },
     },
   ];
@@ -994,33 +1335,59 @@ function TreasuryIntelligencePanel({
       className="treasury-intelligence-panel treasury-intelligence-horizontal executive-float"
       style={{
         width: "100%",
-        border: "1px solid rgba(148, 163, 184, 0.28)",
-        borderRadius: 30,
-        padding: 28,
-        margin: "28px 0",
+        border: "1px solid rgba(148, 163, 184, 0.22)",
+        borderRadius: 24,
+        padding: 22,
+        margin: "10px 0 6px",
         background:
-          "linear-gradient(135deg, rgba(255,255,255,0.96), rgba(239,246,255,0.96))",
-        boxShadow: "0 24px 60px rgba(15, 23, 42, 0.12)",
+          "linear-gradient(135deg, rgba(255,255,255,0.98), rgba(248,250,252,0.96), rgba(239,246,255,0.92))",
+        boxShadow:
+          "0 18px 44px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255,255,255,0.82)",
         overflow: "hidden",
       }}
     >
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "minmax(0, 1fr) 150px",
-          gap: 24,
+          gridTemplateColumns: "minmax(0, 1fr) 122px",
+          gap: 18,
           alignItems: "start",
-          marginBottom: 22,
+          marginBottom: 16,
         }}
       >
         <div>
-          <p className="eyebrow" style={{ margin: "0 0 8px" }}>
+          <p
+            className="eyebrow"
+            style={{
+              margin: "0 0 6px",
+              fontSize: 10,
+              letterSpacing: "0.08em",
+            }}
+          >
             V33.2-G12 Treasury Intelligence
           </p>
-          <h2 style={{ margin: 0, fontSize: 34, lineHeight: 1.05 }}>
+
+          <h2
+            style={{
+              margin: 0,
+              fontSize: 26,
+              lineHeight: 1.05,
+              fontWeight: 850,
+              color: "#0f172a",
+            }}
+          >
             Intelligence Command Center
           </h2>
-          <p className="muted" style={{ marginTop: 10, maxWidth: 760 }}>
+
+          <p
+            className="muted"
+            style={{
+              marginTop: 7,
+              maxWidth: 760,
+              fontSize: 12,
+              lineHeight: 1.45,
+            }}
+          >
             Horizontal treasury intelligence layer for AI reasoning, liquidity
             forecast, risk scoring and predictive orchestration.
           </p>
@@ -1029,17 +1396,46 @@ function TreasuryIntelligencePanel({
         <div
           style={{
             textAlign: "center",
-            border: "1px solid rgba(148, 163, 184, 0.28)",
-            borderRadius: 24,
-            padding: "16px 18px",
+            border: "1px solid rgba(148, 163, 184, 0.24)",
+            borderRadius: 18,
+            padding: "11px 12px",
+            minHeight: 92,
             ...scoreTone,
           }}
         >
-          <div style={{ fontSize: 11, opacity: 0.75 }}>INTELLIGENCE SCORE</div>
-          <strong style={{ display: "block", fontSize: 40, lineHeight: 1 }}>
+          <div
+            style={{
+              fontSize: 9,
+              opacity: 0.72,
+              letterSpacing: "0.06em",
+              textTransform: "uppercase",
+              fontWeight: 800,
+            }}
+          >
+            Score
+          </div>
+
+          <strong
+            style={{
+              display: "block",
+              fontSize: 30,
+              lineHeight: 1,
+              marginTop: 5,
+            }}
+          >
             {intelligence.score}
           </strong>
-          <div style={{ fontSize: 12, marginTop: 7 }}>{intelligence.level}</div>
+
+          <div
+            style={{
+              fontSize: 10,
+              marginTop: 5,
+              fontWeight: 800,
+              letterSpacing: "0.04em",
+            }}
+          >
+            {intelligence.level}
+          </div>
         </div>
       </div>
 
@@ -1047,35 +1443,54 @@ function TreasuryIntelligencePanel({
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
-          gap: 18,
-          marginBottom: 16,
+          gap: 12,
+          marginBottom: 12,
         }}
       >
         {commandMetrics.map((metric) => (
           <div
             key={metric.label}
             style={{
-              border: "1px solid rgba(148, 163, 184, 0.22)",
-              borderRadius: 22,
-              padding: "20px 22px",
+              border: "1px solid rgba(148, 163, 184, 0.18)",
+              borderRadius: 18,
+              padding: "14px 16px",
+              minHeight: 92,
               ...metric.style,
             }}
           >
             <div
               style={{
-                fontSize: 12,
-                opacity: 0.72,
+                fontSize: 10,
+                opacity: 0.68,
                 textTransform: "uppercase",
-                letterSpacing: "0.05em",
-                marginBottom: 8,
+                letterSpacing: "0.06em",
+                marginBottom: 6,
+                fontWeight: 800,
               }}
             >
               {metric.label}
             </div>
-            <strong style={{ display: "block", fontSize: 32, lineHeight: 1.05 }}>
+
+            <strong
+              style={{
+                display: "block",
+                fontSize: 20,
+                lineHeight: 1.05,
+                color: "#0f172a",
+                letterSpacing: "-0.02em",
+              }}
+            >
               {metric.value}
             </strong>
-            <p className="muted" style={{ margin: "8px 0 0", fontSize: 12 }}>
+
+            <p
+              className="muted"
+              style={{
+                margin: "6px 0 0",
+                fontSize: 11,
+                lineHeight: 1.35,
+              }}
+            >
               {metric.note}
             </p>
           </div>
@@ -1085,23 +1500,41 @@ function TreasuryIntelligencePanel({
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "1.25fr 0.9fr 0.9fr",
-          gap: 14,
+          gridTemplateColumns: "1.05fr 0.85fr 1.1fr",
+          gap: 12,
           alignItems: "stretch",
         }}
       >
         <div
           style={{
-            border: "1px solid rgba(99, 102, 241, 0.18)",
-            borderRadius: 22,
-            padding: 18,
+            border: "1px solid rgba(99, 102, 241, 0.16)",
+            borderRadius: 18,
+            padding: 14,
             background: "linear-gradient(135deg, #f8fafc, #eef2ff)",
           }}
         >
-          <strong>AI Treasury Reasoning</strong>
-          <ul style={{ margin: "10px 0 0", paddingLeft: 18 }}>
-            {intelligence.reasoning.map((item, index) => (
-              <li key={`${item}-${index}`} style={{ marginBottom: 6 }}>
+          <strong
+            style={{
+              display: "block",
+              fontSize: 13,
+              marginBottom: 7,
+              color: "#334155",
+            }}
+          >
+            AI Treasury Reasoning
+          </strong>
+
+          <ul
+            style={{
+              margin: 0,
+              paddingLeft: 17,
+              fontSize: 12,
+              lineHeight: 1.42,
+              color: "#475569",
+            }}
+          >
+            {intelligence.reasoning.slice(0, 3).map((item, index) => (
+              <li key={`${item}-${index}`} style={{ marginBottom: 5 }}>
                 {item}
               </li>
             ))}
@@ -1110,81 +1543,143 @@ function TreasuryIntelligencePanel({
 
         <div
           style={{
-            border: "1px solid rgba(59, 130, 246, 0.2)",
-            borderRadius: 22,
-            padding: 18,
+            border: "1px solid rgba(59, 130, 246, 0.18)",
+            borderRadius: 18,
+            padding: 14,
             background: "linear-gradient(135deg, #eff6ff, #dbeafe)",
           }}
         >
-          <strong>Forecast Signal</strong>
-          <p className="muted" style={{ marginTop: 10 }}>
+          <strong
+            style={{
+              display: "block",
+              fontSize: 13,
+              marginBottom: 7,
+              color: "#334155",
+            }}
+          >
+            Forecast Signal
+          </strong>
+
+          <p
+            className="muted"
+            style={{
+              margin: 0,
+              fontSize: 12,
+              lineHeight: 1.42,
+            }}
+          >
             {intelligence.forecastSignal}
           </p>
-          <strong style={{ display: "block", marginTop: 14 }}>
+
+          <strong
+            style={{
+              display: "block",
+              marginTop: 10,
+              fontSize: 12,
+              color: "#0f172a",
+            }}
+          >
             Liquidity Projection
           </strong>
-          <p className="muted" style={{ marginBottom: 0 }}>
+
+          <p
+            className="muted"
+            style={{
+              margin: "4px 0 0",
+              fontSize: 11,
+              lineHeight: 1.35,
+            }}
+          >
             {intelligence.liquidityProjection}
           </p>
         </div>
 
         <div
           style={{
-            border: "1px solid rgba(168, 85, 247, 0.18)",
-            borderRadius: 22,
-            padding: 18,
+            border: "1px solid rgba(168, 85, 247, 0.16)",
+            borderRadius: 18,
+            padding: 14,
             background: "linear-gradient(135deg, #faf5ff, #eef2ff)",
           }}
         >
-          <strong>Recommended Orchestration</strong>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 12 }}>
-            {intelligence.actions.map((action) => (
+          <strong
+            style={{
+              display: "block",
+              fontSize: 13,
+              marginBottom: 8,
+              color: "#334155",
+            }}
+          >
+            Recommended Orchestration
+          </strong>
+
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: 6,
+            }}
+          >
+            {intelligence.actions.slice(0, 4).map((action) => (
               <span
                 key={action}
                 style={{
-                  border: "1px solid rgba(99, 102, 241, 0.22)",
+                  border: "1px solid rgba(99, 102, 241, 0.18)",
                   borderRadius: 999,
-                  padding: "6px 10px",
-                  fontSize: 12,
-                  background: "rgba(255, 255, 255, 0.72)",
+                  padding: "5px 8px",
+                  fontSize: 10,
+                  background: "rgba(255, 255, 255, 0.76)",
+                  color: "#475569",
+                  fontWeight: 700,
                 }}
               >
                 {action}
               </span>
             ))}
           </div>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(5, minmax(110px, 1fr))",
-                gap: 10,
-                marginTop: 16,
-              }}
-            >
-          
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(5, minmax(0, 1fr))",
+              gap: 7,
+              marginTop: 12,
+            }}
+          >
             {scoreMetrics.map(([label, value]) => (
               <div
                 key={label}
                 style={{
-                  border: "1px solid rgba(148, 163, 184, 0.2)",
-                  borderRadius: 14,
-                  padding: 10,
-                  background: "rgba(255,255,255,0.7)",
+                  border: "1px solid rgba(148, 163, 184, 0.18)",
+                  borderRadius: 12,
+                  padding: "7px 8px",
+                  background: "rgba(255,255,255,0.74)",
+                  minHeight: 50,
                 }}
               >
-           <div
-              style={{
-                fontSize: 9,
-                opacity: 0.65,
-                textTransform: "uppercase",
-                lineHeight: 1.2,
-                letterSpacing: "0.04em",
-                wordBreak: "break-word",
-              }}
-            >
-              {label}
-            </div>
-                <strong style={{ display: "block", fontSize: 20, marginTop: 4 }}>
+                <div
+                  style={{
+                    fontSize: 8,
+                    opacity: 0.62,
+                    textTransform: "uppercase",
+                    lineHeight: 1.2,
+                    letterSpacing: "0.04em",
+                    wordBreak: "break-word",
+                    fontWeight: 800,
+                  }}
+                >
+                  {label}
+                </div>
+
+                <strong
+                  style={{
+                    display: "block",
+                    fontSize: 15,
+                    marginTop: 3,
+                    color: "#0f172a",
+                    lineHeight: 1,
+                  }}
+                >
                   {value}
                 </strong>
               </div>
@@ -1193,13 +1688,20 @@ function TreasuryIntelligencePanel({
         </div>
       </div>
 
-      <p className="muted" style={{ marginTop: 14, marginBottom: 0, fontSize: 12 }}>
+      <p
+        className="muted"
+        style={{
+          marginTop: 10,
+          marginBottom: 0,
+          fontSize: 11,
+          lineHeight: 1.4,
+        }}
+      >
         {intelligence.riskOutlook}
       </p>
     </section>
   );
 }
-
 
 function TreasuryLiquidityFlowMatrix({
   currency,
@@ -1239,21 +1741,21 @@ function TreasuryLiquidityFlowMatrix({
       ? {
           color: "#b91c1c",
           background: "linear-gradient(135deg, #fff1f2, #ffe4e6)",
-          border: "rgba(239,68,68,0.24)",
-          glow: "rgba(239,68,68,0.12)",
+          border: "rgba(239,68,68,0.22)",
+          glow: "rgba(239,68,68,0.10)",
         }
       : flowPressure === "WATCH FLOW"
       ? {
           color: "#b45309",
           background: "linear-gradient(135deg, #fffbeb, #fef3c7)",
-          border: "rgba(245,158,11,0.26)",
-          glow: "rgba(245,158,11,0.12)",
+          border: "rgba(245,158,11,0.24)",
+          glow: "rgba(245,158,11,0.10)",
         }
       : {
           color: "#047857",
           background: "linear-gradient(135deg, #ecfdf5, #d1fae5)",
-          border: "rgba(16,185,129,0.24)",
-          glow: "rgba(16,185,129,0.12)",
+          border: "rgba(16,185,129,0.22)",
+          glow: "rgba(16,185,129,0.10)",
         };
 
   const sourceFlows = [
@@ -1281,7 +1783,7 @@ function TreasuryLiquidityFlowMatrix({
     {
       label: "Locked FD Capital",
       value: totalFixedDeposits,
-      note: "Yield capital currently locked",
+      note: "Yield capital locked",
       accent: "#f59e0b",
       bg: "linear-gradient(135deg, #fffbeb, #fef3c7)",
     },
@@ -1294,7 +1796,7 @@ function TreasuryLiquidityFlowMatrix({
       note:
         reserveGap > 0
           ? `${formatMoney(reserveGap, currency)} shortfall`
-          : "Reserve currently covered",
+          : "Reserve covered",
       accent: reserveGap > 0 ? "#dc2626" : "#16a34a",
       bg:
         reserveGap > 0
@@ -1306,8 +1808,8 @@ function TreasuryLiquidityFlowMatrix({
       value: suggestedPlacement,
       note:
         suggestedPlacement > 0
-          ? "Available for suggested placement"
-          : "No excess idle cash route",
+          ? "Available for placement"
+          : "No excess route",
       accent: suggestedPlacement > 0 ? "#2563eb" : "#64748b",
       bg: "linear-gradient(135deg, #eff6ff, #e0f2fe)",
     },
@@ -1318,14 +1820,14 @@ function TreasuryLiquidityFlowMatrix({
         ? `${bestOffer.bank || "Best offer"} · ${
             bestOffer.tenureMonths || "-"
           }M · ${toNumber(bestOffer.ratePa ?? bestOffer.rate ?? 0).toFixed(2)}%`
-        : "No active offer selected",
+        : "No active offer",
       accent: "#7c3aed",
       bg: "linear-gradient(135deg, #faf5ff, #eef2ff)",
     },
     {
       label: "Risk Buffer",
       value: riskBuffer,
-      note: "Liquidity after reserve + maturity support",
+      note: "After reserve + maturity",
       accent: riskBuffer > 0 ? "#0891b2" : "#dc2626",
       bg:
         riskBuffer > 0
@@ -1338,14 +1840,14 @@ function TreasuryLiquidityFlowMatrix({
 
   const flowNotes = [
     reserveGap > 0
-      ? "Reserve drain detected. Treasury should restore reserve before aggressive deployment."
+      ? "Reserve drain detected. Restore reserve before aggressive deployment."
       : "Reserve route is protected. Treasury may review deployment after policy checks.",
     upcomingMaturityAmount > 0
-      ? "Upcoming FD maturity creates a recovery inflow and improves liquidity projection."
-      : "No near-term FD inflow detected. Liquidity depends mainly on Savings and Parking Cash.",
+      ? "Upcoming FD maturity improves liquidity projection."
+      : "No near-term FD inflow detected. Liquidity depends on Savings and Parking Cash.",
     treasuryPolicyDecision?.blocked
-      ? "Policy engine is blocking deployment. Flow matrix recommends governance review."
-      : "Policy engine is not blocking current liquidity flow routing.",
+      ? "Policy engine is blocking deployment. Governance review recommended."
+      : "Policy engine is not blocking current liquidity routing.",
   ];
 
   return (
@@ -1354,84 +1856,102 @@ function TreasuryLiquidityFlowMatrix({
       className="treasury-liquidity-flow-matrix liquidity-flow-surface"
       style={{
         width: "100%",
-        margin: "28px 0",
-        padding: 30,
-        borderRadius: 34,
+        margin: "6px 0 12px",
+        padding: 22,
+        borderRadius: 26,
         background:
-          "linear-gradient(135deg, rgba(255,255,255,0.98), rgba(240,249,255,0.94), rgba(238,242,255,0.90))",
-        border: "1px solid rgba(148, 163, 184, 0.22)",
+          "linear-gradient(135deg, rgba(255,255,255,0.98), rgba(248,250,252,0.96), rgba(239,246,255,0.92))",
+        border: "1px solid rgba(148, 163, 184, 0.20)",
         boxShadow:
-          "0 30px 76px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255,255,255,0.78)",
+          "0 20px 48px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255,255,255,0.78)",
         overflow: "hidden",
         position: "relative",
       }}
     >
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background:
-            "radial-gradient(circle at 14% 12%, rgba(59,130,246,0.12), transparent 28%), radial-gradient(circle at 86% 18%, rgba(124,58,237,0.10), transparent 30%), radial-gradient(circle at 50% 100%, rgba(16,185,129,0.10), transparent 34%)",
-          pointerEvents: "none",
-          filter: "blur(10px)",
-        }}
-      />
-
       <div style={{ position: "relative", zIndex: 1 }}>
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "minmax(0, 1fr) 220px",
-            gap: 22,
+            gridTemplateColumns: "minmax(0, 1fr) 150px",
+            gap: 16,
             alignItems: "start",
-            marginBottom: 24,
+            marginBottom: 16,
           }}
         >
           <div>
-            <p className="eyebrow" style={{ margin: "0 0 8px" }}>
+            <p
+              className="eyebrow"
+              style={{
+                margin: "0 0 6px",
+                fontSize: 10,
+                letterSpacing: "0.08em",
+              }}
+            >
               V33.2-G18 Treasury Liquidity Flow Matrix
             </p>
-            <h2 style={{ margin: 0, fontSize: 34, lineHeight: 1.05 }}>
+
+            <h2
+              style={{
+                margin: 0,
+                fontSize: 26,
+                lineHeight: 1.05,
+                fontWeight: 850,
+                color: "#0f172a",
+              }}
+            >
               Liquidity Flow Matrix
             </h2>
-            <p className="muted" style={{ marginTop: 10, maxWidth: 760 }}>
-              Institutional flow layer mapping capital sources, reserve routing,
-              deployable liquidity, upcoming recovery and FD lock-up pressure.
+
+            <p
+              className="muted"
+              style={{
+                marginTop: 7,
+                maxWidth: 760,
+                fontSize: 12,
+                lineHeight: 1.45,
+              }}
+            >
+              Capital source routing, reserve protection, deployable liquidity and
+              FD recovery flow monitoring.
             </p>
           </div>
 
           <div
             style={{
-              borderRadius: 24,
-              padding: "18px 18px",
+              borderRadius: 18,
+              padding: "12px 14px",
               textAlign: "center",
               background: flowTone.background,
               border: `1px solid ${flowTone.border}`,
-              boxShadow: `0 18px 42px ${flowTone.glow}`,
+              boxShadow: `0 14px 30px ${flowTone.glow}`,
               color: flowTone.color,
+              minHeight: 82,
             }}
           >
             <div
               style={{
-                fontSize: 11,
-                fontWeight: 800,
+                fontSize: 9,
+                fontWeight: 850,
                 letterSpacing: "0.08em",
                 opacity: 0.75,
+                textTransform: "uppercase",
               }}
             >
-              FLOW STATUS
+              Flow Status
             </div>
+
             <strong
               style={{
                 display: "block",
-                marginTop: 8,
-                fontSize: 25,
-                lineHeight: 1,
+                marginTop: 5,
+                fontSize: 18,
+                lineHeight: 1.05,
               }}
             >
               {flowPressure}
             </strong>
-            <div style={{ fontSize: 12, marginTop: 8 }}>
+
+            <div style={{ fontSize: 10, marginTop: 5 }}>
               Reserve {reserveCoverage.toFixed(0)}%
             </div>
           </div>
@@ -1440,72 +1960,73 @@ function TreasuryLiquidityFlowMatrix({
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "minmax(0, 1fr) 74px minmax(0, 1fr)",
-            gap: 18,
+            gridTemplateColumns: "minmax(0, 1fr) 42px minmax(0, 1fr)",
+            gap: 12,
             alignItems: "stretch",
           }}
         >
           <div
             style={{
-              borderRadius: 26,
-              padding: 20,
+              borderRadius: 20,
+              padding: 14,
               background: "rgba(255,255,255,0.72)",
-              border: "1px solid rgba(148,163,184,0.18)",
+              border: "1px solid rgba(148,163,184,0.16)",
               boxShadow: "inset 0 1px 0 rgba(255,255,255,0.72)",
             }}
           >
             <div
               style={{
-                fontSize: 12,
+                fontSize: 10,
                 fontWeight: 900,
                 letterSpacing: "0.08em",
                 color: "#475569",
-                marginBottom: 14,
+                marginBottom: 10,
+                textTransform: "uppercase",
               }}
             >
-              CAPITAL SOURCES
+              Capital Sources
             </div>
 
             <div
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-                gap: 12,
+                gap: 9,
               }}
             >
               {sourceFlows.map((item) => (
                 <div
                   key={item.label}
                   style={{
-                    borderRadius: 20,
-                    padding: 16,
+                    borderRadius: 16,
+                    padding: 12,
                     background: item.bg,
-                    border: "1px solid rgba(148,163,184,0.18)",
-                    minHeight: 118,
+                    border: "1px solid rgba(148,163,184,0.14)",
+                    minHeight: 82,
                   }}
                 >
                   <div
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      gap: 8,
-                      marginBottom: 10,
+                      gap: 6,
+                      marginBottom: 7,
                     }}
                   >
                     <span
                       style={{
-                        width: 9,
-                        height: 9,
+                        width: 7,
+                        height: 7,
                         borderRadius: 999,
                         background: item.accent,
-                        boxShadow: `0 0 14px ${item.accent}66`,
+                        boxShadow: `0 0 10px ${item.accent}55`,
                       }}
                     />
                     <span
                       style={{
-                        fontSize: 11,
-                        fontWeight: 800,
-                        letterSpacing: "0.05em",
+                        fontSize: 9,
+                        fontWeight: 850,
+                        letterSpacing: "0.04em",
                         color: "#64748b",
                         textTransform: "uppercase",
                       }}
@@ -1517,15 +2038,23 @@ function TreasuryLiquidityFlowMatrix({
                   <strong
                     style={{
                       display: "block",
-                      fontSize: 25,
-                      lineHeight: 1,
+                      fontSize: 18,
+                      lineHeight: 1.05,
                       color: "#0f172a",
+                      letterSpacing: "-0.02em",
                     }}
                   >
                     {formatMoney(item.value, currency)}
                   </strong>
 
-                  <p className="muted" style={{ margin: "9px 0 0", fontSize: 12 }}>
+                  <p
+                    className="muted"
+                    style={{
+                      margin: "6px 0 0",
+                      fontSize: 10,
+                      lineHeight: 1.3,
+                    }}
+                  >
                     {item.note}
                   </p>
                 </div>
@@ -1537,28 +2066,28 @@ function TreasuryLiquidityFlowMatrix({
             style={{
               borderRadius: 999,
               background:
-                "linear-gradient(180deg, rgba(59,130,246,0.14), rgba(124,58,237,0.14), rgba(16,185,129,0.14))",
-              border: "1px solid rgba(148,163,184,0.16)",
+                "linear-gradient(180deg, rgba(59,130,246,0.12), rgba(124,58,237,0.12), rgba(16,185,129,0.12))",
+              border: "1px solid rgba(148,163,184,0.14)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.72)",
-              minHeight: 260,
+              minHeight: 190,
             }}
           >
             <div
               style={{
-                width: 42,
-                height: 42,
+                width: 28,
+                height: 28,
                 borderRadius: "50%",
-                background: "rgba(255,255,255,0.9)",
-                border: "1px solid rgba(59,130,246,0.22)",
+                background: "rgba(255,255,255,0.92)",
+                border: "1px solid rgba(59,130,246,0.18)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 color: "#2563eb",
                 fontWeight: 900,
-                boxShadow: "0 12px 28px rgba(37,99,235,0.14)",
+                fontSize: 13,
+                boxShadow: "0 10px 24px rgba(37,99,235,0.12)",
               }}
             >
               →
@@ -1567,65 +2096,66 @@ function TreasuryLiquidityFlowMatrix({
 
           <div
             style={{
-              borderRadius: 26,
-              padding: 20,
+              borderRadius: 20,
+              padding: 14,
               background: "rgba(255,255,255,0.72)",
-              border: "1px solid rgba(148,163,184,0.18)",
+              border: "1px solid rgba(148,163,184,0.16)",
               boxShadow: "inset 0 1px 0 rgba(255,255,255,0.72)",
             }}
           >
             <div
               style={{
-                fontSize: 12,
+                fontSize: 10,
                 fontWeight: 900,
                 letterSpacing: "0.08em",
                 color: "#475569",
-                marginBottom: 14,
+                marginBottom: 10,
+                textTransform: "uppercase",
               }}
             >
-              TREASURY DESTINATIONS
+              Treasury Destinations
             </div>
 
             <div
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-                gap: 12,
+                gap: 9,
               }}
             >
               {destinationFlows.map((item) => (
                 <div
                   key={item.label}
                   style={{
-                    borderRadius: 20,
-                    padding: 16,
+                    borderRadius: 16,
+                    padding: 12,
                     background: item.bg,
-                    border: "1px solid rgba(148,163,184,0.18)",
-                    minHeight: 118,
+                    border: "1px solid rgba(148,163,184,0.14)",
+                    minHeight: 82,
                   }}
                 >
                   <div
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      gap: 8,
-                      marginBottom: 10,
+                      gap: 6,
+                      marginBottom: 7,
                     }}
                   >
                     <span
                       style={{
-                        width: 9,
-                        height: 9,
+                        width: 7,
+                        height: 7,
                         borderRadius: 999,
                         background: item.accent,
-                        boxShadow: `0 0 14px ${item.accent}66`,
+                        boxShadow: `0 0 10px ${item.accent}55`,
                       }}
                     />
                     <span
                       style={{
-                        fontSize: 11,
-                        fontWeight: 800,
-                        letterSpacing: "0.05em",
+                        fontSize: 9,
+                        fontWeight: 850,
+                        letterSpacing: "0.04em",
                         color: "#64748b",
                         textTransform: "uppercase",
                       }}
@@ -1637,15 +2167,23 @@ function TreasuryLiquidityFlowMatrix({
                   <strong
                     style={{
                       display: "block",
-                      fontSize: 25,
-                      lineHeight: 1,
+                      fontSize: 18,
+                      lineHeight: 1.05,
                       color: "#0f172a",
+                      letterSpacing: "-0.02em",
                     }}
                   >
                     {formatMoney(item.value, currency)}
                   </strong>
 
-                  <p className="muted" style={{ margin: "9px 0 0", fontSize: 12 }}>
+                  <p
+                    className="muted"
+                    style={{
+                      margin: "6px 0 0",
+                      fontSize: 10,
+                      lineHeight: 1.3,
+                    }}
+                  >
                     {item.note}
                   </p>
                 </div>
@@ -1657,34 +2195,42 @@ function TreasuryLiquidityFlowMatrix({
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1.05fr 0.95fr",
-            gap: 16,
-            marginTop: 16,
+            gridTemplateColumns: "1fr 1fr",
+            gap: 12,
+            marginTop: 12,
           }}
         >
           <div
             style={{
-              borderRadius: 24,
-              padding: 18,
+              borderRadius: 18,
+              padding: 14,
               background: "linear-gradient(135deg, #f8fafc, #eef2ff)",
-              border: "1px solid rgba(99,102,241,0.18)",
+              border: "1px solid rgba(99,102,241,0.16)",
             }}
           >
-            <strong style={{ display: "block", marginBottom: 12 }}>
+            <strong
+              style={{
+                display: "block",
+                marginBottom: 9,
+                fontSize: 13,
+                color: "#0f172a",
+              }}
+            >
               Flow Governance Notes
             </strong>
-            <div style={{ display: "grid", gap: 9 }}>
+
+            <div style={{ display: "grid", gap: 7 }}>
               {flowNotes.map((note, index) => (
                 <div
                   key={`${note}-${index}`}
                   style={{
-                    borderRadius: 16,
-                    padding: "10px 12px",
-                    background: "rgba(255,255,255,0.72)",
-                    border: "1px solid rgba(148,163,184,0.16)",
-                    fontSize: 13,
+                    borderRadius: 12,
+                    padding: "8px 10px",
+                    background: "rgba(255,255,255,0.74)",
+                    border: "1px solid rgba(148,163,184,0.14)",
+                    fontSize: 11,
                     color: "#475569",
-                    lineHeight: 1.45,
+                    lineHeight: 1.35,
                   }}
                 >
                   {note}
@@ -1695,39 +2241,47 @@ function TreasuryLiquidityFlowMatrix({
 
           <div
             style={{
-              borderRadius: 24,
-              padding: 18,
+              borderRadius: 18,
+              padding: 14,
               background: "linear-gradient(135deg, #ecfeff, #eff6ff)",
-              border: "1px solid rgba(6,182,212,0.18)",
+              border: "1px solid rgba(6,182,212,0.16)",
             }}
           >
-            <strong style={{ display: "block", marginBottom: 12 }}>
+            <strong
+              style={{
+                display: "block",
+                marginBottom: 9,
+                fontSize: 13,
+                color: "#0f172a",
+              }}
+            >
               Upcoming Recovery Flow
             </strong>
 
             {nextMaturityFlows.length > 0 ? (
-              <div style={{ display: "grid", gap: 8 }}>
+              <div style={{ display: "grid", gap: 7 }}>
                 {nextMaturityFlows.map((item) => (
                   <div
                     key={item.month}
                     style={{
                       display: "grid",
-                      gridTemplateColumns: "90px minmax(0, 1fr)",
+                      gridTemplateColumns: "72px minmax(0, 1fr)",
                       alignItems: "center",
-                      gap: 10,
-                      borderRadius: 16,
-                      padding: "10px 12px",
+                      gap: 8,
+                      borderRadius: 12,
+                      padding: "8px 10px",
                       background: "rgba(255,255,255,0.76)",
-                      border: "1px solid rgba(148,163,184,0.16)",
+                      border: "1px solid rgba(148,163,184,0.14)",
                     }}
                   >
-                    <strong style={{ color: "#0f172a", fontSize: 13 }}>
+                    <strong style={{ color: "#0f172a", fontSize: 11 }}>
                       {item.month}
                     </strong>
+
                     <div>
                       <div
                         style={{
-                          height: 8,
+                          height: 6,
                           borderRadius: 999,
                           background: "rgba(148,163,184,0.20)",
                           overflow: "hidden",
@@ -1749,9 +2303,10 @@ function TreasuryLiquidityFlowMatrix({
                           }}
                         />
                       </div>
+
                       <div
                         className="muted"
-                        style={{ fontSize: 12, marginTop: 5 }}
+                        style={{ fontSize: 10, marginTop: 4 }}
                       >
                         {formatMoney(item.amount, currency)}
                       </div>
@@ -1760,9 +2315,8 @@ function TreasuryLiquidityFlowMatrix({
                 ))}
               </div>
             ) : (
-              <p className="muted" style={{ margin: 0 }}>
-                No FD maturity flow available yet. Add FD maturity dates to
-                activate recovery flow mapping.
+              <p className="muted" style={{ margin: 0, fontSize: 11 }}>
+                No FD maturity flow available yet.
               </p>
             )}
           </div>
@@ -1771,7 +2325,6 @@ function TreasuryLiquidityFlowMatrix({
     </section>
   );
 }
-
 
 function TreasuryFlowDynamicsEngine({
   currency,
@@ -3400,482 +3953,13 @@ const demoSummaryItems = [
 
       {treasuryToast && <div className="treasury-toast">{treasuryToast}</div>}
 
-      <section
-        className="dashboard-hero treasury-monitoring-wall treasury-runtime-shell treasury-motion-panel"
-        style={{
-          display: "block",
-          position: "relative",
-          overflow: "hidden",
-          isolation: "isolate",
-          borderRadius: 44,
-          padding: "48px 46px",
-          marginBottom: 28,
-          background:
-            treasuryPolicyDecision.blocked
-              ? "linear-gradient(135deg, rgba(255,255,255,0.98), rgba(254,242,242,0.96), rgba(254,226,226,0.92), rgba(255,228,230,0.90))"
-              : treasuryPolicyDecision.severity === "WARNING" ||
-                treasuryPolicyDecision.severity === "WATCH"
-              ? "linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,251,235,0.96), rgba(254,243,199,0.92), rgba(255,237,213,0.90))"
-              : "linear-gradient(135deg, rgba(255,255,255,0.98), rgba(241,245,249,0.96), rgba(219,234,254,0.92), rgba(224,231,255,0.90))",
-          border: treasuryPolicyDecision.blocked
-            ? "1px solid rgba(239,68,68,0.16)"
-            : treasuryPolicyDecision.severity === "WARNING" ||
-              treasuryPolicyDecision.severity === "WATCH"
-            ? "1px solid rgba(245,158,11,0.16)"
-            : "1px solid rgba(59,130,246,0.16)",
-          boxShadow: treasuryPolicyDecision.blocked
-            ? "0 50px 120px rgba(127,29,29,0.12), 0 20px 60px rgba(239,68,68,0.12), inset 0 1px 0 rgba(255,255,255,0.72)"
-            : treasuryPolicyDecision.severity === "WARNING" ||
-              treasuryPolicyDecision.severity === "WATCH"
-            ? "0 50px 120px rgba(120,53,15,0.10), 0 20px 60px rgba(245,158,11,0.10), inset 0 1px 0 rgba(255,255,255,0.72)"
-            : "0 40px 100px rgba(15,23,42,0.08), 0 12px 40px rgba(59,130,246,0.08), inset 0 1px 0 rgba(255,255,255,0.72)",
-          backdropFilter: "blur(26px)",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              treasuryPolicyDecision.blocked
-                ? "radial-gradient(circle at top right, rgba(239,68,68,0.16), transparent 34%), radial-gradient(circle at bottom left, rgba(251,113,133,0.12), transparent 32%)"
-                : treasuryPolicyDecision.severity === "WARNING" ||
-                  treasuryPolicyDecision.severity === "WATCH"
-                ? "radial-gradient(circle at top right, rgba(245,158,11,0.14), transparent 34%), radial-gradient(circle at bottom left, rgba(251,191,36,0.10), transparent 32%)"
-                : "radial-gradient(circle at top right, rgba(37,99,235,0.16), transparent 34%), radial-gradient(circle at bottom left, rgba(16,185,129,0.10), transparent 32%)",
-            pointerEvents: "none",
-            zIndex: 0,
-            filter: "blur(12px)",
-          }}
-        />
-
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(6, minmax(130px, 1fr))",
-            gap: 14,
-            marginBottom: 26,
-            position: "relative",
-            zIndex: 2,
-          }}
-        >
-          {[
-            {
-              label: "LIQUIDITY",
-              value: liquidityRatio < 0.1 ? "CRITICAL" : "STABLE",
-              color: liquidityRatio < 0.1 ? "#dc2626" : "#2563eb",
-              glow:
-                liquidityRatio < 0.1
-                  ? "rgba(220,38,38,0.16)"
-                  : "rgba(37,99,235,0.12)",
-            },
-            {
-              label: "TREASURY HEAT",
-              value: fdExposureRatio > 0.9 ? "HIGH" : "NORMAL",
-              color: fdExposureRatio > 0.9 ? "#f59e0b" : "#16a34a",
-              glow:
-                fdExposureRatio > 0.9
-                  ? "rgba(245,158,11,0.14)"
-                  : "rgba(22,163,74,0.12)",
-            },
-            {
-              label: "RESERVE",
-              value: totalDeployableFunds <= reserveAmount ? "TIGHT" : "HEALTHY",
-              color: totalDeployableFunds <= reserveAmount ? "#ea580c" : "#2563eb",
-              glow:
-                totalDeployableFunds <= reserveAmount
-                  ? "rgba(234,88,12,0.14)"
-                  : "rgba(37,99,235,0.12)",
-            },
-            {
-              label: "DEPLOYMENT",
-              value: treasuryPolicyDecision.blocked ? "PAUSED" : "ACTIVE",
-              color: treasuryPolicyDecision.blocked ? "#dc2626" : "#16a34a",
-              glow: treasuryPolicyDecision.blocked
-                ? "rgba(220,38,38,0.16)"
-                : "rgba(22,163,74,0.12)",
-            },
-            {
-              label: "POLICY",
-              value: treasuryPolicyDecision.severity,
-              color:
-                treasuryPolicyDecision.severity === "BLOCKED" ||
-                treasuryPolicyDecision.severity === "CRITICAL" ||
-                treasuryPolicyDecision.blocked
-                  ? "#dc2626"
-                  : "#2563eb",
-              glow:
-                treasuryPolicyDecision.severity === "BLOCKED" ||
-                treasuryPolicyDecision.severity === "CRITICAL" ||
-                treasuryPolicyDecision.blocked
-                  ? "rgba(220,38,38,0.16)"
-                  : "rgba(37,99,235,0.12)",
-            },
-            {
-              label: "CONFIDENCE",
-              value: treasuryPolicyDecision.blocked ? "LOW" : "STABLE",
-              color: treasuryPolicyDecision.blocked ? "#dc2626" : "#16a34a",
-              glow: treasuryPolicyDecision.blocked
-                ? "rgba(220,38,38,0.16)"
-                : "rgba(22,163,74,0.12)",
-            },
-          ].map((signal) => (
-            <div
-              key={signal.label}
-              style={{
-                borderRadius: 18,
-                padding: "14px 16px",
-                background: signal.glow,
-                border: `1px solid ${signal.glow}`,
-                backdropFilter: "blur(10px)",
-                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.55)",
-                animation: "treasurySignalFloat 3.6s infinite ease-in-out",
-              }}
-            >
-              <div
-                style={{
-                  fontSize: 10,
-                  fontWeight: 800,
-                  letterSpacing: "0.08em",
-                  color: "#64748b",
-                  marginBottom: 8,
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {signal.label}
-              </div>
-
-              <div
-                style={{
-                  fontSize: 20,
-                  fontWeight: 900,
-                  color: signal.color,
-                  lineHeight: 1,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {signal.value}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "minmax(0, 1fr) 300px",
-            gap: 30,
-            alignItems: "stretch",
-            position: "relative",
-            zIndex: 2,
-          }}
-        >
-          <div>
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 10,
-                padding: "8px 14px",
-                borderRadius: 999,
-                background: "rgba(219,234,254,0.92)",
-                border: "1px solid rgba(59,130,246,0.18)",
-                marginBottom: 18,
-                boxShadow: "0 10px 24px rgba(37,99,235,0.10)",
-              }}
-            >
-              <span
-                style={{
-                  width: 10,
-                  height: 10,
-                  borderRadius: "50%",
-                  background:
-                    treasuryPolicyDecision.severity === "BREACH" ||
-                    treasuryPolicyDecision.severity === "CRITICAL" ||
-                    treasuryPolicyDecision.blocked
-                      ? "#ef4444"
-                      : treasuryPolicyDecision.severity === "WARNING" ||
-                        treasuryPolicyDecision.severity === "WATCH"
-                      ? "#f59e0b"
-                      : "#22c55e",
-                  boxShadow:
-                    treasuryPolicyDecision.severity === "BREACH" ||
-                    treasuryPolicyDecision.severity === "CRITICAL" ||
-                    treasuryPolicyDecision.blocked
-                      ? "0 0 14px rgba(239,68,68,0.75)"
-                      : treasuryPolicyDecision.severity === "WARNING" ||
-                        treasuryPolicyDecision.severity === "WATCH"
-                      ? "0 0 14px rgba(245,158,11,0.72)"
-                      : "0 0 14px rgba(34,197,94,0.72)",
-                  animation: "treasuryPulse 2.2s infinite ease-in-out",
-                }}
-              />
-
-              <span
-                style={{
-                  color: "#1d4ed8",
-                  fontSize: 12,
-                  letterSpacing: "0.08em",
-                  fontWeight: 800,
-                }}
-              >
-                LIVE TREASURY MONITORING
-              </span>
-            </div>
-
-            <p
-              className="eyebrow"
-              style={{
-                color: "#2563eb",
-                marginBottom: 12,
-                letterSpacing: "0.10em",
-              }}
-            >
-              FD WEALTH ENGINE · TREASURY COMMAND CENTER
-            </p>
-
-            <h1
-              style={{
-                margin: 0,
-                fontSize: 52,
-                lineHeight: 1,
-                color: "#0f172a",
-                letterSpacing: "-0.045em",
-                textShadow: "0 1px 0 rgba(255,255,255,0.75)",
-              }}
-            >
-              Treasury Operations Wall
-            </h1>
-
-            <p
-              style={{
-                marginTop: 18,
-                maxWidth: 780,
-                color: "#475569",
-                fontSize: 15,
-                lineHeight: 1.7,
-              }}
-            >
-              Real-time treasury monitoring environment for liquidity supervision,
-              deployment governance, operational escalation and institutional capital
-              orchestration.
-            </p>
-
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, minmax(220px, 1fr))",
-                gap: 18,
-                marginTop: 28,
-              }}
-            >
-              {[
-                {
-                  label: "ACTIVE FD",
-                  value: activeFDRecords.length,
-                },
-                {
-                  label: "LIQUIDITY",
-                  value: `${(liquidityRatio * 100).toFixed(1)}%`,
-                },
-                {
-                  label: "DEPLOYABLE",
-                  value: formatMoney(totalDeployableFunds, currency),
-                },
-                {
-                  label: "RISK",
-                  value: treasuryPolicyDecision.severity,
-                },
-                {
-                  label: "ALERTS",
-                  value: treasuryAlerts.length,
-                },
-                {
-                  label: "POLICY",
-                  value: treasuryPolicyDecision.blocked ? "BLOCKED" : "ACTIVE",
-                },
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  style={{
-                    borderRadius: 20,
-                    padding: "20px 22px",
-                    background: "rgba(255,255,255,0.78)",
-                    border: "1px solid rgba(148,163,184,0.20)",
-                    boxShadow:
-                      "0 16px 36px rgba(15,23,42,0.08), inset 0 1px 0 rgba(255,255,255,0.74)",
-                    backdropFilter: "blur(14px)",
-                    minWidth: 0,
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: 10,
-                      color: "#64748b",
-                      marginBottom: 8,
-                      letterSpacing: "0.07em",
-                      fontWeight: 800,
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {item.label}
-                  </div>
-
-                  <strong
-                    style={{
-                      display: "block",
-                      color:
-                        item.label === "POLICY" && item.value === "BLOCKED"
-                          ? "#dc2626"
-                          : item.label === "RISK" &&
-                            (item.value === "BREACH" ||
-                              item.value === "CRITICAL" ||
-                              item.value === "BLOCKED")
-                          ? "#dc2626"
-                          : "#0f172a",
-                      fontSize: 26,
-                      lineHeight: 1.05,
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {item.value}
-                  </strong>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div
-            style={{
-              borderRadius: 30,
-              padding: "24px 24px",
-              background:
-                treasuryPolicyDecision.severity === "BREACH" ||
-                treasuryPolicyDecision.severity === "CRITICAL" ||
-                treasuryPolicyDecision.blocked
-                  ? "linear-gradient(135deg, rgba(254,242,242,0.98), rgba(255,228,230,0.92))"
-                  : treasuryPolicyDecision.severity === "WARNING" ||
-                    treasuryPolicyDecision.severity === "WATCH"
-                  ? "linear-gradient(135deg, rgba(255,251,235,0.98), rgba(254,243,199,0.92))"
-                  : "linear-gradient(135deg, rgba(236,253,245,0.98), rgba(209,250,229,0.92))",
-              border:
-                treasuryPolicyDecision.severity === "BREACH" ||
-                treasuryPolicyDecision.severity === "CRITICAL" ||
-                treasuryPolicyDecision.blocked
-                  ? "1px solid rgba(239,68,68,0.22)"
-                  : treasuryPolicyDecision.severity === "WARNING" ||
-                    treasuryPolicyDecision.severity === "WATCH"
-                  ? "1px solid rgba(245,158,11,0.24)"
-                  : "1px solid rgba(16,185,129,0.22)",
-              boxShadow:
-                treasuryPolicyDecision.severity === "BREACH" ||
-                treasuryPolicyDecision.severity === "CRITICAL" ||
-                treasuryPolicyDecision.blocked
-                  ? "0 24px 60px rgba(239,68,68,0.14)"
-                  : treasuryPolicyDecision.severity === "WARNING" ||
-                    treasuryPolicyDecision.severity === "WATCH"
-                  ? "0 24px 60px rgba(245,158,11,0.12)"
-                  : "0 24px 60px rgba(16,185,129,0.12)",
-              animation:
-                treasuryPolicyDecision.severity === "BREACH" ||
-                treasuryPolicyDecision.severity === "CRITICAL" ||
-                treasuryPolicyDecision.blocked
-                  ? "treasuryStatusGlow 3.4s infinite ease-in-out"
-                  : "none",
-              backdropFilter: "blur(14px)",
-              alignSelf: "stretch",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-            }}
-          >
-            <div>
-              <div
-                style={{
-                  fontSize: 11,
-                  color: "#64748b",
-                  letterSpacing: "0.09em",
-                  marginBottom: 10,
-                  fontWeight: 800,
-                }}
-              >
-                TREASURY STATUS
-              </div>
-
-              <strong
-                style={{
-                  display: "block",
-                  fontSize: 38,
-                  color:
-                    treasuryPolicyDecision.severity === "BREACH" ||
-                    treasuryPolicyDecision.severity === "CRITICAL" ||
-                    treasuryPolicyDecision.blocked
-                      ? "#b91c1c"
-                      : treasuryPolicyDecision.severity === "WARNING" ||
-                        treasuryPolicyDecision.severity === "WATCH"
-                      ? "#b45309"
-                      : "#047857",
-                  lineHeight: 1,
-                  letterSpacing: "-0.04em",
-                }}
-              >
-                {treasuryPolicyDecision.severity}
-              </strong>
-
-              <p
-                style={{
-                  marginTop: 14,
-                  marginBottom: 0,
-                  fontSize: 13,
-                  color: "#475569",
-                  lineHeight: 1.65,
-                }}
-              >
-                {treasuryPolicyDecision.blocked
-                  ? "Treasury governance restriction active. Deployment requires review before execution."
-                  : "Treasury operations remain within monitored policy thresholds."}
-              </p>
-            </div>
-
-            <div
-              style={{
-                marginTop: 22,
-                paddingTop: 16,
-                borderTop: "1px solid rgba(148,163,184,0.22)",
-                fontSize: 12,
-                color: "#64748b",
-                lineHeight: 1.55,
-              }}
-            >
-              <strong style={{ color: "#334155" }}>Last Treasury Scan</strong>
-              <br />
-              {new Date().toLocaleString()}
-            </div>
-          </div>
-        </div>
-
-
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              treasuryPolicyDecision.blocked
-                ? "radial-gradient(circle at 78% 20%, rgba(239,68,68,0.12), transparent 28%), radial-gradient(circle at 8% 88%, rgba(251,113,133,0.08), transparent 30%)"
-                : treasuryPolicyDecision.severity === "WARNING" ||
-                  treasuryPolicyDecision.severity === "WATCH"
-                ? "radial-gradient(circle at 78% 20%, rgba(245,158,11,0.10), transparent 28%), radial-gradient(circle at 8% 88%, rgba(251,191,36,0.08), transparent 30%)"
-                : "radial-gradient(circle at 78% 20%, rgba(59,130,246,0.10), transparent 28%), radial-gradient(circle at 8% 88%, rgba(16,185,129,0.08), transparent 30%)",
-            zIndex: 0,
-            pointerEvents: "none",
-            filter: "blur(14px)",
-          }}
-        />
-      </section>
+      <TreasuryInstitutionalHero
+        eyebrow="FD WEALTH ENGINE"
+        title="Portfolio Overview"
+        description="Monitor portfolio performance, liquidity readiness and treasury activity."
+        badgeLabel="PORTFOLIO"
+        badgeValue={currency}
+      />
 
       {treasuryAlerts.length > 0 && (
         <section className="treasury-alert-ribbon">
@@ -3892,8 +3976,18 @@ const demoSummaryItems = [
         </section>
       )}
 
-      <div className="liquidity-flow-surface">
-      <SummaryGrid items={summaryItems} />
+      <div
+        className="liquidity-flow-surface home-summary-surface"
+        style={{
+          marginTop: 14,
+          marginBottom: 14,
+          padding: 0,
+          background: "transparent",
+          border: "none",
+          boxShadow: "none",
+        }}
+      >
+        <SummaryGrid items={summaryItems} />
       </div>
 
       <div id="capital-engine-section" className="treasury-motion-panel">
@@ -4026,16 +4120,22 @@ const demoSummaryItems = [
   }}
 >
   <div
+  style={{
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    marginBottom: 18,
+    gap: 20,
+    flexWrap: "nowrap",
+  }}
+>
+  <div
     style={{
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: 24,
-      gap: 20,
-      flexWrap: "wrap",
+      flex: "1 1 auto",
+      minWidth: 0,
+      maxWidth: 900,
     }}
   >
-    <div>
       <p
         className="eyebrow"
         style={{
@@ -4059,7 +4159,12 @@ const demoSummaryItems = [
         className="muted"
         style={{
           marginTop: 10,
-          maxWidth: 720,
+          maxWidth: 620,
+          minWidth: 420,
+          whiteSpace: "normal",
+          wordBreak: "normal",
+          overflowWrap: "normal",
+          lineHeight: 1.45,
         }}
       >
         Operational treasury coordination layer for deployment execution,
@@ -4067,9 +4172,10 @@ const demoSummaryItems = [
       </p>
     </div>
 
-    <div
+   <div
       style={{
-        minWidth: 160,
+        width: 160,
+        flexShrink: 0,
         borderRadius: 24,
         padding: "16px 20px",
         background:
@@ -4110,49 +4216,70 @@ const demoSummaryItems = [
     </div>
   </div>
 
+<div
+  id="treasury-operations-workstation-grid"
+  className="dashboard-console-grid liquidity-flow-surface"
+  style={{
+    display: "grid",
+    gridTemplateColumns: "repeat(2, minmax(420px, 1fr))",
+    gap: 18,
+    alignItems: "start",
+    alignContent: "start",
+    width: "100%",
+    overflow: "visible",
+  }}
+>
   <div
-    className="dashboard-console-grid liquidity-flow-surface"
-      style={{
-        display: "grid",
-        gridTemplateColumns: "1.1fr 1.1fr 0.92fr 0.92fr",
-        gap: 24,
-        alignItems: "start",
-        alignContent: "start",
-        width: "100%",
-      }}
-    >
-      <div className="executive-float">
-        <AdvisorPanel
-          currency={currency}
-          targetMonth={nextTargetMonth?.month || "-"}
-          weakMonth={weakestMonth?.month || "-"}
-          deployable={totalDeployableWithUpcoming}
-          bestOffer={bestOffer}
-        />
-      </div>
+    className="executive-float"
+   
+  >
+    <AdvisorPanel
+      currency={currency}
+      targetMonth={nextTargetMonth?.month || "-"}
+      weakMonth={weakestMonth?.month || "-"}
+      deployable={totalDeployableWithUpcoming}
+      bestOffer={bestOffer}
+    />
+  </div>
 
-      <div id="maturity-command-section" className="executive-float">
-        <MaturityAlerts
-          records={safeRecords}
-          currency={currency}
-        />
-      </div>
+  <div
+    id="maturity-command-section"
+    className="executive-float"
+   
+  >
+    <MaturityAlerts
+      records={safeRecords}
+      currency={currency}
+    />
+  </div>
 
-      <div id="execution-section" className={treasuryPolicyDecision.blocked ? "treasury-pressure-live" : "executive-float"}>
-        <ExecutionPanel
-          currency={currency}
-          upcomingMaturityAmount={upcomingMaturityAmount}
-          idleCash={idleCash}
-          onExecute={handleExecuteDeployment}
-          onUndoExecution={handleUndoExecution}
-          treasuryPolicyDecision={treasuryPolicyDecision}
-        />
-      </div>
+  <div
+    id="execution-section"
+    className={
+      treasuryPolicyDecision?.blocked
+        ? "treasury-pressure-live"
+        : "executive-float"
+    }
+  
+  >
+    <ExecutionPanel
+      currency={currency}
+      upcomingMaturityAmount={upcomingMaturityAmount}
+      idleCash={idleCash}
+      onExecute={handleExecuteDeployment}
+      onUndoExecution={handleUndoExecution}
+      treasuryPolicyDecision={treasuryPolicyDecision}
+    />
+  </div>
 
-      <div className="executive-float">
-        <AuditTrail />
-      </div>
-    </div>
+  <div
+    className="executive-float"
+   
+  >
+    <AuditTrail />
+  </div>
+</div>
+
   </section>
 
 <section
@@ -4169,8 +4296,8 @@ const demoSummaryItems = [
     style={{
       position: "relative",
       overflow: "hidden",
-      borderRadius: 36,
-      padding: "34px 32px",
+      borderRadius: 24,
+      padding: "22px 22px",
       background:
         "linear-gradient(135deg, rgba(255,255,255,0.96), rgba(248,250,252,0.93), rgba(239,246,255,0.88))",
       border: "1px solid rgba(255,255,255,0.72)",
@@ -4200,19 +4327,19 @@ const demoSummaryItems = [
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        gap: 22,
-        marginBottom: 28,
+        gap: 14,
+        marginBottom: 18,
         flexWrap: "wrap",
       }}
     >
       <div>
         <div
           style={{
-            fontSize: 12,
+            fontSize: 9,
             fontWeight: 900,
             letterSpacing: "0.14em",
             color: "#6792ef",
-            marginBottom: 10,
+            marginBottom: 6,
           }}
         >
           V33.2-G17 · TREASURY HEATMAP ENGINE
@@ -4221,7 +4348,7 @@ const demoSummaryItems = [
         <h2
           style={{
             margin: 0,
-            fontSize: 36,
+            fontSize: 26,
             fontWeight: 800,
             color: "#0f172a",
             letterSpacing: "-0.025em",
@@ -4233,11 +4360,11 @@ const demoSummaryItems = [
 
         <p
           style={{
-            marginTop: 14,
+            marginTop: 8,
             maxWidth: 820,
             color: "#64748b",
-            fontSize: 15,
-            lineHeight: 1.7,
+            fontSize: 12,
+            lineHeight: 1.45,
           }}
         >
           Monitor maturity pressure, liquidity imbalance and deployment
@@ -4247,9 +4374,9 @@ const demoSummaryItems = [
 
       <div
         style={{
-          minWidth: 180,
-          borderRadius: 28,
-          padding: "22px 26px",
+          minWidth: 130,
+          borderRadius: 18,
+          padding: "12px 14px",
           background: heatmapSystemHeat.bg,
           border: `1px solid ${heatmapSystemHeat.border}`,
           boxShadow:
@@ -4258,11 +4385,11 @@ const demoSummaryItems = [
       >
         <div
           style={{
-            fontSize: 11,
+            fontSize: 8,
             fontWeight: 800,
             letterSpacing: "0.12em",
             color: "#64748b",
-            marginBottom: 10,
+            marginBottom: 4,
           }}
         >
           SYSTEM HEAT
@@ -4270,7 +4397,7 @@ const demoSummaryItems = [
 
         <div
           style={{
-            fontSize: 30,
+            fontSize: 20,
             fontWeight: 800,
             letterSpacing: "-0.02em",
             color: heatmapSystemHeat.color,
@@ -4288,18 +4415,18 @@ const demoSummaryItems = [
         zIndex: 1,
         display: "grid",
         gridTemplateColumns: "repeat(6, minmax(140px, 1fr))",
-        gap: 18,
+        gap: 10,
       }}
     >
       {treasuryHeatmapItems.map((heat) => (
         <div
           key={heat.month}
           style={{
-            borderRadius: 28,
-            padding: "24px 20px",
+            borderRadius: 18,
+            padding: "14px 14px",
             background: heat.bg,
             border: `1px solid ${heat.border}`,
-            minHeight: 200,
+            minHeight: 130,
             boxShadow:
               "0 18px 42px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.62)",
             backdropFilter: "blur(14px)",
@@ -4307,11 +4434,11 @@ const demoSummaryItems = [
         >
           <div
             style={{
-              fontSize: 12,
+              fontSize: 9,
               fontWeight: 900,
               letterSpacing: "0.10em",
               color: "#64748b",
-              marginBottom: 18,
+              marginBottom: 8,
             }}
           >
             {heat.month}
@@ -4319,11 +4446,11 @@ const demoSummaryItems = [
 
           <div
             style={{
-              fontSize: 24,
+              fontSize: 18,
               fontWeight: 800,
               letterSpacing: "-0.02em",
               color: heat.color,
-              marginBottom: 16,
+              marginBottom: 8,
               lineHeight: 1,
             }}
           >
@@ -4332,11 +4459,11 @@ const demoSummaryItems = [
 
           <div
             style={{
-              fontSize: 18,
+              fontSize: 15,
               fontWeight: 800,
               letterSpacing: "-0.015em",
               color: "#0f172a",
-              marginBottom: 14,
+              marginBottom: 8,
             }}
           >
             {formatMoney(heat.amount, currency)}
@@ -4344,8 +4471,8 @@ const demoSummaryItems = [
 
           <div
             style={{
-              fontSize: 13,
-              lineHeight: 1.75,
+              fontSize: 11,
+              lineHeight: 1.4,
               color: "#64748b",
             }}
           >

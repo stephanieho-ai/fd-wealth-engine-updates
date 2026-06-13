@@ -1,61 +1,74 @@
 .advisor-panel {
   display: grid;
-  gap: 20px;
+  gap: 10px;
+}
+
+.treasury-workstation-card {
+  min-height: 0 !important;
+}
+
+.workstation-header {
+  margin-bottom: 8px !important;
 }
 
 .advisor-panel .section-header h2 {
-  font-size: 24px;
+  font-size: 19px;
+  line-height: 1.1;
 }
 
-.advisor-box {
+.advisor-table {
   display: grid;
-  gap: 16px;
+  gap: 7px;
 }
 
-.advisor-line {
-  display: flex;
-  justify-content: space-between;
+.advisor-table > div {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
   align-items: center;
-  gap: 18px;
-  padding: 18px;
-  border-radius: 18px;
-  background: rgba(248, 250, 252, 0.88);
-  border: 1px solid rgba(148, 163, 184, 0.18);
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(248, 250, 252, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.14);
 }
 
-.advisor-line span {
-  font-size: 13px;
+.advisor-table span {
+  font-size: 9px;
+  font-weight: 900;
   color: #64748b;
-  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
-.advisor-line strong {
-  font-size: 15px;
+.advisor-table strong {
+  min-width: 0;
+  font-size: 12px;
+  line-height: 1.25;
   color: #0f172a;
   font-weight: 900;
   text-align: right;
 }
 
-.advisor-recommendation {
-  margin-top: 4px;
-  padding: 22px;
-  border-radius: 22px;
+.advisor-action-strip {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 13px;
   background: linear-gradient(135deg, #eff6ff, #ffffff);
-  border: 1px solid rgba(37, 99, 235, 0.16);
+  border: 1px solid rgba(37, 99, 235, 0.14);
 }
 
-.advisor-recommendation strong {
+.advisor-action-strip span {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
   color: #2563eb;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  font-size: 9px;
   font-weight: 900;
+  letter-spacing: 0.08em;
 }
 
-.advisor-recommendation p {
+.advisor-action-strip p {
   margin: 0;
   color: #475569;
-  line-height: 1.6;
+  font-size: 11px;
+  line-height: 1.35;
 }

@@ -1,29 +1,47 @@
 .maturity-alerts {
   display: grid;
-  gap: 16px;
+  gap: 10px;
   min-width: 0;
   overflow: hidden;
 }
 
 .maturity-alerts .section-header h2 {
-  font-size: 22px;
-  line-height: 1.15;
-  white-space: normal;
+  font-size: 19px;
+  line-height: 1.1;
 }
 
-.maturity-command-list {
+.score-card-mini {
+  padding: 6px 10px;
+  border-radius: 12px;
+}
+
+.score-card-mini span {
+  font-size: 8px;
+}
+
+.score-card-mini strong {
+  font-size: 18px;
+}
+
+.maturity-table {
   display: grid;
+  gap: 7px;
+}
+
+.maturity-row {
+  display: grid;
+  grid-template-columns: 70px minmax(0, 1fr) 110px;
+  align-items: center;
+
   gap: 10px;
-}
 
-.maturity-command-row {
-  display: grid;
-  grid-template-columns: 86px minmax(0, 1fr);
-  gap: 10px 12px;
-  padding: 14px;
-  border-radius: 18px;
+  padding: 8px 10px;
+
+  border-radius: 12px;
+
   background: #ffffff;
-  border: 1px solid rgba(148, 163, 184, 0.18);
+
+  border: 1px solid rgba(148, 163, 184, 0.14);
 }
 
 .maturity-critical {
@@ -46,115 +64,131 @@
   border-color: #bfdbfe;
 }
 
-.maturity-timeline {
-  grid-row: span 3;
-  align-self: center;
+.maturity-badge {
   justify-self: start;
-  padding: 7px 10px;
+
+  padding: 4px 7px;
+
   border-radius: 999px;
-  font-size: 10px;
+
+  font-size: 8px;
   font-weight: 900;
+
   text-transform: uppercase;
+
   background: #eef2ff;
   color: #1d4ed8;
+
   white-space: nowrap;
 }
 
-.maturity-critical .maturity-timeline {
-  background: #fee2e2;
-  color: #b91c1c;
-}
-
-.maturity-high .maturity-timeline {
-  background: #ffedd5;
-  color: #c2410c;
-}
-
-.maturity-medium .maturity-timeline {
-  background: #fef3c7;
-  color: #b45309;
-}
-
-.maturity-low .maturity-timeline {
-  background: #dbeafe;
-  color: #1d4ed8;
-}
-
-.maturity-record {
+.maturity-main {
   min-width: 0;
 }
 
-.maturity-record strong {
+.maturity-main strong {
   display: block;
-  font-size: 14px;
+
+  font-size: 12px;
+
   color: #0f172a;
+
   font-weight: 900;
 }
 
-.maturity-record span {
+.maturity-main small {
   display: block;
-  margin-top: 4px;
+
+  margin-top: 2px;
+
   color: #64748b;
-  font-size: 12px;
-  line-height: 1.35;
-  word-break: normal;
-}
 
-.maturity-days {
-  font-size: 12px;
-  font-weight: 900;
-  color: #ef4444;
-  white-space: nowrap;
-}
-
-.maturity-medium .maturity-days {
-  color: #d97706;
-}
-
-.maturity-low .maturity-days {
-  color: #2563eb;
-}
-
-.maturity-amount {
-  color: #0f172a;
-  font-size: 12px;
-  font-weight: 900;
-  white-space: nowrap;
-}
-
-.next-major-maturity {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-  padding: 14px;
-  border-radius: 18px;
-  background: linear-gradient(135deg, #eff6ff, #ffffff);
-  border: 1px solid rgba(37, 99, 235, 0.16);
-}
-
-.next-major-maturity span {
-  display: block;
-  margin-bottom: 4px;
-  color: #2563eb;
   font-size: 10px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+
+  line-height: 1.25;
 }
 
-.next-major-maturity strong {
+.maturity-meta {
+  text-align: right;
+}
+
+.maturity-meta strong {
+  display: block;
+
+  font-size: 10px;
+
   color: #0f172a;
-  font-size: 13px;
+
   font-weight: 900;
-  word-break: normal;
 }
 
-.maturity-command-list {
-  max-height: 360px;
-  overflow-y: auto;
-  padding-right: 4px;
+.maturity-meta small {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #64748b;
+
+  font-size: 9px;
 }
 
-.next-major-maturity {
-  margin-top: 4px;
+.next-major-strip {
+  display: grid;
+
+  grid-template-columns:
+    90px
+    1fr
+    1fr
+    1fr;
+
+  gap: 10px;
+
+  align-items: center;
+
+  padding: 10px 12px;
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eff6ff,
+      #ffffff
+    );
+
+  border: 1px solid rgba(37, 99, 235, 0.14);
+}
+
+.next-major-strip span {
+  color: #2563eb;
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.08em;
+}
+
+.next-major-strip strong {
+  font-size: 11px;
+
+  color: #0f172a;
+
+  font-weight: 900;
+}
+
+.empty-state-mini {
+  padding: 14px;
+
+  border-radius: 12px;
+
+  background: #f8fafc;
+
+  border: 1px dashed rgba(148, 163, 184, 0.32);
+
+  color: #64748b;
+
+  text-align: center;
+
+  font-size: 11px;
 }

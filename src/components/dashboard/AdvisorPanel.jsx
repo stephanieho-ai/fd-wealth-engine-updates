@@ -13,50 +13,44 @@ export default function AdvisorPanel({
     maximumFractionDigits: 0,
   })}`;
 
+  const offerText = bestOffer
+    ? `${bestOffer.bank || "Bank"} · ${
+        bestOffer.tenureMonths || bestOffer.tenure || "-"
+      }M · ${Number(bestOffer.ratePa || bestOffer.rate || 0).toFixed(2)}%`
+    : "No active offer";
+
   return (
-    <section className="dashboard-section advisor-panel">
-      <div className="section-header">
+    <section className="dashboard-section advisor-panel treasury-workstation-card">
+      <div className="section-header workstation-header">
         <div>
-          <p className="eyebrow">Private Banker AI</p>
+          <p className="eyebrow">PRIVATE BANKER AI</p>
           <h2>Advisor Panel</h2>
-          <p className="muted">
-            Capital guidance based on deployable funds, reserve position and
-            weakest maturity month.
-          </p>
+          <p className="muted">Capital guidance and ladder action priority.</p>
         </div>
       </div>
 
-      <div className="advisor-box">
-        <div className="advisor-line">
-          <span>Current Deployable Capital</span>
+      <div className="advisor-table">
+        <div>
+          <span>Deployable</span>
           <strong>{formattedDeployable}</strong>
         </div>
 
-        <div className="advisor-line">
-          <span>Priority Target Month</span>
+        <div>
+          <span>Target</span>
           <strong>{targetMonth || "-"}</strong>
         </div>
 
-        <div className="advisor-line">
-          <span>Best Active Offer</span>
-          <strong>
-            {bestOffer
-              ? `${bestOffer.bank || "Bank"} · ${
-                  bestOffer.tenureMonths || bestOffer.tenure || "-"
-                }M · ${Number(bestOffer.ratePa || bestOffer.rate || 0).toFixed(
-                  2
-                )}%`
-              : "No active offer detected"}
-          </strong>
+        <div>
+          <span>Best Offer</span>
+          <strong>{offerText}</strong>
         </div>
+      </div>
 
-        <div className="advisor-recommendation">
-          <strong>Suggested Action</strong>
-          <p>
-            Protect your reserve first. If excess cash is available, consider
-            deploying into the weakest maturity month to improve ladder balance.
-          </p>
-        </div>
+      <div className="advisor-action-strip">
+        <span>ACTION</span>
+        <p>
+          Protect reserve first. Deploy excess cash into weakest maturity month.
+        </p>
       </div>
     </section>
   );
