@@ -1,198 +1,233 @@
+/* ========================================
+   TREASURY INSTITUTIONAL HERO
+   Standard Hero Architecture
+   V33.2-RP1-F.2
+======================================== */
+
 .treasury-institutional-hero {
-  width: min(100%, 1280px);
-  margin: 30px auto 34px;
-  padding: 42px 42px;
+  width: 100%;
+  margin: 0 0 22px;
+  padding: 28px;
 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 32px;
+  display: grid;
+  grid-template-columns: 1.55fr 0.8fr;
+  gap: 22px;
+  align-items: stretch;
 
-  border-radius: 24px;
-  border: 1px solid rgba(147, 197, 253, 0.22);
+  border-radius: 28px;
 
   background:
-    radial-gradient(circle at top right, rgba(59, 130, 246, 0.24), transparent 38%),
-    linear-gradient(135deg, #0b1f63 0%, #123a91 100%);
+    radial-gradient(
+      circle at top right,
+      rgba(96, 165, 250, 0.22),
+      transparent 34%
+    ),
+    linear-gradient(
+      135deg,
+      #061b63 0%,
+      #123f9f 58%,
+      #1d4ed8 100%
+    );
 
   box-shadow:
-    0 28px 68px rgba(15, 23, 42, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    0 20px 55px rgba(15, 23, 42, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+
+  color: #ffffff;
+  overflow: hidden;
+  position: relative;
 }
+
+.treasury-institutional-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0.10),
+    transparent 32%,
+    rgba(255,255,255,0.05)
+  );
+
+  pointer-events: none;
+}
+
+/* ========================================
+   CONTENT
+======================================== */
 
 .treasury-institutional-hero-content {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
+  position: relative;
+  z-index: 1;
 
-.treasury-institutional-kicker {
-  width: fit-content;
-
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: rgba(147, 197, 253, 0.95);
-}
-
-.treasury-institutional-hero h1 {
-  margin: 0;
-  font-size: 42px;
-  font-weight: 900;
-  letter-spacing: -0.045em;
-  color: #ffffff;
-}
-
-.treasury-institutional-hero p {
-  margin: 0;
-  max-width: 820px;
-
-  font-size: 13px;
-  line-height: 1.65;
-  color: rgba(226, 232, 240, 0.92);
-}
-
-.treasury-institutional-hero-badge {
-  min-width: 220px;
-  min-height: 88px;
-  padding: 22px 26px;
+  max-width: 760px;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 10px;
+}
 
-  border-radius: 22px;
-  border: 1px solid rgba(191, 219, 254, 0.24);
+/* ========================================
+   FD WEALTH ENGINE PILL
+======================================== */
 
-  background: rgba(255, 255, 255, 0.15);
+.treasury-institutional-kicker {
+  align-self: flex-start;
+  margin-bottom: 20px;
+}
+
+/* ========================================
+   TITLE
+======================================== */
+
+.treasury-institutional-hero h1 {
+  margin: 0 0 20px;
+
+  font-size: clamp(38px, 4vw, 54px);
+  line-height: 0.96;
+  letter-spacing: -0.03em;
+  font-weight: 950;
+
   color: #ffffff;
+}
+
+/* ========================================
+   DESCRIPTION
+======================================== */
+
+.treasury-institutional-hero p {
+  margin: 0;
+
+  max-width: 720px;
+
+  font-size: 17px;
+  line-height: 1.45;
+  font-weight: 500;
+
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* ========================================
+   RIGHT METRIC CARD
+======================================== */
+
+.treasury-institutional-hero-badge {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  min-height: 150px;
+
+  padding: 30px 26px;
+
+  border-radius: 28px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+
+  background: rgba(255, 255, 255, 0.10);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
 
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.14),
-    0 18px 38px rgba(15, 23, 42, 0.18);
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 14px 34px rgba(15, 23, 42, 0.14);
 }
 
 .treasury-institutional-hero-badge span {
-  font-size: 10px;
+  display: block;
+
+  margin-bottom: 18px;
+
+  font-size: 14px;
   font-weight: 900;
-  letter-spacing: 0.14em;
-  color: rgba(219, 234, 254, 0.9);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .treasury-institutional-hero-badge strong {
-  font-size: 22px;
-  font-weight: 900;
-  letter-spacing: -0.025em;
+  display: block;
+
+  font-size: clamp(34px, 3vw, 54px);
+  line-height: 1;
+  font-weight: 950;
+  letter-spacing: -0.03em;
+
   color: #ffffff;
 }
 
-@media (max-width: 760px) {
+/* ========================================
+   AUTONOMOUS HERO TUNING
+======================================== */
+
+.treasury-autonomous-page .treasury-institutional-hero h1 {
+  font-size: clamp(34px, 3.4vw, 48px);
+  line-height: 1;
+}
+
+.treasury-autonomous-page .treasury-institutional-hero p {
+  font-size: 16px;
+  line-height: 1.42;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 980px) {
   .treasury-institutional-hero {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 34px 28px;
+    grid-template-columns: 1fr;
+    padding: 24px;
   }
 
   .treasury-institutional-hero-badge {
-    width: 100%;
-    min-height: auto;
+    min-height: 120px;
   }
 
   .treasury-institutional-hero h1 {
-    font-size: 30px;
+    font-size: 38px;
   }
 }
 
-/* ========================================
-   RP2-A HOME HERO COMPACT OS ADJUSTMENT
-======================================== */
-
-.treasury-institutional-hero {
-  max-width: 1320px;
-  margin: 34px auto 26px !important;
-  padding: 34px 42px !important;
-  border-radius: 30px !important;
-  min-height: 170px !important;
-}
-
-.treasury-institutional-hero h1,
-.treasury-institutional-hero h2 {
-  font-size: clamp(34px, 3vw, 54px) !important;
-  line-height: 1.02 !important;
-  margin-bottom: 14px !important;
-}
-
-.treasury-institutional-hero p {
-  font-size: 15px !important;
-  line-height: 1.55 !important;
-  max-width: 760px !important;
-}
-
-.treasury-institutional-hero .hero-badge,
-.treasury-institutional-hero .institutional-hero-badge {
-  min-width: 220px !important;
-  padding: 22px 26px !important;
-  border-radius: 24px !important;
-}
-
-.treasury-institutional-hero .hero-badge strong,
-.treasury-institutional-hero .institutional-hero-badge strong {
-  font-size: 34px !important;
-  line-height: 1 !important;
-}
-
-/* ========================================
-   HOME SUMMARY GRID COMPACT OS STYLE
-======================================== */
-
-.dashboard-page .summary-grid {
-  max-width: 1320px;
-  margin: 28px auto 0 !important;
-  display: grid !important;
-  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-  gap: 18px !important;
-}
-
-.dashboard-page .summary-card,
-.dashboard-page .summary-grid > * {
-  min-height: 132px !important;
-  padding: 22px 24px !important;
-  border-radius: 24px !important;
-  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08) !important;
-}
-
-.dashboard-page .summary-card h3,
-.dashboard-page .summary-card strong {
-  font-size: 23px !important;
-  line-height: 1.1 !important;
-}
-
-.dashboard-page .summary-card p {
-  font-size: 12px !important;
-  line-height: 1.4 !important;
-}
-
-/* Remove excessive vertical air after hero */
-.dashboard-page .treasury-demo-banner {
-  margin: -6px auto 18px !important;
-  max-width: 1320px !important;
-}
-
-/* Responsive */
-@media (max-width: 1100px) {
-  .dashboard-page .summary-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  }
-}
-
-@media (max-width: 700px) {
+@media (max-width: 640px) {
   .treasury-institutional-hero {
-    padding: 28px 24px !important;
+    padding: 20px;
+    border-radius: 22px;
   }
 
-  .dashboard-page .summary-grid {
-    grid-template-columns: 1fr !important;
+  .treasury-institutional-hero h1 {
+    font-size: 34px;
   }
+
+  .treasury-institutional-hero p {
+    font-size: 16px;
+  }
+}
+
+/* ========================================
+   FORCE HERO KICKER TO MATCH RECORDS / MORE / SETTINGS
+======================================== */
+
+.treasury-institutional-hero .eyebrow-pill,
+.treasury-institutional-hero .treasury-institutional-kicker {
+  display: inline-flex !important;
+  align-self: flex-start !important;
+
+  margin-bottom: 20px !important;
+  padding: 12px 18px !important;
+  border-radius: 999px !important;
+
+  background: rgba(255, 255, 255, 0.14) !important;
+  color: #ffffff !important;
+
+  font-size: 14px !important;
+  line-height: 1 !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
 }

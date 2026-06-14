@@ -1,12 +1,12 @@
 /* ========================================
-   V33.2-G25-A
+   V33.2-G25-A / RP1-F
    TREASURY AUTONOMOUS INTELLIGENCE CORE
-   Compact Institutional Monitoring Edition
+   Compact OS Institutional Edition
 ======================================== */
 
 .treasury-autonomous-page {
   width: 100%;
-  padding: 22px;
+  padding: 20px 22px;
 }
 
 .treasury-autonomous-core {
@@ -16,28 +16,28 @@
 .autonomous-core-card {
   position: relative;
   overflow: hidden;
-  padding: 20px;
-  border-radius: 26px;
+  padding: 18px;
+  border-radius: 24px;
 
   background:
-    radial-gradient(circle at top right, rgba(79, 70, 229, 0.14), transparent 34%),
-    linear-gradient(135deg, rgba(255,255,255,0.95), rgba(239,246,255,0.74));
+    radial-gradient(circle at top right, rgba(79, 70, 229, 0.12), transparent 32%),
+    linear-gradient(135deg, rgba(255,255,255,0.96), rgba(239,246,255,0.72));
 
-  border: 1px solid rgba(147, 197, 253, 0.42);
-  box-shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(147, 197, 253, 0.38);
+  box-shadow: 0 14px 38px rgba(15, 23, 42, 0.07);
 }
 
 .autonomous-core-header {
   display: grid;
-  grid-template-columns: 1fr 190px;
-  gap: 22px;
+  grid-template-columns: 1fr 170px;
+  gap: 18px;
   align-items: start;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .autonomous-core-eyebrow {
-  margin: 0 0 8px;
-  font-size: 11px;
+  margin: 0 0 6px;
+  font-size: 10px;
   font-weight: 900;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -46,32 +46,32 @@
 
 .autonomous-core-title {
   margin: 0;
-  font-size: 23px;
-  line-height: 1.18;
+  font-size: 21px;
+  line-height: 1.12;
   font-weight: 900;
   letter-spacing: -0.035em;
   color: #020617;
 }
 
 .autonomous-core-description {
-  max-width: 980px;
-  margin: 12px 0 0;
-  font-size: 13.5px;
-  line-height: 1.55;
+  max-width: 940px;
+  margin: 9px 0 0;
+  font-size: 12.5px;
+  line-height: 1.45;
   color: #475569;
 }
 
 .autonomous-core-pills {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 16px;
+  gap: 8px;
+  margin-top: 12px;
 }
 
 .autonomous-core-pills .pill {
-  padding: 8px 15px;
+  padding: 7px 13px;
   border-radius: 999px;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 900;
   letter-spacing: 0.1em;
 }
@@ -95,28 +95,28 @@
 }
 
 .autonomous-core-score-card {
-  min-height: 150px;
-  padding: 18px;
-  border-radius: 24px;
+  min-height: 118px;
+  padding: 15px 16px;
+  border-radius: 22px;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
 
   background: linear-gradient(135deg, #1e3a8a, #4338ca);
-  box-shadow: 0 20px 38px rgba(30, 64, 175, 0.26);
+  box-shadow: 0 16px 30px rgba(30, 64, 175, 0.22);
 }
 
 .score-label {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 900;
   letter-spacing: 0.13em;
   color: rgba(255,255,255,0.72);
 }
 
 .score-value {
-  margin-top: 8px;
-  font-size: 50px;
+  margin-top: 6px;
+  font-size: 42px;
   line-height: 1;
   font-weight: 950;
   letter-spacing: -0.06em;
@@ -124,8 +124,8 @@
 }
 
 .score-status {
-  margin-top: 9px;
-  font-size: 12px;
+  margin-top: 7px;
+  font-size: 11px;
   font-weight: 900;
   letter-spacing: 0.12em;
   color: rgba(255,255,255,0.82);
@@ -134,27 +134,27 @@
 .autonomous-core-metrics {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 14px;
+  gap: 10px;
+  margin-bottom: 12px;
 }
 
 .autonomous-metric-card {
-  padding: 14px 16px;
-  border-radius: 20px;
+  padding: 12px 14px;
+  border-radius: 18px;
 
   background: rgba(255,255,255,0.78);
-  border: 1px solid rgba(203,213,225,0.7);
+  border: 1px solid rgba(203,213,225,0.68);
 }
 
 .autonomous-metric-card h4 {
-  margin: 0 0 7px;
-  font-size: 12px;
+  margin: 0 0 6px;
+  font-size: 11px;
   font-weight: 850;
   color: #64748b;
 }
 
 .metric-value {
-  font-size: 28px;
+  font-size: 24px;
   line-height: 1;
   font-weight: 950;
   letter-spacing: -0.05em;
@@ -162,30 +162,30 @@
 }
 
 .autonomous-metric-card p {
-  margin: 7px 0 0;
-  font-size: 12px;
-  line-height: 1.35;
+  margin: 6px 0 0;
+  font-size: 11.5px;
+  line-height: 1.3;
   color: #64748b;
 }
 
 .autonomous-core-grid {
   display: grid;
   grid-template-columns: 1.45fr 1fr;
-  gap: 14px;
-  margin-bottom: 14px;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
 .autonomous-panel {
-  padding: 18px;
-  border-radius: 22px;
+  padding: 15px 16px;
+  border-radius: 20px;
 
   background: rgba(255,255,255,0.62);
-  border: 1px solid rgba(203,213,225,0.7);
+  border: 1px solid rgba(203,213,225,0.68);
 }
 
 .autonomous-panel h3 {
-  margin: 0 0 14px;
-  font-size: 16px;
+  margin: 0 0 12px;
+  font-size: 15px;
   font-weight: 900;
   letter-spacing: -0.025em;
   color: #020617;
@@ -194,26 +194,26 @@
 .autonomous-signal-box {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  gap: 10px;
 }
 
 .autonomous-signal-box div {
-  padding: 14px;
-  border-radius: 18px;
-  background: rgba(255,255,255,0.86);
+  padding: 12px 13px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.88);
   border: 1px solid rgba(226,232,240,0.9);
 }
 
 .autonomous-signal-box span {
   display: block;
-  margin-bottom: 8px;
-  font-size: 11px;
+  margin-bottom: 7px;
+  font-size: 10px;
   font-weight: 850;
   color: #64748b;
 }
 
 .autonomous-signal-box strong {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 950;
   color: #020617;
 }
@@ -221,13 +221,13 @@
 .autonomous-feed-item {
   display: flex;
   align-items: center;
-  gap: 11px;
+  gap: 10px;
 
-  padding: 10px 12px;
-  border-radius: 16px;
-  margin-bottom: 9px;
+  padding: 9px 11px;
+  border-radius: 15px;
+  margin-bottom: 8px;
 
-  background: rgba(255,255,255,0.86);
+  background: rgba(255,255,255,0.88);
   border: 1px solid rgba(226,232,240,0.9);
 }
 
@@ -236,15 +236,15 @@
 }
 
 .autonomous-feed-item span {
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   border-radius: 999px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 900;
   color: #ffffff;
   background: linear-gradient(135deg, #2563eb, #3b82f6);
@@ -252,29 +252,29 @@
 
 .autonomous-feed-item p {
   margin: 0;
-  font-size: 13px;
+  font-size: 12px;
   color: #475569;
 }
 
 .autonomous-footer-banner {
-  padding: 14px 16px;
-  border-radius: 20px;
+  padding: 12px 14px;
+  border-radius: 18px;
   background: linear-gradient(135deg, #1e40af, #4f46e5);
-  box-shadow: 0 16px 32px rgba(37,99,235,0.22);
+  box-shadow: 0 14px 26px rgba(37,99,235,0.2);
 }
 
 .autonomous-footer-banner span {
   display: block;
-  margin-bottom: 6px;
-  font-size: 10.5px;
+  margin-bottom: 5px;
+  font-size: 10px;
   font-weight: 900;
   letter-spacing: 0.14em;
   color: rgba(255,255,255,0.76);
 }
 
 .autonomous-footer-banner strong {
-  font-size: 13px;
-  line-height: 1.45;
+  font-size: 12.5px;
+  line-height: 1.4;
   font-weight: 850;
   color: #ffffff;
 }
@@ -285,7 +285,7 @@
   }
 
   .autonomous-core-score-card {
-    min-height: 120px;
+    min-height: 110px;
   }
 
   .autonomous-core-grid {
@@ -303,7 +303,7 @@
   }
 
   .autonomous-core-card {
-    padding: 16px;
+    padding: 15px;
   }
 
   .autonomous-core-metrics {
@@ -311,6 +311,6 @@
   }
 
   .score-value {
-    font-size: 42px;
+    font-size: 38px;
   }
 }

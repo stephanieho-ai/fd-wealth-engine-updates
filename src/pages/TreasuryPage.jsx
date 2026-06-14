@@ -51,6 +51,7 @@ import TreasuryRuntimeEscalationIntelligence from "../components/treasury/Treasu
 import TreasuryRuntimeResponseIntelligence from "../components/treasury/TreasuryRuntimeResponseIntelligence";
 import TreasuryRuntimeRecoveryIntelligence from "../components/treasury/TreasuryRuntimeRecoveryIntelligence";
 import TreasuryRuntimeStabilityIntelligence from "../components/treasury/TreasuryRuntimeStabilityIntelligence";
+import TreasuryInstitutionalHero from "../components/common/TreasuryInstitutionalHero";
 
 
 
@@ -995,21 +996,13 @@ const institutionalEscalationPath =
 
    {isDemoMode && <TreasuryDemoBanner compact />}
 
-    <section className="dashboard-hero treasury-hero">
-      <div>
-        <p className="eyebrow">Treasury Operating System</p>
-        <h1>Treasury Control Tower</h1>
-        <p className="muted">
-          Institutional command center for liquidity, governance, recovery,
-          execution readiness and treasury incident traceability.
-        </p>
-      </div>
-
-      <div className="hero-alert">
-        <span>Workspace</span>
-        <strong>TREASURY OS</strong>
-      </div>
-    </section>
+      <TreasuryInstitutionalHero
+      eyebrow="TREASURY OPERATING SYSTEM"
+      title="Treasury Control Tower"
+      description="Institutional command center for liquidity, governance, recovery, execution readiness and treasury incident traceability."
+      badgeLabel="WORKSPACE"
+      badgeValue="TREASURY OS"
+    />
 
       <section className="treasury-control-section treasury-intelligence-center-section">  
 

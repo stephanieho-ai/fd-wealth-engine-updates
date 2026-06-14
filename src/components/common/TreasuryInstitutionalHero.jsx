@@ -1,26 +1,27 @@
 import "../../styles/components/treasury-institutional-hero.css";
 
 export default function TreasuryInstitutionalHero({
+  eyebrow = "FD WEALTH ENGINE",
   title,
   description,
   badgeLabel,
   badgeValue,
 }) {
   return (
-    <section className="treasury-institutional-hero">
-      <div className="treasury-institutional-hero-content">
-        <span className="treasury-institutional-kicker">
-          FD WEALTH ENGINE
-        </span>
+    <section className="hero-card treasury-institutional-hero">
+      <div className="hero-copy treasury-institutional-hero-content">
+        <div className="eyebrow-pill treasury-institutional-kicker">
+          {eyebrow}
+        </div>
 
         <h1>{title}</h1>
 
         <p>{description}</p>
       </div>
 
-      <div className="treasury-institutional-hero-badge">
-        <span>{badgeLabel}</span>
-        <strong>{badgeValue}</strong>
+      <div className="hero-metric-card treasury-institutional-hero-badge">
+        <div className="hero-metric-label">{badgeLabel}</div>
+        <div className="hero-metric-value">{badgeValue}</div>
       </div>
     </section>
   );

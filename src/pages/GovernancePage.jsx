@@ -262,6 +262,7 @@ export default function GovernancePage() {
       {isDemoMode && <TreasuryDemoBanner compact />}
 
       <TreasuryInstitutionalHero
+        eyebrow="FD WEALTH ENGINE"
         title="Governance Console"
         description="Distributed authority coordination, consensus intelligence and governance orchestration."
         badgeLabel="WORKSPACE"
