@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
+import useWorkspaceMode from "../../hooks/useWorkspaceMode";
 
 export default function TreasuryAuthorityNetwork() {
-  const routes = [
+  const { workspaceMode } = useWorkspaceMode();
+  const isDemoMode = workspaceMode === "DEMO";
+
+  const liveRoutes = [
     "Board → Executive Layer",
     "Executive Layer → Treasury Desk",
     "Treasury Desk → Risk Control",
@@ -9,7 +13,15 @@ export default function TreasuryAuthorityNetwork() {
     "Execution Engine → Audit Ledger",
   ];
 
-  const nodes = [
+  const demoRoutes = [
+    "Risk Engine → Treasury Desk",
+    "Treasury Desk → Governance Board",
+    "Governance Board → Executive Layer",
+    "Executive Layer → Execution Engine",
+    "Execution Engine → Audit Ledger",
+  ];
+
+  const liveNodes = [
     { label: "BOARD", title: "Governance Board", subtitle: "Final Authority", status: "LOCKED", className: "authority-node-red" },
     { label: "EXEC", title: "Executive Layer", subtitle: "Strategic Approval", status: "REVIEW", className: "authority-node-purple" },
     { label: "TREASURY", title: "Treasury Desk", subtitle: "Capital Routing", status: "ACTIVE", className: "authority-node-blue" },
@@ -18,17 +30,37 @@ export default function TreasuryAuthorityNetwork() {
     { label: "AUDIT", title: "Audit Ledger", subtitle: "Immutable Record", status: "SYNCED", className: "authority-node-cyan" },
   ];
 
+  const demoNodes = [
+    { label: "RISK", title: "Risk Engine", subtitle: "Signal Monitoring", status: "ACTIVE", className: "authority-node-blue" },
+    { label: "DESK", title: "Treasury Desk", subtitle: "Capital Routing", status: "READY", className: "authority-node-cyan" },
+    { label: "BOARD", title: "Governance Board", subtitle: "Institutional Oversight", status: "ALIGNED", className: "authority-node-green" },
+    { label: "EXEC", title: "Executive Layer", subtitle: "Strategic Approval", status: "AVAILABLE", className: "authority-node-purple" },
+    { label: "OPS", title: "Execution Engine", subtitle: "Deployment Action", status: "ACTIVE", className: "authority-node-green" },
+    { label: "AUDIT", title: "Audit Ledger", subtitle: "Immutable Record", status: "SYNCED", className: "authority-node-cyan" },
+  ];
+
+  const routes = isDemoMode ? demoRoutes : liveRoutes;
+  const nodes = isDemoMode ? demoNodes : liveNodes;
+
   const [selectedRoute, setSelectedRoute] = useState(routes[0]);
 
   useEffect(() => {
+    if (isDemoMode) {
+      setSelectedRoute(demoRoutes[0]);
+      return;
+    }
+
     const savedRoute = localStorage.getItem("treasury_selected_authority_route");
-    if (savedRoute && routes.includes(savedRoute)) {
+    if (savedRoute && liveRoutes.includes(savedRoute)) {
       setSelectedRoute(savedRoute);
     }
-  }, []);
+  }, [isDemoMode]);
 
   const handleRouteClick = (route) => {
     setSelectedRoute(route);
+
+    if (isDemoMode) return;
+
     localStorage.setItem("treasury_selected_authority_route", route);
 
     window.dispatchEvent(
@@ -85,8 +117,14 @@ export default function TreasuryAuthorityNetwork() {
           }}
         >
           <p style={{ fontSize: 10 }}>NETWORK STATUS</p>
-          <h3 style={{ fontSize: 24, margin: "4px 0" }}>ACTIVE</h3>
-          <span style={{ fontSize: 11 }}>6 authority nodes online</span>
+          <h3 style={{ fontSize: 24, margin: "4px 0" }}>
+            {isDemoMode ? "READY" : "ACTIVE"}
+          </h3>
+          <span style={{ fontSize: 11 }}>
+            {isDemoMode
+              ? "6 authority nodes synchronized"
+              : "6 authority nodes online"}
+          </span>
         </div>
       </div>
 
@@ -121,8 +159,13 @@ export default function TreasuryAuthorityNetwork() {
               {node.label}
             </div>
 
-            <h3 style={{ fontSize: 17, margin: "0 0 8px" }}>{node.title}</h3>
-            <p style={{ fontSize: 12, margin: "0 0 12px" }}>{node.subtitle}</p>
+            <h3 style={{ fontSize: 17, margin: "0 0 8px" }}>
+              {node.title}
+            </h3>
+
+            <p style={{ fontSize: 12, margin: "0 0 12px" }}>
+              {node.subtitle}
+            </p>
 
             <span
               className="treasury-authority-status"
@@ -151,7 +194,9 @@ export default function TreasuryAuthorityNetwork() {
           className="treasury-authority-route-panel"
           style={{ padding: 18, borderRadius: 22 }}
         >
-          <h3 style={{ fontSize: 16, marginBottom: 12 }}>Transmission Routes</h3>
+          <h3 style={{ fontSize: 16, marginBottom: 12 }}>
+            Transmission Routes
+          </h3>
 
           <div className="treasury-authority-route-list" style={{ gap: 8 }}>
             {routes.map((route) => (
@@ -179,11 +224,14 @@ export default function TreasuryAuthorityNetwork() {
           className="treasury-authority-signal-panel"
           style={{ padding: 18, borderRadius: 22 }}
         >
-          <h3 style={{ fontSize: 16, marginBottom: 10 }}>Live Authority Signal</h3>
+          <h3 style={{ fontSize: 16, marginBottom: 10 }}>
+            Live Authority Signal
+          </h3>
 
           <p style={{ fontSize: 12, lineHeight: 1.45 }}>
-            Treasury governance signal is transmitting through the institutional
-            authority network with escalation review enabled.
+            {isDemoMode
+              ? "Treasury governance signal is synchronized across institutional authority nodes."
+              : "Treasury governance signal is transmitting through the institutional authority network with escalation review enabled."}
           </p>
 
           <div

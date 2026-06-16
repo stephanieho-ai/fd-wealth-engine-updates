@@ -23,6 +23,14 @@ function getDaysLeft(dateString) {
   return Math.ceil((target - today) / 86400000);
 }
 
+function getMonthLabel(dateString) {
+  const date = new Date(dateString);
+
+  if (Number.isNaN(date.getTime())) return "LADDER";
+
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+}
+
 function formatMoney(value, currency = "MYR") {
   return `${currency} ${Number(value || 0).toLocaleString(undefined, {
     minimumFractionDigits: 0,
@@ -33,7 +41,13 @@ function formatMoney(value, currency = "MYR") {
 export default function TreasuryTimeline({ records = [], currency = "MYR" }) {
   const [showAll, setShowAll] = useState(false);
 
-  const timelineRecords = records
+  const safeRecords = Array.isArray(records) ? records : [];
+
+  const isDemoDataset = safeRecords.some((record) =>
+    String(record?.id || "").startsWith("DEMO-FD")
+  );
+
+  const timelineRecords = safeRecords
     .filter((record) => {
       const type = String(record?.recordType || record?.type || "FD")
         .toUpperCase()
@@ -51,8 +65,17 @@ export default function TreasuryTimeline({ records = [], currency = "MYR" }) {
         daysLeft,
       };
     })
-    .filter((record) => record.daysLeft !== null)
-    .sort((a, b) => a.daysLeft - b.daysLeft);
+    .filter((record) => {
+      if (isDemoDataset) return true;
+      return record.daysLeft !== null;
+    })
+    .sort((a, b) => {
+      if (isDemoDataset) {
+        return new Date(getMaturityDate(a)) - new Date(getMaturityDate(b));
+      }
+
+      return a.daysLeft - b.daysLeft;
+    });
 
   const visibleTimelineRecords = showAll
     ? timelineRecords
@@ -65,12 +88,14 @@ export default function TreasuryTimeline({ records = [], currency = "MYR" }) {
           <p className="eyebrow">Treasury Operations Timeline</p>
           <h2>Treasury Timeline</h2>
           <p className="muted">
-            Monitor upcoming maturity liquidity horizon and treasury cash flow timing.
+            {isDemoDataset
+              ? "Official institutional demo maturity ladder timeline."
+              : "Monitor upcoming maturity liquidity horizon and treasury cash flow timing."}
           </p>
         </div>
 
         <div className="score-card">
-          <span>Active FD Timeline</span>
+          <span>{isDemoDataset ? "Demo FD Timeline" : "Active FD Timeline"}</span>
           <strong>{timelineRecords.length}</strong>
         </div>
       </div>
@@ -79,18 +104,25 @@ export default function TreasuryTimeline({ records = [], currency = "MYR" }) {
         {visibleTimelineRecords.map((record) => {
           let level = "future";
 
-          if (record.daysLeft < 0) {
-            level = "overdue";
-          } else if (record.daysLeft <= 3) {
-            level = "urgent";
-          } else if (record.daysLeft <= 14) {
-            level = "upcoming";
+          if (!isDemoDataset) {
+            if (record.daysLeft < 0) {
+              level = "overdue";
+            } else if (record.daysLeft <= 3) {
+              level = "urgent";
+            } else if (record.daysLeft <= 14) {
+              level = "upcoming";
+            }
           }
 
           return (
-            <div key={record.id} className={`timeline-row timeline-${level}`}>
+            <div
+              key={record.id || record.maturityDate}
+              className={`timeline-row timeline-${level}`}
+            >
               <div className="timeline-days">
-                {record.daysLeft < 0
+                {isDemoDataset
+                  ? getMonthLabel(getMaturityDate(record))
+                  : record.daysLeft < 0
                   ? `${Math.abs(record.daysLeft)}D`
                   : `${record.daysLeft}D`}
               </div>

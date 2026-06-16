@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import useWorkspaceMode from "../hooks/useWorkspaceMode";
+import { demoTreasuryDataset } from "../data/demoTreasuryDataset";
 
 import TreasuryTimeline from "../components/dashboard/TreasuryTimeline";
 import PolicyBreachPanel from "../components/dashboard/PolicyBreachPanel";
@@ -26,7 +27,6 @@ import TreasuryAuthorityTransmission from "../components/treasury/TreasuryAuthor
 import TreasuryAuthorityNetwork from "../components/treasury/TreasuryAuthorityNetwork";
 import TreasuryDemoBanner from "../components/demo/TreasuryDemoBanner";
 import TreasuryInstitutionalHero from "../components/common/TreasuryInstitutionalHero";
-
 
 
 const treasuryRuntimeStyle = `
@@ -3182,49 +3182,81 @@ export default function DashboardPage({
     [activeRecords]
   );
 
-  const totalActivePortfolio = useMemo(
-    () => activeRecords.reduce((sum, record) => sum + getAmount(record), 0),
-    [activeRecords]
-  );
+const liveTotalActivePortfolio = useMemo(
+  () => activeRecords.reduce((sum, record) => sum + getAmount(record), 0),
+  [activeRecords]
+);
 
-  const totalFixedDeposits = useMemo(
-    () => activeFDRecords.reduce((sum, record) => sum + getAmount(record), 0),
-    [activeFDRecords]
-  );
+const liveTotalFixedDeposits = useMemo(
+  () => activeFDRecords.reduce((sum, record) => sum + getAmount(record), 0),
+  [activeFDRecords]
+);
 
-  const totalSavings = useMemo(
-    () =>
-      activeRecords
-        .filter((record) => normalizeType(record) === "SAVINGS")
-        .reduce((sum, record) => sum + getAmount(record), 0),
-    [activeRecords]
-  );
+const liveTotalSavings = useMemo(
+  () =>
+    activeRecords
+      .filter((record) => normalizeType(record) === "SAVINGS")
+      .reduce((sum, record) => sum + getAmount(record), 0),
+  [activeRecords]
+);
 
-  const totalParkingCash = useMemo(
-    () =>
-      activeRecords
-        .filter((record) => normalizeType(record) === "PARKING_CASH")
-        .reduce((sum, record) => sum + getAmount(record), 0),
-    [activeRecords]
-  );
+const liveTotalParkingCash = useMemo(
+  () =>
+    activeRecords
+      .filter((record) => normalizeType(record) === "PARKING_CASH")
+      .reduce((sum, record) => sum + getAmount(record), 0),
+  [activeRecords]
+);
 
-  const totalDeployableFunds = useMemo(
-    () => deployableRecords.reduce((sum, record) => sum + getAmount(record), 0),
-    [deployableRecords]
-  );
+const liveTotalDeployableFunds = useMemo(
+  () => deployableRecords.reduce((sum, record) => sum + getAmount(record), 0),
+  [deployableRecords]
+);
 
-  const fdExposureRatio = totalActivePortfolio
-    ? totalFixedDeposits / totalActivePortfolio
-    : 0;
+const liveFdExposureRatio = liveTotalActivePortfolio
+  ? liveTotalFixedDeposits / liveTotalActivePortfolio
+  : 0;
 
-  const liquidityRatio = totalActivePortfolio
-    ? totalDeployableFunds / totalActivePortfolio
-    : 0;
+const liveLiquidityRatio = liveTotalActivePortfolio
+  ? liveTotalDeployableFunds / liveTotalActivePortfolio
+  : 0;
 
-  const largestBankExposure = useMemo(
-    () => getLargestBankExposure(activeRecords, totalActivePortfolio),
-    [activeRecords, totalActivePortfolio]
-  );
+const liveLargestBankExposure = useMemo(
+  () => getLargestBankExposure(activeRecords, liveTotalActivePortfolio),
+  [activeRecords, liveTotalActivePortfolio]
+);
+
+  const totalActivePortfolio = isDemoMode
+    ? demoTreasuryDataset.runtime.totalActivePortfolio
+    : liveTotalActivePortfolio;
+
+  const totalFixedDeposits = isDemoMode
+    ? demoTreasuryDataset.runtime.totalFixedDeposits
+    : liveTotalFixedDeposits;
+
+  const totalSavings = isDemoMode
+    ? demoTreasuryDataset.runtime.totalSavings
+    : liveTotalSavings;
+
+  const totalParkingCash = isDemoMode
+    ? demoTreasuryDataset.runtime.totalParkingCash
+    : liveTotalParkingCash;
+
+  const totalDeployableFunds = isDemoMode
+    ? demoTreasuryDataset.runtime.totalDeployableFunds
+    : liveTotalDeployableFunds;
+
+  const fdExposureRatio = isDemoMode
+    ? demoTreasuryDataset.runtime.fdExposureRatio
+    : liveFdExposureRatio;
+
+  const liquidityRatio = isDemoMode
+    ? demoTreasuryDataset.runtime.liquidityRatio
+    : liveLiquidityRatio;
+
+  const largestBankExposure = isDemoMode
+    ? demoTreasuryDataset.runtime.largestBankExposure
+    : liveLargestBankExposure;
 
   const maturityMap = useMemo(() => {
     const map = {};
@@ -3238,16 +3270,32 @@ export default function DashboardPage({
     return map;
   }, [activeFDRecords]);
 
-  const maturityMonths = useMemo(() => {
-    return Object.entries(maturityMap)
-      .map(([month, amount]) => ({
-        month,
-        amount,
-        totalPrincipal: amount,
-        totalFdAmount: amount,
-      }))
+ const maturityMonths = useMemo(() => {
+  if (isDemoMode) {
+    return demoTreasuryDataset.demoRecords
+      .map((record) => {
+        const month = getMonthKey(getMaturityDate(record));
+        const amount = getAmount(record);
+
+        return {
+          month,
+          amount,
+          totalPrincipal: amount,
+          totalFdAmount: amount,
+        };
+      })
       .sort((a, b) => a.month.localeCompare(b.month));
-  }, [maturityMap]);
+  }
+
+  return Object.entries(maturityMap)
+    .map(([month, amount]) => ({
+      month,
+      amount,
+      totalPrincipal: amount,
+      totalFdAmount: amount,
+    }))
+    .sort((a, b) => a.month.localeCompare(b.month));
+}, [isDemoMode, maturityMap]);
 
   const strongestMonth = useMemo(() => {
     if (!maturityMonths.length) return null;
@@ -3396,7 +3444,29 @@ export default function DashboardPage({
   }, [validatorDecision, treasuryBreachEngine]);
 
   const treasuryAlerts = useMemo(() => {
-    const alerts = [];
+
+  if (isDemoMode) {
+    return [
+      {
+        level: "safe",
+        label: "LIQUIDITY STABLE",
+      },
+      {
+        level: "info",
+        label: "NEXT MATURITY MYR 36,000",
+      },
+      {
+        level: "safe",
+        label: "GOVERNANCE READY",
+      },
+      {
+        level: "safe",
+        label: "TREASURY OPERATIONAL",
+      },
+    ];
+  }
+
+  const alerts = [];
 
     if (liquidityRatio < 0.05) {
       alerts.push({
@@ -3778,71 +3848,83 @@ export default function DashboardPage({
   };
 
   const treasuryHeatmapItems = useMemo(() => {
-    const today = new Date();
-    const nextSixMonths = Array.from({ length: 6 }, (_, index) => {
-      const date = new Date(today.getFullYear(), today.getMonth() + index, 1);
-      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
-    });
+  if (isDemoMode) {
+    return maturityMonths.map((item) => ({
+      month: item.month,
+      status: "BALANCED",
+      amount: toNumber(item.amount),
+      color: "#047857",
+      bg: "rgba(16,185,129,0.10)",
+      border: "rgba(16,185,129,0.18)",
+      note: "Institutional demo ladder cycle is balanced and ready.",
+    }));
+  }
 
-    const strongestAmount = Math.max(
-      ...maturityMonths.map((item) => toNumber(item.amount)),
-      1
-    );
+  const today = new Date();
+  const nextSixMonths = Array.from({ length: 6 }, (_, index) => {
+    const date = new Date(today.getFullYear(), today.getMonth() + index, 1);
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+  });
 
-    return nextSixMonths.map((month) => {
-      const maturity = maturityMonths.find((item) => item.month === month);
-      const amount = toNumber(maturity?.amount ?? 0);
-      const ratioToStrongest = amount / strongestAmount;
+  const strongestAmount = Math.max(
+    ...maturityMonths.map((item) => toNumber(item.amount)),
+    1
+  );
 
-      let status = "LOW";
-      let color = "#2563eb";
-      let bg = "rgba(59,130,246,0.10)";
-      let border = "rgba(59,130,246,0.16)";
-      let note = "Thin maturity support. Monitor liquidity dependency.";
+  return nextSixMonths.map((month) => {
+    const maturity = maturityMonths.find((item) => item.month === month);
+    const amount = toNumber(maturity?.amount ?? 0);
+    const ratioToStrongest = amount / strongestAmount;
 
-      if (amount <= 0 && totalActivePortfolio > 0) {
-        status = "GAP";
-        color = "#dc2626";
-        bg = "rgba(220,38,38,0.10)";
-        border = "rgba(220,38,38,0.18)";
-        note = "No maturity support detected in this treasury cycle.";
-      } else if (ratioToStrongest < 0.25) {
-        status = "CRITICAL";
-        color = "#dc2626";
-        bg = "rgba(220,38,38,0.12)";
-        border = "rgba(220,38,38,0.18)";
-        note = "Weak maturity month with limited liquidity recovery.";
-      } else if (ratioToStrongest < 0.5) {
-        status = "WATCH";
-        color = "#ea580c";
-        bg = "rgba(234,88,12,0.12)";
-        border = "rgba(234,88,12,0.18)";
-        note = "Maturity support exists but remains below comfort range.";
-      } else if (ratioToStrongest >= 0.85) {
-        status = "HIGH";
-        color = "#f59e0b";
-        bg = "rgba(245,158,11,0.12)";
-        border = "rgba(245,158,11,0.18)";
-        note = "High maturity concentration. Review redeployment timing.";
-      } else {
-        status = "NORMAL";
-        color = "#16a34a";
-        bg = "rgba(22,163,74,0.10)";
-        border = "rgba(22,163,74,0.16)";
-        note = "Balanced maturity support for this cycle.";
-      }
+    let status = "LOW";
+    let color = "#2563eb";
+    let bg = "rgba(59,130,246,0.10)";
+    let border = "rgba(59,130,246,0.16)";
+    let note = "Thin maturity support. Monitor liquidity dependency.";
 
-      return {
-        month,
-        status,
-        amount,
-        color,
-        bg,
-        border,
-        note,
-      };
-    });
-  }, [maturityMonths, totalActivePortfolio]);
+    if (amount <= 0 && totalActivePortfolio > 0) {
+      status = "GAP";
+      color = "#dc2626";
+      bg = "rgba(220,38,38,0.10)";
+      border = "rgba(220,38,38,0.18)";
+      note = "No maturity support detected in this treasury cycle.";
+    } else if (ratioToStrongest < 0.25) {
+      status = "CRITICAL";
+      color = "#dc2626";
+      bg = "rgba(220,38,38,0.12)";
+      border = "rgba(220,38,38,0.18)";
+      note = "Weak maturity month with limited liquidity recovery.";
+    } else if (ratioToStrongest < 0.5) {
+      status = "WATCH";
+      color = "#ea580c";
+      bg = "rgba(234,88,12,0.12)";
+      border = "rgba(234,88,12,0.18)";
+      note = "Maturity support exists but remains below comfort range.";
+    } else if (ratioToStrongest >= 0.85) {
+      status = "HIGH";
+      color = "#f59e0b";
+      bg = "rgba(245,158,11,0.12)";
+      border = "rgba(245,158,11,0.18)";
+      note = "High maturity concentration. Review redeployment timing.";
+    } else {
+      status = "NORMAL";
+      color = "#16a34a";
+      bg = "rgba(22,163,74,0.10)";
+      border = "rgba(22,163,74,0.16)";
+      note = "Balanced maturity support for this cycle.";
+    }
+
+    return {
+      month,
+      status,
+      amount,
+      color,
+      bg,
+      border,
+      note,
+    };
+  });
+}, [isDemoMode, maturityMonths, totalActivePortfolio]);
 
   const heatmapSystemHeat = useMemo(() => {
     const criticalCount = treasuryHeatmapItems.filter((item) =>
@@ -3853,7 +3935,7 @@ export default function DashboardPage({
       ["HIGH", "WATCH"].includes(item.status)
     ).length;
 
-    if (treasuryPolicyDecision.blocked || criticalCount >= 2) {
+    if (!isDemoMode && (treasuryPolicyDecision.blocked || criticalCount >= 2)) {
       return {
         label: "HIGH",
         color: "#dc2626",
@@ -3862,7 +3944,7 @@ export default function DashboardPage({
       };
     }
 
-    if (highCount >= 2) {
+    if (!isDemoMode && highCount >= 2) {
       return {
         label: "WATCH",
         color: "#ea580c",
@@ -3877,7 +3959,7 @@ export default function DashboardPage({
       bg: "rgba(22,163,74,0.10)",
       border: "rgba(22,163,74,0.16)",
     };
-  }, [treasuryHeatmapItems, treasuryPolicyDecision.blocked]);
+  }, [isDemoMode, treasuryHeatmapItems, treasuryPolicyDecision.blocked]);
 
   const liveSummaryItems = [
   {
@@ -3904,41 +3986,29 @@ export default function DashboardPage({
   },
 ];
 
-const demoSummaryItems = [
+  const demoSummaryItems = [
   {
-    label: "Liquidity",
-    value: "Healthy",
-    note: "Treasury liquidity stable",
+    label: "Active Portfolio",
+    value: formatMoney(demoTreasuryDataset.portfolio.totalPortfolio, currency),
+    note: "Institutional demo portfolio",
   },
   {
-    label: "Treasury Heat",
-    value: "Low",
-    note: "Risk pressure minimal",
+    label: "Monthly Target",
+    value: formatMoney(
+      demoTreasuryDataset.portfolio.monthlyInterestTarget,
+      currency
+    ),
+    note: "Monthly interest objective",
   },
   {
-    label: "Reserve",
-    value: "Healthy",
-    note: "Reserve coverage protected",
-  },
-  {
-    label: "Deployment",
-    value: "Ready",
-    note: "Capital ready for deployment",
-  },
-  {
-    label: "Policy",
-    value: "Compliant",
-    note: "No policy breaches detected",
-  },
-  {
-    label: "Confidence",
-    value: "High",
-    note: "AI confidence level strong",
+    label: "Active Deposits",
+    value: demoTreasuryDataset.portfolio.activeDeposits,
+    note: "Demo FD positions",
   },
   {
     label: "Treasury Status",
-    value: "Operational",
-    note: "Treasury operating normally",
+    value: demoTreasuryDataset.portfolio.portfolioStatus,
+    note: "Portfolio operating condition",
   },
 ];
 
@@ -4247,8 +4317,12 @@ const demoSummaryItems = [
     className="executive-float"
    
   >
-    <MaturityAlerts
-      records={safeRecords}
+   <MaturityAlerts
+      records={
+        isDemoMode
+          ? demoTreasuryDataset.demoRecords
+          : safeRecords
+      }
       currency={currency}
     />
   </div>
@@ -4503,7 +4577,14 @@ const demoSummaryItems = [
             maxWidth: "100%",
           }}
         >
-          <TreasuryTimeline records={safeRecords} currency={currency} />
+         <TreasuryTimeline
+            records={
+              isDemoMode
+                ? demoTreasuryDataset.demoRecords
+                : safeRecords
+            }
+            currency={currency}
+          />
         </div>
 
         <div

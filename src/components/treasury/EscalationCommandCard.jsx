@@ -1,18 +1,31 @@
 import { useEffect, useState } from "react";
+import useWorkspaceMode from "../../hooks/useWorkspaceMode";
 
 export default function EscalationCommandCard({ severity = "BLOCKED" }) {
-  const normalizedSeverity = String(severity || "BLOCKED").toUpperCase();
+  const { workspaceMode } = useWorkspaceMode();
+  const isDemoMode = workspaceMode === "DEMO";
+
+  const normalizedSeverity = isDemoMode
+    ? "SAFE"
+    : String(severity || "BLOCKED").toUpperCase();
 
   const [responseActive, setResponseActive] = useState(false);
 
   useEffect(() => {
+    if (isDemoMode) {
+      setResponseActive(false);
+      return;
+    }
+
     const saved =
       localStorage.getItem("treasury_response_active") === "true";
 
     setResponseActive(saved);
-  }, []);
+  }, [isDemoMode]);
 
   const activateTreasuryResponse = () => {
+    if (isDemoMode) return;
+
     setResponseActive(true);
 
     localStorage.setItem("treasury_response_active", "true");
@@ -31,14 +44,14 @@ export default function EscalationCommandCard({ severity = "BLOCKED" }) {
 
   const responseMap = {
     SAFE: {
-      badge: "SAFE RESPONSE",
-      threat: "SAFE",
-      action: "Monitor Treasury Position",
+      badge: "MONITORING",
+      threat: "MONITORING",
+      action: "Continue Treasury Operations",
       priority: "NORMAL",
-      trigger: "No Executive Trigger",
+      trigger: "Not Required",
       route: "Standard Treasury Monitoring Protocol",
       description:
-        "Treasury condition is stable. No immediate escalation action is required.",
+        "Treasury environment is stable. No escalation action is required under the current demo operating state.",
     },
     WATCH: {
       badge: "WATCH RESPONSE",
@@ -82,7 +95,7 @@ export default function EscalationCommandCard({ severity = "BLOCKED" }) {
     },
   };
 
-  const response = responseMap[normalizedSeverity] || responseMap.BLOCKED;
+  const response = responseMap[normalizedSeverity] || responseMap.SAFE;
 
   return (
     <section className="treasury-escalation-card">
@@ -97,8 +110,18 @@ export default function EscalationCommandCard({ severity = "BLOCKED" }) {
           </h2>
         </div>
 
-        <div className="treasury-status-pill treasury-status-pill-red">
-          {responseActive ? "TREASURY RESPONSE ACTIVE" : response.badge}
+        <div
+          className={
+            isDemoMode
+              ? "treasury-status-pill treasury-status-pill-green"
+              : "treasury-status-pill treasury-status-pill-red"
+          }
+        >
+          {isDemoMode
+            ? "TREASURY MONITORING ACTIVE"
+            : responseActive
+            ? "TREASURY RESPONSE ACTIVE"
+            : response.badge}
         </div>
       </div>
 
@@ -146,13 +169,15 @@ export default function EscalationCommandCard({ severity = "BLOCKED" }) {
         <button
           type="button"
           className={
-            responseActive
+            isDemoMode || responseActive
               ? "treasury-response-button treasury-response-button-active"
               : "treasury-response-button"
           }
           onClick={activateTreasuryResponse}
         >
-          {responseActive
+          {isDemoMode
+            ? "Treasury Monitoring Active"
+            : responseActive
             ? "Treasury Response Active"
             : "Activate Treasury Response"}
         </button>

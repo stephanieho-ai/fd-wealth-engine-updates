@@ -1,5 +1,48 @@
+import useWorkspaceMode from "../../hooks/useWorkspaceMode";
+
 export default function TreasuryAuthorityChain() {
-  const chain = [
+  const { workspaceMode } = useWorkspaceMode();
+  const isDemoMode = workspaceMode === "DEMO";
+
+  const demoChain = [
+    {
+      level: "01",
+      title: "Risk Signal",
+      description:
+        "Treasury risk signal is monitored and operating within institutional tolerance.",
+      status: "MONITORED",
+    },
+    {
+      level: "02",
+      title: "Treasury Desk",
+      description:
+        "Operational treasury desk is active and aligned with current liquidity conditions.",
+      status: "ACTIVE",
+    },
+    {
+      level: "03",
+      title: "Senior Treasury",
+      description:
+        "Senior treasury authority is ready for review if escalation is required.",
+      status: "READY",
+    },
+    {
+      level: "04",
+      title: "Governance Board",
+      description:
+        "Governance board alignment is available for institutional oversight.",
+      status: "ALIGNED",
+    },
+    {
+      level: "05",
+      title: "Executive Clearance",
+      description:
+        "Executive clearance remains available under stable treasury conditions.",
+      status: "AVAILABLE",
+    },
+  ];
+
+  const liveChain = [
     {
       level: "01",
       title: "Risk Signal",
@@ -37,6 +80,8 @@ export default function TreasuryAuthorityChain() {
     },
   ];
 
+  const chain = isDemoMode ? demoChain : liveChain;
+
   return (
     <section className="treasury-escalation-card authority-chain-card">
       <div className="treasury-escalation-header">
@@ -50,8 +95,14 @@ export default function TreasuryAuthorityChain() {
           </h2>
         </div>
 
-        <div className="treasury-status-pill treasury-status-pill-red">
-          EXECUTIVE FLOW
+        <div
+          className={
+            isDemoMode
+              ? "treasury-status-pill treasury-status-pill-green"
+              : "treasury-status-pill treasury-status-pill-red"
+          }
+        >
+          {isDemoMode ? "AUTHORITY READY" : "EXECUTIVE FLOW"}
         </div>
       </div>
 
