@@ -2,6 +2,7 @@ import DashboardPage from "../pages/DashboardPage";
 import RecordsPage from "../pages/RecordsPage";
 import TreasuryPage from "../pages/TreasuryPage";
 import TreasuryManualPage from "../pages/TreasuryManualPage";
+import GovernanceManualPage from "../pages/GovernanceManualPage";
 import GovernancePage from "../pages/GovernancePage";
 import TreasuryAutonomousPage from "../pages/TreasuryAutonomousPage";
 import MorePage from "../pages/MorePage";
@@ -15,6 +16,7 @@ function Sidebar({ tabs, activeTab, onTabChange, currency, totalActivePortfolio 
     { key: "GOVERNANCE", label: "Governance", icon: "◈" },
     { key: "AUTONOMOUS", label: "Autonomous", icon: "✦" },
     { key: "TREASURY_MANUAL", label: "Treasury Manual", icon: "📘" },
+    { key: "GOVERNANCE_MANUAL", label: "Governance Manual", icon: "📗" },
     { key: tabs.MORE, label: "More", icon: "≡" },
     { key: tabs.SETTINGS, label: "Settings", icon: "⚙" },
   ];
@@ -149,6 +151,11 @@ export default function AppShell({
     case "TREASURY_MANUAL":
       pageTitle = "Treasury Operating Manual";
       page = <TreasuryManualPage />;
+      break;
+
+    case "GOVERNANCE_MANUAL":
+      pageTitle = "Governance Operating Manual";
+      page = <GovernanceManualPage />;
       break;
 
     case tabs.MORE:
