@@ -203,12 +203,10 @@ export default function AppShell({
         <div className="shell-content">
           {page}
 
-          <footer className="system-footer">
-            <div>FD Wealth Engine · Private Banking Console</div>
-            <div>
-              V33.2-F9J TREASURY OPERATING MANUAL SYSTEM • Built with React + Electron
-              </div>
-          </footer>
+       <footer className="system-footer">
+          <div>FD Wealth Engine · Private Banking Console</div>
+          <div>Treasury OS Platform · Built with React + Electron</div>
+        </footer>
         </div>
       </div>
     </div>
