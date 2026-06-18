@@ -1,3 +1,8 @@
+@import "./styles/dashboard/index.css";
+@import "./styles/governance-manual.css";
+@import "./styles/user-onboarding.css";
+
+
 :root {
   --bg: #edf2f8;
   --panel: #ffffff;
