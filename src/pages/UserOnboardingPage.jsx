@@ -1,4 +1,5 @@
 import { useState } from "react";
+import TreasuryDemoBanner from "../components/demo/TreasuryDemoBanner";
 
 
 const LANGUAGE_OPTIONS = [
@@ -487,14 +488,8 @@ const workspaceIcons = ["FD", "SET", "DASH", "TRSY", "GOV", "AI"];
 
   return (
     <div className="page-container">
-      <section className="treasury-demo-compact-banner">
-        <div className="demo-banner-left">
-          <span className="demo-status-dot"></span>
-          <span className="demo-banner-label">DEMO ENVIRONMENT</span>
-          <span className="demo-banner-divider">SIMULATED DATA</span>
-        </div>
-      </section>
-
+        <TreasuryDemoBanner compact />
+     
       <section className="onboarding-manual-hero">
         <div className="onboarding-manual-logo">FD</div>
 
