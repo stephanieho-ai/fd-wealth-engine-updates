@@ -1,97 +1,207 @@
-# 💰 FD Wealth Engine
+# FD Wealth Engine
 
-**Private Banking Console for Fixed Deposit Portfolio Management**
+## Treasury OS V1
 
-Desktop Private Banking Console built with React, Vite and Electron.
+**Institutional Treasury Intelligence Platform**
 
----
-
-## 🏦 Overview
-
-FD Wealth Engine is a desktop-based financial management system designed to transform traditional Fixed Deposit (FD) tracking into a structured, intelligent portfolio system.
-
-It enables users to manage, plan, and execute FD ladder strategies with clarity — similar to tools used in private banking environments.
+Desktop treasury operating system built with React, Vite and Electron.
 
 ---
 
-## ✨ Key Features
+## Overview
 
-### 📊 Portfolio Dashboard
-- Total FD portfolio overview
-- Savings & Parking Cash tracking
-- Deployable funds visibility
-- Monthly maturity insights
+FD Wealth Engine has evolved from a traditional Fixed Deposit portfolio tracker into **Treasury OS V1**, an institutional treasury intelligence platform designed to provide treasury visibility, governance coordination, operational intelligence and autonomous readiness.
+
+Treasury OS enables users to monitor capital, manage treasury workflows, coordinate governance decisions and observe treasury system health through a unified operating environment.
 
 ---
 
-### ⚙️ Execution Engine (V32)
-- Generate Execution Plan
-- Confirm before execution
-- Auto-create FD records
-- Smart fund deduction from:
-  - Savings
-  - Parking Cash
-
----
-
-### 🧠 Ladder Planning System
-- Target month optimization
-- Weak month detection
-- Execution timing suggestions
-- Partial build strategy
-
----
-
-### 💼 Record Management
-- Add / Edit / Delete FD
-- Close & Rollover actions
-- Auto-generated FD entries
-- Clean separation:
-  - FD
-  - Savings
-  - Parking Cash
-
----
-
-### 🔔 Smart Workflow
-- Execution confirmation modal
-- Auto status tracking
-- Real-time portfolio updates
-
----
-
-## 🖥️ Screenshots
+## Core Capabilities
 
 ### 📊 Dashboard
-![Dashboard](assets/dashboard.png)
+
+Institutional treasury monitoring and portfolio supervision.
+
+Features:
+
+* Portfolio Overview
+* Capital Intelligence
+* Liquidity Visibility
+* Maturity Intelligence
+* Treasury Alerts
+* Execution Snapshot
+* Audit Trail
+* Ledger Intelligence
 
 ---
 
-### ⚙️ Execution Plan
-![Execution](assets/execution.png)
+### 🏦 Treasury Console
+
+Treasury operations, recovery orchestration and execution coordination.
+
+Features:
+
+* Treasury Command Center
+* Recovery Queue Management
+* Treasury Routing Engine
+* Incident Timeline
+* Recovery Intelligence
+* Escalation Management
+* Authority Chain
+* Transmission Network
 
 ---
 
-### 💼 Records Management
-![Records](assets/records.png)
+### ⚖️ Governance Console
+
+Distributed authority coordination and governance orchestration.
+
+Features:
+
+* Governance Mesh
+* Consensus Intelligence
+* Conflict Resolution
+* Governance Latency Intelligence
+* Authority Load Balancing
+* Parallel Approval Routing
+* Governance Decision Matrix
+* Executive Authority Coordination
 
 ---
 
-### ⚙️ Settings Workspace
-![Settings](assets/setting.png)
+### 🤖 Autonomous Intelligence
+
+AI-assisted treasury observation and decision support readiness.
+
+Features:
+
+* Autonomous Treasury Intelligence Core
+* Runtime Observation
+* Reasoning Readiness
+* Decision Safety Monitoring
+* Governance Awareness
+* Treasury Intelligence Integration
 
 ---
 
-## ⚙️ Tech Stack
+### 📚 Treasury Documentation System
 
-- **Frontend:** React + Vite
-- **Desktop App:** Electron
-- **State Management:** React Hooks
-- **Storage:** LocalStorage
+Built-in institutional documentation environment.
+
+Includes:
+
+* Treasury Manual V1
+* Governance Manual V1
+* User Onboarding Guide V1
+* Multi-language Documentation Framework
 
 ---
 
-## 🚀 Getting Started
+## Treasury OS Architecture
+
+```text
+Dashboard
+    ↓
+Treasury Console
+    ↓
+Governance Console
+    ↓
+Treasury Intelligence Layer
+    ↓
+Strategy Intelligence Layer
+    ↓
+Runtime Intelligence Layer
+    ↓
+Autonomous Intelligence Layer
+```
+
+Treasury OS is designed as a layered institutional operating environment where treasury operations, governance coordination and intelligence systems operate together as a unified platform.
+
+---
+
+## Intelligence Systems
+
+### Treasury Intelligence Layer
+
+Provides:
+
+* Signal Analysis
+* Assessment Intelligence
+* Recommendation Engine
+* Decision Intelligence
+* Execution Intelligence
+* Feedback Intelligence
+* Learning Intelligence
+* Predictive Intelligence
+
+---
+
+### Treasury Strategy Intelligence Layer
+
+Provides:
+
+* Capital Allocation Intelligence
+* Portfolio Optimization
+* Scenario Planning
+* What-If Analysis
+* Future State Modeling
+
+---
+
+### Treasury Runtime Intelligence Layer
+
+Provides:
+
+* Runtime Monitoring
+* Runtime Alerts
+* Runtime Escalation
+* Runtime Response Intelligence
+* Runtime Recovery Intelligence
+* Runtime Stability Intelligence
+* Treasury OS Health Monitoring
+
+---
+
+## Workspace Modes
+
+Treasury OS supports:
+
+### Live Mode
+
+Production treasury environment using actual portfolio data.
+
+### Demo Mode
+
+Demonstration environment for product showcases, testing and presentations.
+
+---
+
+## Technology Stack
+
+### Frontend
+
+* React
+* Vite
+
+### Desktop Platform
+
+* Electron
+
+### State Management
+
+* React Hooks
+
+### Data Storage
+
+* LocalStorage
+
+### Styling
+
+* Modular CSS Architecture
+
+---
+
+## Installation
 
 ### Install Dependencies
 
@@ -99,7 +209,7 @@ It enables users to manage, plan, and execute FD ladder strategies with clarity 
 npm install
 ```
 
-### Run Development Server
+### Run Development Environment
 
 ```bash
 npm run dev
@@ -111,19 +221,107 @@ npm run dev
 npm run desktop:build
 ```
 
-## 📦 Project Vision
+---
 
-FD Wealth Engine aims to modernize personal fixed deposit portfolio management by combining:
+## Documentation
 
-- Portfolio analytics
-- Ladder planning
-- Smart execution workflows
-- Banking-style UI experience
-- Intelligent deployment guidance
+Treasury OS includes integrated documentation:
 
-The long-term goal is to evolve the platform into a complete private banking style FD operating system for global multi-currency portfolio management.
+### Treasury Manual
 
-## 📄 License
+Institutional treasury operating procedures and architecture overview.
 
-This project is for educational, portfolio and product development purposes.
+### Governance Manual
 
+Governance mesh, authority coordination and decision framework.
+
+### User Onboarding Guide
+
+First-time user guidance and platform walkthrough.
+
+---
+
+## Current Release Status
+
+Version:
+
+**V33.2 Treasury OS V1**
+
+Status:
+
+**Documentation Release Candidate**
+
+Completed:
+
+* Workspace Mode Foundation
+* Treasury Manual V1
+* Governance Manual V1
+* User Onboarding Guide V1
+* Treasury OS Documentation Program
+
+In Progress:
+
+* GitHub README V1
+
+Next:
+
+* Treasury OS V1 Release Candidate
+* Treasury OS V1 Official Release
+
+---
+
+## Roadmap
+
+### Treasury OS V1
+
+* Dashboard Intelligence
+* Treasury Operations
+* Governance Coordination
+* Runtime Intelligence
+* Autonomous Readiness
+* Documentation System
+
+### Future Development
+
+* Multi-Currency Expansion
+* Institutional Reporting
+* Enhanced Autonomous Intelligence
+* Treasury Automation
+* Global Treasury Management
+
+---
+
+## Project Vision
+
+Treasury OS aims to evolve beyond portfolio tracking into a complete treasury operating environment.
+
+The platform combines:
+
+* Treasury Visibility
+* Governance Coordination
+* Runtime Intelligence
+* Strategic Planning
+* Operational Monitoring
+* Autonomous Readiness
+
+to create a next-generation treasury management experience.
+
+---
+
+## Author
+
+**Lai Wah Ho**
+
+Built with:
+
+* React
+* Vite
+* Electron
+
+---
+
+## Treasury OS V1
+
+Institutional Treasury Intelligence Platform
+
+Documentation Release Candidate
