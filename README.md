@@ -285,6 +285,36 @@ Status:
 
 **Documentation Release Candidate**
 
+### Release Information
+
+Current Version
+
+V33.2 Treasury OS V1
+
+Release Type
+
+Documentation Release Candidate
+
+Repository
+
+fd-wealth-engine-updates
+
+Latest Stable Milestones
+
+* RP1 Workspace Foundation
+* RP2 Treasury Manual V1
+* RP3 Governance Manual V1
+* RP4 User Onboarding Guide V1
+* RP5 GitHub README V1
+
+Target Release
+
+Treasury OS V1 Release Candidate
+
+Next Phase
+
+Treasury OS V1 Official Release
+
 Completed:
 
 * Workspace Mode Foundation
