@@ -176,6 +176,40 @@ Demonstration environment for product showcases, testing and presentations.
 
 ---
 
+## Screenshots
+
+### 📊 Dashboard
+
+Treasury portfolio monitoring, capital intelligence and treasury visibility.
+
+![Dashboard](assets/dashboard-v1.png)
+
+---
+
+### 🏦 Treasury Console
+
+Treasury operations, intelligence orchestration and command center monitoring.
+
+![Treasury](assets/treasury-v1.png)
+
+---
+
+### ⚖️ Governance Console
+
+Governance mesh coordination, consensus intelligence and authority synchronization.
+
+![Governance](assets/governance-v1.png)
+
+---
+
+### 🤖 Autonomous Intelligence
+
+AI-assisted treasury observation, reasoning readiness and decision support monitoring.
+
+![Autonomous](assets/autonomous-v1.png)
+
+---
+
 ## Technology Stack
 
 ### Frontend
