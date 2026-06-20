@@ -61,7 +61,7 @@ function Sidebar({ tabs, activeTab, onTabChange, currency, totalActivePortfolio 
 
         <div className="sidebar-mini-card version-card">
           <span>SYSTEM VERSION</span>
-          <strong>TREASURY OS V1 RC1</strong>
+          <strong>VERSION 1.0.0</strong>
         </div>
       </div>
     </aside>
@@ -73,7 +73,7 @@ function TopBar({ title, currency }) {
     <header className="topbar">
       <div>
         <div className="topbar-version">
-        FD WEALTH ENGINE • TREASURY OS V1 RC1
+        FD WEALTH ENGINE • TREASURY OS V1
         </div>
         <h1 className="topbar-title">{title}</h1>
       </div>
@@ -218,7 +218,7 @@ export default function AppShell({
           {page}
 
     <footer className="system-footer">
-      <div>TREASURY OS V1 RC1</div>
+      <div>TREASURY OS V1</div>
       <div>Treasury OS Platform · Built with React + Electron</div>
     </footer>
         </div>

@@ -182,7 +182,7 @@ export default function TreasuryManualPage() {
 
           <div>
            <div className="manual-kicker">
-              TREASURY OS V1 RC1
+              TREASURY OS V1
             </div>
 
             <h1>{ui.title}</h1>
@@ -369,7 +369,7 @@ export default function TreasuryManualPage() {
         </div>
 
         <div className="treasury-manual-footer-version">
-          Version RC1
+           Version 1.0.0
         </div>
 
         <div className="treasury-manual-footer-divider" />

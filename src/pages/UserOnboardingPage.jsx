@@ -11,12 +11,12 @@ const LANGUAGE_OPTIONS = [
 
 const copy = {
   en: {
-    heroKicker: "TREASURY OS V1 RC1",
+    heroKicker: "TREASURY OS V1",
     heroTitle: "User Onboarding Guide",
     heroSubtitle:
       "Learn the Treasury OS workflow, understand each workspace and become operational in minutes.",
 
-    welcomeKicker: "TREASURY OS V1 RC1",
+    welcomeKicker: "TREASURY OS V1",
     welcomeTitle: "Treasury OS",
     welcomeText:
       "Treasury OS combines portfolio visibility, treasury operations, governance coordination and autonomous monitoring into one institutional workspace.",
@@ -58,7 +58,7 @@ const copy = {
   },
 
   zh: {
-    heroKicker: "TREASURY OS V1 RC1",
+    heroKicker: "TREASURY OS V1",
     heroTitle: "用户入门指南",
     heroSubtitle:
       "了解 Treasury OS 的工作流程、各个工作空间，并在几分钟内开始使用。",
@@ -104,7 +104,7 @@ const copy = {
   },
 
   ja: {
-    heroKicker: "TREASURY OS V1 RC1",
+    heroKicker: "TREASURY OS V1",
     heroTitle: "ユーザーオンボーディングガイド",
     heroSubtitle:
       "Treasury OS の操作フロー、各ワークスペース、運用開始までの流れを理解します。",
@@ -151,7 +151,7 @@ const copy = {
   },
 
   bm: {
-    heroKicker: "TREASURY OS V1 RC1",
+    heroKicker: "TREASURY OS V1",
     heroTitle: "Panduan Permulaan Pengguna",
     heroSubtitle:
       "Fahami aliran Treasury OS, setiap ruang kerja dan mula beroperasi dalam beberapa minit.",
@@ -1075,7 +1075,7 @@ const workspaceIcons = ["FD", "SET", "DASH", "TRSY", "GOV", "AI"];
         </div>
 
 <div className="completion-status-box">
-  <span>TREASURY OS V1 RC1</span>
+  <span>TREASURY OS V1</span>
   <strong>{t.ready}</strong>
   <small>{t.systemStatus}</small>
 </div>

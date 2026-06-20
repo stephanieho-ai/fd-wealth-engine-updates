@@ -57,7 +57,7 @@ export function validateApprovalThreshold({
       policy: policy.policyLabels.APPROVAL,
       title: "Approval Required",
       message: "Deployment amount meets treasury approval threshold.",
-      action: "REQUIRE_APPROVAL",
+      action: "REQUIRE APPROVAL",
     });
   }
 
@@ -128,7 +128,7 @@ export function validateTreasuryPolicies({
   ];
 
   const blocked = results.some((item) => item.action === "AUTO_BLOCK");
-  const approvalRequired = results.some((item) => item.action === "REQUIRE_APPROVAL");
+  const approvalRequired = results.some((item) => item.action === "REQUIRE APPROVAL");
   const escalationRequired = results.some((item) => item.action === "ESCALATE");
 
   return {
