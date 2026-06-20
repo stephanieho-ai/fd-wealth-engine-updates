@@ -181,8 +181,8 @@ export default function TreasuryManualPage() {
           <div className="manual-logo">FD</div>
 
           <div>
-            <div className="manual-kicker">
-              V33.2-RP2 · TREASURY OS DOCUMENTATION
+           <div className="manual-kicker">
+              TREASURY OS V1 RC1
             </div>
 
             <h1>{ui.title}</h1>
@@ -369,17 +369,17 @@ export default function TreasuryManualPage() {
         </div>
 
         <div className="treasury-manual-footer-version">
-          Version V33.2-RP2 Stable Edition
+          Version RC1
         </div>
 
         <div className="treasury-manual-footer-divider" />
 
         <div className="treasury-manual-footer-platform-title">
-          FD WEALTH ENGINE
+           TREASURY OS V1
         </div>
 
         <div className="treasury-manual-footer-platform-subtitle">
-          Private Banking Treasury Platform
+          Treasury Operating System Platform
         </div>
 
         <div className="treasury-manual-footer-platform-tech">

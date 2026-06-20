@@ -185,7 +185,7 @@ export default function GovernanceManualPage() {
 
           <div>
             <div className="manual-kicker">
-              V33.2-RP3 · GOVERNANCE OS DOCUMENTATION
+              TREASURY OS V1 RC1
             </div>
 
             <h1>{ui.title}</h1>
@@ -369,17 +369,17 @@ export default function GovernanceManualPage() {
         </div>
 
         <div className="treasury-manual-footer-version">
-          Version V33.2-RP3 Stable Edition
+          Version RC1
         </div>
 
         <div className="treasury-manual-footer-divider" />
 
         <div className="treasury-manual-footer-platform-title">
-          FD WEALTH ENGINE
+          TREASURY OS V1
         </div>
 
         <div className="treasury-manual-footer-platform-subtitle">
-          Private Banking Treasury Platform
+          Treasury Operating System Platform
         </div>
 
         <div className="treasury-manual-footer-platform-tech">

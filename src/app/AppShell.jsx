@@ -29,7 +29,7 @@ function Sidebar({ tabs, activeTab, onTabChange, currency, totalActivePortfolio 
         <div className="brand-logo">FD</div>
         <div>
           <div className="brand-title">FD Wealth Engine</div>
-          <div className="brand-subtitle">Private Banking Console</div>
+          <div className="brand-subtitle">Treasury OS V1</div>
         </div>
       </div>
 
@@ -61,7 +61,7 @@ function Sidebar({ tabs, activeTab, onTabChange, currency, totalActivePortfolio 
 
         <div className="sidebar-mini-card version-card">
           <span>SYSTEM VERSION</span>
-         <strong>V33.2-F9J TREASURY MANUAL SYSTEM</strong>
+          <strong>TREASURY OS V1 RC1</strong>
         </div>
       </div>
     </aside>
@@ -73,7 +73,7 @@ function TopBar({ title, currency }) {
     <header className="topbar">
       <div>
         <div className="topbar-version">
-       FD WEALTH ENGINE • V33.2-F9J TREASURY OPERATING MANUAL SYSTEM 
+        FD WEALTH ENGINE • TREASURY OS V1 RC1
         </div>
         <h1 className="topbar-title">{title}</h1>
       </div>
@@ -217,10 +217,10 @@ export default function AppShell({
         <div className="shell-content">
           {page}
 
-       <footer className="system-footer">
-          <div>FD Wealth Engine · Private Banking Console</div>
-          <div>Treasury OS Platform · Built with React + Electron</div>
-        </footer>
+    <footer className="system-footer">
+      <div>TREASURY OS V1 RC1</div>
+      <div>Treasury OS Platform · Built with React + Electron</div>
+    </footer>
         </div>
       </div>
     </div>
