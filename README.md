@@ -4,96 +4,107 @@
 
 **Institutional Treasury Intelligence Platform**
 
-Desktop treasury operating system built with React, Vite and Electron.
+FD Wealth Engine has evolved from a Fixed Deposit portfolio tracker into **Treasury OS V1** — a desktop treasury operating system designed for portfolio visibility, treasury operations, governance coordination, runtime monitoring and autonomous intelligence readiness.
+
+Built with **React, Vite and Electron**.
 
 ---
 
 ## Overview
 
-FD Wealth Engine has evolved from a traditional Fixed Deposit portfolio tracker into **Treasury OS V1**, an institutional treasury intelligence platform designed to provide treasury visibility, governance coordination, operational intelligence and autonomous readiness.
+Treasury OS V1 provides a unified operating environment for monitoring capital, coordinating treasury workflows, observing system health and supporting governance-driven decision making.
 
-Treasury OS enables users to monitor capital, manage treasury workflows, coordinate governance decisions and observe treasury system health through a unified operating environment.
+The platform is designed to help users move beyond basic portfolio tracking into a structured treasury intelligence workspace.
+
+Core objectives:
+
+- Monitor treasury capital and liquidity
+- Track maturity visibility and deployment readiness
+- Coordinate recovery, routing and escalation workflows
+- Support governance mesh and authority synchronization
+- Observe runtime health, stability and system readiness
+- Prepare the foundation for autonomous treasury intelligence
 
 ---
 
 ## Core Capabilities
 
-### 📊 Dashboard
+### Dashboard
 
 Institutional treasury monitoring and portfolio supervision.
 
 Features:
 
-* Portfolio Overview
-* Capital Intelligence
-* Liquidity Visibility
-* Maturity Intelligence
-* Treasury Alerts
-* Execution Snapshot
-* Audit Trail
-* Ledger Intelligence
+- Portfolio Overview
+- Capital Intelligence
+- Liquidity Visibility
+- Maturity Intelligence
+- Treasury Alerts
+- Execution Snapshot
+- Audit Trail
+- Ledger Intelligence
 
 ---
 
-### 🏦 Treasury Console
+### Treasury Console
 
 Treasury operations, recovery orchestration and execution coordination.
 
 Features:
 
-* Treasury Command Center
-* Recovery Queue Management
-* Treasury Routing Engine
-* Incident Timeline
-* Recovery Intelligence
-* Escalation Management
-* Authority Chain
-* Transmission Network
+- Treasury Command Center
+- Recovery Queue Management
+- Treasury Routing Engine
+- Incident Timeline
+- Recovery Intelligence
+- Escalation Management
+- Authority Chain
+- Transmission Network
 
 ---
 
-### ⚖️ Governance Console
+### Governance Console
 
 Distributed authority coordination and governance orchestration.
 
 Features:
 
-* Governance Mesh
-* Consensus Intelligence
-* Conflict Resolution
-* Governance Latency Intelligence
-* Authority Load Balancing
-* Parallel Approval Routing
-* Governance Decision Matrix
-* Executive Authority Coordination
+- Governance Mesh
+- Consensus Intelligence
+- Conflict Resolution
+- Governance Latency Intelligence
+- Authority Load Balancing
+- Parallel Approval Routing
+- Governance Decision Matrix
+- Executive Authority Coordination
 
 ---
 
-### 🤖 Autonomous Intelligence
+### Autonomous Intelligence
 
 AI-assisted treasury observation and decision support readiness.
 
 Features:
 
-* Autonomous Treasury Intelligence Core
-* Runtime Observation
-* Reasoning Readiness
-* Decision Safety Monitoring
-* Governance Awareness
-* Treasury Intelligence Integration
+- Autonomous Treasury Intelligence Core
+- Runtime Observation
+- Reasoning Readiness
+- Decision Safety Monitoring
+- Governance Awareness
+- Treasury Intelligence Integration
 
 ---
 
-### 📚 Treasury Documentation System
+### Treasury Documentation System
 
 Built-in institutional documentation environment.
 
 Includes:
 
-* Treasury Manual V1
-* Governance Manual V1
-* User Onboarding Guide V1
-* Multi-language Documentation Framework
+- Treasury Manual V1
+- Governance Manual V1
+- User Onboarding Guide V1
+- Multi-language Documentation Framework
 
 ---
 
@@ -113,279 +124,5 @@ Strategy Intelligence Layer
 Runtime Intelligence Layer
     ↓
 Autonomous Intelligence Layer
+
 ```
-
-Treasury OS is designed as a layered institutional operating environment where treasury operations, governance coordination and intelligence systems operate together as a unified platform.
-
----
-
-## Intelligence Systems
-
-### Treasury Intelligence Layer
-
-Provides:
-
-* Signal Analysis
-* Assessment Intelligence
-* Recommendation Engine
-* Decision Intelligence
-* Execution Intelligence
-* Feedback Intelligence
-* Learning Intelligence
-* Predictive Intelligence
-
----
-
-### Treasury Strategy Intelligence Layer
-
-Provides:
-
-* Capital Allocation Intelligence
-* Portfolio Optimization
-* Scenario Planning
-* What-If Analysis
-* Future State Modeling
-
----
-
-### Treasury Runtime Intelligence Layer
-
-Provides:
-
-* Runtime Monitoring
-* Runtime Alerts
-* Runtime Escalation
-* Runtime Response Intelligence
-* Runtime Recovery Intelligence
-* Runtime Stability Intelligence
-* Treasury OS Health Monitoring
-
----
-
-## Workspace Modes
-
-Treasury OS supports:
-
-### Live Mode
-
-Production treasury environment using actual portfolio data.
-
-### Demo Mode
-
-Demonstration environment for product showcases, testing and presentations.
-
----
-
-## Screenshots
-
-### 📊 Dashboard
-
-Treasury portfolio monitoring, capital intelligence and treasury visibility.
-
-![Dashboard](assets/dashboard-v1.png)
-
----
-
-### 🏦 Treasury Console
-
-Treasury operations, intelligence orchestration and command center monitoring.
-
-![Treasury](assets/treasury-v1.png)
-
----
-
-### ⚖️ Governance Console
-
-Governance mesh coordination, consensus intelligence and authority synchronization.
-
-![Governance](assets/governance-v1.png)
-
----
-
-### 🤖 Autonomous Intelligence
-
-AI-assisted treasury observation, reasoning readiness and decision support monitoring.
-
-![Autonomous](assets/autonomous-v1.png)
-
----
-
-## Technology Stack
-
-### Frontend
-
-* React
-* Vite
-
-### Desktop Platform
-
-* Electron
-
-### State Management
-
-* React Hooks
-
-### Data Storage
-
-* LocalStorage
-
-### Styling
-
-* Modular CSS Architecture
-
----
-
-## Installation
-
-### Install Dependencies
-
-```bash
-npm install
-```
-
-### Run Development Environment
-
-```bash
-npm run dev
-```
-
-### Build Desktop Application
-
-```bash
-npm run desktop:build
-```
-
----
-
-## Documentation
-
-Treasury OS includes integrated documentation:
-
-### Treasury Manual
-
-Institutional treasury operating procedures and architecture overview.
-
-### Governance Manual
-
-Governance mesh, authority coordination and decision framework.
-
-### User Onboarding Guide
-
-First-time user guidance and platform walkthrough.
-
----
-
-## Current Release Status
-
-Version:
-
-**V33.2 Treasury OS V1**
-
-Status:
-
-**Documentation Release Candidate**
-
-### Release Information
-
-Current Version
-
-V33.2 Treasury OS V1
-
-Release Type
-
-Documentation Release Candidate
-
-Repository
-
-fd-wealth-engine-updates
-
-Latest Stable Milestones
-
-* RP1 Workspace Foundation
-* RP2 Treasury Manual V1
-* RP3 Governance Manual V1
-* RP4 User Onboarding Guide V1
-* RP5 GitHub README V1
-
-Target Release
-
-Treasury OS V1 Release Candidate
-
-Next Phase
-
-Treasury OS V1 Official Release
-
-Completed:
-
-* Workspace Mode Foundation
-* Treasury Manual V1
-* Governance Manual V1
-* User Onboarding Guide V1
-* Treasury OS Documentation Program
-
-In Progress:
-
-* GitHub README V1
-
-Next:
-
-* Treasury OS V1 Release Candidate
-* Treasury OS V1 Official Release
-
----
-
-## Roadmap
-
-### Treasury OS V1
-
-* Dashboard Intelligence
-* Treasury Operations
-* Governance Coordination
-* Runtime Intelligence
-* Autonomous Readiness
-* Documentation System
-
-### Future Development
-
-* Multi-Currency Expansion
-* Institutional Reporting
-* Enhanced Autonomous Intelligence
-* Treasury Automation
-* Global Treasury Management
-
----
-
-## Project Vision
-
-Treasury OS aims to evolve beyond portfolio tracking into a complete treasury operating environment.
-
-The platform combines:
-
-* Treasury Visibility
-* Governance Coordination
-* Runtime Intelligence
-* Strategic Planning
-* Operational Monitoring
-* Autonomous Readiness
-
-to create a next-generation treasury management experience.
-
----
-
-## Author
-
-**Lai Wah Ho**
-
-Built with:
-
-* React
-* Vite
-* Electron
-
----
-
-## Treasury OS V1
-
-Institutional Treasury Intelligence Platform
-
-Documentation Release Candidate
