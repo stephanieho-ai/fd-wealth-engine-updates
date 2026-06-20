@@ -124,7 +124,6 @@ Strategy Intelligence Layer
 Runtime Intelligence Layer
     ↓
 Autonomous Intelligence Layer
-
 ```
 
 Treasury OS is designed as a layered institutional operating environment where treasury operations, governance coordination and intelligence systems operate together as a unified platform.
@@ -259,14 +258,13 @@ AI-assisted treasury observation, reasoning readiness and decision support monit
 
 ```bash
 npm install
-
 ```
-````md
+
 ### Run Development Environment
 
 ```bash
 npm run dev
-````
+```
 
 Default local development server:
 
@@ -438,6 +436,3 @@ This release candidate focuses on stabilizing the product documentation layer, G
 **Institutional Treasury Intelligence Platform**
 
 Documentation Release Candidate
-
-```
-```
