@@ -6,20 +6,20 @@
 
 export const demoTreasuryDataset = {
   portfolio: {
-    totalPortfolio: 436000,
+    totalPortfolio: 500000,
     monthlyInterestTarget: 1500,
     activeDeposits: 12,
     maturityCoverage: "12M",
     portfolioStatus: "OPERATIONAL",
   },
 
-  runtime: {
-  totalActivePortfolio: 436000,
-  totalFixedDeposits: 312000,
-  totalSavings: 84000,
-  totalParkingCash: 40000,
-  totalDeployableFunds: 124000,
-  totalDeployableWithUpcoming: 160000,
+runtime: {
+  totalActivePortfolio: 500000,
+  totalFixedDeposits: 350000,
+  totalSavings: 100000,
+  totalParkingCash: 50000,
+  totalDeployableFunds: 150000,
+  totalDeployableWithUpcoming: 186000,
   upcomingMaturityAmount: 36000,
   reserveAmount: 50000,
 
