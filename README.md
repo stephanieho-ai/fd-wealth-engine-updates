@@ -322,11 +322,12 @@ First-time user guidance and platform walkthrough.
 
 ### Version
 
-**V33.2 Treasury OS V1**
+**Treasury OS V1**
+**Version 1.0.0**
 
 ### Release Type
 
-**Documentation Release Candidate**
+**Stable Edition**
 
 ### Repository
 
@@ -344,11 +345,11 @@ fd-wealth-engine-updates
 
 ### Target Release
 
-**Treasury OS V1 Release Candidate**
+**Treasury OS V1 Version 1.0.0 Stable Edition**
 
 ### Next Phase
 
-**Treasury OS V1 Official Release**
+**Treasury OS V1 Maintenance & Future Development**
 
 ---
 
@@ -367,8 +368,8 @@ fd-wealth-engine-updates
 
 ### Next
 
-* Treasury OS V1 Release Candidate
-* Treasury OS V1 Official Release
+* Treasury OS V1 Maintenance
+* Treasury OS V2 Planning
 
 ---
 
@@ -425,9 +426,13 @@ Built with:
 
 ## Release Note
 
-**Treasury OS V1 is currently in Documentation Release Candidate stage.**
+**Treasury OS V1 Version 1.0.0 Stable Edition**
 
-This release candidate focuses on stabilizing the product documentation layer, GitHub presentation, onboarding flow and institutional architecture communication before the final Treasury OS V1 stable release.
+First official stable release of Treasury OS.
+
+This release establishes the baseline Treasury OS architecture including Dashboard Intelligence, Treasury Operations, Governance Coordination, Runtime Intelligence, Autonomous Readiness and the integrated Documentation System.
+
+Treasury OS V1 represents the evolution of FD Wealth Engine from a fixed deposit portfolio tracker into an institutional treasury operating environment.
 
 ---
 
@@ -435,4 +440,4 @@ This release candidate focuses on stabilizing the product documentation layer, G
 
 **Institutional Treasury Intelligence Platform**
 
-Documentation Release Candidate
+Version 1.0.0 Stable Edition
