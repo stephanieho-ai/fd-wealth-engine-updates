@@ -1,5 +1,6 @@
 import { useState } from "react";
 import TreasuryDemoBanner from "../components/demo/TreasuryDemoBanner";
+import { isDemoMode } from "../utils/workspaceMode";
 
 
 const LANGUAGE_OPTIONS = [
@@ -487,10 +488,12 @@ const workspaceIcons = ["FD", "SET", "DASH", "TRSY", "GOV", "AI"];
   };
 
   return (
-    <div className="page-container">
-        <TreasuryDemoBanner compact />
-     
-      <section className="onboarding-manual-hero">
+  <div className="page-container">
+    {isDemoMode() && (
+      <TreasuryDemoBanner compact />
+    )}
+
+    <section className="onboarding-manual-hero">
         <div className="onboarding-manual-logo">FD</div>
 
         <div className="onboarding-manual-content">
